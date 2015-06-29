@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="edit.show" namespace="/" extends="struts-default">
+	<global-results>
+			<result name="show" type="redirectAction">
+				account
+			</result>
+			<result name="oneapm" type="redirect">
+				http://www.oneapm.com				
+			</result>
+			<result name="ERROR">
+				/WEB-INF/pages/error/error.jsp
+			</result>
+			<result name="login">
+				/WEB-INF/pages/login/loginIndex.jsp
+			</result>
+		</global-results>
+		<action name="show" method="show"
+			class="com.oneapm.web.show.OneApmShowAction">
+			<result name="showIndex" type="redirectAction">
+				<!-- /WEB-INF/pages/index/index.jsp -->
+				account
+			</result>
+			<!-- <result name="zhuye">
+				/WEB-INF/pages/index.jsp
+			</result>
+			<result name="shouye1">
+				/WEB-INF/pages/index1.jsp
+			</result> -->
+		</action>
+		<action name="update" method="update"
+			class="com.oneapm.web.show.OneApmShowAction">
+		</action>
+		<!--  -->
+		<action name="info_*" method="{1}" 
+			class="com.oneapm.web.info.InfoAction">
+			<result name="search">
+				/WEB-INF/pages/view/info_search.jsp
+			</result>
+			<result name="add">
+				/WEB-INF/pages/view/info_add.jsp
+			</result>
+			<result name="view">
+				/WEB-INF/pages/view/info_view.jsp
+			</result>
+			<result name="calls">
+				/WEB-INF/pages/view/info_calls.jsp
+			</result>
+			<result name="language">
+				/WEB-INF/pages/view/info_language.jsp
+			</result>
+			<result name="onlianxi">
+				/WEB-INF/pages/view/info_onlianxi.jsp
+			</result>
+			<result name="dashboard_show">
+				/WEB-INF/dashboard/dashboard.jsp
+			</result>
+		</action>
+		
+		<action name="salespanel" method='salespanel' 
+			class="com.oneapm.web.info.InfoAction">
+			<result name="salespanel">
+				/WEB-INF/salespanel/salespanel.jsp
+			</result>
+		</action>
+		<action name="assign_*" method="{1}" class="com.oneapm.web.info.InfoAction">
+			
+		</action>
+		
+		<action name="mark_*" method="{1}" class="com.oneapm.web.info.MarkAction">
+			<result name="list">
+				/WEB-INF/pages/view/mark_list.jsp
+			</result>
+		</action>
+	</package>
+</struts>

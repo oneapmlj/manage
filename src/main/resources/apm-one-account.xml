@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="edit.account" namespace="/" extends="struts-default">
+		<!-- <interceptors>  
+            <interceptor name="userInterceptor" class="com.oneapm.web.account.UserInterceptor" />  
+        </interceptors> -->
+		<global-results>
+			<result name="loginIndex">
+				/WEB-INF/pages/login/loginIndex.jsp
+			</result>
+			<result name="login" type="redirectAction">
+				login
+			</result>
+		</global-results>
+		<action name="login" method="login"
+			class="com.oneapm.web.account.AccountAction">
+			<result name="show" type="redirect">
+				http://manage.oneapm.com
+			</result>
+		</action>
+		
+		<action name="loginOut" method="loginOut"
+			class="com.oneapm.web.account.AccountAction">
+		</action>
+		<action name="loginApi" method="loginApi"
+			class="com.oneapm.web.account.AccountAction">
+			<result name="toDaiKe" type="redirect">
+			</result>
+		</action>
+		
+		<action name="account" method="account"
+			class="com.oneapm.web.account.AccountAction">
+			<result name="account">
+				/WEB-INF/pages/view/account.jsp
+			</result>
+		</action>
+		
+		<action name="account_*" method="{1}"
+			class="com.oneapm.web.account.AccountAction">
+			<result name="add">
+				/WEB-INF/pages/view/account_add.jsp
+			</result>
+			<result name="sign">
+				/WEB-INF/pages/view/account_sign.jsp
+			</result>
+			<result name="password">
+				/WEB-INF/pages/view/account_password.jsp
+			</result>
+			<result name="password_set">
+				/WEB-INF/pages/view/account_password_set.jsp
+			</result>
+			<result name="account" type="redirectAction">
+				account
+			</result>
+		</action>
+		
+		<action name="review"  method="review" class="com.oneapm.web.account.ReviewAction">
+			<result name="review">
+				/WEB-INF/pages/view/account_review.jsp
+			</result>
+		</action>
+		<action name="pay"  method="pay" class="com.oneapm.web.account.PayAction">
+			<result name="pay">
+				/WEB-INF/pages/view/account_pay.jsp
+			</result>
+		</action>
+		<action name="payadd"  method="payadd" class="com.oneapm.web.account.PayAction">
+		</action>
+	</package>
+</struts>

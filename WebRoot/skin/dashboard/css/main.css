@@ -1,0 +1,58 @@
+body{
+	background-image:url('../images/bg.png');
+	background-size:100% 100%;
+	}
+.item_content ul {
+	list-style: none;
+}
+.item_content ul li {
+	width: 580px;
+	height: 310px;
+	float: left;
+	margin: 15px
+}
+.item_content {
+	width: 1900px;
+	height: 1045px;
+	margin:30px 10px 10px 10px;
+}
+.item_content .item {
+	width: 580px;
+	height: 310px;
+	line-height: 120px;
+	text-align: center;
+	cursor: pointer;
+	border-radius:10px;
+	background-color:#b3b5b4;
+	border: 1px rgba(0, 0, 0, 0.24) solid;
+	background-repeat: no-repeat;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
+	background-attachment: fixed;
+	-moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6);
+	-webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6);
+}
+.item .domain{
+	min-width: 310px; 
+	height: 290px;
+	margin: 8px 8px 8px 8px;
+	background-color:#fff;
+}
+.ronglmang {
+	width:320px;
+	height:250px; 
+	font-family: Tahoma; 
+	margin:0 auto;
+	 
+}
+.domain .title {  padding-right:5px;text-align:right;line-height: 33px; font-size: 16px; color: #3366cd;font-family:微软雅黑}
+.ronglmang  .scontent{ border: none; float: left; margin-left: 1px; background: #00aeef;}
+.ronglmang  .number {width: 93px; height: 153px; text-align: center; line-height: 93px; font-size: 30px; color: #fff; font-weight: bold; }
+.ronglmang  .message {width: 93px; height: 63px; text-align: center; line-height: 63px; font-size: 16px; color: #fff; font-weight: bold; }
+
+.ronglmang  .livescontent{ border: none; float: left; margin-left: 1px; background: #00aeef;}
+.ronglmang  .livenumber {width: 380px; height: 153px; text-align: center; line-height: 93px; font-size: 100px; color: #FF0000 ; font-weight: bold; }
+.ronglmang  .livemessage {width: 380px; height: 63px; text-align: center; line-height: 63px; font-size: 40px; color: #FF0000 ; font-weight: bold; }

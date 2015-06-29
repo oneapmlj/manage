@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="edit.tag" namespace="/" extends="struts-default">
+		<global-results>
+				<result name="ERROR">
+					/WEB-INF/pages/error/error.jsp
+				</result>
+				<result name="login">
+					/WEB-INF/pages/login/loginIndex.jsp
+				</result>
+		</global-results>
+		<action name="tag_*" method="{1}"
+			class="com.oneapm.web.info.TagAction">
+		</action>
+	</package>
+</struts>

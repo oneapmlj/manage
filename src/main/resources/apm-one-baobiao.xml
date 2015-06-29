@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="edit.baobiao" namespace="/" extends="struts-default">
+		<global-results>
+				<result name="ERROR">
+					/WEB-INF/pages/error/error.jsp
+				</result>
+				<result name="login">
+					/WEB-INF/pages/login/loginIndex.jsp
+				</result>
+		</global-results>
+		<action name="baobiao_*" method="{1}"
+			class="com.oneapm.web.info.BaobiaoAction">
+			<result name="index">
+				/WEB-INF/pages/baobiao/baobiao_index.jsp
+			</result>
+			<result name="liucun_yunying">
+				/WEB-INF/pages/baobiao/baobiao_liucun_yunying.jsp
+			</result>
+			<result name="liucun_yunying_view">
+				/WEB-INF/pages/baobiao/baobiao_liucun_yunying_view.jsp
+			</result>
+			<result name="sign_yunying_view">
+				/WEB-INF/pages/baobiao/baobiao_sign_yunying_view.jsp
+			</result>
+		</action>
+	</package>
+</struts>

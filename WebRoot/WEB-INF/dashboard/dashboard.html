@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>dashboard</title>
+	<link  type="text/css"  href="./css/main.css" rel="stylesheet">
+	<script type="text/javascript" src="./js/jq.js"></script>
+	<script type="text/javascript" src="./js/drag.js"></script>
+	<script type="text/javascript" src="./js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./js/highcharts.js"></script>
+	<script type="text/javascript" src="./js/highcharts-more.js"></script>
+	<script type="text/javascript" src="./js/chartItem.js"></script>
+	<script type="text/javascript">
+		var alldata={};
+		var categories=['1', '2', '3','4','5','6','7','1', '2', '3','4','5','6','7','1', '2', '3','4','5','6','7','1', '2', '3','4','5','6','7'] ;
+		var chart1;
+		var chart2;
+		var chart3;
+		var chart4;
+		function redrawChart(chart, data){
+			if(!chart){
+				return ;
+			}
+			var seriesList = chart.series; //获得图表的所有序列
+			
+			for(var i = 0;i<seriesList.length;){
+		     		chart.series[0].remove();
+			}
+			chart.addSeries({                          
+		           data: data
+		    }); 
+		}
+		var showalert = function(){
+			$.ajax({
+				dataType:'json',
+				url:'http://manage.oneapm.com/info_dashboard.action',
+				data:{}
+			}).done(function(da){
+				if(da.status == 1){ 
+					categories = da.date;
+					var date_data = da.date_data;
+					var date_sign = da.date_sign;
+					var date_download_new = da.date_download_new;
+					var date_app_new = da.date_app_new;
+					
+					/* categories=['1', '2', '3','4','5','6','7','1', '2', '3','4','5','6','7','1', '2', '3','4','5','6','7','1', '2', '3','4','5','6','7'] ;
+					var data = [ 100, 11, 32, 110, 235, 369, 640, 120,100, 11, 32, 110, 235, 369, 640,100, 11, 32, 110, 235, 369, 640,100, 11, 32, 110, 235, 369]  ; */
+					redrawChart(chart1, date_data);              
+					redrawChart(chart2, date_sign);
+					redrawChart(chart3, date_download_new);
+					redrawChart(chart4, date_app_new);
+				 }else{
+					
+				}
+			}); 
+			
+		} 
+		$(function () {
+			//初始化九宫格
+			doeach();
+			//绘制四张chart图表
+			chart1=createChartItem('container',{}, '活跃');
+			chart2=createChartItem('container1',{},'注册/UV 千分比');
+			chart3=createChartItem('container2',{},'下载/注册 千分比');
+			chart4=createChartItem('container3',{},'应用/下载 千分比');
+			showalert();
+		});
+		window.setInterval(showalert, 10000);
+	</script>
+</head>
+
+<body>
+  <div class="item_content">
+    <ul>
+    	<li>
+        <div class="item" id="panel4">
+        	<div class="domain" style="background-color:#d6d6d6;">
+             	<div class="title">当前活跃</div>
+                  <div class="ronglmang" style="width:400px;">
+                    <div class="livescontent" style="background-color:#d6d6d6;"><div class="livenumber">285</div><div class="livemessage">活跃数</div></div>
+                  </div>
+             </div>
+         </div>
+      </li>
+      <li>
+        <div class="item" id="panel">
+        	<div class="domain">
+             	<div class="title">工单处理</div>
+                  <div class="ronglmang">
+                    <div class="scontent"><div class="number">3</div><div class="message">新增</div></div>
+                    <div class="scontent"><div class="number">4</div><div class="message">解决</div></div>
+                    <div class="scontent"><div class="number">51</div><div class="message">未解决</div></div>
+                  </div>
+             </div>
+          </div>
+      </li>
+      <li>
+        <div class="item" id="panel2">
+                <div class="domain">
+             	<div class="title">UV-注册</div>
+                  <div class="ronglmang">
+                    <div class="scontent"><div class="number">1338</div><div class="message">UV</div></div>
+                    <div class="scontent"><div class="number">930</div><div class="message">NEW</div></div>
+                    <div class="scontent"><div class="number">41</div><div class="message">注册</div></div>
+                  </div>
+             </div>
+          </div>
+      </li>
+      <li>
+        <div class="item" ><div id="container" class="domain"></div> </div>
+      </li>
+      <li>
+        <div class="item"> <div id="container1" class="domain"></div> </div>
+      </li>
+      <li>
+        <div class="item" id="panel3">
+        	<div class="domain">
+             	<div class="title">下载-应用</div>
+                  <div class="ronglmang" style="width:400px">
+                    <div class="scontent"><div class="number">9</div><div class="message">下载</div></div>
+                    <div class="scontent"><div class="number">5</div><div class="message">应用</div></div>
+                    <div class="scontent"><div class="number">20</div><div class="message">总下载</div></div>
+                    <div class="scontent"><div class="number">20</div><div class="message">总应用</div></div>
+                  </div>
+             </div>
+         </div>
+      </li>
+      <li>
+        <div class="item"> <div id="container2" class="domain"></div></div>
+      </li>
+      <li>
+        <div class="item"><div id="container3" class="domain"></div></div>
+      </li>
+     <li>
+        <div class="item" id="panel1">
+            <div class="domain">
+             	<div class="title">千分比</div>
+                  <div class="ronglmang" style="width:400px">
+                    <div class="scontent"><div class="number">31</div><div class="message">注册/UV</div></div>
+                    <div class="scontent"><div class="number">296</div><div class="message">下载/注册</div></div>
+                    <div class="scontent"><div class="number">750</div><div class="message">应用/下载</div></div>
+                    <div class="scontent"><div class="number">222</div><div class="message">应用/注册</div></div>
+                  </div>
+             </div>
+          </div>
+      </li>
+    </ul>
+    <div style="clear:both"></div>
+  </div>
+</body>
+
+</html>

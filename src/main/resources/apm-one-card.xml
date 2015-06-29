@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="edit.index" namespace="/" extends="struts-default">
+	<global-results>
+			<result name="show" type="redirectAction">
+				show
+			</result>
+			<result name="oneapm" type="redirect">
+				http://www.oneapm.com				
+			</result>
+			<result name="ERROR">
+				/WEB-INF/pages/error/error.jsp
+			</result>
+			<result name="login">
+				/WEB-INF/pages/login/loginIndex.jsp
+			</result>
+		</global-results>
+	</package>
+</struts>

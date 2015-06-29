@@ -1,0 +1,279 @@
+.wendang{width:1100px;height:30px;line-height:30px;}
+
+.wendang .img_mulu_aera{width:30px;float:left;hieght:30px;}
+.wendang .img_mulu_aera img{margin-top:5px;}
+
+.wendang .img_wendang_aera{width:30px;float:left;hieght:30px;}
+.wendang .img_wendang_aera img{margin-top:3px;}
+
+.wendang .name_aera{float:left;width:570px;hieght:30px;}
+
+.wendang .guanli{width:150px;float:left;hieght:30px;color:#8A8A8A;}
+.wendang .guanli .view{width:30px;float:left;height:30px;}
+
+.wendang .createTime{margin-left:150px;width:150px;float:left;hieght:30px;color:#8A8A8A;}
+.wendang .createTime_wendang{width:150px;float:left;hieght:30px;color:#8A8A8A;}
+.wendang .admin{width:150px;float:left;hieght:30px;color:#8A8A8A;}
+
+.download{margin-top:8px;}
+.move{margin-top:8px;}
+.delete{margin-top:8px;}
+.store{margin-top:10px;}
+
+.color_wight_blue{color:#8A8A8A;}
+
+.file_window{
+	visibility: visible; width: 450px; position: absolute; z-index: 1002; left: 400px; top: 100px;
+}
+
+.upload_window{
+	visibility: visible; width: 450px; position: absolute; z-index: 1002; left: 400px; top: 100px;
+}
+.pop_up{
+	position: relative;
+	min-width: 400px;
+	border-radius: 8px 8px 0px 0px;
+	border: 2px solid #DDD;
+	background: none repeat scroll 0% 0% #FFF;
+}
+
+.pop_up a.pop_close {
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    display: block;
+    background: url("../images/close.png") no-repeat scroll center center transparent;
+    right: 15px;
+    top: 15px;
+    color: #333;
+    outline: medium none;
+}
+
+.clear:after {
+    content: ".";
+    display: block;
+    height: 0px;
+    font-size: 0px;
+    clear: both;
+    visibility: hidden;
+}
+
+.pop_content {
+    background: none repeat scroll 0% 0% #FFF;
+}
+.clear {
+    min-height: 1px;
+}
+
+ul, ol {
+    list-style: outside none none;
+}
+.pop_list li label {
+    width: 80px;
+    display: block;
+    float: left;
+}
+
+.fileAdd_wrapper {
+    margin: 0px 0px 0px 80px;
+}
+.fileAdd {
+    float: left;
+}
+.fileAdd_wrapper .uploadifyQueue {
+    width: 100%;
+    margin: 8px 0px 0px;
+    display: none;
+}
+.uploadifyQueue {
+    clear: both;
+    float: left;
+    width: 694px;
+    margin: 0px 0px 8px;
+    display: none;
+}
+.fileAdd #uploadify-wrapper {
+}
+* {
+    margin: 0px;
+    padding: 0px;
+}
+.pop_content .pop_list {
+    margin-left: 40px;
+    margin-right: 40px;
+    padding-bottom: 20px;
+}
+.pop_list {
+    margin: 28px 0px 0px;
+    float: left;
+    height: auto;
+}
+
+.pop_list li {
+    clear: left;
+    float: left;
+    margin-bottom: 20px;
+    height: auto;
+    line-height: 20px;
+    width: 100%;
+    position: relative;
+}
+
+.pop_list_mult {
+    float: left;
+}
+
+.pop_list li select {
+    float: left;
+    width: 252px;
+    height: 24px;
+    line-height: 24px;
+    margin-right: 5px;
+}
+
+.pop_list_mult .mult {
+    width: 155px;
+    height: 200px;
+}
+select {
+    font-size: 12px;
+    border: 1px solid #CCC;
+    outline: medium none;
+}
+
+.pop_up .pop_bottom {
+    height: 50px;
+    background: none repeat scroll 0% 0% #EFEFEF;
+    border-top: 1px solid #D7D7D7;
+    position: relative;
+}
+.pop_up .pop_bottom .pop_button_area {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+.pop_up .pop_bottom .pop_button_area .pop_button{
+    height: 24px;
+    line-height: 24px;
+    padding: 0px 20px;
+    display: block;
+    background: none repeat scroll 0% 0% #6ABD3D;
+    color: #EEE;
+    float: left;
+    border-radius: 3px;
+    margin-left: 12px;
+}
+
+.pop_list li {
+    clear: left;
+    float: left;
+    margin-bottom: 20px;
+    height: auto;
+    line-height: 20px;
+    width: 100%;
+    position: relative;
+}
+
+.pop_list_mult ul.pop_list_mult_tool input.delete_button {
+    width: 18px;
+}
+.pop_list li input {
+    float: left;
+    width: 250px;
+    height: 25px;
+    line-height: 25px;
+    margin-right: 5px;
+}
+.delete_button {
+    background: url("../images/pop_delete.png") no-repeat scroll center center transparent;
+    border: medium none;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+input {
+    font-size: 12px;
+    font-family: "微软雅黑",Arial,Helvetica,sans-serif !important;
+}
+input, button, select, textarea {
+    outline: medium none;
+}
+
+.pop_list_mult a.button {
+    height: 22px;
+    line-height: 22px;
+    padding: 0px 12px;
+    display: block;
+    float: left;
+    margin: 5px 5px 0px 0px;
+    border: 1px solid #CCC;
+    background: none repeat scroll 0% 0% #EEE;
+    color: #525252;
+    border-radius: 3px;
+}
+.rename_button {
+    background: url("../images/pop_rename.png") no-repeat scroll center center transparent;
+    border: medium none;
+    cursor: pointer;
+}
+.pop_up .pop_bottom {
+    height: 50px;
+    background: none repeat scroll 0% 0% #EFEFEF;
+    border-top: 1px solid #D7D7D7;
+    position: relative;
+}
+.pop_up .pop_bottom .pop_button_area {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+.pop_up .pop_bottom a.pop_button, .pop_up .pop_bottom a.pop_button:visited {
+    height: 24px;
+    line-height: 24px;
+    padding: 0px 20px;
+    display: block;
+    background: none repeat scroll 0% 0% #6ABD3D;
+    color: #EEE;
+    float: left;
+    border-radius: 3px;
+    margin-left: 12px;
+}
+
+.pop_list_mult ul.pop_list_mult_tool {
+    float: left;
+    width:20px;
+    
+}
+
+.pop_up h4 {
+    height: 50px;
+    background: none repeat scroll 0% 0% #FFF;
+    border-radius: 8px 8px 0px 0px;
+    border-bottom: 1px solid #E2E2E2;
+}
+
+h4 {
+    font-size: 14px;
+    line-height: 26px;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.pop_list_mult input.text {
+    width: 150px;
+    margin: 5px 5px 0px 0px;
+}
+
+.pop_list li input[type="text"] {
+    border: 1px solid #CCC;
+}
+
+.pop_up h4 span {
+    color: #525252;
+    float: left;
+    margin-left: 18px;
+    margin-top: 14px;
+}

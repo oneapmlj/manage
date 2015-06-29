@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="edit.mail" namespace="/" extends="struts-default">
+		<action name="mail_*" method="{1}"
+			class="com.oneapm.web.mail.SendMailAction">
+			<result name="all">
+				/WEB-INF/pages/mail/mail_all.jsp
+			</result>
+			<result name="preview">
+				/WEB-INF/pages/mail/mail_preview.jsp
+			</result>
+			<result name="send">
+				/WEB-INF/pages/mail/mail_send.jsp
+			</result>
+		</action>
+		
+		<action name="mode_*" method="{1}" 
+			class="com.oneapm.web.mail.CloudAction">
+			<result name="list">
+				
+			</result>	
+			<result name="view">
+				
+			</result>
+			<result name="add">
+				/WEB-INF/pages/mail/mode_add.jsp
+			</result>
+		</action>
+	</package>
+</struts>
