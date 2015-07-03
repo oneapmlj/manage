@@ -883,6 +883,8 @@ $(document).ready(function() {
 		$("#view_edit_tag_description_val").removeClass("hidden");
 		$("#view_edit_tag_category").addClass("hidden");
 		$("#view_edit_tag_category_val").removeClass("hidden");
+		$("#view_edit_tag_fuwuqi").addClass("hidden");
+		$("#view_edit_tag_fuwuqi_val").removeClass("hidden");
 		$("#view_edit_tag_from").addClass("hidden");
 		$("#view_edit_tag_from_val").removeClass("hidden");
 	});
@@ -895,11 +897,12 @@ $(document).ready(function() {
 			var rongzi = $("#view_edit_tag_rongzi_val").val();
 			var description = $("#view_edit_tag_description_val").val();
 			var category = $("#view_edit_tag_category_val").val();
+			var fuwuqi = $("#view_edit_tag_fuwuqi_val").val();
 			var from = $("#view_edit_tag_from_val").val();
 			$.ajax({
 				dataType:'json',
 				url:'tag_update.action',
-				data:{id:id,person:person,province:province,rongzi:rongzi,description:description,category:category,from:from}
+				data:{id:id,person:person,province:province,rongzi:rongzi,description:description,category:category,from:from,fuwuqi:fuwuqi}
 			}).done(function(da){
 				if(da.status == "1"){
 					location.reload(); 
@@ -1224,13 +1227,14 @@ $(document).ready(function() {
 	});
 	$(".app_data_view").live("click", function(){
 		var appId = $(this).parent().parent().attr('val');
-		var agent = $(".app_data_view_agent").val();
+		var agent = $(this).parent().attr("val1");
+		var agentId = $(this).parent().attr("val2");
 		$(this).addClass("app_data_close");
 		$(this).removeClass("app_data_view");
 		$.ajax({
 			dataType:'json',
 			url:'info_appMap.action',
-			data:{appId:appId,agent:agent}
+			data:{appId:appId,agent:agent,agentId:agentId}
 		}).done(function(da){
 			if(da.status == 1){
 				var array = da.datas;
@@ -1238,7 +1242,7 @@ $(document).ready(function() {
 				for(var i=0;i<array.length;i++){
 					html += "<div>"+array[i].time+"</div>";
 				}
-				$(".app_data_view_content_"+da.appId).html(html);
+				$(".app_data_view_content_"+da.appId+"_"+da.agentId).html(html);
 			}else{
 				alert(da.msg);
 			}
@@ -1246,9 +1250,10 @@ $(document).ready(function() {
 	});
 	$(".app_data_close").live("click", function(){
 		var appId = $(this).parent().parent().attr('val');
+		var agentId = $(this).parent().attr("val2");
 		$(this).addClass("app_data_view");
 		$(this).removeClass("app_data_close");
-		$(".app_data_view_content_"+appId).html("");
+		$(".app_data_view_content_"+appId+"_"+agentId).html("");
 	});
 	$(".task_remove").live("click", function(){
 		var ids = $(this).parent().attr('id');

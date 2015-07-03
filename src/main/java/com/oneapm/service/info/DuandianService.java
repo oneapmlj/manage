@@ -17,7 +17,9 @@ import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.group.Group;
 import com.oneapm.dto.group.GroupView;
 import com.oneapm.dto.info.Info;
+import com.oneapm.dto.lable.Lable;
 import com.oneapm.service.group.GroupService;
+import com.oneapm.service.lable.LableService;
 import com.oneapm.service.mail.DownloadService;
 import com.oneapm.service.message.TipService;
 import com.oneapm.util.OneTools;
@@ -54,6 +56,33 @@ public class DuandianService {
                         LOG.error(e.getMessage(), e);
                 }
                 return OneTools.getResult(0, "服务器内部错误，请联系管理员");
+        }
+        public static String chaxun(Long fatherId){
+                try{
+                        List<String> args1 = new ArrayList<String>();
+                        List<Object> args2 = new ArrayList<Object>();
+                        Lable lable = LableService.findById(fatherId);
+                        if(lable == null){
+                                return OneTools.getResult(0, "分类不存在");
+                        }
+                        List<Info> infos = InfoService.findByFrom(lable.getFrom());
+                        for(int i=0;i<infos.size();i++){
+                                if(!infos.get(i).getComming().startsWith(lable.getFrom())){
+                                    infos.remove(i);
+                                    i--;
+                                }
+                        }
+                        for(Info info : infos){
+                                InfoService.initInfo(info);
+                                int power = InfoService.power(99999999L, 7, info);
+                        }
+                        args1.add("infos");
+                        args2.add(InfoService.getArrayFromInfos(infos));
+                        return OneTools.getResult(1, args1, args2);
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return OneTools.getResult(0, "服务器内部错误");
         }
         public static String chaxun(int agent, int data, int paixu, int sort, int jinri, String banben, String time, Admin admin, int fuze, Long groupId1, Long groupId2){
                 try{

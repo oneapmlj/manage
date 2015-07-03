@@ -26,7 +26,7 @@ public class TagAction extends SupportAction {
 //        private int uv;
         private int rongzi;
         private Long infoId;
-
+        private int fuwuqi;
         public void update() throws IOException {
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
@@ -35,7 +35,7 @@ public class TagAction extends SupportAction {
                 if (description != null) {
                         description = new String(description.getBytes("ISO8859-1"), "UTF-8");
                 }
-                String result = TagService.update(getAdmin().getId(), id, category, person, province, from, description, rongzi);
+                String result = TagService.update(getAdmin().getId(), id, category, person, province, from, description, rongzi,fuwuqi);
                 getServletResponse().getWriter().print(result);
         }
 
@@ -228,5 +228,13 @@ public class TagAction extends SupportAction {
 
         public void setRongzi(int rongzi) {
                 this.rongzi = rongzi;
+        }
+
+        public int getFuwuqi() {
+                return fuwuqi;
+        }
+
+        public void setFuwuqi(int fuwuqi) {
+                this.fuwuqi = fuwuqi;
         }
 }

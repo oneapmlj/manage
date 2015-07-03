@@ -13,7 +13,7 @@ import com.oneapm.dto.info.Dashboard;
 
 public class DashboardDaoImpl extends DaoImplBase<Active> {
         protected static final Logger LOG = LoggerFactory.getLogger(DashboardDaoImpl.class);
-        protected static final String TABLE_NAME = "dashboard";
+        protected static final String TABLE_NAME = "dashboard2";
 
         static {
                 Instance = new DashboardDaoImpl();
@@ -61,13 +61,25 @@ public class DashboardDaoImpl extends DaoImplBase<Active> {
                 try {
                         Long id = Long.parseLong(object.get("id").toString().trim());
                         int sign = Integer.parseInt(object.get("sign").toString());
-                        int downloadNew = Integer.parseInt(object.get("download").toString());
-                        int appNew = Integer.parseInt(object.get("app").toString());
-                        int data = Integer.parseInt(object.get("total_data").toString());
+                        int downloadNew = Integer.parseInt(object.get("download_new").toString());
+                        int appNew = Integer.parseInt(object.get("app_new").toString());
+                        int download= Integer.parseInt(object.get("download").toString());
+                        int app= Integer.parseInt(object.get("app").toString());
                         String dataTime = object.get("data_time").toString();
                         int uv = Integer.parseInt(object.get("uv").toString());
                         int newUv = Integer.parseInt(object.get("new_uv").toString());
-                        dashboard = new Dashboard(id, sign, 0, downloadNew, 0, appNew, data, dataTime, uv, newUv);
+                        int data_all = Integer.parseInt(object.get("data_all").toString());
+                        int app_all = Integer.parseInt(object.get("app_all").toString());
+                        int data_ai= Integer.parseInt(object.get("data_ai").toString());
+                        int app_ai = Integer.parseInt(object.get("app_ai").toString());
+                        int only_ai = Integer.parseInt(object.get("only_ai").toString());
+                        int data_mi = Integer.parseInt(object.get("data_mi").toString());
+                        int app_mi = Integer.parseInt(object.get("app_mi").toString());
+                        int only_mi = Integer.parseInt(object.get("only_mi").toString());
+                        int data_server= Integer.parseInt(object.get("data_server").toString());
+                        int app_server= Integer.parseInt(object.get("app_server").toString());
+                        int only_server= Integer.parseInt(object.get("only_server").toString());
+                        dashboard = new Dashboard(id, sign, download, downloadNew, app, appNew, dataTime, uv, newUv, data_all, app_all, data_ai, app_ai, only_ai, data_mi, app_mi, only_mi, data_server, app_server, only_server);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

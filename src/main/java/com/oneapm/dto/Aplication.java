@@ -4,7 +4,7 @@ public class Aplication {
 
     private Long appId;
     
-    private int language;
+    private int agent;
     
     private Long userId;
     
@@ -12,12 +12,15 @@ public class Aplication {
     
     private String lang;
     
-    public Aplication(Long appId, int language, Long userId, String dataTime, String lang){
+    private Long agentId;
+    
+    public Aplication(Long appId, int agent, Long userId, String dataTime, String lang, Long agentId){
         setAppId(appId);
-        setLanguage(language);
+        setAgent(agent);
         setUserId(userId);
         setDataTime(dataTime);
         setLang(lang);
+        setAgentId(agentId);
     }
 
     public Long getAppId() {
@@ -26,14 +29,6 @@ public class Aplication {
 
     public void setAppId(Long appId) {
         this.appId = appId;
-    }
-
-    public int getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(int language) {
-        this.language = language;
     }
 
     public Long getUserId() {
@@ -59,5 +54,21 @@ public class Aplication {
     public void setLang(String lang) {
         this.lang = lang;
     }
+
+public Long getAgentId() {
+        return agentId;
+}
+
+public void setAgentId(Long agentId) {
+        this.agentId = agentId;
+}
+
+public int getAgent() {
+        return agent;
+}
+
+public void setAgent(int agent) {
+        this.agent = agent;
+}
     
 }

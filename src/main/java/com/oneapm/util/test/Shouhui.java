@@ -20,12 +20,15 @@ import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dao.info.impl.LoginDaoImpl;
 import com.oneapm.dao.info.impl.TianjiaDaoImpl;
 import com.oneapm.dao.info.impl.XiazaiDaoImpl;
+import com.oneapm.dao.opt.impl.AddDaoImpl;
 import com.oneapm.dao.opt.impl.DownDaoImpl;
 import com.oneapm.dto.Aplication;
+import com.oneapm.dto.App;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.lable.Lable;
 import com.oneapm.dto.tag.Category;
+import com.oneapm.dto.tag.Person;
 import com.oneapm.dto.tag.Province;
 import com.oneapm.dto.tag.Rongzi;
 import com.oneapm.service.account.AccountService;
@@ -480,7 +483,7 @@ public class Shouhui {
                                 List<Aplication> Apps = AppDataDaoImpl.getInstance().findByTime(start, end);
                                 for(int i=0;i<Apps.size()-1;i++){
                                         for(int j=i+1;j<Apps.size();j++){
-                                                if(Apps.get(i).getAppId().equals(Apps.get(j).getAppId()) && Apps.get(i).getLanguage() == Apps.get(j).getLanguage()){
+                                                if(Apps.get(i).getAppId().equals(Apps.get(j).getAppId()) && Apps.get(i).getAgent() == Apps.get(j).getAgent()){
                                                         Apps.remove(j);
                                                         j--;
                                                 }
@@ -1093,4 +1096,212 @@ public class Shouhui {
                 }
         }
         
+        public static void youguoshuju(){
+                List<App> apps = AddDaoImpl.getInstance().findByAgent("2014-01-01 00:00:00", TimeTools.format());
+                LOG.info("apps:"+apps.size());
+                List<Info> infos = new ArrayList<Info>();
+                Set<Long> userIds = new HashSet<Long>();
+                for(App app : apps){
+                        userIds.add(app.getUserId());
+                }
+                LOG.info("userIds:"+userIds.size());
+                Admin admin = AccountService.findById(99999999L);
+                for(Long userId : userIds){
+                        infos.add(InfoService.findByUserId(userId, admin));
+                }
+                LOG.info("infos:"+infos.size());
+                FileOutputStream out = null;
+                OutputStreamWriter osw = null;
+                BufferedWriter bw = null;
+                try{
+                        File file = new File("/data/filesystem/report/report.csv");
+                        out = new FileOutputStream(file);
+                        osw = new OutputStreamWriter(out);
+                        bw = new BufferedWriter(osw);
+                        bw.append("序号,userId,公司,电话,地域,融资,分类,规模,销售,售前,支持").append("\r");
+                        bw.newLine();
+                        int i=1;
+                        for(Info info : infos){
+                                bw.append(i+",").append(info.getUserId()+",");
+                                if(info.getProject() != null){
+                                        bw.append(info.getProject()+",");
+                                }else{
+                                        if(info.getCompany() != null){
+                                                bw.append(info.getCompany()+",");
+                                        }else{
+                                                bw.append("未知,");
+                                        }
+                                }
+                                bw.append(info.getPhone()+",");
+                                if(info.getTag() != null){
+                                        if(info.getTag().getProvince() > 0){
+                                                bw.append(Province.getName(info.getTag().getProvince())+",");
+                                        }else{
+                                                bw.append("未知,");
+                                        }
+                                        if(info.getTag().getRongzi() > 0){
+                                                bw.append(Rongzi.getName(info.getTag().getRongzi())+",");
+                                        }else{
+                                                bw.append("未知,");
+                                        }
+                                        if(info.getTag().getCategory() > 0){
+                                                bw.append(Category.getName(info.getTag().getCategory())+",");
+                                        }else{
+                                                bw.append("未知,");
+                                        }
+                                        if(info.getTag().getPerson() > 0){
+                                                bw.append(Person.getName(info.getTag().getPerson())+",");
+                                        }else{
+                                                bw.append("未知,");
+                                        }
+                                }else{
+                                        bw.append("未知,未知,未知,未知,");
+                                }
+                                if(info.getSale() != null && info.getSale() > 0){
+                                        bw.append(AccountService.findName(info.getSale())+",");
+                                }else{
+                                        bw.append("无,");
+                                }
+                                if(info.getPreSale() != null && info.getPreSale() > 0){
+                                        bw.append(AccountService.findName(info.getPreSale())+",");
+                                }else{
+                                        bw.append("无,");
+                                }
+                                if(info.getSupport() != null && info.getSupport() > 0){
+                                        bw.append(AccountService.findName(info.getSupport())+"").append("\r");
+                                }else{
+                                        bw.append("无").append("\r");
+                                }
+                                i++;
+                                bw.newLine();
+                        }
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }finally {
+                        if (bw != null) {
+                                try {
+                                        bw.close();
+                                        bw = null;
+                                } catch (IOException e) {
+                                        e.printStackTrace();
+                                }
+                        }
+                        if (osw != null) {
+                                try {
+                                        osw.close();
+                                        osw = null;
+                                } catch (IOException e) {
+                                        e.printStackTrace();
+                                }
+                        }
+                        if (out != null) {
+                                try {
+                                        out.close();
+                                        out = null;
+                                } catch (IOException e) {
+                                        e.printStackTrace();
+                                }
+                        }
+                }
+        }
+        
+        public static void waibao(){
+                List<Info> infos = InfoDaoImpl.getInstance().findWaibao();
+                for(Info info : infos){
+                        InfoService.initInfo(info);
+                }
+                FileOutputStream out = null;
+                OutputStreamWriter osw = null;
+                BufferedWriter bw = null;
+                try{
+                        File file = new File("/data/filesystem/report/waibao.csv");
+                        out = new FileOutputStream(file);
+                        osw = new OutputStreamWriter(out);
+                        bw = new BufferedWriter(osw);
+                        bw.append("序号,userId,公司,电话,邮箱,地域,融资,分类,规模,销售,售前,支持").append("\r");
+                        bw.newLine();
+                        int i=1;
+                        for(Info info : infos){
+                                bw.append(i+",").append(info.getUserId()+",");
+                                if(info.getProject() != null){
+                                        bw.append(info.getProject()+",");
+                                }else{
+                                        if(info.getCompany() != null){
+                                                bw.append(info.getCompany()+",");
+                                        }else{
+                                                bw.append("未知,");
+                                        }
+                                }
+                                bw.append(info.getPhone()+","+info.getEmail()+",");
+                                if(info.getTag() != null){
+                                        if(info.getTag().getProvince() > 0){
+                                                bw.append(Province.getName(info.getTag().getProvince())+",");
+                                        }else{
+                                                bw.append("未知,");
+                                        }
+                                        if(info.getTag().getRongzi() > 0){
+                                                bw.append(Rongzi.getName(info.getTag().getRongzi())+",");
+                                        }else{
+                                                bw.append("未知,");
+                                        }
+                                        if(info.getTag().getCategory() > 0){
+                                                bw.append(Category.getName(info.getTag().getCategory())+",");
+                                        }else{
+                                                bw.append("未知,");
+                                        }
+                                        if(info.getTag().getPerson() > 0){
+                                                bw.append(Person.getName(info.getTag().getPerson())+",");
+                                        }else{
+                                                bw.append("未知,");
+                                        }
+                                }else{
+                                        bw.append("未知,未知,未知,未知,");
+                                }
+                                if(info.getSale() != null && info.getSale() > 0){
+                                        bw.append(AccountService.findName(info.getSale())+",");
+                                }else{
+                                        bw.append("无,");
+                                }
+                                if(info.getPreSale() != null && info.getPreSale() > 0){
+                                        bw.append(AccountService.findName(info.getPreSale())+",");
+                                }else{
+                                        bw.append("无,");
+                                }
+                                if(info.getSupport() != null && info.getSupport() > 0){
+                                        bw.append(AccountService.findName(info.getSupport())+"").append("\r");
+                                }else{
+                                        bw.append("无").append("\r");
+                                }
+                                i++;
+                                bw.newLine();
+                        }
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }finally {
+                        if (bw != null) {
+                                try {
+                                        bw.close();
+                                        bw = null;
+                                } catch (IOException e) {
+                                        e.printStackTrace();
+                                }
+                        }
+                        if (osw != null) {
+                                try {
+                                        osw.close();
+                                        osw = null;
+                                } catch (IOException e) {
+                                        e.printStackTrace();
+                                }
+                        }
+                        if (out != null) {
+                                try {
+                                        out.close();
+                                        out = null;
+                                } catch (IOException e) {
+                                        e.printStackTrace();
+                                }
+                        }
+                }
+        }
 }

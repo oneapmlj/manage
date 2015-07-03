@@ -23,8 +23,10 @@ public class App {
 	
 	private int agent;
 	
+	private Long agentId;
 	
-	public App(Long userId, String createTime, String language, Long appId, String appName, String dataTime, int agent){
+	
+	public App(Long userId, String createTime, String language, Long appId, String appName, String dataTime, int agent, Long agentId){
 		setAppId(appId);
 		setUserId(userId);
 		setCreateTime(createTime);
@@ -32,6 +34,7 @@ public class App {
 		setAppName(appName);
 		setDataTime(dataTime);
 		setAgent(agent);
+		setAgentId(agentId);
 	}
 
 	public Long getUserId() {
@@ -116,6 +119,14 @@ public int getAgent() {
 
 public void setAgent(int agent) {
         this.agent = agent;
+}
+
+public Long getAgentId() {
+        return agentId;
+}
+
+public void setAgentId(Long agentId) {
+        this.agentId = agentId;
 }
 
 }

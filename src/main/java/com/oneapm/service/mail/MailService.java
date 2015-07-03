@@ -1,5 +1,6 @@
 package com.oneapm.service.mail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -58,17 +59,18 @@ public class MailService {
         }
 
         public static List<Mail> findByAccountId(Long accountId) {
-                List<Mail> mails = MailDaoImpl.getInstance().findByAccountId(accountId);
-                try{
-                        if (mails != null) {
-                                for (Mail mail : mails) {
-                                        mail.setModeName(MailModeDaoImpl.getInstance().findById(mail.getMailMode()).getDescription());
-                                        mail.setCompanyName(InfoService.findByIdSimple(mail.getInfoId()).getCompany());
-                                }
-                        }
-                }catch(Exception e){
-                        LOG.error(e.getMessage(), e);
-                }
+                List<Mail> mails = new ArrayList<Mail>();
+//                List<Mail> mails = MailDaoImpl.getInstance().findByAccountId(accountId);
+//                try{
+//                        if (mails != null) {
+//                                for (Mail mail : mails) {
+//                                        mail.setModeName(MailModeDaoImpl.getInstance().findById(mail.getMailMode()).getDescription());
+//                                        mail.setCompanyName(InfoService.findByIdSimple(mail.getInfoId()).getCompany());
+//                                }
+//                        }
+//                }catch(Exception e){
+//                        LOG.error(e.getMessage(), e);
+//                }
                 return mails;
         }
 

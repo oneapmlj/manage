@@ -32,10 +32,6 @@ public class TagService extends OneTools {
 
         protected static final Logger LOG = LoggerFactory.getLogger(TagService.class);
 
-        public static Tag insert(Tag tag) {
-                return TagDaoImpl.getInstance().insert(tag);
-        }
-
         public static List<Tag> findByLanguage(String language) {
                 return TagDaoImpl.getInstance().findByLanguage(language);
         }
@@ -219,7 +215,7 @@ public class TagService extends OneTools {
                 return tags;
         }
 
-        public static String update(Long adminId, Long id, Integer category, int person, int province, int from, String description, int rongzi) {
+        public static String update(Long adminId, Long id, Integer category, int person, int province, int from, String description, int rongzi, int fuwuqi) {
                 try {
                         if (id == null || id <= 0) {
                                 return getResult(0, "id错误");
@@ -237,6 +233,7 @@ public class TagService extends OneTools {
                         if (province > 0) {
                                 tag.setProvince(province);
                         }
+                        tag.setFuwuqi(fuwuqi);
 //                        if (uv > 0) {
 //                                tag.setUv(uv);
 //                        }
@@ -291,7 +288,7 @@ public class TagService extends OneTools {
         public static Tag findByInfoId(Long infoId) {
                 Tag tag = TagDaoImpl.getInstance().findByInfoId(infoId);
                 if (tag == null) {
-                        tag = new Tag(null, infoId, 0, 0, new Integer(0), new Integer(0), null, 0, new Integer(0), new Integer(0), null, new Integer(0));
+                        tag = new Tag(null, infoId, 0, 0, new Integer(0), new Integer(0), null, 0, new Integer(0), new Integer(0), null, new Integer(0), new Integer(0));
                         initLanguage(tag);
                         tag = TagDaoImpl.getInstance().insert(tag);
                 } else {
@@ -311,7 +308,7 @@ public class TagService extends OneTools {
                 if (info == null)
                         return;
                 List<App> apps = AppService.findByUserId(info.getUserId());
-                List<App> appsM = AppService.findByUserIdM(info.getUserId());
+//                List<App> appsM = AppService.findByUserIdM(info.getUserId());
                 StringBuilder builder = new StringBuilder();
                 Set<String> set = new HashSet<String>();
                 if (apps != null && apps.size() > 0) {
@@ -321,13 +318,13 @@ public class TagService extends OneTools {
                                 }
                         }
                 }
-                if (appsM != null && appsM.size() > 0) {
-                        for (App app : appsM) {
-                                if (Language.getName(app.getAgent()) != null) {
-                                        set.add(Language.getName(app.getAgent()));
-                                }
-                        }
-                }
+//                if (appsM != null && appsM.size() > 0) {
+//                        for (App app : appsM) {
+//                                if (Language.getName(app.getAgent()) != null) {
+//                                        set.add(Language.getName(app.getAgent()));
+//                                }
+//                        }
+//                }
                 if (set.size() > 0) {
                         for (String s : set) {
                                 builder.append(Language.getId(s.trim())).append(OneTools.sp);

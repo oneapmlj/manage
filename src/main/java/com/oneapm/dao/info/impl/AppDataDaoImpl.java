@@ -117,13 +117,14 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
                 return null;
         }
 
-        public List<Aplication> findByTimeList(String time, Long appId, int agent) {
+        public List<Aplication> findByTimeList(String time, Long appId, int agent, Long agentId) {
                 List<Aplication> apps = null;
                 try {
                         DBObject object = new BasicDBObject();
                         object.put("app_id", appId);
                         object.put("data_time", new BasicDBObject("$gte", time));
                         object.put("agent", agent);
+                        object.put("agent_id", agentId);
                         DBObject sort = new BasicDBObject();
                         sort.put("data_time", -1);
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort);
@@ -137,36 +138,6 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
                 return apps;
         }
         
-        public boolean exist (String start, String end, Long appId) {
-                try {
-                        DBObject object = new BasicDBObject();
-                        object.put("app_id", appId);
-                        BasicDBList list = new BasicDBList();
-                        list.add(new BasicDBObject("$gte", start));
-                        list.add(new BasicDBObject("$lt", end));
-                        object.put("data_time", list);
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
-                        return cursor.hasNext();
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return false;
-        }
-
-
-        public boolean findByIdAndTime(String dataTime, Long appId, int language) {
-                try {
-                        DBObject object = new BasicDBObject();
-                        object.put("data_time", new BasicDBObject("$gte", dataTime));
-                        object.put("app_id", appId);
-                        object.put("agent", language);
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
-                        return cursor.hasNext();
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return false;
-        }
 
         public boolean exist(Long userId, String dataTime, int agent) {
                 try {
@@ -184,35 +155,6 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
                 return false;
         }
 
-        public String findLastDataById(Long appId, int language) {
-                try {
-                        DBObject object = new BasicDBObject();
-                        object.put("app_id", appId);
-                        object.put("agent", language);
-                        DBObject sort = new BasicDBObject("data_time", -1);
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort).limit(1);
-                        if (cursor.hasNext()) {
-                                return cursor.next().get("data_time").toString();
-                        }
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return null;
-        }
-
-        public boolean insert(Aplication ap) {
-                try {
-                        DBObject value = new BasicDBObject();
-                        value.put("app_id", ap.getAppId());
-                        value.put("data_time", ap.getDataTime());
-                        value.put("agent", ap.getLanguage());
-                        value.put("user_id", ap.getUserId());
-                        return getDBCollection(TABLE_NAME).insert(value).getN() > -1;
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return false;
-        }
 
         public Aplication getAplicationFromResult(DBObject object) {
                 Aplication ap = null;
@@ -221,7 +163,11 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
                         Long userId = Long.parseLong(object.get("user_id").toString().trim());
                         int agent = Integer.parseInt(object.get("agent").toString().trim());
                         String dataTime = object.get("data_time").toString();
-                        ap = new Aplication(appId, agent, userId, dataTime, Language.getName(agent));
+                        Long agentId = 0L;
+                        try{
+                                agentId = Long.parseLong(object.get("agent_id").toString());
+                        }catch(Exception e){}
+                        ap = new Aplication(appId, agent, userId, dataTime, Language.getName(agent), agentId);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

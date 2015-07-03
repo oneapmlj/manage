@@ -133,6 +133,7 @@ public class TagDaoImpl extends DaoImplBase<Tag> {
                         object.put("language", tag.getLanguage());
                         object.put("person", tag.getPerson());
                         object.put("province", tag.getProvince());
+                        object.put("fuwuqi", tag.getFuwuqi());
 //                        object.put("pv", tag.getPv());
 //                        object.put("uv", tag.getUv());
                         object.put("rongzi", tag.getRongzi());
@@ -159,6 +160,7 @@ public class TagDaoImpl extends DaoImplBase<Tag> {
                         value.put("language", tag.getLanguage());
                         value.put("person", tag.getPerson());
                         value.put("province", tag.getProvince());
+                        value.put("fuwuqi", tag.getFuwuqi());
 //                        value.put("pv", tag.getPv());
 //                        value.put("uv", tag.getUv());
                         value.put("rongzi", tag.getRongzi());
@@ -254,11 +256,15 @@ public class TagDaoImpl extends DaoImplBase<Tag> {
 //                                uv = Integer.parseInt(object.get("uv").toString().trim());
 //                        } catch (Exception e) {
 //                        }
+                        int fuwuqi = 0;
+                        try{
+                                fuwuqi = Integer.parseInt(object.get("fuwuqi").toString().trim());
+                        }catch(Exception e){}
                         int rongzi = 0;
                         try{
                                 rongzi = Integer.parseInt(object.get("rongzi").toString().trim());
                         }catch(Exception e){}
-                        tag = new Tag(id, infoId, category, from, metric, loudou, description, status, province, person, language, rongzi);
+                        tag = new Tag(id, infoId, category, from, metric, loudou, description, status, province, person, language, rongzi, fuwuqi);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

@@ -76,14 +76,14 @@ public class InfoAction extends SupportAction {
                 }
                 return "view";
         }
-        
+        private long agentId;
         public void appMap() throws IOException{
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
                         return;
                 }
                 try{
-                        String result = AppService.appMap(appId, agent);
+                        String result = AppService.appMap(appId, agent, agentId);
                         getServletResponse().getWriter().print(result);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
@@ -1043,5 +1043,13 @@ public class InfoAction extends SupportAction {
 
         public void setGroupId(Long groupId) {
                 this.groupId = groupId;
+        }
+
+        public long getAgentId() {
+                return agentId;
+        }
+
+        public void setAgentId(long agentId) {
+                this.agentId = agentId;
         }
 }

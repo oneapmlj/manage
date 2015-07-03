@@ -314,11 +314,10 @@
 								<div style="margin-left:5px;width:170px;float:left;">语言：${language }</div>
 								<div style="margin-left:10px;width:165px;float:left;">版本：${version }</div>
 								<div style="margin-left:5px;width:170px;float:left;">应用：${parentId }</div>
-								<div style="margin-left:10px;width:300px;float:left;">
+								<div style="margin-left:10px;width:300px;float:left;" val1="${agent}" val2="${agentId}">
 									<div style="width:180px;float:left;">最近数据：${dataTime }</div>
 									<div style="width:30px;float:left;color:blue;" class="hand app_data_view">>>>></div>
-									<input class="hidden app_data_view_agent" value="${agent} "/>
-									<div style="width:80px;float:left;" class="app_data_view_content_${appId }"></div>
+									<div style="width:80px;float:left;" class="app_data_view_content_${appId }_${agentId}"></div>
 								</div>
 							</div>
 						</s:iterator>
@@ -669,6 +668,31 @@
 									<select class="hand hidden" style="width:120px;" id="view_edit_tag_category_val">
 										<s:iterator value="CATEGORY">
 											<s:if test="%{info.tag.category == id}">
+												<option  selected = "selected" value="${id}">${name}</option>
+											</s:if>
+											<s:else>
+												<option value="${id}">${name}</option>
+											</s:else>
+										</s:iterator>
+									</select>
+								</div>
+							</div>
+							<div style="width:230px;height:20px;margin:10px 0 0 15px;">
+								<div style="float:left;width:60px;">平台：</div>
+								<div style="float:left;width:170px;color:#4F4F4F;">
+									<div style="width:120px;" id="view_edit_tag_fuwuqi">
+										<s:if test="%{info.tag.fuwuqi == 0}">未选择</s:if>
+										<s:else>
+											<s:iterator value="FUWUQI">
+												<s:if test="%{info.tag.fuwuqi == id}">
+													${name}
+												</s:if>
+											</s:iterator>
+										</s:else>
+									</div>
+									<select class="hand hidden" style="width:120px;" id="view_edit_tag_fuwuqi_val">
+										<s:iterator value="FUWUQI">
+											<s:if test="%{info.tag.fuwuqi == id}">
 												<option  selected = "selected" value="${id}">${name}</option>
 											</s:if>
 											<s:else>

@@ -516,11 +516,13 @@ public class InfoService extends OneTools {
                         List<MailPush> pushs = TaskService.findByInfoId(id);
                         if (pushs.size() > 0) {
                                 for(MailPush push : pushs){
-                                        if(push.getFromId() != null && push.getFromId() > 0){
-                                                push.setFromName(AccountService.findById(push.getFromId()).getName());
-                                        }
-                                        push.setAdminName(AccountService.findById(push.getAdminId()).getName());
-                                        push.setRemove(push.getAdminId().equals(admin.getId()) || push.getAdminId().equals(10000005L));
+                                        try{
+                                                if(push.getFromId() != null && push.getFromId() > 0){
+                                                        push.setFromName(AccountService.findById(push.getFromId()).getName());
+                                                }
+                                                push.setAdminName(AccountService.findById(push.getAdminId()).getName());
+                                                push.setRemove(push.getAdminId().equals(admin.getId()) || push.getAdminId().equals(10000005L));
+                                        }catch(Exception e){}
                                 }
                                 info.setPushs(pushs);
                                 TaskService.touch(id, admin.getId(), TimeTools.format());
@@ -780,12 +782,12 @@ public class InfoService extends OneTools {
                 info.setMails(MailService.findMailsById(info.getId()));
                 info.setCalls(CallService.findByInfoId(info.getId()));
                 info.setApps(AppService.findByUserId(info.getUserId()));
-                List<App> apps = AppService.findByUserIdM(info.getUserId());
-                if (apps != null && apps.size() > 0) {
-                        for (App app : apps) {
-                                info.getApps().add(app);
-                        }
-                }
+//                List<App> apps = AppService.findByUserIdM(info.getUserId());
+//                if (apps != null && apps.size() > 0) {
+//                        for (App app : apps) {
+//                                info.getApps().add(app);
+//                        }
+//                }
                 info.setDownloads(DownloadService.findByUserId(info.getUserId()));
                 info.setCards(CardService.findByInfoId(info.getId()));
                 info.setGongdans(KFService.findByUserId(info.getUserId()));
@@ -973,6 +975,9 @@ public class InfoService extends OneTools {
                         initTag(infos.get(i));
                 }
                 return infos;
+        }
+        public static List<Info> findByFrom(String from){
+                return InfoDaoImpl.getInstance().findByFrom(from);
         }
 
         @SuppressWarnings("unchecked")

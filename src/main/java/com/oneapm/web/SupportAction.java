@@ -21,6 +21,7 @@ import com.oneapm.dto.MailMode;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.tag.Category;
 import com.oneapm.dto.tag.From;
+import com.oneapm.dto.tag.Fuwuqi;
 import com.oneapm.dto.tag.Language;
 import com.oneapm.dto.tag.Loudou;
 import com.oneapm.dto.tag.Metric;
@@ -58,6 +59,7 @@ public class SupportAction extends ActionSupport implements ServletRequestAware,
 //        protected static List<TagBase> UV;
         protected static List<TagBase> RONGZI;
         protected static List<TagBase> CATEGORY;
+        protected static List<TagBase> FUWUQI;
         protected static List<TagBase> FROM;
 
         public static void tagInit() {
@@ -80,6 +82,10 @@ public class SupportAction extends ActionSupport implements ServletRequestAware,
                 PROVINCE = new ArrayList<TagBase>();
                 for (Province in : Province.values()) {
                         PROVINCE.add(new TagBase(in.getId(), in.getName()));
+                }
+                FUWUQI = new ArrayList<TagBase>();
+                for (Fuwuqi in : Fuwuqi.values()) {
+                        FUWUQI.add(new TagBase(in.getId(), in.getName()));
                 }
 //                PV = new ArrayList<TagBase>();
 //                for (Pv in : Pv.values()) {
@@ -313,6 +319,10 @@ public class SupportAction extends ActionSupport implements ServletRequestAware,
 
         public List<TagBase> getPROVINCE() {
                 return PROVINCE;
+        }
+        
+        public List<TagBase> getFUWUQI() {
+                return FUWUQI;
         }
 
 //        public List<TagBase> getPV() {

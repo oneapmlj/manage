@@ -40,12 +40,17 @@ public class DuandianAction extends SupportAction {
 
         private Long groupId1;
         private Long groupId2;
-        
+        private Long fatherId;
         public void chaxun() throws IOException {
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
                 }
                 try {
+                        if(fatherId != null && fatherId > 0){
+                                String result = DuandianService.chaxun(fatherId);
+                                getServletResponse().getWriter().print(result);
+                                return;
+                        }
                         String result = DuandianService.chaxun(agent, data, paixu, sort, jinri, banben, time, getAdmin(), fuze, groupId1, groupId2);
                         getServletResponse().getWriter().print(result);
                 } catch (Exception e) {
@@ -175,5 +180,13 @@ public class DuandianAction extends SupportAction {
 
         public void setGroupId2(Long groupId2) {
                 this.groupId2 = groupId2;
+        }
+
+        public Long getFatherId() {
+                return fatherId;
+        }
+
+        public void setFatherId(Long fatherId) {
+                this.fatherId = fatherId;
         }
 }

@@ -29,11 +29,14 @@ public class Tag {
         private String language;
         private int rongzi;
         private String rongziName;
+        private int fuwuqi;
+        private String fuwuqiName;
 
         public Tag() {
         };
 
-        public Tag(Long id, Long infoId, Integer category, int from, Integer metric, Integer loudou, String description, int status, Integer province, Integer person, String language, Integer rongzi) {
+        public Tag(Long id, Long infoId, Integer category, int from, Integer metric, Integer loudou, String description,
+                        int status, Integer province, Integer person, String language, Integer rongzi, Integer fuwuqi) {
                 setId(id);
                 setInfoId(infoId);
                 setCategory(category);
@@ -48,6 +51,7 @@ public class Tag {
 //                setUv(uv);
                 setLanguage(language);
                 setRongzi(rongzi);
+                setFuwuqi(fuwuqi);
         }
 
         public Long getId() {
@@ -224,5 +228,21 @@ public class Tag {
 
         public void setRongziName(String rongziName) {
                 this.rongziName = rongziName;
+        }
+
+        public int getFuwuqi() {
+                return fuwuqi;
+        }
+
+        public void setFuwuqi(int fuwuqi) {
+                this.fuwuqi = fuwuqi;
+        }
+
+        public String getFuwuqiName() {
+                return fuwuqiName;
+        }
+
+        public void setFuwuqiName(String fuwuqiName) {
+                this.fuwuqiName = fuwuqiName;
         }
 }

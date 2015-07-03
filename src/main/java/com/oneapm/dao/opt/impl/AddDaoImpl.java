@@ -26,48 +26,47 @@ public class AddDaoImpl extends DaoImplBase<App> {
         public static AddDaoImpl getInstance() {
                 return Instance;
         }
-        
-        public List<App> findByAgent(int agent, String start, String end){
+
+        public List<App> findByAgent(int agent, String start, String end) {
                 List<App> apps = new ArrayList<App>();
-                try{
+                try {
                         DBObject object = new BasicDBObject();
                         object.put("agent", agent);
-                        if(start != null){
+                        if (start != null) {
                                 BasicDBList list = new BasicDBList();
                                 list.add(new BasicDBObject("create_time", new BasicDBObject("$gte", start)));
                                 list.add(new BasicDBObject("create_time", new BasicDBObject("$lt", end)));
                                 object.put("$and", list);
                         }
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
-                        while(cursor.hasNext()){
+                        while (cursor.hasNext()) {
                                 apps.add(getInfoFromResult(cursor.next()));
                         }
-                }catch(Exception e){
-                        LOG.error(e.getMessage(), e);
-                }
-                return apps;
-        }
-        
-        public List<App> findByAgent(String start, String end){
-                List<App> apps = new ArrayList<App>();
-                try{
-                        DBObject object = new BasicDBObject();
-                        if(start != null){
-                               BasicDBList list = new BasicDBList();
-                               list.add(new BasicDBObject("create_time", new BasicDBObject("$gte", start)));
-                               list.add(new BasicDBObject("create_time", new BasicDBObject("$lt", end)));
-                                object.put("$and", list);
-                        }
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
-                        while(cursor.hasNext()){
-                                apps.add(getInfoFromResult(cursor.next()));
-                        }
-                }catch(Exception e){
+                } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }
                 return apps;
         }
 
+        public List<App> findByAgent(String start, String end) {
+                List<App> apps = new ArrayList<App>();
+                try {
+                        DBObject object = new BasicDBObject();
+                        if (start != null) {
+                                BasicDBList list = new BasicDBList();
+                                list.add(new BasicDBObject("create_time", new BasicDBObject("$gte", start)));
+                                list.add(new BasicDBObject("create_time", new BasicDBObject("$lt", end)));
+                                object.put("$and", list);
+                        }
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        while (cursor.hasNext()) {
+                                apps.add(getInfoFromResult(cursor.next()));
+                        }
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return apps;
+        }
 
         public List<App> countData(String time) {
                 try {
@@ -106,6 +105,7 @@ public class AddDaoImpl extends DaoImplBase<App> {
                 try {
                         DBObject object = new BasicDBObject();
                         object.put("user_id", userId);
+                        object.put("parent_id", 0);
                         DBObject sort = new BasicDBObject();
                         sort.put("create_time", -1);
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort);
@@ -119,10 +119,12 @@ public class AddDaoImpl extends DaoImplBase<App> {
                 return apps;
         }
 
-        public App findById(Long appId) {
+        public App findById(Long appId, Long agentId, int agent) {
                 try {
                         DBObject object = new BasicDBObject();
                         object.put("app_id", appId);
+                        object.put("agent_id", agentId);
+                        object.put("agent", agent);
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
                         if (cursor.hasNext()) {
                                 return getInfoFromResult(cursor.next());
@@ -147,10 +149,12 @@ public class AddDaoImpl extends DaoImplBase<App> {
                 return null;
         }
 
-        public boolean update(Long appId, String dataTime) {
+        public boolean update(Long appId, Long agentId, int agent, String dataTime) {
                 try {
                         DBObject object = new BasicDBObject();
                         object.put("app_id", appId);
+                        object.put("agent_id", agentId);
+                        object.put("agent", agent);
                         DBObject value = new BasicDBObject();
                         value.put("$set", new BasicDBObject("data_time", dataTime));
                         return getDBCollection(TABLE_NAME).update(object, value).getN() > -1;
@@ -160,36 +164,6 @@ public class AddDaoImpl extends DaoImplBase<App> {
                 return false;
         }
 
-        public boolean insert(App app) {
-                try {
-                        DBObject value = new BasicDBObject();
-                        value.put("user_id", app.getUserId());
-                        value.put("name", app.getAppName());
-                        value.put("create_time", app.getCreateTime());
-                        value.put("app_id", app.getAppId());
-                        value.put("language", app.getLanguage());
-                        return getDBCollection(TABLE_NAME).insert(value).getN() > -1;
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return false;
-        }
-
-        public boolean update(App app) {
-                try {
-                        DBObject object = new BasicDBObject();
-                        object.put("app_id", app.getAppId());
-                        DBObject value = new BasicDBObject();
-                        value.put("$set", new BasicDBObject("user_id", app.getUserId()));
-                        value.put("$set", new BasicDBObject("name", app.getAppName()));
-                        value.put("$set", new BasicDBObject("create_time", app.getCreateTime()));
-                        value.put("$set", new BasicDBObject("language", app.getLanguage()));
-                        return getDBCollection(TABLE_NAME).update(object, value).getN() > -1;
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return false;
-        }
 
         public App getInfoFromResult(DBObject object) {
                 App app = null;
@@ -206,10 +180,15 @@ public class AddDaoImpl extends DaoImplBase<App> {
                         }
                         int agent = Integer.parseInt(object.get("agent").toString().trim());
                         String version = null;
-                        try{
+                        try {
                                 version = object.get("version").toString();
+                        } catch (Exception e) {
+                        }
+                        Long agentId = 0L;
+                        try{
+                                agentId = Long.parseLong(object.get("agent_id").toString());
                         }catch(Exception e){}
-                        app = new App(userId, createTime, language, appId, appName, dataTime, agent);
+                        app = new App(userId, createTime, language, appId, appName, dataTime, agent, agentId);
                         app.setVersion(version);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
