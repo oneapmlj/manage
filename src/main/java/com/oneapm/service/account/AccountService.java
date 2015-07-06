@@ -348,7 +348,7 @@ public class AccountService {
         }
 
         public static void main(String[] args) {
-                String str = string2MD5("123456");
+                String str = string2MD5("wkqurfkj@#92dsnl");
                 System.out.println(str);
                 // System.out.println(string2MD5(str));
                 // try {
