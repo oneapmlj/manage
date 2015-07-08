@@ -1,8 +1,10 @@
 package com.oneapm.util.test;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
@@ -28,10 +30,13 @@ import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.lable.Lable;
 import com.oneapm.dto.tag.Category;
+import com.oneapm.dto.tag.From;
+import com.oneapm.dto.tag.Fuwuqi;
 import com.oneapm.dto.tag.Person;
 import com.oneapm.dto.tag.Province;
 import com.oneapm.dto.tag.Rongzi;
 import com.oneapm.service.account.AccountService;
+import com.oneapm.service.info.AppService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.lable.LableService;
 import com.oneapm.util.TimeTools;
@@ -124,7 +129,6 @@ public class Shouhui {
                 List<Info> infos = new ArrayList<Info>();
                 List<Aplication> aplications = AppDataDaoImpl.getInstance().findByTime(start, end);
                 List<Aplication> aplications2 = AppDataDaoImpl.getInstance().findByTime(end, end1);
-                Admin admin = AccountService.findById(99999999L);
                 for(Aplication aplication : aplications){
                         boolean in = false;
                         for(Aplication aplication2 : aplications2){
@@ -134,7 +138,7 @@ public class Shouhui {
                                 }
                         }
                         if(!in){
-                                infos.add(InfoService.findByUserId(aplication.getUserId(), admin));
+                                infos.add(InfoService.findByUserId(aplication.getUserId()));
                         }
                 }
                 FileOutputStream out = null;
@@ -1105,9 +1109,8 @@ public class Shouhui {
                         userIds.add(app.getUserId());
                 }
                 LOG.info("userIds:"+userIds.size());
-                Admin admin = AccountService.findById(99999999L);
                 for(Long userId : userIds){
-                        infos.add(InfoService.findByUserId(userId, admin));
+                        infos.add(InfoService.findByUserId(userId));
                 }
                 LOG.info("infos:"+infos.size());
                 FileOutputStream out = null;
@@ -1205,20 +1208,25 @@ public class Shouhui {
                 }
         }
         
-        public static void waibao(){
-                List<Info> infos = InfoDaoImpl.getInstance().findWaibao();
-                for(Info info : infos){
-                        InfoService.initInfo(info);
+        public static void wajue() throws IOException{
+                List<Aplication> aplications = AppDataDaoImpl.getInstance().findByTime("2015-07-07 00:00:00", "2015-07-08 00:00:00");
+                Set<Long> userIds = new HashSet<Long>();
+                for(Aplication aplication : aplications){
+                        userIds.add(aplication.getUserId());
+                }
+                List<Info> infos = new ArrayList<Info>();
+                for(Long userId : userIds){
+                        infos.add(InfoService.findByUserId(userId));
                 }
                 FileOutputStream out = null;
                 OutputStreamWriter osw = null;
                 BufferedWriter bw = null;
                 try{
-                        File file = new File("/data/filesystem/report/waibao.csv");
+                        File file = new File("/data/filesystem/report/0707.csv");
                         out = new FileOutputStream(file);
                         osw = new OutputStreamWriter(out);
                         bw = new BufferedWriter(osw);
-                        bw.append("序号,userId,公司,电话,邮箱,地域,融资,分类,规模,销售,售前,支持").append("\r");
+                        bw.append("序号,userId,公司,电话,邮箱,地域,融资,分类,规模,平台,销售,售前,支持").append("\r");
                         bw.newLine();
                         int i=1;
                         for(Info info : infos){
@@ -1254,8 +1262,13 @@ public class Shouhui {
                                         }else{
                                                 bw.append("未知,");
                                         }
+                                        if(info.getTag().getFuwuqi() > 0){
+                                                bw.append(Fuwuqi.getName(info.getTag().getFuwuqi())+",");
+                                        }else{
+                                                bw.append("未知,");
+                                        }
                                 }else{
-                                        bw.append("未知,未知,未知,未知,");
+                                        bw.append("未知,未知,未知,未知,未知,");
                                 }
                                 if(info.getSale() != null && info.getSale() > 0){
                                         bw.append(AccountService.findName(info.getSale())+",");

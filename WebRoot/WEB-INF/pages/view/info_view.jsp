@@ -76,7 +76,7 @@
 				</s:if>
 				<s:else>
 					<div style="float:left;"><div style="float:left;width:30px;color:red;">无</div>
-					<s:if test="%{(admin.group >= 7 || admin.group == 6 || admin.group == 5)&&admin.assign == 1}">
+					<s:if test="%{(admin.group >= 7 || admin.group == 6 || admin.group == 5 || admin.group == 2 || admin.group == 3)&&admin.assign == 1}">
 						<div style="float:left;width:40px;">
 							<input style="width:38px;"  id="view_info_assign_presale" class="biankuang_blue_ding hand" type="button" value="分配"/>
 						</div>
@@ -96,7 +96,7 @@
 									</div>
 							</s:if>
 							<s:else>
-								<s:if test="%{(admin.group == 5 || admin.group >= 7)&&admin.assign == 1}">
+								<s:if test="%{(admin.group == 5 || admin.group == 2 || admin.group == 3 || admin.group==6 || admin.group >= 7)&&admin.assign == 1}">
 									<div style="float:left;width:40px;">
 										<input style="width:38px;"  id="view_info_remind_support" class="biankuang_blue_ding hand" type="button" value="提醒"/>
 									</div>

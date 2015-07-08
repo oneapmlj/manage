@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.info.impl.InfoDaoImpl;
-import com.oneapm.dto.App;
 import com.oneapm.dto.Zhengzailianxi;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.card.Card;
@@ -51,14 +50,6 @@ public class InfoService extends OneTools {
         
         public static List<Info> findEmail(int emailStatus){
                 return InfoDaoImpl.getInstance().findEmail(emailStatus);
-        }
-
-        public static List<Info> countLogin() {
-                return InfoDaoImpl.getInstance().countLogin(TimeTools.getDateTime(0));
-        }
-
-        public static long countTotle() {
-                return InfoDaoImpl.getInstance().countTotle();
         }
 
         public static String delete(Admin admin, Long id, int type) {
@@ -173,7 +164,7 @@ public class InfoService extends OneTools {
                                 RecordService.insert(admin.getId(), 9, id, adminId, 0, info.getTag().getMetric(), info.getTag().getLoudou(), 0, 0);
                                 break;
                         case 2:
-                                if (admin.getGroup() != 5 &&  admin.getGroup() != 6 && admin.getGroup() <= 6) {
+                                if (admin.getGroup() != 5 &&  admin.getGroup() != 6 && admin.getGroup() <= 6 && admin.getGroup() != 2 && admin.getGroup() != 3) {
                                         return OneTools.getResult(0, "权限不足");
                                 }
                                 info = findByIdSingle(id);
@@ -186,7 +177,7 @@ public class InfoService extends OneTools {
                                 RecordService.insert(admin.getId(), 10, id, adminId, 0, info.getTag().getMetric(), info.getTag().getLoudou(), 0, 0);
                                 break;
                         case 3:
-                                if (admin.getGroup() != 6 && admin.getGroup() != 5  && admin.getGroup() < 7) {
+                                if (admin.getGroup() != 6 && admin.getGroup() != 5  && admin.getGroup() < 7  && admin.getGroup() != 2 && admin.getGroup() != 3) {
                                         return OneTools.getResult(0, "权限不足");
                                 }
                                 info = findByIdSingle(id);
@@ -441,8 +432,8 @@ public class InfoService extends OneTools {
                 return InfoDaoImpl.getInstance().findById(id);
         }
         
-        public static boolean update_xiaoshouyi(Info info){
-                return InfoDaoImpl.getInstance().update_xiaoshouyi(info);
+        public static boolean update_xiaoshouyi(Info info, String lableId){
+                return InfoDaoImpl.getInstance().update_xiaoshouyi(info, lableId);
         }
 
         public static Info findByUserIdSimple(Long userId) {
@@ -529,6 +520,20 @@ public class InfoService extends OneTools {
                         }
                 }
                 
+                return info;
+        }
+        /**
+         * 非显示查询
+         * @param id
+         * @return
+         */
+        public static Info findById(Long id) {
+                Info info = InfoDaoImpl.getInstance().findById(id);
+                if (info != null) {
+                        initTag(info);
+                        power(99999999L, 7, info);
+                        initSupport(info);
+                }
                 return info;
         }
 
@@ -639,24 +644,27 @@ public class InfoService extends OneTools {
                 return infos;
         }
 
+        public static void initLanguage(Info info){
+                if (info.getTag().getLanguage() != null && info.getTag().getLanguage().trim().length() > 0) {
+                        String[] languages = info.getTag().getLanguage().split(OneTools.sp);
+                        if (languages != null && languages.length > 0) {
+                                StringBuilder builder = new StringBuilder();
+                                for (String l : languages) {
+                                        try {
+                                                int k = Integer.parseInt(l.trim());
+                                                if (k > 0) {
+                                                        builder.append(Language.getName(k)).append(OneTools.sp);
+                                                }
+                                        } catch (Exception e) {
+                                        }
+                                }
+                                info.setLanguage(builder.toString());
+                        }
+                }
+        }
         public static int power(Long adminId, int group, Info info) {
                 if (info != null && adminId != null) {
-                        if (info.getTag().getLanguage() != null && info.getTag().getLanguage().trim().length() > 0) {
-                                String[] languages = info.getTag().getLanguage().split(OneTools.sp);
-                                if (languages != null && languages.length > 0) {
-                                        StringBuilder builder = new StringBuilder();
-                                        for (String l : languages) {
-                                                try {
-                                                        int k = Integer.parseInt(l.trim());
-                                                        if (k > 0) {
-                                                                builder.append(Language.getName(k)).append(OneTools.sp);
-                                                        }
-                                                } catch (Exception e) {
-                                                }
-                                        }
-                                        info.setLanguage(builder.toString());
-                                }
-                        }
+                        initLanguage(info);
                         switch (group) {
                         case 1:
                                 if (info.getSale() == null || info.getSale() <= 0L) {
@@ -743,19 +751,6 @@ public class InfoService extends OneTools {
                 return info;
         }
 
-        public static List<Info> findByIds(String ids) {
-                if (ids == null)
-                        return null;
-                String[] str = ids.split(OneTools.sp);
-                Long[] id = new Long[str.length];
-                for (int i = 0; i < str.length; i++) {
-                        if (str != null) {
-                                id[i] = Long.parseLong(str[i]);
-                        }
-                }
-                return InfoDaoImpl.getInstance().findByIds(id);
-        }
-
         // public static Info findInfoById(Long id){
         // Info info = InfoDaoImpl.getInstance().findById(id);
         // return info;
@@ -764,35 +759,30 @@ public class InfoService extends OneTools {
         public static Info findByUserId(Long userId, Admin admin) {
                 Info info = InfoDaoImpl.getInstance().findByUserId(userId);
                 return findById(info.getId(), admin);
-//                if (info != null) {
-//                        Zhengzailianxi zhengzailianxi = ZhengzailianxiService.findByInfoId(info.getId());
-//                        if(zhengzailianxi != null){
-//                                zhengzailianxi.setAdminName(AccountService.findName(zhengzailianxi.getAdminId()));
-//                        }
-//                        info.setZhengzailianxi(zhengzailianxi);
-//                        initTag(info);
-//                        if (power(admin.getId(), admin.getGroup(), info) > 0) {
-//                                initInfo(info);
-//                        }
-//                }
-//                return info;
+        }
+        /**
+         * 非显示
+         * @param userId
+         * @return
+         */
+        public static Info findByUserId(Long userId) {
+                Info info = InfoDaoImpl.getInstance().findByUserId(userId);
+                return findById(info.getId());
         }
 
         public static void initInfo(Info info) {
                 info.setMails(MailService.findMailsById(info.getId()));
                 info.setCalls(CallService.findByInfoId(info.getId()));
                 info.setApps(AppService.findByUserId(info.getUserId()));
-//                List<App> apps = AppService.findByUserIdM(info.getUserId());
-//                if (apps != null && apps.size() > 0) {
-//                        for (App app : apps) {
-//                                info.getApps().add(app);
-//                        }
-//                }
                 info.setDownloads(DownloadService.findByUserId(info.getUserId()));
                 info.setCards(CardService.findByInfoId(info.getId()));
                 info.setGongdans(KFService.findByUserId(info.getUserId()));
                 initTag(info);
                 initAdmin(info);
+                initSupport(info);
+        }
+        
+        public static void initSupport(Info info){
                 if (info.getSale() != null && info.getSale() > 0L) {
                         info.setSaleName(AccountService.findById(info.getSale()).getName());
                 }

@@ -148,6 +148,21 @@ public class AddDaoImpl extends DaoImplBase<App> {
                 }
                 return null;
         }
+        
+        public List<App> findAll(){
+                List<App> apps = new ArrayList<App>();
+                try{
+                        DBObject object = new BasicDBObject();
+                        object.put("parent_id", 0L);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        while(cursor.hasNext()){
+                                apps.add(getInfoFromResult(cursor.next()));
+                        }
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return apps;
+        }
 
         public boolean update(Long appId, Long agentId, int agent, String dataTime) {
                 try {

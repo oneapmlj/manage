@@ -119,7 +119,7 @@ public class LiucunYunyingService {
                 view.setInTimeStart(liucuns.get(0).getDataTime().substring(0, 10));
                 view.setInTimeEnd(TimeTools.week(liucuns.get(0).getDataTime(), 1, 1).substring(0, 10));
                 for (DataLiucun liucun : liucuns) {
-                        Info info = InfoService.findByUserId(liucun.getUserId(), admin);
+                        Info info = InfoService.findByUserId(liucun.getUserId());
                         info.setCustom(0);
                         infos.add(info);
                 }
@@ -173,7 +173,7 @@ public class LiucunYunyingService {
                 view.setInTimeStart(liucuns.get(0).getDataTime().substring(0, 10));
                 view.setInTimeEnd(TimeTools.week(liucuns.get(0).getDataTime(), 1, 1).substring(0, 10));
                 for (SignLiucun liucun : liucuns) {
-                        Info info = InfoService.findByUserId(liucun.getUserId(), admin);
+                        Info info = InfoService.findByUserId(liucun.getUserId());
                         info.setCustom(0);
                         infos.add(info);
                 }

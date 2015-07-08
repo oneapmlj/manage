@@ -1,11 +1,11 @@
 package com.oneapm.web.account;
 
 import java.io.IOException;
-import java.text.ParseException;
 
 import com.oneapm.service.account.PayService;
+import com.oneapm.service.info.InfoService;
+import com.oneapm.service.record.Xiaoshouyi;
 import com.oneapm.util.OneTools;
-import com.oneapm.util.test.Shouhui;
 import com.oneapm.web.SupportAction;
 
 public class PayAction extends SupportAction {
@@ -24,13 +24,15 @@ public class PayAction extends SupportAction {
                         return "login";
                 }
                 try {
-                       LOG.info("START LIANXUI");
-                        Shouhui.genzongbaobiao();
+//                        Xiaoshouyi.tuisongxiaoshouyi();
+//                        Shouhui.wajue();
+//                       LOG.info("START LIANXUI");
+//                        Shouhui.genzongbaobiao();
 //                        LOG.info("START DIAOSHUJU");
 //                        Shouhui.diaoshujuliebiao();
-                        LOG.info("START LIUCUN");
-                        Shouhui.meizhoubaobiao();
-                        LOG.info("END.........................");
+//                        LOG.info("START LIUCUN");
+//                        Shouhui.meizhoubaobiao();
+//                        LOG.info("END.........................");
                 } catch (Exception e) {
                         LOG.info(e.getMessage(), e);
                 }

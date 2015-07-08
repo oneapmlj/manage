@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSONArray;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
@@ -29,26 +28,6 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                 return Instance;
         }
 
-        public List<Info> findWaibao(){
-                List<Info> infos = new ArrayList<Info>();
-                try{
-                        DBObject object = new BasicDBObject();
-                        BasicDBList list = new BasicDBList();
-                        String string = "4912,4641,4631,4613,4292,4026,6364,6359,1913,1900,6536,6540,6632,6638,6642,6664,6721,1900,1913,4026,4292,4613,4631,4641,4912,6359,6364,5055,5593,5562,5408,4972,4968,4912,4760,4710,4641,4631,4613,4292,4026,3655,3654,3483,3020,6364,6359,6165,2746,1913,1900,1079,520,227";
-                        String[] ids = string.split(",");
-                        for(String id: ids){
-                              list.add(Long.parseLong(id));  
-                        }
-                        object.put("user_id", new BasicDBObject("$in", list));
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
-                        while(cursor.hasNext()){
-                                infos.add(getInfoFromResult(cursor.next()));
-                        }
-                }catch(Exception e){
-                        LOG.error(e.getMessage(), e);
-                }
-                return infos;
-        }
         public List<Info> findByLoginTime(String loginTime) {
                 List<Info> infos = new ArrayList<Info>();
                 try {
@@ -124,7 +103,7 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         List<Info> infos = new ArrayList<Info>();
                         DBObject object = new BasicDBObject();
                         object.put("email_status", emailStatus);
-                        object.put("user_id", new BasicDBObject("$gt", 300));
+                        object.put("user_id", new BasicDBObject("$gt", 3400));
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
                         while(cursor.hasNext()){
                                 infos.add(getInfoFromResult(cursor.next()));
@@ -134,63 +113,6 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         LOG.error(e.getMessage(), e);
                 }
                 return null;
-        }
-
-        public List<Info> countSign(String time) {
-                try {
-                        DBObject object = new BasicDBObject();
-                        object.put("create_time", new BasicDBObject("$lt", time));
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
-                        List<Info> infos = new ArrayList<Info>();
-                        while (cursor.hasNext()) {
-                                infos.add(getInfoFromResult(cursor.next()));
-                        }
-                        return infos;
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return null;
-        }
-
-        public List<Info> countLogin(String time) {
-                try {
-                        DBObject object = new BasicDBObject();
-                        object.put("login_time", new BasicDBObject("$gte", time));
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
-                        List<Info> infos = new ArrayList<Info>();
-                        while (cursor.hasNext()) {
-                                infos.add(getInfoFromResult(cursor.next()));
-                        }
-                        return infos;
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return null;
-        }
-
-        public long countTotle() {
-                try {
-                        return getDBCollection(TABLE_NAME).count();
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return 0;
-        }
-
-        public List<Info> findByIds(Long[] ids) {
-                List<Info> infos = null;
-                try {
-                        DBObject object = new BasicDBObject();
-                        object.put("id", new BasicDBObject("$in", ids));
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
-                        infos = new ArrayList<Info>();
-                        while (cursor.hasNext()) {
-                                infos.add(getInfoFromResult(cursor.next()));
-                        }
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return infos;
         }
 
         public Info findByEmail(String email) {
@@ -235,6 +157,23 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                 return null;
         }
 
+        public List<Info> findByCreateTime(String start, String end){
+                List<Info> infos = new ArrayList<Info>();
+                try{
+                       DBObject object = new BasicDBObject();
+                       BasicDBList list = new BasicDBList();
+                       list.add(new BasicDBObject("create_time", new BasicDBObject("$gte", start)));
+                       list.add(new BasicDBObject("create_time", new BasicDBObject("$lt", end)));
+                       object.put("$and", list);
+                       DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                       while(cursor.hasNext()){
+                               infos.add(getInfoFromResult(cursor.next()));
+                       }
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return infos;
+        }
         public Info findByUserIdCreate(Long userId) {
                 try {
                         DBObject object = new BasicDBObject();
@@ -430,12 +369,15 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                 return null;
         }
         
-        public boolean update_xiaoshouyi(Info info){
+        public boolean update_xiaoshouyi(Info info, String lableId){
                 try{
                         DBObject object = new BasicDBObject();
                         DBObject value = new BasicDBObject();
                         value.put("xiaoshouyi", info.getXiaoshouyi());
                         value.put("xiaoshouyiAdmin", info.getXiaoshouyiAdmin());
+                        if(lableId != null && lableId.length() > 0){
+                                value.put("xiaoshouyi_lable_id", lableId);
+                        }
                         object.put("id", info.getId());
                         return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set",value)).getN() > -1;
                 }catch(Exception e){

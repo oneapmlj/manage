@@ -18,6 +18,8 @@ public class Info {
         private Long id;
 
         private Long userId;
+        
+        private String userIdPaixu;
 
         private String name;
 
@@ -140,6 +142,9 @@ public class Info {
                 setQq(qq);
                 setProject(project);
                 setCustomer(customer);
+                if(userId != null){
+                        setUserIdPaixu(userId.toString());
+                }
         }
 
         public Long getUserId() {
@@ -564,5 +569,13 @@ public class Info {
 
         public void setFrom(String from) {
                 this.from = from;
+        }
+
+        public String getUserIdPaixu() {
+                return userIdPaixu;
+        }
+
+        public void setUserIdPaixu(String userIdPaixu) {
+                this.userIdPaixu = userIdPaixu;
         }
 }

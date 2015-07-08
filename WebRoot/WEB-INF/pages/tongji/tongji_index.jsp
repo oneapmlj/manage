@@ -27,7 +27,7 @@
 					<thead> 
 						<tr> 
 				  			<th style="width:120px;">日期</th> 
-				  			<th style="width:70px;">总数</th>
+				  			<!-- <th style="width:70px;">总数</th> -->
 				  			<th style="width:70px;">注册</th>
 				  			<th style="width:65px;">登录</th>
 				  			<th style="width:65px;">下载</th>
@@ -35,9 +35,9 @@
 				  			<th style="width:65px;">数据</th>
 				  			<th style="width:65px;">数应</th>     
 				  			
-				  			<th style="width:65px;">企业</th>
+				  			<!-- <th style="width:65px;">企业</th>
 				  			<th style="width:65px;">开发者</th>
-				  			<th style="width:65px;">未定义</th>
+				  			<th style="width:65px;">未定义</th> -->
 				  			<!-- <th style="width:65px;">关闭</th> -->
 				  			
 				  			<!-- <th style="width:65px;">交流</th>
@@ -57,7 +57,7 @@
 							<s:iterator value="index.tongjis">
 								<tr style="font-size:16px;" id="${id}"> 
 						 			<td>${data_time}</td>
-									<s:if test="%{totalUp == 1}">
+									<%-- <s:if test="%{totalUp == 1}">
 							 			<td style="color:red;">${total}</td>
 									</s:if>
 									<s:else>
@@ -67,7 +67,7 @@
 										<s:else>
 											<td>${total}</td>
 										</s:else>
-									</s:else>
+									</s:else> --%>
 									
 									<s:if test="%{signUp == 1}">
 							 			<td style="color:red;"  class="hand view" id="${id}_2">${sign}</td>
@@ -135,7 +135,7 @@
 											<td  class="hand" id="${id}_17">${appData}</td>
 										</s:else>
 									</s:else>
-									<s:if test="%{pointUp == 1}">
+									<%-- <s:if test="%{pointUp == 1}">
 							 			<td style="color:red;"  class="hand view" id="${id}_7">${point}</td>
 									</s:if>
 									<s:else>
@@ -167,7 +167,7 @@
 										<s:else>
 											<td  class="hand view" id="${id}_9">${unbin}</td>
 										</s:else>
-									</s:else>
+									</s:else> --%>
 									<%-- <s:if test="%{unuseUp == 1}">
 							 			<td style="color:red;"  class="hand view" id="${id}_10">${unuse}</td>
 									</s:if>

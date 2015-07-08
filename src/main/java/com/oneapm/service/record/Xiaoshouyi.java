@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.tag.Category;
@@ -33,6 +34,7 @@ import com.oneapm.service.account.AccountService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.info.TagService;
 import com.oneapm.util.OneTools;
+import com.oneapm.util.TimeTools;
 
 @SuppressWarnings("deprecation")
 public class Xiaoshouyi {
@@ -61,12 +63,54 @@ public class Xiaoshouyi {
                         }
                         info.setXiaoshouyi(xiaoshouyiId);
                         info.setXiaoshouyiAdmin(admin.getId());
-                        InfoService.update_xiaoshouyi(info);
+                        InfoService.update_xiaoshouyi(info, null);
                         return OneTools.getResult(1, "成功");
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
                 }
                 return OneTools.getResult(0, "服务器内部错误");
+        }
+        
+        public static void tuisongxiaoshouyi(){
+                String start = "2015-04-01 00:00:00";
+                String end = "2015-05-01 00:00:00";
+                List<Info> infos = InfoDaoImpl.getInstance().findByCreateTime(start, end);
+                for(Info info : infos){
+                        if(info.getXiaoshouyi() == null){
+                                xiaoshouyi(info, null);
+                        }
+                }
+        }
+        
+        public static void xiaoshouyi(Info info, String xiaoshou){
+                try{
+                        if(info == null){
+                                return;
+                        }
+                        if(info.getProject() == null || info.getProject().trim().length() <= 0){
+                                if(info.getCompany() == null || info.getCompany().length() <= 0){
+                                        return;
+                                }
+                                info.setProject(info.getCompany());
+                        }
+                        info.setTag(TagService.findByInfoId(info.getId()));
+                        if(info.getTag() != null && info.getTag().getProvince() > 0){
+                                info.getTag().setProvinceName(Province.getName(info.getTag().getProvince()));
+                        }else{
+                                info.setTag(new Tag());
+                                info.getTag().setProvinceName("未知");
+                        }
+                        Long xiaoshouyiId = post(info, xiaoshou);
+                        if(xiaoshouyiId == null){
+                                LOG.info("推送销售失败:"+info.getUserId());
+                        }
+                        info.setXiaoshouyi(xiaoshouyiId);
+                        info.setXiaoshouyiAdmin(99999999L);
+                        InfoService.update_xiaoshouyi(info, "20150707");
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                        LOG.info("推送销售失败:"+info.getUserId());
+                }
         }
         
         public static Long post(Info info, String xiaoshou) {

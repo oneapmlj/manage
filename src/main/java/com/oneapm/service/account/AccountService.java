@@ -195,7 +195,7 @@ public class AccountService {
         public static String list(int group, Admin admin) {
                 JSONObject object = new JSONObject();
                 try {
-                        if (admin.getGroup() < 4) {
+                        if (admin.getGroup() == 1) {
                                 object.put("status", 0);
                                 object.put("msg", "权限不足");
                                 return object.toJSONString();
@@ -240,7 +240,7 @@ public class AccountService {
                                 }
                                 break;
                         case 2:
-                                if (admin.getGroup() < 7 && admin.getGroup() != 5 && admin.getGroup() != 6) {
+                                if (admin.getGroup() < 7 && admin.getGroup() != 5 && admin.getGroup() != 6 && admin.getGroup() != 3 && admin.getGroup() != 2) {
                                         object.put("status", 0);
                                         object.put("msg", "权限不足");
                                         return object.toJSONString();

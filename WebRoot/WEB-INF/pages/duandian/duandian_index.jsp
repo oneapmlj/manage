@@ -25,6 +25,14 @@
 				<div style="width:1200px;float:left;">
 					<div style="float:left;width:60px;" class="go_guolv_ding menu_button biankuang_blue_ding hand">过滤</div>
 					<div style="float:left;width:60px;" class="go_from menu_button biankuang_gray hand">来源</div>
+					<div style="float:left;width:250px;margin-left:10px;">
+						<span style="font-size:14px;">排序方式:</span>
+						<select id="paixu" class="hand">
+							<option value="0">默认排序</option>
+							<option value="1">注册时间排序</option>
+							<!-- <option value="2">UserId排序</option> -->
+						</select>
+					</div>
 				</div>
 				<div style="width:1200px;float:left;" class="guolv">
 					<div style="margin-top:20px;width:1200px;margin-left:auto;margin-right:auto;">

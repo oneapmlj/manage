@@ -117,10 +117,9 @@ public class AppService {
                                 } else {
                                         if(TimeTools.formatTime.parse(app.getDataTime()).getTime() > TimeTools.formatTime.parse(TimeTools.getDateTime(0)).getTime()){
                                                 app.setDataTime("今日");
+                                        }else{
+                                                app.setDataTime(app.getDataTime().substring(0,10));
                                         }
-//                                        if (TimeTools.fromToday(app.getDataTime(), false) <= 0) {
-//                                                app.setDataTime("今日");
-//                                        }
                                 }
                                 if(app.getAppName().length() > 20){
                                         app.setAppName(app.getAppName().substring(0, 17)+"…");

@@ -91,7 +91,7 @@ public class Listener implements ServletContextListener {
                 }
                 LOG.info("init redis ...................................................");
                 try {
-//                         RedisBase.init();
+                        initRedis((Element) root.selectSingleNode("redis/manage"));
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }
@@ -119,6 +119,16 @@ public class Listener implements ServletContextListener {
                 MongoConnection.init(replicaSet, option, defaultDb);
                 LOG.info("mongodb连接参数初始化完毕.....");
 
+        }
+        
+        public static void initRedis(Element Element){
+                Element element = (Element) Element.selectSingleNode("serverNode");
+                String host = element.getTextTrim();
+                element = (Element) Element.selectSingleNode("serverPort");
+                String port = element.getTextTrim();
+                element = (Element) Element.selectSingleNode("poolSize");
+                int poolSize = Integer.parseInt(element.getTextTrim());
+                RedisBase.init(host, poolSize, port);
         }
 
 }

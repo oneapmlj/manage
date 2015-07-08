@@ -81,6 +81,7 @@ $(document).ready(function() {
 		var data = $("#duandian_data").val();
 		var groupId1 = $("#duandian_group_1").val();
 		var groupId2 = $("#duandian_group_2").val();
+		var paixu = $("#paixu").val();
 //		var login = $("#duandian_login").val();
 		var banben = $("#duandian_banben").val();
 		var time = $("#duandian_zidingyishijian").val();
@@ -91,7 +92,7 @@ $(document).ready(function() {
 		$.ajax({
 			dataType:'json',
 			url:'duandian_chaxun.action',
-			data:{agent:agent,data:data,jinri:jinri,banben:banben,time:time,fuze:fuze,groupId1:groupId1,groupId2:groupId2}
+			data:{agent:agent,data:data,jinri:jinri,banben:banben,time:time,fuze:fuze,groupId1:groupId1,groupId2:groupId2,paixu:paixu}
 		}).done(function(da){
 			if(da.status == 1){
 				var html = "";

@@ -21,8 +21,8 @@ import com.oneapm.dto.lable.Lable;
 import com.oneapm.service.group.GroupService;
 import com.oneapm.service.lable.LableService;
 import com.oneapm.service.mail.DownloadService;
-import com.oneapm.service.message.TipService;
 import com.oneapm.util.OneTools;
+import com.oneapm.util.SortList;
 import com.oneapm.util.TimeTools;
 
 public class DuandianService {
@@ -74,7 +74,7 @@ public class DuandianService {
                         }
                         for(Info info : infos){
                                 InfoService.initInfo(info);
-                                int power = InfoService.power(99999999L, 7, info);
+                                InfoService.power(99999999L, 7, info);
                         }
                         args1.add("infos");
                         args2.add(InfoService.getArrayFromInfos(infos));
@@ -84,7 +84,7 @@ public class DuandianService {
                 }
                 return OneTools.getResult(0, "服务器内部错误");
         }
-        public static String chaxun(int agent, int data, int paixu, int sort, int jinri, String banben, String time, Admin admin, int fuze, Long groupId1, Long groupId2){
+        public static String chaxun(int agent, int data, int paixu, int sort, int jinri, String banben, String time, Admin admin, int fuze, Long groupId, Long groupId2){
                 try{
                         List<String> args1 = new ArrayList<String>();
                         List<Object> args2 = new ArrayList<Object>();
@@ -132,7 +132,7 @@ public class DuandianService {
                                                                 j--;
                                                         }
                                                 }
-                                                infos.add(InfoService.findByUserId(apps.get(i).getUserId(), admin)) ;
+                                                infos.add(InfoService.findByUserId(apps.get(i).getUserId())) ;
                                         }
                                 }else{
                                         List<Aplication> apps = AppService.findByAgent(agent, start, banben, end);
@@ -143,7 +143,7 @@ public class DuandianService {
                                                                 j--;
                                                         }
                                                 }
-                                                infos.add(InfoService.findByUserId(apps.get(i).getUserId(), admin)) ;
+                                                infos.add(InfoService.findByUserId(apps.get(i).getUserId())) ;
                                         }
                                 }
                         }else{
@@ -155,7 +155,7 @@ public class DuandianService {
                                                         j--;
                                                 }
                                         }
-                                        infos.add(InfoService.findByUserId(downloads.get(i).getUserId(), admin)) ;
+                                        infos.add(InfoService.findByUserId(downloads.get(i).getUserId())) ;
                                 }
                         }
                         boolean JINRI = false;
@@ -173,8 +173,7 @@ public class DuandianService {
                                                         continue;
                                                 }
                                         }
-                                        InfoService.initTag(infos.get(i));
-                                        if(groupId1 > 0){
+                                        if(groupId > 0){
                                                 GroupView view = GroupService.findByInfoId(infos.get(i).getId());
                                                 if(groupId2 > 0){
                                                         if(!view.getGroupId().equals(groupId2)){
@@ -190,7 +189,7 @@ public class DuandianService {
                                                                 }
                                                         }
                                                 }else{
-                                                        if(!view.getGroupId().equals(groupId1)){
+                                                        if(!view.getGroupId().equals(groupId)){
                                                                 infos.remove(i);
                                                                 i--;
                                                                 continue;  
@@ -212,14 +211,14 @@ public class DuandianService {
                                                         }
                                                 }
                                         }
-                                        int power = InfoService.power(admin.getId(), admin.getGroup(), infos.get(i));
-                                        if (power > 0) {
-                                                InfoService.initInfo(infos.get(i));
-                                        } else {
-                                                return null;
-                                        }
-                                        infos.get(i).setMark(MarkService.findByAdminIdAndInfoId(admin.getId(), infos.get(i).getId()));
-                                        infos.get(i).setTip(TipService.findByInfoId(infos.get(i).getId()));
+                                }
+                        }
+                        if(paixu > 0 && infos.size() > 1){
+                                SortList<Info> sortList = new SortList<Info>();  
+                                switch (paixu) {
+                                        case 1:sortList.Sort(infos, "getCreateTime", null);break;
+                                        case 2:sortList.Sort(infos, "getUserIdPaixu", null);break;
+                                        default:break;
                                 }
                         }
                         args1.add("infos");
