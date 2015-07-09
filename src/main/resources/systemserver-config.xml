@@ -13,9 +13,9 @@
 	<!--mongodb参数 -->
 	<mongodb>
 		<mongodata>
-			<serverNode>10.251.129.94</serverNode>
+			<!-- <serverNode>10.251.129.94</serverNode> -->
 			<!-- <serverNode>10.128.8.222</serverNode> -->
-			<!-- <serverNode>203.195.178.106</serverNode>  -->
+			<serverNode>203.195.178.106</serverNode>
 			<serverPort>27017</serverPort>
 			<autoConnectRetry>true</autoConnectRetry>
 			<connectionsPerHost>300</connectionsPerHost>

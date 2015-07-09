@@ -1,7 +1,39 @@
 //var guanbi = 0;
 var jinri = 0;
 var fuze = 0;
+var date_id = "";
+
 $(document).ready(function() {
+	$("#duandian_zidingyishijian_start").live("click", function(){
+		laydate({
+		    elem: '#duandian_zidingyishijian_start',
+		    max: laydate.now(), //+1代表明天，+2代表后天，以此类推
+		    format: 'YYYY-MM-DD',
+		});
+	});
+	$("#duandian_zidingyishijian_end").live("click", function(){
+		laydate({
+		    elem: '#duandian_zidingyishijian_end',
+		    format: 'YYYY-MM-DD', // 分隔符可以任意定义，该例子表示只显示年月
+		    max: laydate.now(), //+1代表明天，+2代表后天，以此类推
+		    festival: true, //显示节日
+		});
+	});
+	$("#duandian_zidingyishijian_start_activ").live("click", function(){
+		laydate({
+		    elem: '#duandian_zidingyishijian_start_activ',
+		    max: laydate.now(), //+1代表明天，+2代表后天，以此类推
+		    format: 'YYYY-MM-DD',
+		});
+	});
+	$("#duandian_zidingyishijian_end_activ").live("click", function(){
+		laydate({
+		    elem: '#duandian_zidingyishijian_end_activ',
+		    format: 'YYYY-MM-DD', // 分隔符可以任意定义，该例子表示只显示年月
+		    max: laydate.now(), //+1代表明天，+2代表后天，以此类推
+		    festival: true, //显示节日
+		});
+	});
 	$("#duandian_guanbi").live('click', function(){
 		if(guanbi == 0){
 			guanbi = 1;
@@ -71,6 +103,16 @@ $(document).ready(function() {
 		}else{
 			$("#duandian_zidingyishijian").val("");
 			$(".duandian_zidingyishijian").addClass("hidden");
+		}
+	});
+	$("#duandian_data_activ").live("change", function(){
+		var id = $(this).val();
+		if(id == 9){
+			$("#duandian_zidingyishijian_activ").val("");
+			$(".duandian_zidingyishijian_activ").removeClass("hidden");
+		}else{
+			$("#duandian_zidingyishijian_activ").val("");
+			$(".duandian_zidingyishijian_activ").addClass("hidden");
 		}
 	});
 	$("#duandian_chaxun").live('click', function(){
