@@ -22,20 +22,29 @@
 			<h3 class="tabs_involved">过滤用户</h3>
 		</div> 
 			<div style="width:1200px;margin-left:auto;margin-right:auto;font-size:14px;">
-				<div style="width:1200px;float:left;">
-					<div style="float:left;width:60px;" class="go_guolv_ding menu_button biankuang_blue_ding hand">过滤</div>
-					<div style="float:left;width:60px;" class="go_from menu_button biankuang_gray hand">来源</div>
-					<div style="float:left;width:250px;margin-left:10px;">
-						<span style="font-size:14px;">排序方式:</span>
+				<div style="width:1200px;float:left;height:30px;line-height:30px;">
+					<div style="margin-left:auto;margin-right:auto;width:400px;">
+						<span style="color:red;">过滤时状态，数据，登录必选其一。独立用户只在有数据时有效</span>
+					</div>
+				</div>
+				<div style="width:1200px;float:left;height:30px;line-height:30px;">
+					<div style="width:70px;float:left;height:30px;">
+						<div style="float:left;width:60px;margin-top:5px;" class="go_guolv_ding menu_button biankuang_blue_ding hand">过滤</div>
+					</div>
+					<div style="width:70px;float:left;height:30px;">
+						<div style="float:left;width:60px;margin-top:5px;" class="go_from menu_button biankuang_gray hand">来源</div>
+					</div>
+					<div style="float:left;width:250px;margin-left:10px;height:30px;">
+						排序方式:
 						<select id="paixu" class="hand">
 							<option value="0">默认排序</option>
-							<option value="1">注册时间排序</option>
+							<option value="1">注册时间</option>
 							<!-- <option value="2">UserId排序</option> -->
 						</select>
 					</div>
 				</div>
 				<div style="width:1200px;float:left;" class="guolv">
-					<div style="margin-top:20px;width:1200px;margin-left:auto;margin-right:auto;float:left;">
+					<div style="margin-top:20px;width:1200px;height:30px;line-height:30px;margin-left:auto;margin-right:auto;float:left;">
 						<div style="width:130px;float:left;height:30px;">
 							语言:
 							<select class="hand" id="duandian_agent">
@@ -57,7 +66,7 @@
 							<select class="hand" id="duandian_banben">
 							</select>
 						</div>
-						<div style="width:140px;float:left;height:20px;line-height:20px;margin-left:5px;">
+						<div style="width:140px;float:left;height:30px;margin-left:5px;">
 							分类:
 							<select id="duandian_group_1" class="hand">
 								<option value="0">全部</option>
@@ -66,7 +75,7 @@
 								</s:iterator>
 							</select>
 						</div>
-						<div style="width:160px;float:left;height:20px;line-height:20px;" class="duandian_group_2 hidden">
+						<div style="width:160px;float:left;height:30px;" class="duandian_group_2 hidden">
 							二级:
 							<select id="duandian_group_2" class="hand">
 								<option value='0'>全部</option>
@@ -81,24 +90,24 @@
 								<option value="3">有过数据</option>
 							</select>
 						</div>
-						<div style="width:75px;float:left;height:30px;line-height:30px;">
-							<div id="duandian_fuze" style="float:left;width:65px;height:20px;margin:0 0 0 0;" class="menu_button biankuang_gray_ding hand">我负责的</div>
+						<div style="width:75px;float:left;height:30px;">
+							<div id="duandian_fuze" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">我负责的</div>
+						</div>
+						<div style="hieght:30px;width:135px;float:left;">
+							<div id="duandian_chaxun" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">查询</div>
 						</div>
 					</div>
-					<div style="margin-top:10px;width:1200px;margin-left:auto;margin-right:auto;float:left;">
-						<div style="width:210px;float:left;height:30px;">
-							有数据:
+					<div style="margin-top:10px;width:1200px;margin-left:auto;margin-right:auto;float:left;line-height:30px;">
+						<div style="width:170px;float:left;height:30px;">
+							数据:
 							<select class="hand" id="duandian_data_activ">
 								<option value="0" selected="selected">全部</option>
-								<option value="7">今日</option>
-								<option value="8">昨日</option>
-								<option value="2">最近一周</option>
-								<option value="3">最近二周</option>
-								<option value="4">最近一个月</option>
-								<option value="9">自定义时间</option>
-								<option value="1">有过数据</option>
-								<option value="5">添加应用</option>
-								<option value="6">下载</option>
+								<option value="1">今日</option>
+								<option value="2">昨日</option>
+								<option value="3">最近一周</option>
+								<option value="4">最近二周</option>
+								<option value="5">最近一个月</option>
+								<option value="6">自定义时间</option>
 							</select>
 						</div>
 						<div class="hidden duandian_zidingyishijian_activ" style="width:160px;float:left;height:30px;font-size:14px;">
@@ -109,21 +118,16 @@
 							结束时间:
 							<input type="text" id="duandian_zidingyishijian_end_activ" value="" style="width:80px;"/>
 						</div>
-					</div>
-					<div style="margin-top:10px;width:1200px;margin-left:auto;margin-right:auto;float:left;">
-						<div style="width:210px;float:left;height:30px;">
+						<div style="margin-left:20px;width:170px;float:left;height:30px;">
 							无数据:
 							<select class="hand" id="duandian_data">
 								<option value="0" selected="selected">全部</option>
-								<option value="7">今日</option>
-								<option value="8">昨日</option>
-								<option value="2">最近一周</option>
-								<option value="3">最近二周</option>
-								<option value="4">最近一个月</option>
-								<option value="9">自定义时间</option>
-								<option value="1">有过数据</option>
-								<option value="5">添加应用</option>
-								<option value="6">下载</option>
+								<option value="1">今日</option>
+								<option value="2">昨日</option>
+								<option value="3">最近一周</option>
+								<option value="4">最近二周</option>
+								<option value="5">最近一个月</option>
+								<option value="6">自定义时间</option>
 							</select>
 						</div>
 						<div class="hidden duandian_zidingyishijian" style="width:160px;float:left;height:30px;font-size:14px;">
@@ -133,6 +137,46 @@
 						<div class="hidden duandian_zidingyishijian" style="width:160px;float:left;height:30px;font-size:14px;">
 							结束时间:
 							<input type="text" id="duandian_zidingyishijian_end" value="" style="width:80px;"/>
+						</div>
+						<div style="margin-left:20px;width:170px;float:left;height:30px;">
+							独立用户:
+							<select class="hand" id="duandian_data_duli">
+								<option value="0" selected="selected">全部</option>
+								<option value="1">java</option>
+								<option value="2">php</option>
+								<option value="3">nodejs</option>
+								<option value="4">python</option>
+								<option value="5">dotnet</option>
+								<option value="6">ruby</option>
+								<option value="7">android</option>
+								<option value="8">ios</option>
+								<option value="9">browser</option>
+								<option value="10">server</option>
+								<option value="11">AI</option>
+								<option value="12">MI</option>
+							</select>
+						</div>
+					</div>
+					<div style="margin-top:10px;width:1200px;margin-left:auto;margin-right:auto;float:left;line-height:30px;">
+						<div style="width:170px;float:left;height:30px;">
+							登录:
+							<select class="hand" id="duandian_login">
+								<option value="0" selected="selected">全部</option>
+								<option value="1">今日</option>
+								<option value="2">昨日</option>
+								<option value="3">最近一周</option>
+								<option value="4">最近二周</option>
+								<option value="5">最近一个月</option>
+								<option value="6">自定义时间</option>
+							</select>
+						</div>
+						<div class="hidden duandian_zidingyishijian_login" style="width:160px;float:left;height:30px;font-size:14px;">
+							起始时间:
+							<input type="text" id="duandian_zidingyishijian_start_login" value="" style="width:80px;"/>
+						</div>
+						<div class="hidden duandian_zidingyishijian_login" style="width:160px;float:left;height:30px;font-size:14px;">
+							结束时间:
+							<input type="text" id="duandian_zidingyishijian_end_login" value="" style="width:80px;"/>
 						</div>
 					</div>
 					<div style="float:left;width:1200px;height:30px;">

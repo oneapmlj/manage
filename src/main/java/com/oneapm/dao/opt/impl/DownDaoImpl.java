@@ -50,7 +50,7 @@ public class DownDaoImpl extends DaoImplBase<Download> {
                         if(agent > 0){
                                 object.put("agent", agent);
                         }
-                        if(banben != null){
+                        if(banben != null && !banben.equals("null")){
                                 object.put("vesion", banben);
                         }
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
@@ -61,6 +61,24 @@ public class DownDaoImpl extends DaoImplBase<Download> {
                         LOG.error(e.getMessage(), e);
                 }
                 return downloads;
+        }
+        
+        public boolean findByAgentAndUserId(int agent, String banben, Long userId){
+                try{
+                        DBObject object = new BasicDBObject();
+                        object.put("user_id", userId);
+                        if(agent > 0){
+                                object.put("agent", agent);
+                        }
+                        if(banben != null && !banben.equals("null")){
+                                object.put("vesion", banben);
+                        }
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        return cursor.hasNext();
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return false;
         }
 
         public List<Download> findByTime(String downloadTime) {

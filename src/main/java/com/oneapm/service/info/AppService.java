@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.oneapm.dao.info.impl.AppDataDaoImpl;
 import com.oneapm.dao.opt.impl.AddDaoImpl;
-import com.oneapm.dao.opt.impl.AddMDaoImpl;
 import com.oneapm.dto.Aplication;
 import com.oneapm.dto.App;
 import com.oneapm.util.OneTools;
@@ -21,7 +20,7 @@ public class AppService {
         protected static final Logger LOG = LoggerFactory.getLogger(AppService.class);
 
 
-        public static List<App> findAppByAgent(int agent, String start, String banben, String end){
+        public static List<App> findAppByAgent(int agent, String start, String end, String banben){
                 List<App> apps = new ArrayList<App>();
                 try{
                         if(agent <= 0){
@@ -35,11 +34,11 @@ public class AppService {
                 return apps;
         }
         
-        public static List<Aplication> findByAgent(int agent, String start, String banben, String end){
+        public static List<Aplication> findAplicationByAgent(int agent, String start, String banben, String end){
                 List<Aplication> apps = new ArrayList<Aplication>();
                 try{
                         apps = AppDataDaoImpl.getInstance().findByAgent(agent, start, end);
-                        if(banben != null && banben.trim().length() > 0 && (agent <= 6 || agent > 8)){
+                        if(banben != null && banben.trim().length() > 0 && !banben.equals("null") && (agent <= 6)){
                                 for(int i=0;i<apps.size();i++){
                                         App app = findById(apps.get(i).getAppId(), apps.get(i).getAgent(), apps.get(i).getAgentId());
                                         if(app != null){

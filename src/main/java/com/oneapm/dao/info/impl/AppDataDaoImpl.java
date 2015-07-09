@@ -83,6 +83,56 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
                 }
                 return false;
         }
+        /**
+         * 一段时间内是否有数据
+         * @param start
+         * @param end
+         * @param userId
+         * @param agent
+         * @return
+         */
+        public boolean existByTimeAndUserIdAndAgent(String start, String end, Long userId, int agent){
+                try{
+                        DBObject object = new BasicDBObject();
+                       BasicDBList list = new BasicDBList();
+                       list.add(new BasicDBObject("data_time", new BasicDBObject("$gte", start)));
+                       list.add(new BasicDBObject("data_time", new BasicDBObject("$lt", end)));
+                        object.put("$and", list);
+                        if(agent > 0){
+                                object.put("agent", agent);
+                        }
+                        object.put("user_id", userId);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        return cursor.hasNext();
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return false;
+        }
+        
+        public boolean duli(String start, String end, Long userId, int agentStart, int agentEnd){
+                try{
+                        DBObject object = new BasicDBObject();
+                       BasicDBList list = new BasicDBList();
+                       list.add(new BasicDBObject("data_time", new BasicDBObject("$gte", start)));
+                       list.add(new BasicDBObject("data_time", new BasicDBObject("$lt", end)));
+                        object.put("$and", list);
+                        object.put("user_id", userId);
+                        BasicDBList agents = new BasicDBList();
+                        agents.add(new BasicDBObject("agent", new BasicDBObject("$gte", agentStart)));
+                        agents.add(new BasicDBObject("agent", new BasicDBObject("$lte", agentEnd)));
+                        if(agentEnd >= agentStart){
+                                object.put("$and", agents);
+                        }else{
+                                object.put("$or", agents);
+                        }
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        return cursor.hasNext();
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return false;
+        }
         
         public List<Aplication> findByTimeAndUserId(String start, String end, Long userId){
                 List<Aplication> aplications = new ArrayList<Aplication>();

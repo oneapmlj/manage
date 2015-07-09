@@ -767,7 +767,12 @@ public class InfoService extends OneTools {
          */
         public static Info findByUserId(Long userId) {
                 Info info = InfoDaoImpl.getInstance().findByUserId(userId);
-                return findById(info.getId());
+                if (info != null) {
+                        initTag(info);
+                        power(99999999L, 7, info);
+                        initSupport(info);
+                }
+                return info;
         }
 
         public static void initInfo(Info info) {

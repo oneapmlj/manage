@@ -18,14 +18,21 @@ public class DuandianAction extends SupportAction {
         private int data;
         private int login;
         private int paixu;
-        private int sort;
-        private int guanbi;
-        private int jinri;
         private String banben;
-        private String time;
         private int fuze;
-
+        private Long groupId1;
+        private Long groupId2;
+        private Long fatherId;
+        private String dataStart;
+        private String dataEnd;
+        private int nodata;
+        private String nodataStart;
+        private String nodataEnd;
+        private int duli;
+        private String loginStart;
+        private String loginEnd;
         private List<Group> groups;
+        private int caozuo;
         public String index() {
                 if (!isLogin()) {
                         return "login";
@@ -38,9 +45,6 @@ public class DuandianAction extends SupportAction {
                 return "index";
         }
 
-        private Long groupId1;
-        private Long groupId2;
-        private Long fatherId;
         public void chaxun() throws IOException {
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
@@ -51,7 +55,8 @@ public class DuandianAction extends SupportAction {
                                 getServletResponse().getWriter().print(result);
                                 return;
                         }
-                        String result = DuandianService.chaxun(agent, data, paixu, sort, jinri, banben, time, getAdmin(), fuze, groupId1, groupId2);
+                        String result = DuandianService.chaxun(agent, data, paixu, banben, fuze, groupId1, groupId2, dataStart, dataEnd, nodataStart, nodataEnd, 
+                                        nodata, duli,login,loginStart,loginEnd,caozuo, getAdmin());
                         getServletResponse().getWriter().print(result);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
@@ -110,29 +115,6 @@ public class DuandianAction extends SupportAction {
                 this.paixu = paixu;
         }
 
-        public int getSort() {
-                return sort;
-        }
-
-        public void setSort(int sort) {
-                this.sort = sort;
-        }
-
-        public int getGuanbi() {
-                return guanbi;
-        }
-
-        public void setGuanbi(int guanbi) {
-                this.guanbi = guanbi;
-        }
-
-        public int getJinri() {
-                return jinri;
-        }
-
-        public void setJinri(int jinri) {
-                this.jinri = jinri;
-        }
 
         public String getBanben() {
                 return banben;
@@ -140,14 +122,6 @@ public class DuandianAction extends SupportAction {
 
         public void setBanben(String banben) {
                 this.banben = banben;
-        }
-
-        public String getTime() {
-                return time;
-        }
-
-        public void setTime(String time) {
-                this.time = time;
         }
 
         public int getFuze() {
@@ -188,5 +162,77 @@ public class DuandianAction extends SupportAction {
 
         public void setFatherId(Long fatherId) {
                 this.fatherId = fatherId;
+        }
+
+        public String getDataStart() {
+                return dataStart;
+        }
+
+        public void setDataStart(String dataStart) {
+                this.dataStart = dataStart;
+        }
+
+        public String getDataEnd() {
+                return dataEnd;
+        }
+
+        public void setDataEnd(String dataEnd) {
+                this.dataEnd = dataEnd;
+        }
+
+        public int getNodata() {
+                return nodata;
+        }
+
+        public void setNodata(int nodata) {
+                this.nodata = nodata;
+        }
+
+        public String getNodataStart() {
+                return nodataStart;
+        }
+
+        public void setNodataStart(String nodataStart) {
+                this.nodataStart = nodataStart;
+        }
+
+        public String getNodataEnd() {
+                return nodataEnd;
+        }
+
+        public void setNodataEnd(String nodataEnd) {
+                this.nodataEnd = nodataEnd;
+        }
+
+        public int getDuli() {
+                return duli;
+        }
+
+        public void setDuli(int duli) {
+                this.duli = duli;
+        }
+
+        public String getLoginStart() {
+                return loginStart;
+        }
+
+        public void setLoginStart(String loginStart) {
+                this.loginStart = loginStart;
+        }
+
+        public String getLoginEnd() {
+                return loginEnd;
+        }
+
+        public void setLoginEnd(String loginEnd) {
+                this.loginEnd = loginEnd;
+        }
+
+        public int getCaozuo() {
+                return caozuo;
+        }
+
+        public void setCaozuo(int caozuo) {
+                this.caozuo = caozuo;
         }
 }

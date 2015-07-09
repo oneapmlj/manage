@@ -1,9 +1,20 @@
-//var guanbi = 0;
-var jinri = 0;
 var fuze = 0;
-var date_id = "";
 
 $(document).ready(function() {
+	$("#duandian_zidingyishijian_start_login").live("click", function(){
+		laydate({
+		    elem: '#duandian_zidingyishijian_start_login',
+		    max: laydate.now(), //+1代表明天，+2代表后天，以此类推
+		    format: 'YYYY-MM-DD',
+		});
+	});
+	$("#duandian_zidingyishijian_end_login").live("click", function(){
+		laydate({
+		    elem: '#duandian_zidingyishijian_end_login',
+		    max: laydate.now(), //+1代表明天，+2代表后天，以此类推
+		    format: 'YYYY-MM-DD',
+		});
+	});
 	$("#duandian_zidingyishijian_start").live("click", function(){
 		laydate({
 		    elem: '#duandian_zidingyishijian_start',
@@ -97,7 +108,7 @@ $(document).ready(function() {
 	});
 	$("#duandian_data").live("change", function(){
 		var id = $(this).val();
-		if(id == 9){
+		if(id == 6){
 			$("#duandian_zidingyishijian").val("");
 			$(".duandian_zidingyishijian").removeClass("hidden");
 		}else{
@@ -107,7 +118,7 @@ $(document).ready(function() {
 	});
 	$("#duandian_data_activ").live("change", function(){
 		var id = $(this).val();
-		if(id == 9){
+		if(id == 6){
 			$("#duandian_zidingyishijian_activ").val("");
 			$(".duandian_zidingyishijian_activ").removeClass("hidden");
 		}else{
@@ -119,22 +130,28 @@ $(document).ready(function() {
 		$("#duandian_chaxun").html("查询中");
 		$("#duandian_result").html("");
 		$(".duandian_result_msg").html("");
+		var paixu = $("#paixu").val();
 		var agent = $("#duandian_agent").val();
-		var data = $("#duandian_data").val();
+		var banben = $("#duandian_banben").val();
 		var groupId1 = $("#duandian_group_1").val();
 		var groupId2 = $("#duandian_group_2").val();
-		var paixu = $("#paixu").val();
-//		var login = $("#duandian_login").val();
-		var banben = $("#duandian_banben").val();
-		var time = $("#duandian_zidingyishijian").val();
-		if(data == 0 && agent == 0 && fuze == 0){
-			alert("至少选择中条件");
-			return;
-		}
+		var caozuo = $("#duandian_data_else").val();
+		
+		var data = $("#duandian_data_activ").val();
+		var data_start = $("#duandian_zidingyishijian_start_activ").val();
+		var data_end = $("#duandian_zidingyishijian_end_activ").val();
+		var nodata = $("#duandian_data").val();
+		var nodata_start = $("#duandian_zidingyishijian_start").val();
+		var nodata_end = $("#duandian_zidingyishijian_end").val();
+		var duli = $("#duandian_data_duli").val();
+		var login = $("#duandian_login").val();
+		var login_start = $("#duandian_zidingyishijian_start_login").val();
+		var login_end = $("#duandian_zidingyishijian_end_login").val();
 		$.ajax({
 			dataType:'json',
 			url:'duandian_chaxun.action',
-			data:{agent:agent,data:data,jinri:jinri,banben:banben,time:time,fuze:fuze,groupId1:groupId1,groupId2:groupId2,paixu:paixu}
+			data:{agent:agent,banben:banben,fuze:fuze,groupId1:groupId1,groupId2:groupId2,paixu:paixu,caozuo:caozuo,data:data,dataStart:data_start,
+				dataEnd:data_end,nodata:nodata,nodataStart:nodata_start,nodataEnd:nodata_end,duli:duli,login:login,loginStart:login_start,loginEnd:login_end}
 		}).done(function(da){
 			if(da.status == 1){
 				var html = "";
@@ -159,7 +176,7 @@ $(document).ready(function() {
 				$("#duandian_chaxun").html("查询");
 			}else{
 				alert(da.msg);
-				$("#duandian_chaxun").val("查询");
+				$("#duandian_chaxun").html("查询");
 			}
 		});
 		
