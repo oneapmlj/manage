@@ -18,16 +18,12 @@ import com.oneapm.dto.Aplication;
 import com.oneapm.dto.App;
 import com.oneapm.dto.Download;
 import com.oneapm.dto.Account.Admin;
-import com.oneapm.dto.group.Group;
-import com.oneapm.dto.group.GroupView;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.lable.Lable;
 import com.oneapm.dto.tag.Language;
-import com.oneapm.service.group.GroupService;
 import com.oneapm.service.lable.LableService;
 import com.oneapm.service.mail.DownloadService;
 import com.oneapm.util.OneTools;
-import com.oneapm.util.SortList;
 import com.oneapm.util.TimeTools;
 
 public class DuandianService {
@@ -113,7 +109,7 @@ public class DuandianService {
          * @return
          */
         public static String chaxun(int agent, int data, int paixu, String banben, int fuze, Long groupId1, Long groupId2, String dataStart, String dataEnd, String nodataStart, 
-                        String nodataEnd, int nodata, int duli, int login, String loginStart, String loginEnd, int caozuo, Admin admin){
+                        String nodataEnd, int nodata, int duli, int login, String loginStart, String loginEnd, int caozuo, int caozuoTime, String caozuoStart, String caozuoEnd, Admin admin){
                 try{
                         List<String> args1 = new ArrayList<String>();
                         List<Object> args2 = new ArrayList<Object>();
@@ -124,6 +120,8 @@ public class DuandianService {
                         long nodata_end = 0;
                         long login_start = 0;
                         long login_end = 0;
+                        long caozuo_start = 0;
+                        long caozuo_end = 0;
                         if(login > 0){
                                 switch(login){
                                         case 1:loginStart = TimeTools.getDateTime(0);loginEnd = TimeTools.getDateTime(-1);break;
@@ -155,6 +153,40 @@ public class DuandianService {
                                                 break;
                                         default:return OneTools.getResult(0, "login参数错误");
                                 }
+                        }
+                        if(caozuoTime > 0){
+                                switch(caozuoTime){
+                                        case 1:caozuoStart = TimeTools.getDateTime(0);caozuoEnd = TimeTools.getDateTime(-1);break;
+                                        case 2:caozuoStart = TimeTools.getDateTime(1);caozuoEnd = TimeTools.getDateTime(0);break;
+                                        case 3:caozuoStart = TimeTools.getDateTime(7);caozuoEnd = TimeTools.getDateTime(0);break;
+                                        case 4:caozuoStart = TimeTools.getDateTime(14);caozuoEnd = TimeTools.getDateTime(0);break;
+                                        case 5:caozuoStart = TimeTools.getDateTime(30);caozuoEnd = TimeTools.getDateTime(0);break;
+                                        case 6:
+                                                if(caozuoStart == null)return OneTools.getResult(0, "请填写时间区间");
+                                                caozuoStart += " 00:00:00";
+                                                if(caozuoEnd == null){
+                                                        caozuoEnd = end;
+                                                }else{
+                                                        caozuoEnd+= " 00:00:00";
+                                                }
+                                                try{
+                                                        caozuoEnd = TimeTools.next(caozuoEnd, 1);
+                                                        caozuo_start = TimeTools.formatTime.parse(caozuoStart).getTime();
+                                                        caozuo_end= TimeTools.formatTime.parse(caozuoEnd).getTime();
+                                                        if(caozuo_start > new Date().getTime()){
+                                                                return OneTools.getResult(0, "caozuo 我不是先知啊！！以后的事我哪知道");
+                                                        }
+                                                        if(caozuo_end <= caozuo_start){
+                                                                return OneTools.getResult(0, "caozuo起始时间比结束时间还大，我们不是一个维度的");
+                                                        }
+                                                }catch (Exception e) {
+                                                        return OneTools.getResult(0, "caozuo 时间格式错误");
+                                                }
+                                                break;
+                                        default:return OneTools.getResult(0, "caozuo参数错误");
+                                }
+                        }else{
+                                caozuoStart=null;
                         }
                         if(data > 0){
                                 switch(data){
@@ -309,7 +341,7 @@ public class DuandianService {
                                                 switch (caozuo) {
                                                 //下载，（无数据，登录，版本，语言）
                                                         case 1:
-                                                                List<Download> downloads = DownloadService.findByAgent(agent, banben);
+                                                                List<Download> downloads = DownloadService.findByAgent(agent, banben, caozuoStart, caozuoEnd);
                                                                 if(downloads.size() > 0){
                                                                         for(int i=0;i<downloads.size()-1;i++){
                                                                                 for(int j=i+1;j<downloads.size();j++){
@@ -325,7 +357,7 @@ public class DuandianService {
                                                                 }
                                                                 break;
                                                         case 2:
-                                                                List<App> apps = AppDaoImpl.getInstance().findByAgent(agent, banben, false);
+                                                                List<App> apps = AppDaoImpl.getInstance().findByAgent(agent, banben, false, caozuoStart, caozuoEnd);
                                                                 if(apps.size() > 0){
                                                                         for(int i=0;i<apps.size()-1;i++){
                                                                                 for(int j=i+1;j<apps.size();j++){
@@ -341,7 +373,7 @@ public class DuandianService {
                                                                 }
                                                                 break;
                                                         case 3:
-                                                                List<App> aps = AppDaoImpl.getInstance().findByAgent(agent, banben, true);
+                                                                List<App> aps = AppDaoImpl.getInstance().findByAgent(agent, banben, true, caozuoStart, caozuoEnd);
                                                                 if(aps.size() > 0){
                                                                         for(int i=0;i<aps.size()-1;i++){
                                                                                 for(int j=i+1;j<aps.size();j++){
@@ -396,15 +428,12 @@ public class DuandianService {
                                                                                 }
                                                                         }
                                                                         if(agent > 0){
-                                                                                if(AppDaoImpl.getInstance().findByAgentAndUserId(logins.get(i), agent, banben)){
-                                                                                        logins.remove(i);
-                                                                                        i--;
-                                                                                        continue;
-                                                                                }
-                                                                                if(DownDaoImpl.getInstance().findByAgentAndUserId(agent, banben, logins.get(i))){
-                                                                                        logins.remove(i);
-                                                                                        i--;
-                                                                                        continue;
+                                                                                if(!AppDaoImpl.getInstance().findByAgentAndUserId(logins.get(i), agent, banben)){
+                                                                                        if(!DownDaoImpl.getInstance().findByAgentAndUserId(agent, banben, logins.get(i))){
+                                                                                                logins.remove(i);
+                                                                                                i--;
+                                                                                                continue;
+                                                                                        }
                                                                                 }
                                                                         }
                                                                         infos.add(InfoService.findByUserId(logins.get(i)));

@@ -43,7 +43,7 @@ public class DownDaoImpl extends DaoImplBase<Download> {
                 return versions;
         }
         
-        public List<Download> findByAgent(int agent, String banben){
+        public List<Download> findByAgent(int agent, String banben, String start, String end){
                 List<Download> downloads = new ArrayList<Download>();
                 try{
                         DBObject object = new BasicDBObject();
@@ -52,6 +52,10 @@ public class DownDaoImpl extends DaoImplBase<Download> {
                         }
                         if(banben != null && !banben.equals("null")){
                                 object.put("vesion", banben);
+                        }
+                        if(start != null){
+                                object.put("create_time", new BasicDBObject("$gte", start));
+                                object.put("create_time", new BasicDBObject("$lt", end));
                         }
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
                         while(cursor.hasNext()){

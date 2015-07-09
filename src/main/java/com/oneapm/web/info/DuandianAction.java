@@ -33,6 +33,9 @@ public class DuandianAction extends SupportAction {
         private String loginEnd;
         private List<Group> groups;
         private int caozuo;
+        private int caozuoTime;
+        private String caozuoStart;
+        private String caozuoEnd;
         public String index() {
                 if (!isLogin()) {
                         return "login";
@@ -56,7 +59,7 @@ public class DuandianAction extends SupportAction {
                                 return;
                         }
                         String result = DuandianService.chaxun(agent, data, paixu, banben, fuze, groupId1, groupId2, dataStart, dataEnd, nodataStart, nodataEnd, 
-                                        nodata, duli,login,loginStart,loginEnd,caozuo, getAdmin());
+                                        nodata, duli,login,loginStart,loginEnd,caozuo, caozuoTime, caozuoStart, caozuoEnd, getAdmin());
                         getServletResponse().getWriter().print(result);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
@@ -234,5 +237,29 @@ public class DuandianAction extends SupportAction {
 
         public void setCaozuo(int caozuo) {
                 this.caozuo = caozuo;
+        }
+
+        public int getCaozuoTime() {
+                return caozuoTime;
+        }
+
+        public void setCaozuoTime(int caozuoTime) {
+                this.caozuoTime = caozuoTime;
+        }
+
+        public String getCaozuoStart() {
+                return caozuoStart;
+        }
+
+        public void setCaozuoStart(String caozuoStart) {
+                this.caozuoStart = caozuoStart;
+        }
+
+        public String getCaozuoEnd() {
+                return caozuoEnd;
+        }
+
+        public void setCaozuoEnd(String caozuoEnd) {
+                this.caozuoEnd = caozuoEnd;
         }
 }

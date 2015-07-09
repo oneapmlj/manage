@@ -25,18 +25,22 @@ public class AppDaoImpl extends DaoImplBase<App> {
         public static AppDaoImpl getInstance() {
                 return Instance;
         }
-        public List<App> findByAgent(int agent, String banben, boolean dataTime){
+        public List<App> findByAgent(int agent, String banben, boolean dataTime, String start, String end){
                 List<App> apps = new ArrayList<App>();
                 try{
                         DBObject object = new BasicDBObject();
                         if(agent > 0){
                                 object.put("agent", agent);
-                                if(agent < 7){
+                                if(agent < 7 && banben != null && !banben.equals("null")){
                                         object.put("version", banben);
                                 }
                         }
                         if(dataTime){
                                 object.put("data_time", new BasicDBObject("$gte","2014-01-01 00:00:00"));
+                        }
+                        if(start != null){
+                                object.put("create_time", new BasicDBObject("$gte", start));
+                                object.put("create_time", new BasicDBObject("$lt", end));
                         }
                         object.put("parent_id", 0L);
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object);

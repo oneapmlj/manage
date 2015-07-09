@@ -19,8 +19,8 @@ public class DownloadService {
                 return downloads;
         }
         
-        public static List<Download> findByAgent(int agent, String banben){
-                return DownDaoImpl.getInstance().findByAgent(agent, banben);
+        public static List<Download> findByAgent(int agent, String banben, String start, String end){
+                return DownDaoImpl.getInstance().findByAgent(agent, banben, start, end);
         }
         public static List<String> findVersions(int agent){
                 return DownDaoImpl.getInstance().findVersions(agent);

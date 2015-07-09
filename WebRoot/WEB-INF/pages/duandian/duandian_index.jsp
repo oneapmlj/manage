@@ -90,11 +90,25 @@
 								<option value="3">有过数据</option>
 							</select>
 						</div>
-						<div style="width:75px;float:left;height:30px;">
-							<div id="duandian_fuze" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">我负责的</div>
+						<div style="width:150px;float:left;height:30px;" class="duandian_data_else_select hidden">
+							时间:
+							<select class="hand" id="duandian_data_else_select">
+								<option value="0" selected="selected">全部</option>
+								<option value="1">今日</option>
+								<option value="2">昨日</option>
+								<option value="3">最近一周</option>
+								<option value="4">最近二周</option>
+								<option value="5">最近一个月</option>
+								<option value="6">自定义时间</option>
+							</select>
 						</div>
-						<div style="hieght:30px;width:135px;float:left;">
-							<div id="duandian_chaxun" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">查询</div>
+						<div class="hidden duandian_data_else" style="width:160px;float:left;height:30px;font-size:14px;">
+							起始时间:
+							<input type="text" id="duandian_data_else_start" value="" style="width:80px;"/>
+						</div>
+						<div class="hidden duandian_data_else" style="width:160px;float:left;height:30px;font-size:14px;">
+							结束时间:
+							<input type="text" id="duandian_data_else_end" value="" style="width:80px;"/>
 						</div>
 					</div>
 					<div style="margin-top:10px;width:1200px;margin-left:auto;margin-right:auto;float:left;line-height:30px;">
@@ -138,7 +152,7 @@
 							结束时间:
 							<input type="text" id="duandian_zidingyishijian_end" value="" style="width:80px;"/>
 						</div>
-						<div style="margin-left:20px;width:170px;float:left;height:30px;">
+						<div style="margin-left:20px;width:170px;float:left;height:30px;" class="hidden duandian_data_duli">
 							独立用户:
 							<select class="hand" id="duandian_data_duli">
 								<option value="0" selected="selected">全部</option>
@@ -177,6 +191,12 @@
 						<div class="hidden duandian_zidingyishijian_login" style="width:160px;float:left;height:30px;font-size:14px;">
 							结束时间:
 							<input type="text" id="duandian_zidingyishijian_end_login" value="" style="width:80px;"/>
+						</div>
+						<div style="width:75px;float:left;height:30px;">
+							<div id="duandian_fuze" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">我负责的</div>
+						</div>
+						<div style="hieght:30px;width:135px;float:left;">
+							<div id="duandian_chaxun" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">查询</div>
 						</div>
 					</div>
 					<div style="float:left;width:1200px;height:30px;">

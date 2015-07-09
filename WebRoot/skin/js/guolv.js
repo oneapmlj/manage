@@ -109,7 +109,8 @@ $(document).ready(function() {
 	$("#duandian_data").live("change", function(){
 		var id = $(this).val();
 		if(id == 6){
-			$("#duandian_zidingyishijian").val("");
+			$("#duandian_zidingyishijian_start").val("");
+			$("#duandian_zidingyishijian_end").val("");
 			$(".duandian_zidingyishijian").removeClass("hidden");
 		}else{
 			$("#duandian_zidingyishijian").val("");
@@ -119,11 +120,37 @@ $(document).ready(function() {
 	$("#duandian_data_activ").live("change", function(){
 		var id = $(this).val();
 		if(id == 6){
-			$("#duandian_zidingyishijian_activ").val("");
+			$("#duandian_zidingyishijian_start_activ").val("");
+			$("#duandian_zidingyishijian_end_activ").val("");
 			$(".duandian_zidingyishijian_activ").removeClass("hidden");
 		}else{
 			$("#duandian_zidingyishijian_activ").val("");
 			$(".duandian_zidingyishijian_activ").addClass("hidden");
+		}
+		if(id > 0){
+			$(".duandian_data_duli").removeClass("hidden");
+		}else{
+			$(".duandian_data_duli").addClass("hidden");
+		}
+	});
+	$("#duandian_data_else").live("change", function(){
+		var id = $(this).val();
+		if(id > 0 && id <3){
+			$(".duandian_data_else_select").removeClass("hidden");
+		}else{
+			$(".duandian_data_else_select").addClass("hidden");
+			$(".duandian_data_else").addClass("hidden");
+			$("#duandian_data_else_select").val("0");
+		}
+	});
+	$("#duandian_data_else_select").live("change", function(){
+		var id = $(this).val();
+		if(id ==6){
+			$("#duandian_data_else_start").val("");
+			$("#duandian_data_else_end").val("");
+			$(".duandian_data_else").removeClass("hidden");
+		}else{
+			$(".duandian_data_else").addClass("hidden");
 		}
 	});
 	$("#duandian_chaxun").live('click', function(){
@@ -136,6 +163,9 @@ $(document).ready(function() {
 		var groupId1 = $("#duandian_group_1").val();
 		var groupId2 = $("#duandian_group_2").val();
 		var caozuo = $("#duandian_data_else").val();
+		var caozuo_time = $("#duandian_data_else_select").val();
+		var caozuo_start = $("#duandian_data_else_start").val();
+		var caozuo_end = $("#duandian_data_else_end").val();
 		
 		var data = $("#duandian_data_activ").val();
 		var data_start = $("#duandian_zidingyishijian_start_activ").val();
@@ -147,11 +177,13 @@ $(document).ready(function() {
 		var login = $("#duandian_login").val();
 		var login_start = $("#duandian_zidingyishijian_start_login").val();
 		var login_end = $("#duandian_zidingyishijian_end_login").val();
+		
 		$.ajax({
 			dataType:'json',
 			url:'duandian_chaxun.action',
 			data:{agent:agent,banben:banben,fuze:fuze,groupId1:groupId1,groupId2:groupId2,paixu:paixu,caozuo:caozuo,data:data,dataStart:data_start,
-				dataEnd:data_end,nodata:nodata,nodataStart:nodata_start,nodataEnd:nodata_end,duli:duli,login:login,loginStart:login_start,loginEnd:login_end}
+				dataEnd:data_end,nodata:nodata,nodataStart:nodata_start,nodataEnd:nodata_end,duli:duli,login:login,loginStart:login_start,loginEnd:login_end,
+				caozuoTime:caozuoTime,caozuoStart:caozuo_start,caozuoEnd:caozuo_end}
 		}).done(function(da){
 			if(da.status == 1){
 				var html = "";
