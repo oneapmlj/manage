@@ -24,7 +24,7 @@ var liucun = function(){
 			}
 			html +="</div>";
 			for(var i=0;i<list.length;i++){
-				var width = list[i].length*82 + 170;
+				var width = width1;
 				html += "<div style='width:"+width+"px;min-width:1200px;float:left;'>"
 				html += "<div style='margin-left:0px;width:160px;height:30px;line-height:30px;float:left;' class='public_table_line_2 hand HANG'"
 							+" id='"+list[i][0].dataTimeStart+"-"+list[i][0].dataTimeEnd+"'><span>"
@@ -92,8 +92,9 @@ var zhuanhua = function(){
 	}).done(function(da){
 		if(da.status == 1){
 			var list = da.liucun;
+			var width1 = list[0].length*60 + 170;
 			var html = "<div style='width:1200px;margin-left:5px;font-size:13px;overflow:scroll;'>";
-			html += "<div style='width:"+width+"px;min-width:1200px;float:left;'>"
+			html += "<div style='width:"+width1+"px;min-width:1200px;float:left;'>"
 						+"<div style='margin-left:0px;margin-top:0px;width:160px;height:30px;line-height:30px;float:left;' class='public_table_line_2'>时间</div>"
 						+"<div style='margin-top:0px;float:left;width:60px;height:30px;line-height:30px;' class='public_table_line_2'>初始数据</div>";
 			for(var i=1;i<list[0].length;i++){
