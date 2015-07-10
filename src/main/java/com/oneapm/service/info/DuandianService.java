@@ -24,6 +24,7 @@ import com.oneapm.dto.tag.Language;
 import com.oneapm.service.lable.LableService;
 import com.oneapm.service.mail.DownloadService;
 import com.oneapm.util.OneTools;
+import com.oneapm.util.SortList;
 import com.oneapm.util.TimeTools;
 
 public class DuandianService {
@@ -455,6 +456,14 @@ public class DuandianService {
                                                 infos.remove(i);
                                                 i--;
                                         }
+                                }
+                        }
+                        if(paixu > 0 && infos.size() > 1){
+                                SortList<Info> sortList = new SortList<Info>();  
+                                switch (paixu) {
+                                        case 1:sortList.Sort(infos, "getCreateTime", null);break;
+                                        case 2:sortList.Sort(infos, "getUserIdPaixu", null);break;
+                                        default:break;
                                 }
                         }
                         args1.add("infos");

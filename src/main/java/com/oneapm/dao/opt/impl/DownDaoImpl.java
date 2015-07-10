@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -54,8 +55,10 @@ public class DownDaoImpl extends DaoImplBase<Download> {
                                 object.put("vesion", banben);
                         }
                         if(start != null){
-                                object.put("create_time", new BasicDBObject("$gte", start));
-                                object.put("create_time", new BasicDBObject("$lt", end));
+                                BasicDBList list = new BasicDBList();
+                                list.add(new BasicDBObject("create_time", new BasicDBObject("$gte", start)));
+                                list.add(new BasicDBObject("create_time", new BasicDBObject("$lt", end)));
+                                object.put("$and", list);
                         }
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
                         while(cursor.hasNext()){

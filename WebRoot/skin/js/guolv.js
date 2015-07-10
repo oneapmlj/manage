@@ -183,7 +183,7 @@ $(document).ready(function() {
 			url:'duandian_chaxun.action',
 			data:{agent:agent,banben:banben,fuze:fuze,groupId1:groupId1,groupId2:groupId2,paixu:paixu,caozuo:caozuo,data:data,dataStart:data_start,
 				dataEnd:data_end,nodata:nodata,nodataStart:nodata_start,nodataEnd:nodata_end,duli:duli,login:login,loginStart:login_start,loginEnd:login_end,
-				caozuoTime:caozuoTime,caozuoStart:caozuo_start,caozuoEnd:caozuo_end}
+				caozuoTime:caozuo_time,caozuoStart:caozuo_start,caozuoEnd:caozuo_end}
 		}).done(function(da){
 			if(da.status == 1){
 				var html = "";

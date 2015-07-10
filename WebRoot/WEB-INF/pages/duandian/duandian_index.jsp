@@ -242,7 +242,7 @@
 					  			<th style="width:3%"></th>
 							</tr> 
 						</thead> 
-						<tbody id="duandian_result"> 
+						<tbody id="duandian_result" style="font-size:12px;"> 
 						</tbody> 
 					</table>
 				</div>
