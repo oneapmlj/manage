@@ -3,9 +3,8 @@ package com.oneapm.web.account;
 import java.io.IOException;
 
 import com.oneapm.service.account.PayService;
-import com.oneapm.service.info.InfoService;
-import com.oneapm.service.record.Xiaoshouyi;
 import com.oneapm.util.OneTools;
+import com.oneapm.util.test.Shouhui;
 import com.oneapm.web.SupportAction;
 
 public class PayAction extends SupportAction {
@@ -28,6 +27,7 @@ public class PayAction extends SupportAction {
 //                        Shouhui.wajue();
 //                       LOG.info("START LIANXUI");
 //                        Shouhui.genzongbaobiao();
+                        
 //                        LOG.info("START DIAOSHUJU");
 //                        Shouhui.diaoshujuliebiao();
 //                        LOG.info("START LIUCUN");

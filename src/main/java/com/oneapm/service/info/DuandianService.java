@@ -125,6 +125,7 @@ public class DuandianService {
                         long caozuo_end = 0;
                         if(login > 0){
                                 switch(login){
+                                        case 0:loginStart = "2014-01-01 00:00:00";loginEnd = TimeTools.getDateTime(-1);break;
                                         case 1:loginStart = TimeTools.getDateTime(0);loginEnd = TimeTools.getDateTime(-1);break;
                                         case 2:loginStart = TimeTools.getDateTime(1);loginEnd = TimeTools.getDateTime(0);break;
                                         case 3:loginStart = TimeTools.getDateTime(7);loginEnd = TimeTools.getDateTime(0);break;

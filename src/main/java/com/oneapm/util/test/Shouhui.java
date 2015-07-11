@@ -56,7 +56,7 @@ class Laiyuan{
                 setFrom(from);
                 setSign(sign);
                 setDownload(download);
-                setApp(data_app);
+                setApp(app);
                 setData(data);
                 setData_app(data_app);
                 setData_sign(data_sign);
@@ -228,9 +228,10 @@ public class Shouhui {
          * 跟踪报表
          */
         public static void genzongbaobiao(){
-                String start = TimeTools.getDateTime(7);
-                String end = TimeTools.getDateTime(0);
-                String end1 = TimeTools.getDateTime(-1);
+                int before = 1;
+                String start = TimeTools.getDateTime(7+before);
+                String end = TimeTools.getDateTime(0+before);
+                String end1 = TimeTools.getDateTime(-1+before);
                 List<Laiyuan> laiyuans = new ArrayList<Laiyuan>();
                 List<Info> infos = new ArrayList<Info>();
                 addLaiyuan(0L, "", start, end, end1, laiyuans, "", infos);
@@ -388,14 +389,18 @@ public class Shouhui {
                         if(TianjiaDaoImpl.getInstance().findById(info.getUserId())){
                               app1++;  
                         }
-                        if(AppDataDaoImpl.getInstance().existByTimeAndUserId(start, end, info.getUserId())){
-                                data1++;
-                        }
-                        List<Aplication> aplications = AppDataDaoImpl.getInstance().findByTimeAndUserId(end, end1, info.getUserId());
+//                        if(AppDataDaoImpl.getInstance().existByTimeAndUserId(start, end, info.getUserId())){
+//                                data1++;
+//                        }
+//                        List<Aplication> aplications = AppDataDaoImpl.getInstance().findByTimeAndUserId(end, end1, info.getUserId());
+                        List<Aplication> aplications = AppDataDaoImpl.getInstance().findByTimeAndUserId(TimeTools.getDateTime(1), end1, info.getUserId());
                         Set<Long> set = new HashSet<Long>();
+                        Set<Long> setUser = new HashSet<Long>();
                         for(Aplication aplication : aplications){
                                 set.add(aplication.getAppId());
+                                setUser.add(aplication.getUserId());
                         }
+                        data1 += setUser.size();
                         data_app1 += set.size();
                 }
                 double data_sign1 = 0;

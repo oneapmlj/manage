@@ -51,7 +51,7 @@ public class DownDaoImpl extends DaoImplBase<Download> {
                         if(agent > 0){
                                 object.put("agent", agent);
                         }
-                        if(banben != null && !banben.equals("null")){
+                        if(banben != null && banben.trim().length() > 0 && !banben.equals("null") ){
                                 object.put("vesion", banben);
                         }
                         if(start != null){

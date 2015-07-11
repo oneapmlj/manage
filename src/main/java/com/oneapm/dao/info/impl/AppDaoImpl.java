@@ -96,7 +96,11 @@ public class AppDaoImpl extends DaoImplBase<App> {
                                 agentId = Long.parseLong(object.get("agent_id").toString());
                         }catch(Exception e){}
                         String appName = object.get("name").toString();
-                        String version = object.get("version").toString();
+                        
+                        String version = null;
+                        try{
+                                version = object.get("version").toString();
+                        }catch(Exception e){}
                         ap = new App(userId, createTime, language, appId, appName, dataTime, agent, agentId);
                         ap.setVersion(version);
                 } catch (Exception e) {

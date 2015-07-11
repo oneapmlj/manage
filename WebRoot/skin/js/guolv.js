@@ -1,6 +1,231 @@
 var fuze = 0;
-
+var father = 0; 
+var lable_list = 1;
 $(document).ready(function() {
+	$(".go_from").live('click', function(){
+		$(".go_guolv_ding").addClass("go_guolv");
+		$(".go_guolv").removeClass("go_guolv_ding");
+		$(".go_guolv").removeClass("biankuang_blue_ding");
+		$(".go_guolv").addClass("biankuang_gray");
+		
+		$(".go_from").addClass("go_from_ding");
+		$(".go_from_ding").removeClass("go_from");
+		$(".go_from_ding").removeClass("biankuang_gray");
+		$(".go_from_ding").addClass("biankuang_blue_ding");
+		
+		$(".go_baobiao_ding").addClass("go_baobiao");
+		$(".go_baobiao").removeClass("go_baobiao_ding");
+		$(".go_baobiao").removeClass("biankuang_blue_ding");
+		$(".go_baobiao").addClass("biankuang_gray");
+		
+		$(".guolv").addClass("hidden");
+		$(".from").removeClass("hidden");
+		$(".baobiao").addClass("hidden");
+		$.ajax({
+			dataType:'json',
+			url:'lable_lable.action',
+			data:{lableId:0}
+		}).done(function(da){
+			if(da.status == 1){
+				if(da.lables.length > 0){
+					var lables = da.lables;
+					var html = "<select style='width:100px;' class='hand lable_list lable_list_"+lables[0].grade+"'>"
+							+"<option value='0'>所有</option>";
+					var i = 0;
+					while(lables.length > i){
+						html += "<option value='"+lables[i].id+"'>"+lables[i].name+"</option>";
+						i++;
+					}
+					html += "</select>";
+					$(".lable_"+lables[0].grade).html(html);
+					$(".lable_"+lables[0].grade).removeClass("hidden");
+				}
+			}else{
+				alert(da.msg)
+			}
+		});
+	});
+	$(".go_guolv").live('click', function(){
+		$(".go_guolv").addClass("go_guolv_ding");
+		$(".go_guolv_ding").removeClass("go_guolv");
+		$(".go_guolv_ding").removeClass("biankuang_gray");
+		$(".go_guolv_ding").addClass("biankuang_blue_ding");
+		
+		$(".go_from_ding").addClass("go_from");
+		$(".go_from").removeClass("go_from_ding");
+		$(".go_from").removeClass("biankuang_blue_ding");
+		$(".go_from").addClass("biankuang_gray");
+		
+		$(".go_baobiao_ding").addClass("go_baobiao");
+		$(".go_baobiao").removeClass("go_baobiao_ding");
+		$(".go_baobiao").removeClass("biankuang_blue_ding");
+		$(".go_baobiao").addClass("biankuang_gray");
+		
+		$(".guolv").removeClass("hidden");
+		$(".from").addClass("hidden");
+		$(".baobiao").addClass("hidden");
+	});
+	$(".go_baobiao").live('click', function(){
+		$(".go_baobiao").addClass("go_baobiao_ding");
+		$(".go_baobiao_ding").removeClass("go_baobiao");
+		$(".go_baobiao_ding").removeClass("biankuang_gray");
+		$(".go_baobiao_ding").addClass("biankuang_blue_ding");
+		
+		$(".go_guolv_ding").addClass("go_guolv");
+		$(".go_guolv").removeClass("go_guolv_ding");
+		$(".go_guolv").removeClass("biankuang_blue_ding");
+		$(".go_guolv").addClass("biankuang_gray");
+		
+		$(".go_from_ding").addClass("go_from");
+		$(".go_from").removeClass("go_from_ding");
+		$(".go_from").removeClass("biankuang_blue_ding");
+		$(".go_from").addClass("biankuang_gray");
+		
+		$(".guolv").addClass("hidden");
+		$(".from").addClass("hidden");
+		$(".baobiao").removeClass("hidden");
+	});
+	$(".from_chaxun").live('click', function(){
+		if(father <= 0){
+			alert("至少选一个来源分类");
+			return;
+		}
+		$(".from_chaxun").html("查询中");
+		$("#duandian_result").html("");
+		$(".duandian_result_msg").html("");
+		$(".from_chaxun").val("查询中");
+		$(".from_chaxun").addClass("from_chaxun_ding");
+		$(".from_chaxun_ding").removeClass("from_chaxun");
+		$.ajax({
+			dataType:'json',
+			url:'duandian_chaxun.action',
+			data:{fatherId:father}
+		}).done(function(da){
+			if(da.status == 1){
+				var html = "";
+				for(var i=0;i<da.infos.length;i++){
+					html += "<tr>" 
+								+"<td></td>"
+								+"<td>"+da.infos[i].userId+"</td>"
+								+"<td>"+da.infos[i].name+"</td>"
+								+"<td>"+da.infos[i].company+"</td>"
+								+"<td>"+da.infos[i].project+"</td>"
+								+"<td>"+da.infos[i].language+"</td>"
+								+"<td>"+da.infos[i].comming+"</td>"
+								+"<td>"+da.infos[i].saleName+"</td>"
+								+"<td>"+da.infos[i].preSaleName+"</td>"
+								+"<td>"+da.infos[i].supportName+"</td>"
+								+"<td><input val1='"+da.infos[i].id+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' /></td>"
+								+"<td></td>"
+								+"</tr>";
+				}
+				$("#duandian_result").html(html);
+				$(".duandian_result_msg").html("总数："+da.infos.length);
+				$(".from_chaxun_ding").val("查询");
+				$(".from_chaxun_ding").addClass("from_chaxun");
+				$(".from_chaxun").removeClass("from_chaxun_ding");
+			}else{
+				alert(da.msg);
+				$(".from_chaxun_ding").html("查询");
+				$(".from_chaxun_ding").addClass("from_chaxun");
+				$(".from_chaxun").removeClass("from_chaxun_ding");
+			}
+		});
+	});
+	$(".lable_list").live("change", function(){
+		var lableId = $(this).val();
+		var val = Number($(this).parent().attr("val"));
+		if(val > 7){
+			return;
+		}
+		for(var i=val+1;i<=7;i++){
+			$(".lable_"+i).html("");
+			$(".lable_"+i).addClass("hidden");
+			lable_list = val;
+		}if(lableId <= 0){
+			if(val == 1){
+				father = 0;
+			}else{
+				var a = val - 1;
+				father = $(".lable_list_"+a).val();
+			}
+		}
+		if(lableId > 0){
+			father = lableId;
+			$.ajax({
+				dataType:'json',
+				url:'lable_lable.action',
+				data:{lableId:lableId}
+			}).done(function(da){
+				if(da.status == 1){
+					if(da.lables.length > 0){
+						var lables = da.lables;
+						var html = "<select style='width:100px;' class='hand lable_list lable_list_"+lables[0].grade+"'>"
+								+"<option value='0'>所有</option>";
+						var i = 0;
+						while(lables.length > i){
+							html += "<option value='"+lables[i].id+"'>"+lables[i].name+"</option>";
+							i++;
+						}
+						html += "</select>";
+						$(".lable_"+lables[0].grade).html(html);
+						$(".lable_"+lables[0].grade).removeClass("hidden");
+						lable_list = lables[0].grade;
+					}
+				}else{
+					alert(da.msg)
+				}
+			});
+		}else{
+			var val = $(this).parent().attr("val");
+			if(val > 1){
+				val --;
+				var lableId = $(".lable_list_"+val).val();
+				$.ajax({
+					dataType:'json',
+					url:'lable_single.action',
+					data:{lableId:lableId}
+				}).done(function(da){
+					if(da.status == 1){
+						$("#myText").val(da.lable.from);
+					}else{
+						alert(da.msg)
+					}
+				});
+			}
+		}
+		
+	});
+	
+	$("#duandian_group_1").live('click', function(){
+		var id = $("#duandian_group_1").val();
+		if(id > 0){
+			$.ajax({
+				dataType:'json',
+				url:'group_group.action',
+				data:{groupId:id}
+			}).done(function(da){
+				if(da.status == 1){
+					if(da.groups.length > 0){
+						var html = "<option value='0'>全部</option>";
+						for(var i=0;i<da.groups.length;i++){
+							html += "<option value='"+da.groups[i].id+"'>"+da.groups[i].name+"</option>";
+						}
+						$("#duandian_group_2").html(html);
+						$(".duandian_group_2").removeClass("hidden");
+					}else{
+						$("#duandian_group_2").html("<option value='0'>全部</option>");
+						$(".duandian_group_2").addClass("hidden");
+					}
+				}else{
+					alert(alert(da.msg));
+				}
+			});
+		}else{
+			$("#duandian_group_2").html("<option value='0'>全部</option>");
+			$(".duandian_group_2").addClass("hidden");
+		}
+	});	
 	$("#duandian_zidingyishijian_start_login").live("click", function(){
 		laydate({
 		    elem: '#duandian_zidingyishijian_start_login',
