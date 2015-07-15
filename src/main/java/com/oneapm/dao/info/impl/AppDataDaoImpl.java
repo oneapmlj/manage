@@ -166,6 +166,19 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
                 }
                 return null;
         }
+        
+        public Aplication findByUserIdfirst(Long userId){
+                try{
+                        DBObject object = new BasicDBObject("user_id", userId);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).limit(1);
+                        if(cursor.hasNext()){
+                                return getAplicationFromResult(cursor.next());
+                        }
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return null;
+        }
 
         public List<Aplication> findByTimeList(String time, Long appId, int agent, Long agentId) {
                 List<Aplication> apps = null;
@@ -197,6 +210,18 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
                         }
                         object.put("user_id", userId);
                         object.put("data_time", new BasicDBObject("$gte", dataTime));
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        return cursor.hasNext();
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return false;
+        }
+        
+        public boolean exist(Long userId) {
+                try {
+                        DBObject object = new BasicDBObject();
+                        object.put("user_id", userId);
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
                         return cursor.hasNext();
                 } catch (Exception e) {

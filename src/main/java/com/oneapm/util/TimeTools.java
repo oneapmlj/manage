@@ -63,7 +63,7 @@ public class TimeTools {
         public static void formatToday() {
                 today = Integer.parseInt(formatDay.format(new Date()));
         }
-
+        
         /**
          * 获取一个月的第几天
          * 

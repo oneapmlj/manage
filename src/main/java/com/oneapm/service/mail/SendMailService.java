@@ -96,65 +96,65 @@ public class SendMailService extends OneTools {
         }
         
 
-        public static String modeToMail(Info info, MailDto mail, Admin admin) throws IOException, PramaException {
-                switch (mail.getTimeType()) {
-                // 注册时间
-                case 1:
-                        mail.setTime(info.getCreateTime());
-                        break;
-                // 登录时间
-                case 2:
-                        mail.setTime(info.getLoginTime());
-                        break;
-                // 下载时间
-                case 3:
-                        Download download = DownloadService.findDownTime(info.getUserId());
-                        if (download == null)
-                                return null;
-                        mail.setTime(download.getDownloadTime());
-                        break;
-                // 添加时间
-                case 4:
-                        App app = AppService.findAddTime(info.getUserId());
-                        if (app == null)
-                                return null;
-                        mail.setTime(app.getCreateTime());
-                        break;
-                // 有数据时间
-                case 5:
-                        String time = DataDaoImpl.getInstance().findLastDataById(info.getUserId());
-                        if (time == null) {
-                                return null;
-                        }
-                        mail.setTime(time);
-                        break;
-                default:
-                        break;
-                }
-                String html = FileSystem.read(mail.getContent());
-                String str = mail.getTime().substring(0, 4) + "年" + mail.getTime().substring(5, 7) + "月" + mail.getTime().substring(8, 10) + "日";
-                html = html.replaceAll("\\$\\{admin_name\\}", admin.getNickName()).replaceAll("\\$\\{time_1\\}", str).replaceAll("\\$\\{admin_position\\}", admin.getPosition()).replaceAll("\\$\\{admin_phone\\}", admin.getPhone()).replaceAll("\\$\\{admin_email\\}", admin.getEmail());
-                if (info.getName() != null && info.getName().length() > 0) {
-                        html = html.replaceAll("\\$\\{user_name\\}", info.getName() + "&nbsp;");
-                } else {
-                        html = html.replaceAll("\\$\\{user_name\\}", "");
-                }
-                return html;
-        }
+//        public static String modeToMail(Info info, MailDto mail, Admin admin) throws IOException, PramaException {
+//                switch (mail.getTimeType()) {
+//                // 注册时间
+//                case 1:
+//                        mail.setTime(info.getCreateTime());
+//                        break;
+//                // 登录时间
+//                case 2:
+//                        mail.setTime(info.getLoginTime());
+//                        break;
+//                // 下载时间
+//                case 3:
+//                        Download download = DownloadService.findDownTime(info.getUserId());
+//                        if (download == null)
+//                                return null;
+//                        mail.setTime(download.getDownloadTime());
+//                        break;
+//                // 添加时间
+//                case 4:
+//                        App app = AppService.findAddTime(info.getUserId());
+//                        if (app == null)
+//                                return null;
+//                        mail.setTime(app.getCreateTime());
+//                        break;
+//                // 有数据时间
+//                case 5:
+//                        String time = DataDaoImpl.getInstance().findLastDataById(info.getUserId());
+//                        if (time == null) {
+//                                return null;
+//                        }
+//                        mail.setTime(time);
+//                        break;
+//                default:
+//                        break;
+//                }
+//                String html = FileSystem.read(mail.getContent());
+//                String str = mail.getTime().substring(0, 4) + "年" + mail.getTime().substring(5, 7) + "月" + mail.getTime().substring(8, 10) + "日";
+//                html = html.replaceAll("\\$\\{admin_name\\}", admin.getNickName()).replaceAll("\\$\\{time_1\\}", str).replaceAll("\\$\\{admin_position\\}", admin.getPosition()).replaceAll("\\$\\{admin_phone\\}", admin.getPhone()).replaceAll("\\$\\{admin_email\\}", admin.getEmail());
+//                if (info.getName() != null && info.getName().length() > 0) {
+//                        html = html.replaceAll("\\$\\{user_name\\}", info.getName() + "&nbsp;");
+//                } else {
+//                        html = html.replaceAll("\\$\\{user_name\\}", "");
+//                }
+//                return html;
+//        }
 
-        public static String preview(Long infoId, int mode, Admin admin) {
-                try {
-                        Info info = InfoService.findByIdSingle(infoId);
-                        MailDto mail = MailModeDaoImpl.getInstance().findById(mode);
-                        if (mail == null) {
-                                throw new PramaException("邮件模板不可用！");
-                        }
-                        return modeToMail(info, mail, admin);
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return null;
-        }
+//        public static String preview(Long infoId, int mode, Admin admin) {
+//                try {
+//                        Info info = InfoService.findByIdSingle(infoId);
+//                        MailDto mail = MailModeDaoImpl.getInstance().findById(mode);
+//                        if (mail == null) {
+//                                throw new PramaException("邮件模板不可用！");
+//                        }
+//                        return modeToMail(info, mail, admin);
+//                } catch (Exception e) {
+//                        LOG.error(e.getMessage(), e);
+//                }
+//                return null;
+//        }
         
         public static String findByModeId(int mode) throws IOException{
                 MailDto mail = MailModeDaoImpl.getInstance().findById(mode);
@@ -173,29 +173,29 @@ public class SendMailService extends OneTools {
                 return mail.getMailContent();
         }
 
-        public static String previewPush(Long id, Admin admin) {
-                try {
-                        if (id == null || id <= 0) {
-                                return getResult(0, "参数错误！");
-                        }
-                        MailPush push = TaskService.findById(id);
-                        if (push == null) {
-                                return getResult(0, "参数错误！");
-                        }
-                        MailDto mail = MailModeDaoImpl.getInstance().findById(TaskService.mailType(push));
-                        if (mail == null) {
-                                return getResult(0, "邮件模板不存在");
-                        }
-                        if (admin == null) {
-                                return getResult(0, "发送邮件帐号不存在");
-                        }
-                        Info info = InfoService.findByIdSingle(push.getInfoId());
-                        return modeToMail(info, mail, admin);
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return null;
-        }
+//        public static String previewPush(Long id, Admin admin) {
+//                try {
+//                        if (id == null || id <= 0) {
+//                                return getResult(0, "参数错误！");
+//                        }
+//                        MailPush push = TaskService.findById(id);
+//                        if (push == null) {
+//                                return getResult(0, "参数错误！");
+//                        }
+//                        MailDto mail = MailModeDaoImpl.getInstance().findById(TaskService.mailType(push));
+//                        if (mail == null) {
+//                                return getResult(0, "邮件模板不存在");
+//                        }
+//                        if (admin == null) {
+//                                return getResult(0, "发送邮件帐号不存在");
+//                        }
+//                        Info info = InfoService.findByIdSingle(push.getInfoId());
+//                        return modeToMail(info, mail, admin);
+//                } catch (Exception e) {
+//                        LOG.error(e.getMessage(), e);
+//                }
+//                return null;
+//        }
 
         @SuppressWarnings("unchecked")
         public static String sendSingle(Long infoId, int mode, Admin admin, String mailContent, String title, int to, String from, Long lable) {

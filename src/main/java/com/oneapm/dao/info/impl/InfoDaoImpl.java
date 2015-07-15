@@ -82,6 +82,25 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                 }
                 return null;
         }
+        public List<Info> countSign(String start, String end) {
+                try {
+                        DBObject object = new BasicDBObject();
+                        object.put("user_id", new BasicDBObject("$gte", 1L));
+                        BasicDBList list = new BasicDBList();
+                        list.add(new BasicDBObject("create_time", new BasicDBObject("$gte", start)));
+                        list.add(new BasicDBObject("create_time", new BasicDBObject("$lt", end)));
+                        object.put("$and", list);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        List<Info> infos = new ArrayList<Info>();
+                        while (cursor.hasNext()) {
+                                infos.add(getInfoFromResult(cursor.next()));
+                        }
+                        return infos;
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return null;
+        }
         public List<Info> findAll(){
                 try{
                         List<Info> infos = new ArrayList<Info>();
@@ -103,7 +122,7 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         List<Info> infos = new ArrayList<Info>();
                         DBObject object = new BasicDBObject();
                         object.put("email_status", emailStatus);
-                        object.put("user_id", new BasicDBObject("$gt", 3400));
+                        object.put("user_id", new BasicDBObject("$gt", 0L));
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
                         while(cursor.hasNext()){
                                 infos.add(getInfoFromResult(cursor.next()));

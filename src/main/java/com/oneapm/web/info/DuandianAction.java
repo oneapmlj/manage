@@ -65,6 +65,40 @@ public class DuandianAction extends SupportAction {
                         LOG.error(e.getMessage(), e);
                 }
         }
+        
+        private int yuan;
+        private String yuanStart;
+        private String yuanEnd;
+        private int leixing;
+        private int liucun;
+        private int zuobiao;
+        private int zuobiaoZidingyi;
+        private String zuobiaoStart;
+        private String zuobiaoEnd;
+        public void chaxun_baobiao() throws IOException {
+                if (!isLogin()) {
+                        getServletResponse().sendRedirect("/login.action");
+                }
+                try {
+                        String result = DuandianService.chaxun(yuan, yuanStart, yuanEnd, agent, leixing, liucun, zuobiao, zuobiaoZidingyi, zuobiaoStart, zuobiaoEnd);
+                        getServletResponse().getWriter().print(result);
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+        }
+        
+        public void chaxun_baobiao_view() throws IOException {
+                if (!isLogin()) {
+                        getServletResponse().sendRedirect("/login.action");
+                }
+                try {
+                        String result = DuandianService.chaxun_chazhi(yuanStart, yuanEnd);
+                        getServletResponse().getWriter().print(result);
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+        }
+        
 
         public void versions() throws IOException {
                 if (!isLogin()) {
@@ -261,5 +295,77 @@ public class DuandianAction extends SupportAction {
 
         public void setCaozuoEnd(String caozuoEnd) {
                 this.caozuoEnd = caozuoEnd;
+        }
+
+        public int getYuan() {
+                return yuan;
+        }
+
+        public void setYuan(int yuan) {
+                this.yuan = yuan;
+        }
+
+        public String getYuanEnd() {
+                return yuanEnd;
+        }
+
+        public void setYuanEnd(String yuanEnd) {
+                this.yuanEnd = yuanEnd;
+        }
+
+        public int getLeixing() {
+                return leixing;
+        }
+
+        public void setLeixing(int leixing) {
+                this.leixing = leixing;
+        }
+
+        public String getYuanStart() {
+                return yuanStart;
+        }
+
+        public void setYuanStart(String yuanStart) {
+                this.yuanStart = yuanStart;
+        }
+
+        public int getLiucun() {
+                return liucun;
+        }
+
+        public void setLiucun(int liucun) {
+                this.liucun = liucun;
+        }
+
+        public int getZuobiao() {
+                return zuobiao;
+        }
+
+        public void setZuobiao(int zuobiao) {
+                this.zuobiao = zuobiao;
+        }
+
+        public String getZuobiaoStart() {
+                return zuobiaoStart;
+        }
+
+        public void setZuobiaoStart(String zuobiaoStart) {
+                this.zuobiaoStart = zuobiaoStart;
+        }
+
+        public int getZuobiaoZidingyi() {
+                return zuobiaoZidingyi;
+        }
+
+        public void setZuobiaoZidingyi(int zuobiaoZidingyi) {
+                this.zuobiaoZidingyi = zuobiaoZidingyi;
+        }
+
+        public String getZuobiaoEnd() {
+                return zuobiaoEnd;
+        }
+
+        public void setZuobiaoEnd(String zuobiaoEnd) {
+                this.zuobiaoEnd = zuobiaoEnd;
         }
 }

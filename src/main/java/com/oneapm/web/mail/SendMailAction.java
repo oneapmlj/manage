@@ -42,21 +42,21 @@ public class SendMailAction extends SupportAction {
 
         private String preview;
 
-        public String preview() {
-                if (!isLogin()) {
-                        return "login";
-                }
-                try {
-                        if (adminId != null && adminId > 0) {
-                                preview = SendMailService.preview(infoId, mode, AccountService.findById(adminId));
-                        } else {
-                                preview = SendMailService.preview(infoId, mode, getAdmin());
-                        }
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), 1);
-                }
-                return "preview";
-        }
+//        public String preview() {
+//                if (!isLogin()) {
+//                        return "login";
+//                }
+//                try {
+//                        if (adminId != null && adminId > 0) {
+//                                preview = SendMailService.preview(infoId, mode, AccountService.findById(adminId));
+//                        } else {
+//                                preview = SendMailService.preview(infoId, mode, getAdmin());
+//                        }
+//                } catch (Exception e) {
+//                        LOG.error(e.getMessage(), 1);
+//                }
+//                return "preview";
+//        }
         
         private Info info;
         private String content;
@@ -142,17 +142,17 @@ public class SendMailAction extends SupportAction {
 
         private Long id;
 
-        public String previewPush() {
-                if (!isLogin()) {
-                        return "login";
-                }
-                try {
-                        preview = SendMailService.previewPush(id, getAdmin());
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), 1);
-                }
-                return "preview";
-        }
+//        public String previewPush() {
+//                if (!isLogin()) {
+//                        return "login";
+//                }
+//                try {
+//                        preview = SendMailService.previewPush(id, getAdmin());
+//                } catch (Exception e) {
+//                        LOG.error(e.getMessage(), 1);
+//                }
+//                return "preview";
+//        }
 
         public String all() {
                 return "all";

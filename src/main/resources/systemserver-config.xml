@@ -2,10 +2,10 @@
 <xml-body>
 	<!--静态资源地址 -->
 	<staticPath>http://manage.oneapm.com/</staticPath>
-	<!-- <staticPath>http://10.128.8.222:8080/manage/</staticPath> -->
+	<!-- <staticPath>http://203.195.178.106:8180/manage/</staticPath> -->
 	<!--项目地址 -->
 	<basePath>http://manage.oneapm.com/</basePath>
-	<!-- <basePath>http://10.128.8.222:8080/manage/</basePath> -->
+	<!-- <basePath>http://203.195.178.106:8180/manage/</basePath> -->
 	<fileSystem>/data/filesystem/</fileSystem>
 	<!--工单地址 -->
 	<crmAddress>https://oneapm.kf5.com/</crmAddress>

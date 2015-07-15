@@ -1,0 +1,8 @@
+.border_all{border: 1px solid #6495ED;}
+.border_left{border-left: 1px solid #6495ED;}
+.border_left_all{border-left: 1px solid #6495ED;border-top: 1px solid #6495ED;border-bottom: 1px solid #6495ED;}
+.border_top{border-top: 1px solid #6495ED;}
+.border_right{border-right: 1px solid #6495ED;}
+.border_right_all{border-right: 1px solid #6495ED;border-top: 1px solid #6495ED;border-bottom: 1px solid #6495ED;}
+.border_bottom{border-bottom: 1px solid #6495ED;}
+.left{float:left;}

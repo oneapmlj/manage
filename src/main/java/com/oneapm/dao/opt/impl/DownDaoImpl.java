@@ -139,7 +139,7 @@ public class DownDaoImpl extends DaoImplBase<Download> {
                 try {
                         DBObject object = new BasicDBObject();
                         object.put("user_id", userId);
-                        DBObject sort = new BasicDBObject("create_time", -1);
+                        DBObject sort = new BasicDBObject("create_time", 1);
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort).limit(1);
                         if (cursor.hasNext()) {
                                 return getInfoFromResult(cursor.next());
@@ -148,6 +148,19 @@ public class DownDaoImpl extends DaoImplBase<Download> {
                         LOG.error(e.getMessage(), e);
                 }
                 return null;
+        }
+        
+        public boolean findDownload(Long userId){
+                try {
+                        DBObject object = new BasicDBObject();
+                        object.put("user_id", userId);
+                        DBObject sort = new BasicDBObject("create_time", 1);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort).limit(1);
+                        return cursor.hasNext();
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return false;
         }
 
         public boolean insert(Download download) {

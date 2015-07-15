@@ -43,7 +43,7 @@ public class DownloadService {
                 return DownDaoImpl.getInstance().findById(downloadId);
         }
 
-        public static Download findDownTime(Long userId) {
-                return DownDaoImpl.getInstance().findDonwTime(userId);
-        }
+//        public static Download findDownTime(Long userId) {
+//                return DownDaoImpl.getInstance().findDonwTime(userId);
+//        }
 }

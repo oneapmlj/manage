@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="${applicationScope.staticPath}skin/css/index.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="${applicationScope.staticPath}skin/css/view.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="${applicationScope.staticPath}skin/css/public.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="${applicationScope.staticPath}skin/css/duandian.css" type="text/css" media="screen" />
 	<script src="${applicationScope.staticPath}skin/js/jquery.min.js"></script>
 	<script src="${applicationScope.staticPath}skin/js/guolv.js"></script>
 	<script type="text/javascript" src="${applicationScope.staticPath}skin/js/timeselect/laydate.js"></script>
@@ -22,12 +23,7 @@
 			<h3 class="tabs_involved">过滤用户</h3>
 		</div> 
 			<div style="width:1200px;margin-left:auto;margin-right:auto;font-size:14px;">
-				<div style="width:1200px;float:left;height:30px;line-height:30px;">
-					<div style="margin-left:auto;margin-right:auto;width:400px;">
-						<span style="color:red;">过滤时状态，数据，登录必选其一。独立用户只在有数据时有效</span>
-					</div>
-				</div>
-				<div style="width:1200px;float:left;height:30px;line-height:30px;">
+				<div style="width:1200px;float:left;height:30px;line-height:30px;margin-top:20px;">
 					<div style="width:70px;float:left;height:30px;">
 						<div style="float:left;width:60px;margin-top:5px;" class="go_guolv_ding menu_button biankuang_blue_ding hand">过滤</div>
 					</div>
@@ -47,7 +43,12 @@
 					</div>
 				</div>
 				<div style="width:1200px;float:left;" class="guolv">
-					<div style="margin-top:20px;width:1200px;height:30px;line-height:30px;margin-left:auto;margin-right:auto;float:left;">
+					<div style="width:1200px;float:left;height:30px;line-height:30px;">
+						<div>
+							<span style="color:red;">过滤时状态，数据，登录必选其一。独立用户只在有数据时有效</span>
+						</div>
+					</div>
+					<div style="margin-top:10px;width:1200px;height:30px;line-height:30px;margin-left:auto;margin-right:auto;float:left;">
 						<div style="width:130px;float:left;height:30px;">
 							语言:
 							<select class="hand" id="duandian_agent">
@@ -228,28 +229,100 @@
 					</div>
 				</div>
 				<div style="width:1200px;float:left;" class="baobiao hidden">
-					<div style="margin-top:20px;width:1200px;margin-left:auto;margin-right:auto;">
-						<div style="width:120px;float:left;" class="lable_1" val="1"></div>
-						<div style="width:120px;float:left;" class="hidden lable_2" val="2">
+					<div style="margin-top:10px;width:1200px;margin-left:auto;margin-right:auto;float:left;line-height:30px;">
+						<div style="width:170px;float:left;height:30px;">
+							源数据:
+							<select class="hand" id="duandian_baobiao_yuan">
+								<option value="0" selected="selected">今天</option>
+								<option value="1">昨天</option>
+								<option value="2">最近一周</option>
+								<option value="3">自定义</option>
+							</select>
 						</div>
-						<div style="width:120px;float:left;" class="hidden lable_3" val="3">
+						<div class="hidden duandian_baobiao_yuan" style="width:160px;float:left;height:30px;font-size:14px;">
+							起始时间:
+							<input type="text" id="duandian_baobiao_yuan_start" value="" style="width:80px;"/>
 						</div>
-						<div style="width:120px;float:left;" class="hidden lable_4" val="4">
+						<div class="hidden duandian_baobiao_yuan" style="width:160px;float:left;height:30px;font-size:14px;">
+							结束时间:
+							<input type="text" id="duandian_baobiao_yuan_end" value="" style="width:80px;"/>
 						</div>
-						<div style="width:120px;float:left;" class="hidden lable_5" val="5">
-						</div>
-						<div style="width:120px;float:left;" class="hidden lable_6" val="6">
-						</div>
-						<div style="width:120px;float:left;" class="hidden lable_7" val="7">
-						</div>
-						<div style="width:100px;float:left;"><input class="from_chaxun hand" type="button" value="查询"/></div>
 					</div>
-					<div style="float:left;width:1200px;height:30px;">
-						<div class="duandian_result_msg" style="height:20px;line-hight:20px;font-size:16px;color:red;"></div>
+					<div style="margin-top:10px;width:1200px;margin-left:auto;margin-right:auto;float:left;line-height:30px;">
+						<div style="width:170px;float:left;height:30px;">
+							报表类型:
+							<select class="hand" id="duandian_baobiao_leixing">
+								<option value="0" selected="selected">转化</option>
+								<!-- <option value="1">留存</option> -->
+							</select>
+						</div>
+						<div class="duandian_baobiao_liucun_guize hidden" style="width:180px;float:left;height:30px;">
+							留存规则:
+							<select class="hand" id="duandian_baobiao_liucun_guize">
+								<option value="0" selected="selected">存在数据</option>
+								<option value="1">连续有数据</option>
+								<option value="2">连续和存在</option>
+							</select>
+						</div>
+						<div class="duandian_baobiao_zhuanhua_guize" style="width:180px;float:left;height:30px;">
+							转化规则:
+							<select class="hand" id="duandian_baobiao_liucun_guize">
+								<option value="0" selected="selected">总计</option>
+								<option value="1">区间</option>
+								<option value="2">全部</option>
+							</select>
+						</div>
+						<div style="width:170px;float:left;height:30px;" class="duandian_baobiao_yuyan hidden">
+							语言:
+							<select class="hand" id="duandian_baobiao_yuyan">
+								<option value="0" selected="selected">全部</option>
+								<option value="1">java</option>
+								<option value="2">php</option>
+								<option value="3">nodejs</option>
+								<option value="4">python</option>
+								<option value="5">dotnet</option>
+								<option value="6">ruby</option>
+								<option value="7">android</option>
+								<option value="8">ios</option>
+								<option value="9">browser</option>
+								<option value="10">server</option>
+								<option value="11">AI</option>
+								<option value="12">MI</option>
+							</select>
+						</div>
+					</div>
+					<div style="margin-top:10px;width:1200px;margin-left:auto;margin-right:auto;float:left;line-height:30px;">
+						<div style="width:160px;float:left;height:30px;">
+							坐标:
+							<select class="hand" id="duandian_baobiao_zuobiao">
+								<option value="0" selected="selected">天</option>
+								<option value="1">3天</option>
+								<option value="2">周</option>
+								<option value="3">月</option>
+								<option value="4">自定义</option>
+								<option value="5">自定义区间</option>
+							</select>
+						</div>
+						<div class="hidden duandian_baobiao_zuobiao_zidingyi" style="width:210px;float:left;height:30px;">
+							自定义坐标天数:
+							<input style="width:60px;" class="hand" id="duandian_baobiao_zuobiao_zidingyi" />天
+						</div>
+						<div class="hidden duandian_baobiao_zuobiao" style="width:160px;float:left;height:30px;font-size:14px;">
+							起始时间:
+							<input type="text" id="duandian_baobiao_zuobiao_start" value="" style="width:80px;"/>
+						</div>
+						<div class="hidden duandian_baobiao_zuobiao" style="width:160px;float:left;height:30px;font-size:14px;">
+							结束时间:
+							<input type="text" id="duandian_baobiao_zuobiao_end" value="" style="width:80px;"/>
+						</div>
+						<div style="width:100px;float:left;"><input class="hand baobiao_chaxun" type="button" value="查询"/></div>
 					</div>
 				</div>
+				<div style="float:left;width:1200px;height:30px;">
+					<div class="duandian_result_msg" style="height:20px;line-hight:20px;font-size:16px;color:red;"></div>
+				</div>
 				<div id="duandian_out" style="width:1200px;min-height:400px;float:left;">
-					<table class="tablesorter" cellspacing="0"> 
+					<table class="tablesorter duandian_list" cellspacing="0"> 
 						<thead> 
 							<tr> 
 								<th style="width:2%"></th>
@@ -267,6 +340,29 @@
 							</tr> 
 						</thead> 
 						<tbody id="duandian_result" style="font-size:12px;"> 
+						</tbody> 
+					</table>
+					<div style="width:1200px;height:200px;" class="hidden duandian_list_baobiao">
+					</div>
+					<div class="hidden back_to_baobiao" style="width:1200px;height:30px;line-height:30px;"><input type="button" value="返回" id="back_to_baobiao"/></div>
+					<table class="tablesorter duandian_list_baobiao_chazhi hidden" cellspacing="0"> 
+						<thead> 
+							<tr> 
+								<th style="width:2%"></th>
+					  			<th style="width:6%;">ID</th> 
+					  			<th style="width:10%;">姓名</th>
+					  			<th style="width:14%;">公司</th>
+					  			<th style="width:15%;">项目</th>
+					  			<th style="width:15%;">语言</th>
+					  			<th style="width:7%">Coming</th>
+					  			<th style="width:6%;">销售</th>
+					  			<th style="width:6%;">售前</th>
+					  			<th style="width:6%;">运营</th>
+					  			<th style="width:10%">Edit</th>
+					  			<th style="width:3%"></th>
+							</tr> 
+						</thead> 
+						<tbody id="duandian_list_baobiao_chazhi" style="font-size:12px;"> 
 						</tbody> 
 					</table>
 				</div>

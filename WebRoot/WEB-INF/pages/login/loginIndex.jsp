@@ -28,7 +28,7 @@
 			</s:if>
 		</div>
 		<div style="margin:10px 0 0 50px;">
-			<form action="/login" method="post">
+			<form action="${applicationScope.basePath}login" method="post">
 				<div class="login">帐号:<input type="text" name="username"/></div> 
 				<div class="login">密码:<input type="password" name="password"/></div>  
 		    	<div style="float:right;width:60px;margin:5px 15px 0 0;"><input type="submit" value="登录"/></div>

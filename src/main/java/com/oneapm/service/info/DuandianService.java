@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.info.impl.AppDaoImpl;
 import com.oneapm.dao.info.impl.AppDataDaoImpl;
+import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dao.info.impl.LoginDaoImpl;
 import com.oneapm.dao.opt.impl.DownDaoImpl;
 import com.oneapm.dto.Aplication;
@@ -85,6 +86,285 @@ public class DuandianService {
                         LOG.error(e.getMessage(), e);
                 }
                 return OneTools.getResult(0, "服务器内部错误");
+        }
+        
+        public static String chaxun_chazhi(String yuanStart, String yuanEnd){
+                try{
+                        JSONObject object = new JSONObject();
+                        object.put("status", 1);
+                        String start = yuanStart + " 00:00:00";
+                        String end = yuanEnd + " 00:00:00";
+                        List<Info> infos = InfoDaoImpl.getInstance().countSign(start, end);
+//                        boolean today = TimeTools.formatTime.parse(end).getTime() > new Date().getTime();
+                        for(int i=0;i<infos.size();i++){
+                                if(!DownDaoImpl.getInstance().findDownload(infos.get(i).getUserId())){
+                                    infos.remove(i);
+                                    i--;
+                                }else{
+//                                        if(today){
+                                                if(AppDaoImpl.getInstance().findApp(infos.get(i).getUserId())){
+                                                   infos.remove(i);
+                                                   i--;
+                                                }
+//                                        }else{
+//                                                if(AppDataDaoImpl.getInstance().exist(infos.get(i).getUserId())){
+//                                                        infos.remove(i);
+//                                                        i--;
+//                                                }
+//                                        }
+                                }
+                        }
+                        if(infos.size() == 0){
+                                object.put("size", 0);
+                        }else{
+                                object.put("size", infos.size());
+                                for(int i=0;i<infos.size();i++){
+                                        infos.set(i, InfoService.findById(infos.get(i).getId()));
+                                }
+                                object.put("infos", InfoService.getArrayFromInfos(infos));
+                        }
+                        return object.toJSONString();
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return OneTools.getResult(0, "服务器内部错误");
+        }
+        public static String chaxun(int yuan, String yuanStart, String yuanEnd, int agent, int leixing, int liucun, int zuobiao, int zuobiaoZidingyi, String zuobiaoStart,
+                        String zuobiaoEnd){
+                List<String> args1 = new ArrayList<String>();
+                List<Object> args2 = new ArrayList<Object>();
+                String start = TimeTools.getDateTime(0);
+                String end = TimeTools.getDateTime(-1);
+                JSONObject object = new JSONObject();
+                try{
+                        if(zuobiao == 4 && zuobiaoZidingyi <= 0){
+                                return OneTools.getResult(0, "坐标值不能为0");
+                        }
+                        if(zuobiao == 5){
+                                if(zuobiaoStart == null || zuobiaoStart.trim().length() <= 0 || zuobiaoEnd == null || zuobiaoEnd.trim().length() <= 0){
+                                        return OneTools.getResult(0, "自定义坐标区间不能为空");
+                                }
+                        }
+                        
+                        switch(yuan){
+                                case 0:break;
+                                case 1:start = TimeTools.getDateTime(1);end = TimeTools.getDateTime(0);break;
+                                case 2:start = TimeTools.getDateTime(7);end = TimeTools.getDateTime(0);break;
+                                case 3:
+                                        if(yuanStart == null || yuanEnd == null || yuanStart.trim().length() <= 0 || yuanEnd.trim().length() <= 0){
+                                                return OneTools.getResult(0, "数据源区间错误");
+                                        }
+                                        start = yuanStart+" 00:00:00";
+                                        end = TimeTools.next(yuanEnd+" 00:00:00", 1);
+                                        break;
+                                default:return OneTools.getResult(0, "未知源数据区间");
+                        }
+                        switch (zuobiao) {
+                                case 0:zuobiaoZidingyi=1;break;
+                                case 1:zuobiaoZidingyi=3;break;
+                                case 2:zuobiaoZidingyi=7;break;
+                                case 3:zuobiaoZidingyi=30;break;
+                                case 4:if(zuobiaoZidingyi <= 0)return OneTools.getResult(0, "坐标自定义不能小于0");break;
+                                case 5:
+                                        zuobiaoEnd = TimeTools.next(zuobiaoEnd+" 00:00:00", 1);
+                                        zuobiaoStart += " 00:00:00";
+                                        if(TimeTools.formatTime.parse(zuobiaoStart+" 00:00:00").getTime() >= TimeTools.formatTime.parse(zuobiaoEnd+" 00:00:00").getTime()){
+                                                return OneTools.getResult(0, "坐标区间错误");
+                                        }
+                                        break;
+                                default:break;
+                        }
+                        switch (leixing) {
+                                case 0:object = chaxun_zhuanhua(start, end, zuobiaoStart, zuobiaoEnd, zuobiaoZidingyi);break;
+                                case 1:object = chaxun_liucun(start, end, zuobiaoStart, zuobiaoEnd, zuobiaoZidingyi, liucun, agent);break;
+                                default:return OneTools.getResult(0, "无此查询类型");
+                        }
+                        if(object == null){
+                                return OneTools.getResult(0, "服务器内部错误");
+                        }
+                        args1.add("baobiao");
+                        args2.add(object);
+                        return OneTools.getResult(1, args1, args2);
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return OneTools.getResult(0, "服务器错误");
+        }
+        
+        public static JSONObject chaxun_zhuanhua(String start, String end, String zuobiaoStart, String zuobiaoEnd, int zuobiao){
+                JSONObject object = new JSONObject();
+                try{
+                        String time =TimeTools.getDateTime(-1);
+                        long timeLong = TimeTools.formatTime.parse(time).getTime();
+                        List<Info> infos = InfoDaoImpl.getInstance().countSign(start, end);
+                        if(infos == null || infos.size() <= 0){
+                                object.put("base", 0);
+                                return object;
+                        }
+                        object.put("base", infos.size());
+                        JSONArray datas = new JSONArray();
+                        if(zuobiao > 0){
+                                List<String> mapTime = new ArrayList<String>();
+                                List<Long> mapLong = new ArrayList<Long>();
+                                List<Integer> mapDownload_qujian = new ArrayList<Integer>();
+                                List<Integer> mapApp_qujian = new ArrayList<Integer>();
+                                List<Integer> mapDownload_zong = new ArrayList<Integer>();
+                                List<Integer> mapApp_zong= new ArrayList<Integer>();
+                                mapTime.add(start);
+                                mapTime.add(end);
+                                mapDownload_zong.add(0);
+                                mapApp_zong.add(0);
+                                mapDownload_qujian.add(0);
+                                mapApp_qujian.add(0);
+                                mapLong.add(TimeTools.formatTime.parse(start).getTime());
+                                mapLong.add(TimeTools.formatTime.parse(end).getTime());
+                                String b = end;
+                                while(TimeTools.formatTime.parse(b).getTime() < timeLong){
+                                        b = TimeTools.next(b, zuobiao);
+                                        if(TimeTools.formatTime.parse(b).getTime() > timeLong){
+                                                b = time;
+                                        }
+                                        mapTime.add(b);
+                                        mapLong.add(TimeTools.formatTime.parse(b).getTime());
+                                        mapDownload_zong.add(0);
+                                        mapApp_zong.add(0);
+                                        mapDownload_qujian.add(0);
+                                        mapApp_qujian.add(0);
+                                }
+                                for(Info info : infos){
+                                        Download download = DownDaoImpl.getInstance().findDonwTime(info.getUserId());
+                                        Aplication aplication = AppDataDaoImpl.getInstance().findByUserIdfirst(info.getUserId());
+                                        if(download != null){
+                                                long d = TimeTools.formatTime.parse(download.getDownloadTime()).getTime();
+                                                for(int i=0;i<mapLong.size()-1;i++){
+                                                        if(d >= mapLong.get(i) && d < mapLong.get(i+1)){
+                                                                mapDownload_qujian.set(i, mapDownload_qujian.get(i)+1);
+                                                                mapDownload_zong.set(i, mapDownload_zong.get(i)+1);
+                                                        }else{
+                                                                if(d < mapLong.get(i)){
+                                                                        mapDownload_zong.set(i, mapDownload_zong.get(i)+1);
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                        if(aplication != null){
+                                                long a = TimeTools.formatTime.parse(aplication.getDataTime()).getTime();
+                                                for(int i=0;i<mapLong.size()-1;i++){
+                                                        if(a >= mapLong.get(i) && a < mapLong.get(i+1)){
+                                                                mapApp_qujian.set(i, mapApp_qujian.get(i)+1);
+                                                                mapApp_zong.set(i, mapApp_zong.get(i)+1);
+                                                        }else{
+                                                                if(a < mapLong.get(i)){
+                                                                        mapApp_zong.set(i, mapApp_zong.get(i)+1);
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                                for(int i=0;i<mapTime.size() -1;i++){
+                                        JSONObject object2 = new JSONObject();
+                                        object2.put("time_start", mapTime.get(i).substring(0, 10));
+                                        object2.put("time_end", mapTime.get(i+1).substring(0, 10));
+                                        object2.put("download_qujian", mapDownload_qujian.get(i));
+                                        object2.put("download_zong", mapDownload_zong.get(i));
+                                        object2.put("app_qujian", mapApp_qujian.get(i));
+                                        object2.put("app_zong", mapApp_zong.get(i));
+                                        datas.add(object2);
+                                }
+                        }else{
+                                List<String> mapTime = new ArrayList<String>();
+                                List<Long> mapLong = new ArrayList<Long>();
+                                List<Integer> mapDownload_qujian = new ArrayList<Integer>();
+                                List<Integer> mapApp_qujian = new ArrayList<Integer>();
+                                List<Integer> mapDownload_zong = new ArrayList<Integer>();
+                                List<Integer> mapApp_zong= new ArrayList<Integer>();
+                                mapTime.add(start);
+                                mapTime.add(end);
+                                mapTime.add(zuobiaoStart);
+                                mapTime.add(zuobiaoEnd);
+                                mapDownload_zong.add(0);
+                                mapApp_zong.add(0);
+                                mapDownload_qujian.add(0);
+                                mapApp_qujian.add(0);
+                                mapDownload_zong.add(0);
+                                mapApp_zong.add(0);
+                                mapDownload_qujian.add(0);
+                                mapApp_qujian.add(0);
+                                mapLong.add(TimeTools.formatTime.parse(start).getTime());
+                                mapLong.add(TimeTools.formatTime.parse(end).getTime());
+                                mapLong.add(TimeTools.formatTime.parse(zuobiaoStart).getTime());
+                                mapLong.add(TimeTools.formatTime.parse(zuobiaoEnd).getTime());
+                                for(Info info : infos){
+                                        Download download = DownDaoImpl.getInstance().findDonwTime(info.getUserId());
+                                        Aplication aplication = AppDataDaoImpl.getInstance().findByUserIdfirst(info.getUserId());
+                                        if(download != null){
+                                                long d = TimeTools.formatTime.parse(download.getDownloadTime()).getTime();
+                                                if(d >= mapLong.get(0) && d < mapLong.get(1)){
+                                                        mapDownload_qujian.set(0, mapDownload_qujian.get(0)+1);
+                                                        mapDownload_zong.set(0, mapDownload_zong.get(0)+1);
+                                                        mapDownload_zong.set(1, mapDownload_zong.get(1)+1);
+                                                }else{
+                                                        if(d >= mapLong.get(2) && d< mapLong.get(3)){
+                                                                mapDownload_qujian.set(1, mapDownload_qujian.get(1)+1);
+                                                                mapDownload_zong.set(1, mapDownload_zong.get(1)+1);
+                                                        }else{
+                                                                if(d >= mapLong.get(1) && d< mapLong.get(2)){
+                                                                        mapDownload_zong.set(1, mapDownload_zong.get(1)+1);
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                        if(aplication != null){
+                                                long a = TimeTools.formatTime.parse(aplication.getDataTime()).getTime();
+                                                if(a >= mapLong.get(0) && a < mapLong.get(1)){
+                                                        mapApp_qujian.set(0, mapApp_qujian.get(0)+1);
+                                                        mapApp_zong.set(0, mapApp_zong.get(0)+1);
+                                                        mapApp_zong.set(1, mapApp_zong.get(1)+1);
+                                                }else{
+                                                        if(a >= mapLong.get(2) && a< mapLong.get(3)){
+                                                                mapApp_qujian.set(1, mapApp_qujian.get(1)+1);
+                                                                mapApp_zong.set(1, mapApp_zong.get(1)+1);
+                                                        }else{
+                                                                if(a >= mapLong.get(1) && a< mapLong.get(2)){
+                                                                        mapApp_zong.set(1, mapApp_zong.get(1)+1);
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                                JSONObject object2 = new JSONObject();
+                                object2.put("time_start", mapTime.get(0).substring(0, 10));
+                                object2.put("time_end", mapTime.get(1).substring(0, 10));
+                                object2.put("download_qujian", mapDownload_qujian.get(0));
+                                object2.put("download_zong", mapDownload_zong.get(0));
+                                object2.put("app_qujian", mapApp_qujian.get(0));
+                                object2.put("app_zong", mapApp_zong.get(0));
+                                datas.add(object2);
+                                JSONObject object3 = new JSONObject();
+                                object3.put("time_start", mapTime.get(2).substring(0, 10));
+                                object3.put("time_end", mapTime.get(3).substring(0, 10));
+                                object3.put("download_qujian", mapDownload_qujian.get(1));
+                                object3.put("download_zong", mapDownload_zong.get(1));
+                                object3.put("app_qujian", mapApp_qujian.get(1));
+                                object3.put("app_zong", mapApp_zong.get(1));
+                                datas.add(object3);
+                        }
+                        object.put("datas", datas);
+                        object.put("zuobiao", zuobiao);
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                        return null;
+                }
+                return object;
+        }
+        public static JSONObject chaxun_liucun(String start, String end, String zuobiaoStart, String zuobiaoEnd, int zuobiao, int liucun, int agent){
+                JSONObject object = new JSONObject();
+                try{
+                        
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return object;
         }
         /**
          * 排序查询次序：

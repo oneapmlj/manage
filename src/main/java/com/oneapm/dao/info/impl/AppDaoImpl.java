@@ -26,6 +26,19 @@ public class AppDaoImpl extends DaoImplBase<App> {
         public static AppDaoImpl getInstance() {
                 return Instance;
         }
+        
+        public boolean findApp(Long userId){
+                try {
+                        DBObject object = new BasicDBObject();
+                        object.put("user_id", userId);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        return cursor.hasNext();
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return false;
+        }
+        
         public List<App> findByAgent(int agent, String banben, boolean dataTime, String start, String end){
                 List<App> apps = new ArrayList<App>();
                 try{
