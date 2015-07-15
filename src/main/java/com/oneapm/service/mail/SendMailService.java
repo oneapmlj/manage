@@ -1,5 +1,9 @@
 package com.oneapm.service.mail;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -81,9 +85,20 @@ public class SendMailService extends OneTools {
                         if(title == null || title.length() <= 0){
                                 title = mail.getTitle();
                         }
+                        int i=0;
+                        int j= 0;
                         for(Info info : infos){
+                                if(i%500 == 0){
+                                        LOG.info("send email step :"+j+"/"+i);
+                                }
                                 try{
-                                        SendCloudService2.sendMail(info.getEmail(), mailContent, title, lable);
+                                        i++;
+                                        boolean send = SendCloudService2.sendMail(info.getEmail(), mailContent, title, lable);
+                                        if(!send){
+                                                LOG.info("send email faile:"+info.getUserId());
+                                        }else{
+                                                j++;
+                                        }
                                 }catch(Exception e){}
                         }
 //                        SendCloudService2.sendMail("lijiang1225@qq.com", mailContent, title, lable);
@@ -95,66 +110,6 @@ public class SendMailService extends OneTools {
                 }
         }
         
-
-//        public static String modeToMail(Info info, MailDto mail, Admin admin) throws IOException, PramaException {
-//                switch (mail.getTimeType()) {
-//                // 注册时间
-//                case 1:
-//                        mail.setTime(info.getCreateTime());
-//                        break;
-//                // 登录时间
-//                case 2:
-//                        mail.setTime(info.getLoginTime());
-//                        break;
-//                // 下载时间
-//                case 3:
-//                        Download download = DownloadService.findDownTime(info.getUserId());
-//                        if (download == null)
-//                                return null;
-//                        mail.setTime(download.getDownloadTime());
-//                        break;
-//                // 添加时间
-//                case 4:
-//                        App app = AppService.findAddTime(info.getUserId());
-//                        if (app == null)
-//                                return null;
-//                        mail.setTime(app.getCreateTime());
-//                        break;
-//                // 有数据时间
-//                case 5:
-//                        String time = DataDaoImpl.getInstance().findLastDataById(info.getUserId());
-//                        if (time == null) {
-//                                return null;
-//                        }
-//                        mail.setTime(time);
-//                        break;
-//                default:
-//                        break;
-//                }
-//                String html = FileSystem.read(mail.getContent());
-//                String str = mail.getTime().substring(0, 4) + "年" + mail.getTime().substring(5, 7) + "月" + mail.getTime().substring(8, 10) + "日";
-//                html = html.replaceAll("\\$\\{admin_name\\}", admin.getNickName()).replaceAll("\\$\\{time_1\\}", str).replaceAll("\\$\\{admin_position\\}", admin.getPosition()).replaceAll("\\$\\{admin_phone\\}", admin.getPhone()).replaceAll("\\$\\{admin_email\\}", admin.getEmail());
-//                if (info.getName() != null && info.getName().length() > 0) {
-//                        html = html.replaceAll("\\$\\{user_name\\}", info.getName() + "&nbsp;");
-//                } else {
-//                        html = html.replaceAll("\\$\\{user_name\\}", "");
-//                }
-//                return html;
-//        }
-
-//        public static String preview(Long infoId, int mode, Admin admin) {
-//                try {
-//                        Info info = InfoService.findByIdSingle(infoId);
-//                        MailDto mail = MailModeDaoImpl.getInstance().findById(mode);
-//                        if (mail == null) {
-//                                throw new PramaException("邮件模板不可用！");
-//                        }
-//                        return modeToMail(info, mail, admin);
-//                } catch (Exception e) {
-//                        LOG.error(e.getMessage(), e);
-//                }
-//                return null;
-//        }
         
         public static String findByModeId(int mode) throws IOException{
                 MailDto mail = MailModeDaoImpl.getInstance().findById(mode);

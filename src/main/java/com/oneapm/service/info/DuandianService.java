@@ -2,7 +2,9 @@ package com.oneapm.service.info;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
@@ -129,8 +131,8 @@ public class DuandianService {
                 }
                 return OneTools.getResult(0, "服务器内部错误");
         }
-        public static String chaxun(int yuan, String yuanStart, String yuanEnd, int agent, int leixing, int liucun, int zuobiao, int zuobiaoZidingyi, String zuobiaoStart,
-                        String zuobiaoEnd){
+        public static String chaxun(int yuan, String yuanStart, String yuanEnd, int agent, int leixing, int zuobiao, int zuobiaoZidingyi, String zuobiaoStart,
+                        String zuobiaoEnd, int yuanType){
                 List<String> args1 = new ArrayList<String>();
                 List<Object> args2 = new ArrayList<Object>();
                 String start = TimeTools.getDateTime(0);
@@ -176,7 +178,7 @@ public class DuandianService {
                         }
                         switch (leixing) {
                                 case 0:object = chaxun_zhuanhua(start, end, zuobiaoStart, zuobiaoEnd, zuobiaoZidingyi);break;
-                                case 1:object = chaxun_liucun(start, end, zuobiaoStart, zuobiaoEnd, zuobiaoZidingyi, liucun, agent);break;
+                                case 1:object = chaxun_liucun(start, end, zuobiaoStart, zuobiaoEnd, zuobiaoZidingyi, agent, yuanType);break;
                                 default:return OneTools.getResult(0, "无此查询类型");
                         }
                         if(object == null){
@@ -184,6 +186,8 @@ public class DuandianService {
                         }
                         args1.add("baobiao");
                         args2.add(object);
+                        args1.add("leixing");
+                        args2.add(leixing);
                         return OneTools.getResult(1, args1, args2);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
@@ -357,12 +361,203 @@ public class DuandianService {
                 }
                 return object;
         }
-        public static JSONObject chaxun_liucun(String start, String end, String zuobiaoStart, String zuobiaoEnd, int zuobiao, int liucun, int agent){
+        public static JSONObject chaxun_liucun(String start, String end, String zuobiaoStart, String zuobiaoEnd, int zuobiao, int agent, int yuanType){
                 JSONObject object = new JSONObject();
                 try{
-                        
+                        List<Info> infos = new ArrayList<Info>();
+                        Set<Long> userIds = new HashSet<Long>();
+                        String chushi = "2014-01-01 00:00:00";
+                        if(yuanType == 0){
+                                List<Aplication> aplications = AppDataDaoImpl.getInstance().findByAgent(agent, start, end);
+                                for(Aplication aplication : aplications){
+                                        userIds.add(aplication.getUserId());
+                                }
+                                if(userIds.size() > 0){
+                                        for(Long userId: userIds){
+                                                if(!AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(chushi, start, userId, agent)){
+                                                        infos.add(InfoService.findByUserId(userId));
+                                                }
+                                        }
+                                }
+                        }else{
+                                String end1 = TimeTools.next(start, 1);
+                                List<Aplication> aplications = AppDataDaoImpl.getInstance().findByAgent(agent, start, end1);
+                                for(Aplication aplication : aplications){
+                                        userIds.add(aplication.getUserId());
+                                }
+                                List<Long> times_long = new ArrayList<Long>();
+                                List<String> times = new ArrayList<String>();
+                                while(TimeTools.formatTime.parse(end1).getTime() <= TimeTools.formatTime.parse(end).getTime()){
+                                        times.add(end1);
+                                        times_long.add(TimeTools.formatTime.parse(end1).getTime());
+                                        end1 = TimeTools.next(end1, 1);
+                                }
+                                for(Long userId: userIds){
+                                        if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(chushi, start, userId, agent)){
+                                                continue;
+                                        }
+                                        boolean in = true;
+                                        for(int i=0;i<times_long.size()-1;i++){
+                                                if(!AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(times.get(i), times.get(i+1), userId, agent)){
+                                                        in = false;
+                                                        break;
+                                                }
+                                        }
+                                        if(in){
+                                                infos.add(InfoService.findByUserId(userId));
+                                        }
+                                }
+                        }
+                        if(infos == null || infos.size() <= 0){
+                                object.put("base", 0);
+                                return object;
+                        }
+                        object.put("base", infos.size());
+                        List<String> mapTime = new ArrayList<String>();
+                        List<Long> mapLong = new ArrayList<Long>();
+                        List<Integer> mapLianxu= new ArrayList<Integer>();
+                        List<Integer> mapCunzai= new ArrayList<Integer>();
+                        List<Integer> mapChixu= new ArrayList<Integer>();
+                        String time =TimeTools.getDateTime(-1);
+                        long timeLong = TimeTools.formatTime.parse(time).getTime();
+                        JSONArray datas = new JSONArray();
+                        if(zuobiao > 0){
+                                mapTime.add(start);
+                                mapTime.add(end);
+                                mapLong.add(TimeTools.formatTime.parse(start).getTime());
+                                mapLong.add(TimeTools.formatTime.parse(end).getTime());
+                                mapLianxu.add(0);
+                                mapCunzai.add(0);
+                                mapChixu.add(0);
+                                String b = end;
+                                while(TimeTools.formatTime.parse(b).getTime() < timeLong){
+                                        b = TimeTools.next(b, zuobiao);
+                                        if(TimeTools.formatTime.parse(b).getTime() > timeLong){
+                                                b = time;
+                                        }
+                                        mapTime.add(b);
+                                        mapLong.add(TimeTools.formatTime.parse(b).getTime());
+                                        mapLianxu.add(0);
+                                        mapCunzai.add(0);
+                                        mapChixu.add(0);
+                                }
+                                for(Info info: infos){
+                                        boolean chixu = true;
+                                        for(int i=0;i<mapTime.size()-1;i++){
+                                                boolean lianxu = true;
+                                                boolean cunzai = false;
+                                                String a1 = mapTime.get(i);
+                                                String a2 = TimeTools.next(mapTime.get(i), 1);
+                                                while(TimeTools.formatTime.parse(a2).getTime() <= mapLong.get(i+1)){
+                                                        if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(a1,a2, info.getUserId(), agent)){
+                                                                cunzai = true;
+                                                        }else{
+                                                                if(i > 0){
+                                                                        lianxu = false;
+                                                                        chixu = false;
+                                                                }
+                                                        }
+                                                        
+                                                        a1 = TimeTools.next(a1, 1);
+                                                        a2 = TimeTools.next(a2, 1);
+                                                }
+                                                if(i>0){
+                                                        if(lianxu){
+                                                                mapLianxu.set(i, mapLianxu.get(i)+1);
+                                                        }
+                                                        if(chixu){
+                                                                mapChixu.set(i, mapChixu.get(i)+1);
+                                                        }
+                                                }
+                                                if(cunzai){
+                                                        mapCunzai.set(i, mapCunzai.get(i)+1);
+                                                }
+                                        }
+                                }
+                                for(int i=0;i<mapTime.size() -1;i++){
+                                        JSONObject object2 = new JSONObject();
+                                        object2.put("time_start", mapTime.get(i).substring(0, 10));
+                                        object2.put("time_end", mapTime.get(i+1).substring(0, 10));
+                                        object2.put("lianxu", mapLianxu.get(i));
+                                        object2.put("cunzai", mapCunzai.get(i));
+                                        object2.put("chixu", mapChixu.get(i));
+                                        datas.add(object2);
+                                }
+                        }else{
+                                mapTime.add(start);
+                                mapTime.add(end);
+                                mapLong.add(TimeTools.formatTime.parse(start).getTime());
+                                mapLong.add(TimeTools.formatTime.parse(end).getTime());
+                                mapLianxu.add(0);
+                                mapCunzai.add(0);
+                                mapChixu.add(0);
+                                mapTime.add(zuobiaoStart);
+                                mapTime.add(zuobiaoEnd);
+                                mapLong.add(TimeTools.formatTime.parse(zuobiaoStart).getTime());
+                                mapLong.add(TimeTools.formatTime.parse(zuobiaoEnd).getTime());
+                                mapLianxu.add(0);
+                                mapCunzai.add(0);
+                                mapChixu.add(0);
+                                for(Info info: infos){
+                                        boolean lianxu = true;
+                                        boolean cunzai = false;
+                                        boolean chixu = true;
+                                        String a1 = mapTime.get(0);
+                                        String a2 = TimeTools.next(mapTime.get(0), 1);
+                                        while(TimeTools.formatTime.parse(a2).getTime() <= mapLong.get(1)){
+                                                if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(a1,a2, info.getUserId(), agent)){
+                                                        cunzai = true;
+                                                }
+                                                
+                                                a1 = TimeTools.next(a1, 1);
+                                                a2 = TimeTools.next(a2, 1);
+                                        }
+                                        if(cunzai){
+                                                mapCunzai.set(0, mapCunzai.get(0)+1);
+                                        }
+                                        cunzai = false;
+                                        a1 = mapTime.get(2);
+                                        a2 = TimeTools.next(mapTime.get(2), 1);
+                                        while(TimeTools.formatTime.parse(a2).getTime() <= mapLong.get(3)){
+                                                if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(a1,a2, info.getUserId(), agent)){
+                                                        cunzai = true;
+                                                }else{
+                                                        lianxu = false;
+                                                        chixu = false;
+                                                }
+                                                a1 = TimeTools.next(a1, 1);
+                                                a2 = TimeTools.next(a2, 1);
+                                        }
+                                        if(lianxu){
+                                                mapLianxu.set(1, mapLianxu.get(1)+1);
+                                        }
+                                        if(cunzai){
+                                                mapCunzai.set(1, mapCunzai.get(1)+1);
+                                        }
+                                        if(chixu){
+                                                mapChixu.set(1, mapChixu.get(1)+1);
+                                        }
+                                }
+                                JSONObject object2 = new JSONObject();
+                                object2.put("time_start", mapTime.get(0).substring(0, 10));
+                                object2.put("time_end", mapTime.get(1).substring(0, 10));
+                                object2.put("lianxu", mapLianxu.get(0));
+                                object2.put("cunzai", mapCunzai.get(0));
+                                object2.put("chixu", mapChixu.get(0));
+                                datas.add(object2);
+                                JSONObject object3 = new JSONObject();
+                                object3.put("time_start", mapTime.get(2).substring(0, 10));
+                                object3.put("time_end", mapTime.get(3).substring(0, 10));
+                                object3.put("lianxu", mapLianxu.get(1));
+                                object3.put("cunzai", mapCunzai.get(1));
+                                object3.put("chixu", mapChixu.get(1));
+                                datas.add(object3);
+                        }
+                        object.put("datas", datas);
+                        object.put("zuobiao", zuobiao);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
+                        return null;
                 }
                 return object;
         }

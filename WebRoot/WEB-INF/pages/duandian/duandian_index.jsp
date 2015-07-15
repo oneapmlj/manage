@@ -247,29 +247,20 @@
 							结束时间:
 							<input type="text" id="duandian_baobiao_yuan_end" value="" style="width:80px;"/>
 						</div>
+						<div style="width:170px;float:left;height:30px;" class="yuan_liucun_type hidden">
+							源数据类型:
+							<select class="hand" id="yuan_liucun_type">
+								<option value="0" selected="selected">存在</option>
+								<option value="1">连续</option>
+							</select>
+						</div>
 					</div>
 					<div style="margin-top:10px;width:1200px;margin-left:auto;margin-right:auto;float:left;line-height:30px;">
 						<div style="width:170px;float:left;height:30px;">
 							报表类型:
 							<select class="hand" id="duandian_baobiao_leixing">
 								<option value="0" selected="selected">转化</option>
-								<!-- <option value="1">留存</option> -->
-							</select>
-						</div>
-						<div class="duandian_baobiao_liucun_guize hidden" style="width:180px;float:left;height:30px;">
-							留存规则:
-							<select class="hand" id="duandian_baobiao_liucun_guize">
-								<option value="0" selected="selected">存在数据</option>
-								<option value="1">连续有数据</option>
-								<option value="2">连续和存在</option>
-							</select>
-						</div>
-						<div class="duandian_baobiao_zhuanhua_guize" style="width:180px;float:left;height:30px;">
-							转化规则:
-							<select class="hand" id="duandian_baobiao_liucun_guize">
-								<option value="0" selected="selected">总计</option>
-								<option value="1">区间</option>
-								<option value="2">全部</option>
+								<option value="1">留存</option>
 							</select>
 						</div>
 						<div style="width:170px;float:left;height:30px;" class="duandian_baobiao_yuyan hidden">
@@ -305,7 +296,7 @@
 						</div>
 						<div class="hidden duandian_baobiao_zuobiao_zidingyi" style="width:210px;float:left;height:30px;">
 							自定义坐标天数:
-							<input style="width:60px;" class="hand" id="duandian_baobiao_zuobiao_zidingyi" />天
+							<input style="width:60px;" class="hand" id="duandian_baobiao_zuobiao_zidingyi" value="0"/>天
 						</div>
 						<div class="hidden duandian_baobiao_zuobiao" style="width:160px;float:left;height:30px;font-size:14px;">
 							起始时间:

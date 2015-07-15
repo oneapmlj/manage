@@ -145,11 +145,11 @@ $(document).ready(function() {
 		var yuan_end = $("#duandian_baobiao_yuan_end").val();
 		var agent = $("#duandian_baobiao_yuyan").val();
 		var leixing = $("#duandian_baobiao_leixing").val();
-		var liucun = $("#duandian_baobiao_liucun_guize").val();
 		var zuobiao = $("#duandian_baobiao_zuobiao").val();
 		var zuobiao_zidingyi = $("#duandian_baobiao_zuobiao_zidingyi").val();
 		var zuobiao_start = $("#duandian_baobiao_zuobiao_start").val();
 		var zuobiao_end = $("#duandian_baobiao_zuobiao_end").val();
+		var yuan_type = $("#yuan_liucun_type").val();
 		$(".baobiao_chaxun").val("查询中");
 		$(".baobiao_chaxun").addClass("baobiao_chaxun_ing");
 		$(".baobiao_chaxun_ing").removeClass("baobiao_chaxun");
@@ -160,98 +160,172 @@ $(document).ready(function() {
 		$.ajax({
 			dataType:'json',
 			url:'duandian_chaxun_baobiao.action',
-			data:{yuan:yuan,yuanStart:yuan_start,yuanEnd:yuan_end,agent:agent,leixing:leixing,liucun:liucun,zuobiao:zuobiao,zhuobiaoZidingyi:
-				zuobiao_zidingyi,zuobiaoStart:zuobiao_start,zuobiaoEnd:zuobiao_end}
+			data:{yuan:yuan,yuanStart:yuan_start,yuanEnd:yuan_end,agent:agent,leixing:leixing,zuobiao:zuobiao,zuobiaoZidingyi:
+				zuobiao_zidingyi,zuobiaoStart:zuobiao_start,zuobiaoEnd:zuobiao_end,yuanType:yuan_type}
 		}).done(function(da){
 			$(".baobiao_chaxun_ing").val("查询");
 			$(".baobiao_chaxun_ing").addClass("baobiao_chaxun");
 			$(".baobiao_chaxun").removeClass("baobiao_chaxun_ing");
 			if(da.status == '1'){
-				var baobiao = da.baobiao;
-				var html = "<div style='width:1200px;float:left;margin-top:5px;'><div style='float:left;width:1140px;'>";
-				if(baobiao.zuobiao == 0){
-					html += "<div style='float:left;width:100px;' class='border_all'>"
-						+"<div style='width:100px;height:28px;text-align:center;font-size:14px;line-height:28px;'></div>"
-						+"<div class='border_top' style='width:100px;height:28px;text-align:center;font-size:14px;line-height:28px;'>时间</div>"
-						+"<div class='border_top' style='width:100px;height:41px;text-align:center;font-size:14px;line-height:20px;'>"
-						+"<div class='left' style='float:left;width:50px;height:41px;line-height:40px;'>下载</div>"	
-						+"<div class='border_left' style='float:left;width:49px;height:20px;line-height:20px;'>区间</div>"	
-						+"<div class='border_left border_top' style='float:left;width:49px;height:20px;line-height:20px;'>总计</div>"	
-						+"</div>"
-						+"<div class='border_top' style='width:100px;height:41px;text-align:center;font-size:14px;line-height:20px;'>"
-						+"<div class='left' style='float:left;width:50px;height:41px;line-height:40px;'>应用</div>"	
-						+"<div class='border_left' style='float:left;width:49px;height:20px;line-height:20px;'>区间</div>"	
-						+"<div class='border_left border_top' style='float:left;width:49px;height:20px;line-height:20px;'>总计</div>"	
-						+"</div>"
-						+"</div>"
-						+"<div style='float:left;width:140px;' class='border_right_all'>"
-						+"<div style='width:140px;height:28px;text-align:center;font-size:14px;line-height:28px;'>源数据</div>"
-						+"<div class='border_top' style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_start+"</div>"
-						+"<div style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_end+"</div>"
-						+"<div class='border_top' style='width:140px;height:83px;text-align:center;font-size:12px;line-height:83px;'>"
-						+"<div class='left' style='width:59px;height:83px;text-align:center;font-size:14px;line-height:83px;'>"+baobiao.base+"</div>"
-						+"<div class='border_left left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].download_qujian+"</div>"
-						+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].download_zong+"</div>"
-						+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].app_qujian+"</div>"
-						+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].app_zong+"</div>"
-						+"</div>"
-						+"</div>"
-						+"<div style='float:left;width:80px;' class='border_right_all'>"
-						+"<div style='width:80px;height:28px;text-align:center;font-size:14px;line-height:28px;'>1</div>"
-						+"<div class='border_top' style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[1].time_start+"</div>"
-						+"<div style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[1].time_end+"</div>"
-						+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[1].download_qujian+"</div>"
-						+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[1].download_zong+"</div>"
-						+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[1].app_qujian+"</div>"
-						+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[1].app_zong+"</div>"
-						+"</div>";
-				}else{
-					html += "<div style='float:left;width:100px;' class='border_all'>"
-						+"<div style='width:100px;height:28px;text-align:center;font-size:14px;line-height:28px;'></div>"
-						+"<div class='border_top' style='width:100px;height:28px;text-align:center;font-size:14px;line-height:28px;'>时间</div>"
-						+"<div class='border_top' style='width:100px;height:41px;text-align:center;font-size:14px;line-height:20px;'>"
-						+"<div class='left' style='float:left;width:50px;height:41px;line-height:40px;'>下载</div>"	
-						+"<div class='border_left' style='float:left;width:49px;height:20px;line-height:20px;'>区间</div>"	
-						+"<div class='border_left border_top' style='float:left;width:49px;height:20px;line-height:20px;'>总计</div>"	
-						+"</div>"
-						+"<div class='border_top' style='width:100px;height:41px;text-align:center;font-size:14px;line-height:20px;'>"
-						+"<div class='left' style='float:left;width:50px;height:41px;line-height:40px;'>应用</div>"	
-						+"<div class='border_left' style='float:left;width:49px;height:20px;line-height:20px;'>区间</div>"	
-						+"<div class='border_left border_top' style='float:left;width:49px;height:20px;line-height:20px;'>总计</div>"	
-						+"</div>"
-						+"</div>"
-						+"<div style='float:left;width:140px;' class='border_right_all'>"
-						+"<div style='width:140px;height:28px;text-align:center;font-size:14px;line-height:28px;'>源数据</div>"
-						+"<div class='border_top' style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_start+"</div>"
-						+"<div style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_end+"</div>"
-						+"<div class='border_top' style='width:140px;height:83px;text-align:center;font-size:12px;line-height:83px;'>"
-						+"<div class='left' style='width:59px;height:83px;text-align:center;font-size:14px;line-height:83px;'>"+baobiao.base+"</div>"
-						+"<div class='border_left left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].download_qujian+"</div>"
-						+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].download_zong+"</div>"
-						+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].app_qujian+"</div>"
-						+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].app_zong+"</div>"
-						+"</div>"
-						+"</div>";
-					if(baobiao.datas.length > 1){
-						var datas = baobiao.datas;
-						for(var i=1;i<datas.length;i++){
-							html += "<div style='float:left;width:80px;' class='border_right_all'>"
-								+"<div style='width:80px;height:28px;text-align:center;font-size:14px;line-height:28px;'>"+i+"</div>"
-								+"<div class='border_top' style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+datas[i].time_start+"</div>"
-								+"<div style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+datas[i].time_end+"</div>"
-								+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+datas[i].download_qujian+"</div>"
-								+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+datas[i].download_zong+"</div>"
-								+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+datas[i].app_qujian+"</div>"
-								+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+datas[i].app_zong+"</div>"
-								+"</div>";
+				//转化
+				if(leixing == 0){
+					var baobiao = da.baobiao;
+					var html = "<div style='width:1200px;float:left;margin-top:5px;'><div style='float:left;width:1140px;'>";
+					if(baobiao.zuobiao == 0){
+						html += "<div style='float:left;width:100px;' class='border_all'>"
+							+"<div style='width:100px;height:28px;text-align:center;font-size:14px;line-height:28px;'></div>"
+							+"<div class='border_top' style='width:100px;height:28px;text-align:center;font-size:14px;line-height:28px;'>时间</div>"
+							+"<div class='border_top' style='width:100px;height:41px;text-align:center;font-size:14px;line-height:20px;'>"
+							+"<div class='left' style='float:left;width:50px;height:41px;line-height:40px;'>下载</div>"	
+							+"<div class='border_left' style='float:left;width:49px;height:20px;line-height:20px;'>区间</div>"	
+							+"<div class='border_left border_top' style='float:left;width:49px;height:20px;line-height:20px;'>总计</div>"	
+							+"</div>"
+							+"<div class='border_top' style='width:100px;height:41px;text-align:center;font-size:14px;line-height:20px;'>"
+							+"<div class='left' style='float:left;width:50px;height:41px;line-height:40px;'>应用</div>"	
+							+"<div class='border_left' style='float:left;width:49px;height:20px;line-height:20px;'>区间</div>"	
+							+"<div class='border_left border_top' style='float:left;width:49px;height:20px;line-height:20px;'>总计</div>"	
+							+"</div>"
+							+"</div>"
+							+"<div style='float:left;width:140px;' class='border_right_all'>"
+							+"<div style='width:140px;height:28px;text-align:center;font-size:14px;line-height:28px;'>源数据</div>"
+							+"<div class='border_top' style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_start+"</div>"
+							+"<div style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_end+"</div>"
+							+"<div class='border_top' style='width:140px;height:83px;text-align:center;font-size:12px;line-height:83px;'>"
+							+"<div class='left' style='width:59px;height:83px;text-align:center;font-size:14px;line-height:83px;'>"+baobiao.base+"</div>"
+							+"<div class='border_left left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].download_qujian+"</div>"
+							+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].download_zong+"</div>"
+							+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].app_qujian+"</div>"
+							+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].app_zong+"</div>"
+							+"</div>"
+							+"</div>"
+							+"<div style='float:left;width:80px;' class='border_right_all'>"
+							+"<div style='width:80px;height:28px;text-align:center;font-size:14px;line-height:28px;'>1</div>"
+							+"<div class='border_top' style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[1].time_start+"</div>"
+							+"<div style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[1].time_end+"</div>"
+							+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[1].download_qujian+"</div>"
+							+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[1].download_zong+"</div>"
+							+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[1].app_qujian+"</div>"
+							+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[1].app_zong+"</div>"
+							+"</div>";
+					}else{
+						html += "<div style='float:left;width:100px;' class='border_all'>"
+							+"<div style='width:100px;height:28px;text-align:center;font-size:14px;line-height:28px;'></div>"
+							+"<div class='border_top' style='width:100px;height:28px;text-align:center;font-size:14px;line-height:28px;'>时间</div>"
+							+"<div class='border_top' style='width:100px;height:41px;text-align:center;font-size:14px;line-height:20px;'>"
+							+"<div class='left' style='float:left;width:50px;height:41px;line-height:40px;'>下载</div>"	
+							+"<div class='border_left' style='float:left;width:49px;height:20px;line-height:20px;'>区间</div>"	
+							+"<div class='border_left border_top' style='float:left;width:49px;height:20px;line-height:20px;'>总计</div>"	
+							+"</div>"
+							+"<div class='border_top' style='width:100px;height:41px;text-align:center;font-size:14px;line-height:20px;'>"
+							+"<div class='left' style='float:left;width:50px;height:41px;line-height:40px;'>应用</div>"	
+							+"<div class='border_left' style='float:left;width:49px;height:20px;line-height:20px;'>区间</div>"	
+							+"<div class='border_left border_top' style='float:left;width:49px;height:20px;line-height:20px;'>总计</div>"	
+							+"</div>"
+							+"</div>"
+							+"<div style='float:left;width:140px;' class='border_right_all'>"
+							+"<div style='width:140px;height:28px;text-align:center;font-size:14px;line-height:28px;'>源数据</div>"
+							+"<div class='border_top' style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_start+"</div>"
+							+"<div style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_end+"</div>"
+							+"<div class='border_top' style='width:140px;height:83px;text-align:center;font-size:12px;line-height:83px;'>"
+							+"<div class='left' style='width:59px;height:83px;text-align:center;font-size:14px;line-height:83px;'>"+baobiao.base+"</div>"
+							+"<div class='border_left left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].download_qujian+"</div>"
+							+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].download_zong+"</div>"
+							+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].app_qujian+"</div>"
+							+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].app_zong+"</div>"
+							+"</div>"
+							+"</div>";
+						if(baobiao.datas.length > 1){
+							var datas = baobiao.datas;
+							for(var i=1;i<datas.length;i++){
+								html += "<div style='float:left;width:80px;' class='border_right_all'>"
+									+"<div style='width:80px;height:28px;text-align:center;font-size:14px;line-height:28px;'>"+i+"</div>"
+									+"<div class='border_top' style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+datas[i].time_start+"</div>"
+									+"<div style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+datas[i].time_end+"</div>"
+									+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+datas[i].download_qujian+"</div>"
+									+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+datas[i].download_zong+"</div>"
+									+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+datas[i].app_qujian+"</div>"
+									+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+datas[i].app_zong+"</div>"
+									+"</div>";
+							}
 						}
 					}
+					html = html+"</div><div style='float:left;width:60px;height:148px;line-height:188px;text-align:center;'>" +
+					"<input type='button' value='移除' class='hand baobiao_result_remove'/>" +
+					"<input type='button' start='"+baobiao.datas[0].time_start+"' end='"+baobiao.datas[0].time_end+"' value='差值' class='hand baobiao_result_chazhi'/></div></div>";
+					var html1 = $(".duandian_list_baobiao").html();
+					$(".duandian_list_baobiao").html(html+html1);
 				}
-				html = html+"</div><div style='float:left;width:60px;height:148px;line-height:188px;text-align:center;'>" +
-						"<input type='button' value='移除' class='hand baobiao_result_remove'/>" +
-						"<input type='button' start='"+baobiao.datas[0].time_start+"' end='"+baobiao.datas[0].time_end+"' value='差值' class='hand baobiao_result_chazhi'/></div></div>";
-				var html1 = $(".duandian_list_baobiao").html();
-				$(".duandian_list_baobiao").html(html+html1);
+				//留存
+				if(da.leixing == 1){
+					var baobiao = da.baobiao;
+					var html = "<div style='width:1200px;float:left;margin-top:5px;'><div style='float:left;width:1140px;'>";
+					if(baobiao.zuobiao == 0){
+						html += "<div style='float:left;width:60px;' class='border_all'>"
+							+"<div style='width:60px;height:28px;text-align:center;font-size:14px;line-height:28px;'></div>"
+							+"<div class='border_top' style='width:60px;height:28px;text-align:center;font-size:14px;line-height:28px;'>时间</div>"
+							+"<div class='border_top' style='width:60px;height:20px;text-align:center;line-height:20px;'>持续</div>"	
+							+"<div class='border_top' style='width:60px;height:20px;text-align:center;line-height:20px;'>连续</div>"	
+							+"<div class='border_top' style='width:60px;height:20px;text-align:center;line-height:20px;'>存在</div>"	
+							+"</div>"
+							+"<div style='float:left;width:140px;' class='border_right_all'>"
+							+"<div style='width:140px;height:28px;text-align:center;font-size:14px;line-height:28px;'>源数据</div>"
+							+"<div class='border_top' style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_start+"</div>"
+							+"<div style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_end+"</div>"
+							+"<div class='border_top' style='width:140px;height:62px;text-align:center;font-size:12px;line-height:62px;'>"
+							+"<div class='left' style='width:59px;height:62px;text-align:center;font-size:14px;line-height:62px;'>"+baobiao.base+"</div>"
+							+"<div class='border_left left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>---</div>"
+							+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>---</div>"
+							+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].cunzai+"</div>"
+							+"</div>"
+							+"</div>"
+							+"<div style='float:left;width:80px;' class='border_right_all'>"
+							+"<div style='width:80px;height:28px;text-align:center;font-size:14px;line-height:28px;'>1</div>"
+							+"<div class='border_top' style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[1].time_start+"</div>"
+							+"<div style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[1].time_end+"</div>"
+							+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[1].chixu+"</div>"
+							+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[1].lianxu+"</div>"
+							+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[1].cunzai+"</div>"
+							+"</div>";
+					}else{
+						html += "<div style='float:left;width:60px;' class='border_all'>"
+							+"<div style='width:60px;height:28px;text-align:center;font-size:14px;line-height:28px;'></div>"
+							+"<div class='border_top' style='width:60px;height:28px;text-align:center;font-size:14px;line-height:28px;'>时间</div>"
+							+"<div class='border_top' style='width:60px;height:20px;text-align:center;line-height:20px;'>持续</div>"	
+							+"<div class='border_top' style='width:60px;height:20px;text-align:center;line-height:20px;'>连续</div>"	
+							+"<div class='border_top' style='width:60px;height:20px;text-align:center;line-height:20px;'>存在</div>"	
+							+"</div>"
+							+"<div style='float:left;width:140px;' class='border_right_all'>"
+							+"<div style='width:140px;height:28px;text-align:center;font-size:14px;line-height:28px;'>源数据</div>"
+							+"<div class='border_top' style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_start+"</div>"
+							+"<div style='width:140px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+baobiao.datas[0].time_end+"</div>"
+							+"<div class='border_top' style='width:140px;height:62px;text-align:center;font-size:12px;line-height:62px;'>"
+							+"<div class='left' style='width:59px;height:62px;text-align:center;font-size:14px;line-height:62px;'>"+baobiao.base+"</div>"
+							+"<div class='border_left left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>---</div>"
+							+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>---</div>"
+							+"<div class='border_left border_top left' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+baobiao.datas[0].cunzai+"</div>"
+							+"</div>"
+							+"</div>"
+						if(baobiao.datas.length > 1){
+							var datas = baobiao.datas;
+							for(var i=1;i<datas.length;i++){
+								html += "<div style='float:left;width:80px;' class='border_right_all'>"
+									+"<div style='width:80px;height:28px;text-align:center;font-size:14px;line-height:28px;'>"+i+"</div>"
+									+"<div class='border_top' style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+datas[i].time_start+"</div>"
+									+"<div style='width:80px;height:14px;text-align:center;font-size:12px;line-height:14px;'>"+datas[i].time_end+"</div>"
+									+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+datas[i].chixu+"</div>"
+									+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+datas[i].lianxu+"</div>"
+									+"<div class='border_top' style='width:80px;height:20px;text-align:center;font-size:14px;line-height:20px;'>"+datas[i].cunzai+"</div>"
+									+"</div>";
+							}
+						}
+					}
+					html = html+"</div><div style='float:left;width:60px;height:148px;line-height:188px;text-align:center;'>" +
+					"<input type='button' value='移除' class='hand baobiao_result_remove'/>"
+					+"<input type='button' start='"+baobiao.datas[0].time_start+"' end='"+baobiao.datas[0].time_end+"' value='差值' class='hand baobiao_result_chazhi_liucun'/>"
+					+"</div></div>";
+					var html1 = $(".duandian_list_baobiao").html();
+					$(".duandian_list_baobiao").html(html+html1);
+				}
 			}else{
 				alert(da.msg);
 			}
@@ -409,18 +483,15 @@ $(document).ready(function() {
 				$("#duandian_baobiao_leixing").val(0);
 				return;
 			}
-			$(".duandian_baobiao_liucun_guize").removeClass("hidden");
-			$(".duandian_baobiao_zhuanhua_guize").addClass("hidden");
 			$(".duandian_baobiao_yuyan").removeClass("hidden");
+			$(".yuan_liucun_type").removeClass("hidden");
 		}else{
 			if(id == 0){
-				$(".duandian_baobiao_liucun_guize").addClass("hidden");
-				$(".duandian_baobiao_zhuanhua_guize").removeClass("hidden");
 				$(".duandian_baobiao_yuyan").addClass("hidden");
+				$(".yuan_liucun_type").addClass("hidden");
 			}else{
-				$(".duandian_baobiao_liucun_guize").addClass("hidden");
-				$(".duandian_baobiao_zhuanhua_guize").addClass("hidden");
 				$(".duandian_baobiao_yuyan").addClass("hidden");
+				$(".yuan_liucun_type").addClass("hidden");
 			}
 		}
 	});

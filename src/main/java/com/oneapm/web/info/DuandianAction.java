@@ -70,17 +70,17 @@ public class DuandianAction extends SupportAction {
         private String yuanStart;
         private String yuanEnd;
         private int leixing;
-        private int liucun;
         private int zuobiao;
         private int zuobiaoZidingyi;
         private String zuobiaoStart;
         private String zuobiaoEnd;
+        private int yuanType;
         public void chaxun_baobiao() throws IOException {
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
                 }
                 try {
-                        String result = DuandianService.chaxun(yuan, yuanStart, yuanEnd, agent, leixing, liucun, zuobiao, zuobiaoZidingyi, zuobiaoStart, zuobiaoEnd);
+                        String result = DuandianService.chaxun(yuan, yuanStart, yuanEnd, agent, leixing, zuobiao, zuobiaoZidingyi, zuobiaoStart, zuobiaoEnd, yuanType);
                         getServletResponse().getWriter().print(result);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
@@ -329,14 +329,6 @@ public class DuandianAction extends SupportAction {
                 this.yuanStart = yuanStart;
         }
 
-        public int getLiucun() {
-                return liucun;
-        }
-
-        public void setLiucun(int liucun) {
-                this.liucun = liucun;
-        }
-
         public int getZuobiao() {
                 return zuobiao;
         }
@@ -367,5 +359,13 @@ public class DuandianAction extends SupportAction {
 
         public void setZuobiaoEnd(String zuobiaoEnd) {
                 this.zuobiaoEnd = zuobiaoEnd;
+        }
+
+        public int getYuanType() {
+                return yuanType;
+        }
+
+        public void setYuanType(int yuanType) {
+                this.yuanType = yuanType;
         }
 }
