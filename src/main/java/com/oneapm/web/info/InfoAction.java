@@ -23,6 +23,7 @@ import com.oneapm.service.show.IndexShowService;
 import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
 import com.oneapm.web.JWT;
+import com.oneapm.web.KF5;
 import com.oneapm.web.LoginApi;
 import com.oneapm.web.SupportAction;
 
@@ -603,8 +604,13 @@ public class InfoAction extends SupportAction {
                 Info info = InfoService.findByIdSimple(id);
                 // 获取用户运营系统的id
                 Long udeskId = JWT.findUdeskId(info.getEmail(), id);
-//                Long udeskId = JWT.findUdeskId("520287450@QQ.com", id);
-                String url = JWT.getUrl(getAdmin().getEmail(), getAdmin().getName(), "http://oneapm.udesk.cn/entry/customer_center/customers/" + udeskId);
+                company = info.getCompany();
+                if(info.getProject() != null && info.getProject().trim().length() > 0){
+                        company = info.getProject();
+                }
+//                Long kfId = KF5.getKfId(info.getId(), info.getEmail(), info.getName(), company, udeskId);
+                String url = KF5.getUrl(info.getId(), info.getEmail(), info.getName(), company, info.getUserId(), getAdmin().getEmail());
+//                String url = JWT.getUrl(getAdmin().getEmail(), getAdmin().getName(), "http://oneapm.udesk.cn/entry/customer_center/customers/" + udeskId);
                 getServletResponse().sendRedirect(url);
         }
 
