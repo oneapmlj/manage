@@ -30,7 +30,7 @@
 			<s:else><div style="float:left;width:45px;" id="type=3"  class="account biankuang_gray menu_button_2">开发者</div></s:else>
 			<s:if test="%{type == 2}"><div style="float:left;width:55px;" id="type=2"  class="account biankuang_blue_ding menu_button_2">未定义</div></s:if>
 			<s:else><div style="float:left;width:55px;" id="type=2"  class="account biankuang_gray menu_button_2">未定义</div></s:else>
-			<s:if test="%{type == 4}"><div style="float:left;width:55px;" id="type=4"  class="account biankuang_blue_ding menu_button_2">已关闭</div></s:if>
+			<%-- <s:if test="%{type == 4}"><div style="float:left;width:55px;" id="type=4"  class="account biankuang_blue_ding menu_button_2">已关闭</div></s:if>
 			<s:else><div style="float:left;width:55px;" id="type=4"  class="account biankuang_gray menu_button_2">已关闭</div></s:else>
 			<s:if test="%{type == 5}"><div style="float:left;width:45px;" id="type=5"  class="account biankuang_blue_ding menu_button_2">新分配</div></s:if>
 			<s:else><div style="float:left;width:45px;" id="type=5"  class="account biankuang_gray menu_button_2">新分配</div></s:else>
@@ -43,9 +43,9 @@
 			<s:if test="%{type == 9}"><div style="float:left;width:45px;" id="type=9"  class="account biankuang_blue_ding menu_button_2">成单</div></s:if>
 			<s:else><div style="float:left;width:45px;" id="type=9"  class="account biankuang_gray menu_button_2">成单</div></s:else>
 			<s:if test="%{type == 10}"><div style="float:left;width:45px;" id="type=10"  class="account biankuang_blue_ding menu_button_2">输单</div></s:if>
-			<s:else><div style="float:left;width:45px;" id="type=10"  class="account biankuang_gray menu_button_2">输单</div></s:else>
+			<s:else><div style="float:left;width:45px;" id="type=10"  class="account biankuang_gray menu_button_2">输单</div></s:else> --%>
 			<div style="float:left;width:70px;"  class="account_info biankuang_gray menu_button_2">个人信息</div>
-			<div style="float:left;width:70px;"  class="account_mails biankuang_gray menu_button_2">邮件记录</div>
+			<!-- <div style="float:left;width:70px;"  class="account_mails biankuang_gray menu_button_2">邮件记录</div> -->
 		</div>
 	</div> 
 		<div style="width:100%;" id="tab_1" class="tab">
@@ -123,7 +123,7 @@
 					</s:if>
 					</div>
 				</div>
-				<div style="width:370px;height:800px;float:left;margin-left:10px;">
+				<%-- <div style="width:370px;height:800px;float:left;margin-left:10px;">
 					<div style="width:360px;float:left;line-height:25px;font-size:16px;">
 						<div class="view_p_button"><strong>名片添加记录(${account.cardSize})</strong></div>
 					</div>
@@ -148,7 +148,7 @@
 							</s:iterator>
 						</s:if>
 					</div>
-				</div>
+				</div> --%>
 				<%-- <div style="width:1000px;max-height:600px;float:left;margin-left:10px;font-size:14px;">
 					<div style="width:250px;float:left;line-height:25px;font-size:16px;">
 						<div class="view_p_button"><strong>负责用户(${account.infoSize })</strong></div>

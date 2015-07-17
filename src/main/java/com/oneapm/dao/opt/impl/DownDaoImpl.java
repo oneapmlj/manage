@@ -3,6 +3,7 @@ package com.oneapm.dao.opt.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -144,6 +145,17 @@ public class DownDaoImpl extends DaoImplBase<Download> {
                         if (cursor.hasNext()) {
                                 return getInfoFromResult(cursor.next());
                         }
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return null;
+        }
+        
+        public List<Long> test(JSONArray array) {
+                try {
+                        DBObject object = new BasicDBObject();
+                        object.put("user_id", new BasicDBObject("$in", array));
+                        return getDBCollection(TABLE_NAME).distinct("user_id", object);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

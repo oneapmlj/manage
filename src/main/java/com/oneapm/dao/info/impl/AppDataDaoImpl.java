@@ -1,8 +1,11 @@
 package com.oneapm.dao.info.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +30,16 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
         public static AppDataDaoImpl getInstance() {
                 return Instance;
         }
-        
+        public List<Long> test(JSONArray array) {
+                try {
+                        DBObject object = new BasicDBObject();
+                        object.put("user_id", new BasicDBObject("$in", array));
+                        return getDBCollection(TABLE_NAME).distinct("user_id", object);
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return null;
+        }
         public List<Aplication> findByAgent(int agent, String start, String end){
                 List<Aplication> apps = new ArrayList<Aplication>();
                 try{
@@ -50,6 +62,48 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
                 }
                 return apps;
         }
+        
+        public List<Long> findUserIdsByAgent(int agent, String start, String end){
+                List<Long> userIds = new ArrayList<Long>();
+                try{
+                        DBObject object = new BasicDBObject();
+                        if(agent > 0){
+                                object.put("agent", agent);
+                        }
+                        if(start != null){
+                               BasicDBList list = new BasicDBList();
+                               list.add(new BasicDBObject("data_time", new BasicDBObject("$gte", start)));
+                               list.add(new BasicDBObject("data_time", new BasicDBObject("$lt", end)));
+                                object.put("$and", list);
+                        }
+                        userIds = getDBCollection(TABLE_NAME).distinct("user_id", object);
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return userIds;
+        }
+        
+        public List<Long> exitBeforeTime(int agent, String dataTime, List<Long> USERIDS){
+                List<Long> userIds = new ArrayList<Long>();
+                try{
+                        DBObject object = new BasicDBObject();
+                        if(agent > 0){
+                                object.put("agent", agent);
+                        }
+                        object.put("data_time", new BasicDBObject("$lt", dataTime));
+                       JSONArray array = new JSONArray();
+                       for(Long userId : USERIDS){
+                               array.add(userId);
+                       }
+                        object.put("user_id", new BasicDBObject("$in",array));
+                        userIds = getDBCollection(TABLE_NAME).distinct("user_id", object);
+                        System.out.println(userIds.size());
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return userIds;
+        }
+        
         public List<Aplication> findByTime(String start, String end){
                 List<Aplication> apps = new ArrayList<Aplication>();
                 try{
@@ -170,7 +224,7 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
         public Aplication findByUserIdfirst(Long userId){
                 try{
                         DBObject object = new BasicDBObject("user_id", userId);
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).limit(1);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(new BasicDBObject("data_time", 1)).limit(1);
                         if(cursor.hasNext()){
                                 return getAplicationFromResult(cursor.next());
                         }

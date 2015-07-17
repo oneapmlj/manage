@@ -97,7 +97,7 @@ public class Listener implements ServletContextListener {
                 }
                 LOG.info("init finished .....................................................");
                 LOG.info("start run ......................................................");
-                new Thread(new Run()).start();
+//                new Thread(new Run()).start();
         }
 
         public static void initMongoDao(Element Element) throws UnknownHostException {

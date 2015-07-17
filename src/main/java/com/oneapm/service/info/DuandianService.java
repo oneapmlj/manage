@@ -6,9 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,24 +96,16 @@ public class DuandianService {
                         String start = yuanStart + " 00:00:00";
                         String end = yuanEnd + " 00:00:00";
                         List<Info> infos = InfoDaoImpl.getInstance().countSign(start, end);
-//                        boolean today = TimeTools.formatTime.parse(end).getTime() > new Date().getTime();
                         for(int i=0;i<infos.size();i++){
                                 if(!DownDaoImpl.getInstance().findDownload(infos.get(i).getUserId())){
                                     infos.remove(i);
                                     i--;
                                 }else{
-//                                        if(today){
-                                                if(AppDaoImpl.getInstance().findApp(infos.get(i).getUserId())){
-                                                   infos.remove(i);
-                                                   i--;
-                                                }
-//                                        }else{
-//                                                if(AppDataDaoImpl.getInstance().exist(infos.get(i).getUserId())){
-//                                                        infos.remove(i);
-//                                                        i--;
-//                                                }
-//                                        }
-                                }
+                                        if(AppDaoImpl.getInstance().findApp(infos.get(i).getUserId())){
+                                           infos.remove(i);
+                                           i--;
+                                        }
+                        }
                         }
                         if(infos.size() == 0){
                                 object.put("size", 0);
@@ -201,6 +192,7 @@ public class DuandianService {
                         String time =TimeTools.getDateTime(-1);
                         long timeLong = TimeTools.formatTime.parse(time).getTime();
                         List<Info> infos = InfoDaoImpl.getInstance().countSign(start, end);
+                        
                         if(infos == null || infos.size() <= 0){
                                 object.put("base", 0);
                                 return object;
@@ -257,8 +249,15 @@ public class DuandianService {
                                                         if(a >= mapLong.get(i) && a < mapLong.get(i+1)){
                                                                 mapApp_qujian.set(i, mapApp_qujian.get(i)+1);
                                                                 mapApp_zong.set(i, mapApp_zong.get(i)+1);
+                                                                if(download == null){
+                                                                        mapDownload_qujian.set(i, mapDownload_qujian.get(i)+1);
+                                                                        mapDownload_zong.set(i, mapDownload_zong.get(i)+1);
+                                                                }
                                                         }else{
                                                                 if(a < mapLong.get(i)){
+                                                                        if(download == null){
+                                                                                mapDownload_zong.set(i, mapDownload_zong.get(i)+1);
+                                                                        }
                                                                         mapApp_zong.set(i, mapApp_zong.get(i)+1);
                                                                 }
                                                         }
@@ -365,26 +364,26 @@ public class DuandianService {
                 JSONObject object = new JSONObject();
                 try{
                         List<Info> infos = new ArrayList<Info>();
-                        Set<Long> userIds = new HashSet<Long>();
-                        String chushi = "2014-01-01 00:00:00";
+                        List<Long> USERIDS = new ArrayList<Long>();
                         if(yuanType == 0){
-                                List<Aplication> aplications = AppDataDaoImpl.getInstance().findByAgent(agent, start, end);
-                                for(Aplication aplication : aplications){
-                                        userIds.add(aplication.getUserId());
-                                }
-                                if(userIds.size() > 0){
+                                USERIDS = AppDataDaoImpl.getInstance().findUserIdsByAgent(agent, start, end);
+                                if(USERIDS.size() > 0){
+                                        List<Long> userIds = AppDataDaoImpl.getInstance().exitBeforeTime(agent, start, USERIDS);
                                         for(Long userId: userIds){
-                                                if(!AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(chushi, start, userId, agent)){
-                                                        infos.add(InfoService.findByUserId(userId));
+                                                for(int i=0;i<USERIDS.size();i++){
+                                                        if(USERIDS.get(i).equals(userId)){
+                                                                USERIDS.remove(i);
+                                                                i--;
+                                                        }
                                                 }
+                                        }
+                                        for(Long userId: USERIDS){
+                                                infos.add(InfoService.findByUserId(userId));
                                         }
                                 }
                         }else{
                                 String end1 = TimeTools.next(start, 1);
-                                List<Aplication> aplications = AppDataDaoImpl.getInstance().findByAgent(agent, start, end1);
-                                for(Aplication aplication : aplications){
-                                        userIds.add(aplication.getUserId());
-                                }
+                                USERIDS = AppDataDaoImpl.getInstance().findUserIdsByAgent(agent, start, end1);
                                 List<Long> times_long = new ArrayList<Long>();
                                 List<String> times = new ArrayList<String>();
                                 while(TimeTools.formatTime.parse(end1).getTime() <= TimeTools.formatTime.parse(end).getTime()){
@@ -392,10 +391,18 @@ public class DuandianService {
                                         times_long.add(TimeTools.formatTime.parse(end1).getTime());
                                         end1 = TimeTools.next(end1, 1);
                                 }
-                                for(Long userId: userIds){
-                                        if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(chushi, start, userId, agent)){
-                                                continue;
+                                if(USERIDS.size() > 0){
+                                        List<Long> userIds = AppDataDaoImpl.getInstance().exitBeforeTime(agent, start, USERIDS);
+                                        for(Long userId: userIds){
+                                                for(int i=0;i<USERIDS.size();i++){
+                                                        if(USERIDS.get(i).equals(userId)){
+                                                                USERIDS.remove(i);
+                                                                i--;
+                                                        }
+                                                }
                                         }
+                                }
+                                for(Long userId: USERIDS){
                                         boolean in = true;
                                         for(int i=0;i<times_long.size()-1;i++){
                                                 if(!AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(times.get(i), times.get(i+1), userId, agent)){

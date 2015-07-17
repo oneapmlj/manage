@@ -224,9 +224,9 @@
 						</div>
 						<div style="width:100px;float:left;"><input class="from_chaxun hand" type="button" value="查询"/></div>
 					</div>
-					<div style="float:left;width:1200px;height:30px;">
+					<!-- <div style="float:left;width:1200px;height:30px;">
 						<div class="duandian_result_msg" style="height:20px;line-hight:20px;font-size:16px;color:red;"></div>
-					</div>
+					</div> -->
 				</div>
 				<div style="width:1200px;float:left;" class="baobiao hidden">
 					<div style="margin-top:10px;width:1200px;margin-left:auto;margin-right:auto;float:left;line-height:30px;">

@@ -7,15 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.oneapm.dto.Call;
-import com.oneapm.dto.Mail;
 import com.oneapm.dto.Account.Account;
 import com.oneapm.dto.Account.Admin;
-import com.oneapm.dto.card.Card;
 import com.oneapm.dto.info.Info;
-import com.oneapm.service.card.CardService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.info.TagService;
-import com.oneapm.service.mail.MailService;
 import com.oneapm.service.show.CallService;
 import com.oneapm.vo.Quanxian;
 import com.oneapm.web.SupportAction;
@@ -27,32 +23,32 @@ public class AccountRecordService {
         public static Account findByAdmin(Admin admin, int type, boolean self) {
                 if (admin == null)
                         return null;
-                List<Card> cards = null;
+//                List<Card> cards = null;
                 List<Call> calls = null;
-                List<Mail> mails = null;
-                int mailSize = 0;
+//                List<Mail> mails = null;
+//                int mailSize = 0;
                 int callSize = 0;
-                int cardSize = 0;
+//                int cardSize = 0;
                 int infoSize = 0;
                 if (self) {
-                        cards = CardService.findByAccountId(admin.getId());
+//                        cards = CardService.findByAccountId(admin.getId());
                         calls = CallService.findByAccountId(admin.getId());
-                        mails = MailService.findByAccountId(admin.getId());
-                        cardSize = cards.size();
+//                        mails = MailService.findByAccountId(admin.getId());
+//                        cardSize = cards.size();
                         callSize = calls.size();
-                        mailSize = mails.size();
+//                        mailSize = mails.size();
                 }
                 List<Info> infos = InfoService.findInfosByAdminId(admin.getId());
                 if (type > 0) {
                         if (self) {
-                                if (cards != null && cards.size() > 0) {
-                                        for (int i = 0; i < cards.size(); i++) {
-                                                if (!match(type, cards.get(i).getInfoId())) {
-                                                        cards.remove(i);
-                                                        i--;
-                                                }
-                                        }
-                                }
+//                                if (cards != null && cards.size() > 0) {
+//                                        for (int i = 0; i < cards.size(); i++) {
+//                                                if (!match(type, cards.get(i).getInfoId())) {
+//                                                        cards.remove(i);
+//                                                        i--;
+//                                                }
+//                                        }
+//                                }
                                 if (calls != null && calls.size() > 0) {
                                         for (int i = 0; i < calls.size(); i++) {
                                                 if (!match(type, calls.get(i).getInfoId())) {
@@ -61,14 +57,14 @@ public class AccountRecordService {
                                                 }
                                         }
                                 }
-                                if (mails != null && mails.size() > 0) {
-                                        for (int i = 0; i < mails.size(); i++) {
-                                                if (!match(type, mails.get(i).getInfoId())) {
-                                                        mails.remove(i);
-                                                        i--;
-                                                }
-                                        }
-                                }
+//                                if (mails != null && mails.size() > 0) {
+//                                        for (int i = 0; i < mails.size(); i++) {
+//                                                if (!match(type, mails.get(i).getInfoId())) {
+//                                                        mails.remove(i);
+//                                                        i--;
+//                                                }
+//                                        }
+//                                }
                         }
                         if (infos != null && infos.size() > 0) {
                                 for (int i = 0; i < infos.size(); i++) {
@@ -80,7 +76,7 @@ public class AccountRecordService {
                         }
                 }
                 infoSize = infos.size();
-                Account account = new Account(admin, mails, cards, calls, infos);
+                Account account = new Account(admin, null, null, calls, infos);
                 // Account account = new Account(admin, null, null, null,
                 // infos);
                 List<Quanxian> quanxians = new ArrayList<Quanxian>();
@@ -100,9 +96,9 @@ public class AccountRecordService {
                 }
                 account.setQuanxians(quanxians);
                 account.setCallSize(callSize);
-                account.setCardSize(cardSize);
+//                account.setCardSize(cardSize);
                 account.setInfoSize(infoSize);
-                account.setMailSize(mailSize);
+//                account.setMailSize(mailSize);
                 return account;
         }
 

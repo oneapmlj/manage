@@ -24,6 +24,7 @@ $(document).ready(function() {
 		
 		$(".duandian_list").removeClass("hidden");
 		$(".duandian_list_baobiao").addClass("hidden");
+		$(".duandian_result_msg").html("");
 		$.ajax({
 			dataType:'json',
 			url:'lable_lable.action',
@@ -69,6 +70,7 @@ $(document).ready(function() {
 		$(".baobiao").addClass("hidden");
 		$(".duandian_list").removeClass("hidden");
 		$(".duandian_list_baobiao").addClass("hidden");
+		$(".duandian_result_msg").html("");
 	});
 	$(".go_baobiao").live('click', function(){
 		$(".go_baobiao").addClass("go_baobiao_ding");
@@ -91,6 +93,7 @@ $(document).ready(function() {
 		$(".baobiao").removeClass("hidden");
 		$(".duandian_list").addClass("hidden");
 		$(".duandian_list_baobiao").removeClass("hidden");
+		$(".duandian_result_msg").html("");
 	});
 	$(".from_chaxun").live('click', function(){
 		if(father <= 0){
