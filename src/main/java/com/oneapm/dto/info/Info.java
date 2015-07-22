@@ -121,6 +121,8 @@ public class Info {
         
         private String from;
         
+        private String contectTime;
+        
         public Info() {
         }
 
@@ -577,5 +579,13 @@ public class Info {
 
         public void setUserIdPaixu(String userIdPaixu) {
                 this.userIdPaixu = userIdPaixu;
+        }
+
+        public String getContectTime() {
+                return contectTime;
+        }
+
+        public void setContectTime(String contectTime) {
+                this.contectTime = contectTime;
         }
 }

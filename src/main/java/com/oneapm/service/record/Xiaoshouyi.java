@@ -281,7 +281,7 @@ public class Xiaoshouyi {
         }
         
         public static void main(String[] args){
-                ByteArrayOutputStream bos = null;
+                /*ByteArrayOutputStream bos = null;
                 InputStream bis = null;
                 byte[] buf = new byte[10240];
                 String content = null;
@@ -295,39 +295,49 @@ public class Xiaoshouyi {
                                         request.addHeader("Authorization", TOKEN);
                                 }
                         });
-                        HttpPost request = new HttpPost("https://api.xiaoshouyi.com/data/v1/objects/lead/create");
+                        HttpPost request = new HttpPost("https://api.xiaoshouyi.com/data/v1/objects/lead/describe");
                         JSONObject object = new JSONObject();
                         object.put("public", true);
                         JSONObject record = new JSONObject();
-                        record.put("name", "闵早华");                              //姓名
-                        record.put("companyName", "汇通天下");              //公司名
+                        record.put("name", info.getName());                              //姓名
+                        record.put("companyName", info.getProject());              //公司名
                         record.put("ownerId", 329832);                                       //负责人
                         record.put("status", 1);                                        //跟进状态1.未处理，2.已联系，3.关闭，4.已转换
-                        record.put("mobile", "18910080812");                    //手机
-                        record.put("email", "minzaohua@126.com");              //邮件
-                        record.put("state", "北京");                                       //省
+                        if(info.getGender() == 1 || info.getGender() == 2){
+                                record.put("gender", info.getGender());                                        //性别1男2女
+                        }
+                        record.put("mobile", info.getPhone());                    //手机
+                        record.put("email", info.getEmail());              //邮件
+                        record.put("state", info.getTag().getProvinceName());                                       //省
                         record.put("highSeaId", 58830);                                            //所属公海分组，4735默认分组
                         
                         record.put("comment", "无"); 
                         try{
-                                record.put("comment", "三大件网络散乱的发射的拉进了万恶士大夫散乱的");
+                                record.put("comment", info.getTag().getDescription());
                         }catch(Exception e){}
                         record.put("dimDepart", "180022");                                                    //所属部门
-                        record.put("dbcVarchar1", "39411");
+                        record.put("dbcVarchar1", info.getUserId());
                         record.put("dbcVarchar2", "未知");      //融资
                         try{
-                                record.put("dbcVarchar2", "B轮");
+                                record.put("dbcVarchar2", Rongzi.getName(info.getTag().getRongzi()));
                         }catch(Exception e){}
                         record.put("dbcVarchar3", "未知");        //分类
                         try{
-                                record.put("dbcVarchar3", "其他");
+                                record.put("dbcVarchar3", Category.getName(info.getTag().getCategory()));
                         }catch(Exception e){}
                         record.put("dbcVarchar4", "未知");        //人数
                         try{
-                                record.put("dbcVarchar4", "未知");
+                                record.put("dbcVarchar4", Person.getName(info.getTag().getPerson()));
                         }catch(Exception e){}
                         try{
-                                       record.put("dbcVarchar5", "惠大庆");
+                                if(xiaoshou != null && xiaoshou.trim().length() > 0){
+                                        record.put("dbcVarchar5", xiaoshou);
+                                }else if(info.getSale() != null&& info.getSale() > 0){
+                                        Admin a = AccountService.findById(info.getSale());
+                                        if(a != null){
+                                                record.put("dbcVarchar5", a.getName());
+                                        }
+                                }
                         }catch(Exception e){}
                         
                         object.put("record", record);
@@ -351,11 +361,12 @@ public class Xiaoshouyi {
                                 }
                                 bis.close();
                                 content = bos.toString();
-                                System.out.println(content);
                                 JSONObject xiaoshouyi = null;
                                 try{
                                         xiaoshouyi = new JSONObject(content);
                                 }catch(Exception e){
+                                        LOG.info(content);
+                                        return null;
                                 }
                                 Long id = null;
                                 try{
@@ -363,6 +374,7 @@ public class Xiaoshouyi {
                                 }catch(Exception e){
                                         LOG.info(content);
                                 }
+                                return id;
                         } else {
                                 System.out.println(response.getStatusLine().getStatusCode());
                         }
@@ -377,5 +389,6 @@ public class Xiaoshouyi {
                                 }
                         }
                 }
+                return null;*/
         }
 }

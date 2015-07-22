@@ -206,10 +206,10 @@ public class InfoService extends OneTools {
         public static List<Info> findInfosByAdminId(Long adminId) {
                 List<Info> infos = InfoDaoImpl.getInstance().findByAdminId(adminId);
                 if (infos != null) {
-                        for (Info info : infos) {
-                                initAdmin(info);
-                                initTag(info);
-                        }
+//                        for (Info info : infos) {
+//                                initAdmin(info);
+//                                initTag(info);
+//                        }
                 }
                 return infos;
         }

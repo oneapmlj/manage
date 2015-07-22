@@ -54,7 +54,7 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         list.add(new BasicDBObject("preSale", adminId));
                         object.put("$or", list);
                         DBObject sort = new BasicDBObject();
-                        sort.put("create_time", -1);
+                        sort.put("contect_time", 1);
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort);
                         infos = new ArrayList<Info>();
                         while (cursor.hasNext()) {
@@ -174,6 +174,18 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         LOG.error(e.getMessage(), e);
                 }
                 return null;
+        }
+        public boolean update_contectTime(Info info) {
+                try {
+                        DBObject object = new BasicDBObject();
+                        object.put("id", info.getId());
+                        BasicDBObject value = new BasicDBObject();
+                        value.put("$set", new BasicDBObject("contect_time", info.getContectTime()));
+                        return getDBCollection(TABLE_NAME).update(object, value).getN() > -1;
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return false;
         }
 
         public List<Info> findByCreateTime(String start, String end){
@@ -640,7 +652,9 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         try{
                                 gender = Integer.parseInt(object.get("gender").toString().trim());
                         }catch(Exception e){}
+                        String contectTime = object.get("contect_time").toString();
                         info = new Info(userId, name, email, company, phone, loginTime, createTime, language, kfId, adminId, support, sale, preSale, customer, status, qq, project);
+                        info.setContectTime(contectTime);
                         info.setDataTime(dataTime);
                         info.setId(id);
                         info.setPayLevel(payLevel);

@@ -13,8 +13,8 @@ import com.oneapm.dao.info.impl.InfoDaoImpl;
 
 public class KF5 {
         
-        public static String getUrl(Long id, String email, String name, String company, Long userId, String adminEmail){
-                Long kfId = getKfId(id, email, name, company, userId);
+        public static String getUrl(Long id, String email, String name, String company, Long userId, String adminEmail, String phone){
+                Long kfId = getKfId(id, email, name, company, userId, phone);
                 String return_to = "https://oneapm.kf5.com/agent/#/user/"+kfId+"/tickets";
                 long now=System.currentTimeMillis()/1000;
                         
@@ -31,7 +31,7 @@ public class KF5 {
                 return url;
         }
         
-        public static Long getKfId(Long id, String email, String name, String company, Long userId){
+        public static Long getKfId(Long id, String email, String name, String company, Long userId, String phone){
                 Long kfId = InfoDaoImpl.getInstance().findKFById(id);
                 if(kfId == null){
                         String result = Sdk.getResult("user/view", getUser(email));
@@ -50,7 +50,7 @@ public class KF5 {
                                         object = new JSONObject(result);
                                         organizationId = object.getJSONObject("datas").getLong("id");
                                 }
-                                result = Sdk.getResult("user/add",createUser(email, name, organizationId, userId));
+                                result = Sdk.getResult("user/add",createUser(email, name, organizationId, userId, phone));
                                 object = new JSONObject(result);
                                 err = object.getInt("err");
                                 if(err == 0){
@@ -65,7 +65,7 @@ public class KF5 {
         
         
         public static void main(String[ ]args){
-                System.out.println(getKfId(111L, "lijiang@oneapm.com", "李江", "测试公司", 1122999L));
+//                System.out.println(getKfId(111L, "lijiang@oneapm.com", "李江", "测试公司", 1122999L));
 //                String result = Sdk.getResult("user/view",getUser("lijiang@oneapm.com"));
 //                System.out.println(result);
 //                JSONObject object = new JSONObject(result);
@@ -92,12 +92,13 @@ public class KF5 {
         }
         
 
-        public static String createUser(String email, String name, Long organizationId, Long userId){
+        public static String createUser(String email, String name, Long organizationId, Long userId, String phone){
                 TreeMap<String, String> apiparamsMap = new TreeMap<String, String>();
                 apiparamsMap.put("username", email);
                 apiparamsMap.put("name", name);
                 apiparamsMap.put("organization_id", organizationId.toString());
                 apiparamsMap.put("details", userId.toString());
+                apiparamsMap.put("phone", phone);
                 // 生成签名
                 String sign = Sdk.md5Signature(apiparamsMap);
                 apiparamsMap.put("sign", sign);

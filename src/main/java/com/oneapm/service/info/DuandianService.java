@@ -935,7 +935,9 @@ public class DuandianService {
                         if(fuze == 1 && infos.size() > 0){
                                 for(int i=0;i<infos.size();i++){
                                         Info info = infos.get(i);
-                                        if(!(info.getSale().equals(admin.getId()) || info.getPreSale().equals(admin.getId()) || info.getSupport().equals(admin.getId()))){
+                                        if(!(info.getSale() != null && info.getSale().equals(admin.getId())) || 
+                                                        (info.getPreSale() != null && info.getPreSale().equals(admin.getId())) || 
+                                                        (info.getSupport() != null && info.getSupport().equals(admin.getId()))){
                                                 infos.remove(i);
                                                 i--;
                                         }

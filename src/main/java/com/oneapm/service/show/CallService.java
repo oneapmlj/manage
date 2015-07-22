@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.account.impl.AdminDaoImpl;
 import com.oneapm.dao.card.impl.CardDaoImpl;
+import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dao.opt.impl.CallDaoImpl;
 import com.oneapm.dto.Call;
 import com.oneapm.dto.NoteType;
@@ -153,6 +154,8 @@ public class CallService {
                         if (call == null) {
                                 throw new DataException();
                         }
+                        info.setContectTime(TimeTools.format());
+                        InfoDaoImpl.getInstance().update_contectTime(info);
                         TaskService.deal(call.getInfoId(), admin.getId(), call.getCallId());
                         JSONObject value = getJSONFromCall(call);
                         while(mark != null && mark.indexOf("@") > -1){

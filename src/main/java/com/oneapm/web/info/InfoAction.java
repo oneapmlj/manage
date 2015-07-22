@@ -603,13 +603,13 @@ public class InfoAction extends SupportAction {
                 }
                 Info info = InfoService.findByIdSimple(id);
                 // 获取用户运营系统的id
-                Long udeskId = JWT.findUdeskId(info.getEmail(), id);
+//                Long udeskId = JWT.findUdeskId(info.getEmail(), id);
                 company = info.getCompany();
                 if(info.getProject() != null && info.getProject().trim().length() > 0){
                         company = info.getProject();
                 }
 //                Long kfId = KF5.getKfId(info.getId(), info.getEmail(), info.getName(), company, udeskId);
-                String url = KF5.getUrl(info.getId(), info.getEmail(), info.getName(), company, info.getUserId(), getAdmin().getEmail());
+                String url = KF5.getUrl(info.getId(), info.getEmail(), info.getName(), company, info.getUserId(), getAdmin().getEmail(), info.getPhone());
 //                String url = JWT.getUrl(getAdmin().getEmail(), getAdmin().getName(), "http://oneapm.udesk.cn/entry/customer_center/customers/" + udeskId);
                 getServletResponse().sendRedirect(url);
         }
