@@ -129,7 +129,6 @@ public class AccountAction extends SupportAction {
         private int control;
         private int page;
         private int nowPage;
-        private int infoPage;
         public String account() {
                 if (!isLogin()) {
                         return "login";
@@ -439,13 +438,6 @@ public class AccountAction extends SupportAction {
         }
 
 
-        public int getInfoPage() {
-                return infoPage;
-        }
-
-        public void setInfoPage(int infoPage) {
-                this.infoPage = infoPage;
-        }
 
         public int getNowPage() {
                 return nowPage;

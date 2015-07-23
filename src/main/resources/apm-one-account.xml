@@ -65,6 +65,8 @@
 				/WEB-INF/pages/view/account_review.jsp
 			</result>
 		</action>
+		<action name="review_view"  method="view" class="com.oneapm.web.account.ReviewAction">
+		</action>
 		<action name="pay"  method="pay" class="com.oneapm.web.account.PayAction">
 			<result name="pay">
 				/WEB-INF/pages/view/account_pay.jsp

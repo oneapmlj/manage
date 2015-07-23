@@ -109,12 +109,18 @@ public class AppService {
                 if (userId == null || userId <= 0)
                         return null;
                 apps = AddDaoImpl.getInstance().findByUserId(userId);
+                long dataTime = 0;
+                try{
+                        TimeTools.formatTime.parse(TimeTools.getDateTime(0)).getTime();
+                }catch(Exception e){
+                        LOG.error(e.getMessage() ,e);
+                }
                 for (App app : apps) {
                         try {
                                 if (app.getDataTime() == null) {
                                         app.setDataTime("未记录");
                                 } else {
-                                        if(TimeTools.formatTime.parse(app.getDataTime()).getTime() > TimeTools.formatTime.parse(TimeTools.getDateTime(0)).getTime()){
+                                        if(TimeTools.formatTime.parse(app.getDataTime()).getTime() >= dataTime){
                                                 app.setDataTime("今日");
                                         }else{
                                                 app.setDataTime(app.getDataTime().substring(0,10));

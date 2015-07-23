@@ -679,21 +679,31 @@ public class InfoService extends OneTools {
                                 info.setLevel(adminId.equals(info.getSale()) ? 1 : 0);
                                 break;
                         case 2:
-                                if (info.getSupport() == null || info.getSupport() <= 0) {
+                                if ((info.getSupport() == null || info.getSupport() <= 0) && (info.getPreSale() == null || info.getPreSale() <= 0)) {
                                         info.setLevel(2);
                                         break;
                                 }
-                                info.setSupportName(AccountService.findById(info.getSupport()).getName());
+                                if(info.getSupport() != null && info.getSupport() > 0L){
+                                        info.setSupportName(AccountService.findById(info.getSupport()).getName());
+                                }
+                                if(info.getPreSale() == null || info.getPreSale() <= 0){
+                                        info.setPreSaleName(AccountService.findById(info.getPreSale()).getName());
+                                }
                                 // info.setLevel(adminId.equals(info.getSupport())
                                 // ? 1 : 0);
                                 info.setLevel(1);
                                 break;
                         case 3:
-                                if (info.getPreSale() == null || info.getPreSale() <= 0) {
+                                if ((info.getSupport() == null || info.getSupport() <= 0) && (info.getPreSale() == null || info.getPreSale() <= 0)) {
                                         info.setLevel(2);
                                         break;
                                 }
-                                info.setPreSaleName(AccountService.findById(info.getPreSale()).getName());
+                                if(info.getSupport() != null && info.getSupport() > 0L){
+                                        info.setSupportName(AccountService.findById(info.getSupport()).getName());
+                                }
+                                if(info.getPreSale() == null || info.getPreSale() <= 0){
+                                        info.setPreSaleName(AccountService.findById(info.getPreSale()).getName());
+                                }
                                 // info.setLevel(adminId.equals(info.getPreSale())
                                 // ? 1 : 0);
                                 info.setLevel(1);

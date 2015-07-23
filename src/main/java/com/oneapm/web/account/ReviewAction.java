@@ -1,5 +1,6 @@
 package com.oneapm.web.account;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.oneapm.dao.account.impl.AdminDaoImpl;
@@ -21,6 +22,8 @@ public class ReviewAction extends SupportAction {
         private List<Admin> admins;
         private int type;
         private int adminType;
+        private int page;
+        private int nowPage;
         public String review() {
                 if (!isLogin()) {
                         return "login";
@@ -38,7 +41,7 @@ public class ReviewAction extends SupportAction {
                                         } else {
                                                 admin = AccountService.findById(id);
                                         }
-//                                        account = AccountRecordService.findByAdmin(admin, type, true);
+                                        account = AccountRecordService.findByAdmin(admin, type, true, page, nowPage);
                                 }
                         }
                 } catch (Exception e) {
@@ -46,6 +49,20 @@ public class ReviewAction extends SupportAction {
                         return "error";
                 }
                 return "review";
+        }
+        
+        public void view() throws IOException {
+                if (!isLogin()) {
+                        getServletResponse().sendRedirect("/login.action");
+                        return;
+                }
+                try{
+                        Admin admin = AccountService.findById(id);
+                        String result = AccountRecordService.findByAdminId(admin, type, true, page, nowPage);
+                        getServletResponse().getWriter().print(result);
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
         }
 
         public Account getAccount() {
@@ -86,6 +103,22 @@ public class ReviewAction extends SupportAction {
 
         public void setAdminType(int adminType) {
                 this.adminType = adminType;
+        }
+
+        public int getPage() {
+                return page;
+        }
+
+        public void setPage(int page) {
+                this.page = page;
+        }
+
+        public int getNowPage() {
+                return nowPage;
+        }
+
+        public void setNowPage(int nowPage) {
+                this.nowPage = nowPage;
         }
 
 }

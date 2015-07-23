@@ -185,7 +185,7 @@
 			</div>
 		</div> --%>
 		<div style="width:100%;" id="tab_3" class="hidden tab ">
-			<div style="width:1200px;margin-left: auto;margin-right: auto;min-height:500px;">
+			<div style="width:1200px;margin-left: auto;margin-right: auto;min-height:800px;">
 				<div style="width:1000px;margin-left: auto;margin-right: auto;">
 					<div style="width:250px;float:left;height:400px;line-height:30px;margin-top:30px;font-size:14px;">
 						<div style="width:250px;height:40px;">

@@ -1,5 +1,6 @@
 package com.oneapm.service.account;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -14,6 +15,8 @@ import com.oneapm.service.info.InfoService;
 import com.oneapm.service.info.TagService;
 import com.oneapm.service.show.CallService;
 import com.oneapm.util.OneTools;
+import com.oneapm.vo.Quanxian;
+import com.oneapm.web.SupportAction;
 
 public class AccountRecordService {
 
@@ -44,6 +47,7 @@ public class AccountRecordService {
                 return OneTools.getResult(0, "服务器内部错误");
         }
         public static Account findByAdmin(Admin admin, int type, boolean self, int page, int nowPage) {
+                int number = 30;
                 if (admin == null)
                         return null;
                 Account account = null;
@@ -57,7 +61,7 @@ public class AccountRecordService {
                                         account.setPageTotal(1);
                                         account.setSizeTotal(0);
                                 }else{
-                                        List<Info> infos = InfoService.findInfosByAdminId(admin.getId(), 50, (50*nowPage));
+                                        List<Info> infos = InfoService.findInfosByAdminId(admin.getId(), number, (number*nowPage));
                                         if (type > 0) {
                                                 if (infos != null && infos.size() > 0) {
                                                         for (int i = 0; i < infos.size(); i++) {
@@ -71,49 +75,75 @@ public class AccountRecordService {
                                         account = new Account(admin, null, null, null, infos);
                                         account.setSize(infos.size());
                                         account.setPageNow(nowPage+1);
-                                        if(infoSize%50 == 0){
-                                                account.setPageTotal(infoSize/50);
+                                        if(infoSize%number == 0){
+                                                account.setPageTotal(infoSize/number);
                                         }else{
-                                                account.setPageTotal(infoSize/50+1);
+                                                account.setPageTotal(infoSize/number+1);
                                         }
                                         account.setSizeTotal(infoSize);
                                 }
                                 break;
                         case 1:
                                 int callSize = (int) CallService.countByAdminId(admin.getId());
-                                List<Call> calls = null;
-                                if (self) {
-                                        calls = CallService.findByAccountId(admin.getId(), (50*nowPage), 50);
-                                }
-                                if (type > 0) {
-                                        if (self) {
-                                                if (calls != null && calls.size() > 0) {
-                                                        for (int i = 0; i < calls.size(); i++) {
-                                                                if (!match(type, calls.get(i).getInfoId())) {
-                                                                        calls.remove(i);
-                                                                        i--;
+                                if(callSize <= 0){
+                                        account = new Account(admin, null, null, null, null);
+                                        account.setSize(0);
+                                        account.setPageNow(1);
+                                        account.setPageTotal(1);
+                                        account.setSizeTotal(0);
+                                }else{
+                                        List<Call> calls = CallService.findByAccountId(admin.getId(), (number*nowPage), number);
+                                        if (type > 0) {
+                                                if (self) {
+                                                        if (calls != null && calls.size() > 0) {
+                                                                for (int i = 0; i < calls.size(); i++) {
+                                                                        if (!match(type, calls.get(i).getInfoId())) {
+                                                                                calls.remove(i);
+                                                                                i--;
+                                                                        }
                                                                 }
                                                         }
                                                 }
                                         }
+                                        account = new Account(admin, null, null, calls, null);
+                                        account.setSize(calls.size());
+                                        
+                                        account.setSize(calls.size());
+                                        account.setPageNow(nowPage+1);
+                                        if(callSize%number == 0){
+                                                account.setPageTotal(callSize/number);
+                                        }else{
+                                                account.setPageTotal(callSize/number+1);
+                                        }
+                                        account.setSizeTotal(callSize);
                                 }
-                                account = new Account(admin, null, null, calls, null);
-                                account.setSize(calls.size());
-                                
-                                account.setSize(calls.size());
-                                account.setPageNow(nowPage+1);
-                                if(callSize%50 == 0){
-                                        account.setPageTotal(callSize/50);
-                                }else{
-                                        account.setPageTotal(callSize/50+1);
-                                }
-                                account.setSizeTotal(callSize);
                                 break;
                         default:
                                 break;
                 }
+                try{
+                        List<Quanxian> quanxians = new ArrayList<Quanxian>();
+                        for (Quanxian quanxian : SupportAction.getGRADE().getList()) {
+                                quanxians.add(new Quanxian(quanxian.getId(), quanxian.getQuanxian(), quanxian.getName(), quanxian.getAll()));
+                        }
+                        if (admin.getGrades() != null && admin.getGrades().trim().length() > 0) {
+                                for (int i = 0; i < quanxians.size(); i++) {
+                                        if (admin.getGrades().indexOf(quanxians.get(i).getQuanxian()) > -1) {
+                                                quanxians.get(i).setStatus(1);
+                                        } else {
+                                                if (admin.getGrades().indexOf(SupportAction.getGRADE().getMap().get(999).getQuanxian()) > -1 && quanxians.get(i).getAll() == 1) {
+                                                        quanxians.get(i).setStatus(1);
+                                                }
+                                        }
+                                }
+                        }
+                        account.setQuanxians(quanxians);
+                }catch(Exception e){
+                        LOG.error(e.getMessage() ,e);
+                }
                 return account;
         }
+        
 
         public static boolean match(int type, Long infoId) {
                 switch (type) {

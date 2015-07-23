@@ -285,7 +285,7 @@ public class TagService extends OneTools {
                 return tag;
         }
 
-        public static Tag findByInfoId(Long infoId) {
+        public static Tag findByInfoId(Long infoId)  {
                 Tag tag = TagDaoImpl.getInstance().findByInfoId(infoId);
                 if (tag == null) {
                         tag = new Tag(null, infoId, 0, 0, new Integer(0), new Integer(0), null, 0, new Integer(0), new Integer(0), null, new Integer(0), new Integer(0));
@@ -301,7 +301,7 @@ public class TagService extends OneTools {
                 return tag;
         }
 
-        public static void initLanguage(Tag tag) {
+        public static void initLanguage(Tag tag)  {
                 if (tag == null)
                         return;
                 Info info = InfoService.findByIdSimple(tag.getInfoId());
