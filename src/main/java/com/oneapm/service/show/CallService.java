@@ -41,22 +41,27 @@ public class CallService {
                 return CallDaoImpl.getInstance().exit(infoId, adminId, time);
         }
 
-        public static List<Call> findByAccountId(Long accountId) {
-                List<Call> calls = CallDaoImpl.getInstance().findByAccountId(accountId, 50);
-                for (Call call : calls) {
-                        addAmin(call);
-                        if (call.getCardId() != null && call.getCardId() >= 100) {
-                                Card card = CardService.findById(call.getCardId());
-                                if (card != null) {
-                                        call.setCardName(card.getName());
-                                }
-                        } else {
-                                call.setCardName("注册");
+        public static List<Call> findByAccountId(Long accountId, int skip, int number) {
+                List<Call> calls = CallDaoImpl.getInstance().findByAccountId(accountId, number, skip);
+                for(int i=0;i<calls.size();i++){
+                        Info info = InfoService.findByIdSimple(calls.get(i).getInfoId());
+                        if(info == null){
+                                calls.remove(i);
+                                i--;
+                                continue;
                         }
+                        String name = info.getProject();
+                        if(name == null || name.trim().length() <= 0){
+                                name = info.getCompany();
+                        }
+                        calls.get(i).setCompany(name);
                 }
                 return calls;
         }
 
+        public static long countByAdminId(Long adminId){
+                return CallDaoImpl.getInstance().countByAdminId(adminId);
+        }
         public static List<Call> findByInfoId(Long infoId) {
                 List<Call> calls = null;
                 try {

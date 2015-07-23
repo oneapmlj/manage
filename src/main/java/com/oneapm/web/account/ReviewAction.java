@@ -38,7 +38,7 @@ public class ReviewAction extends SupportAction {
                                         } else {
                                                 admin = AccountService.findById(id);
                                         }
-                                        account = AccountRecordService.findByAdmin(admin, type, true);
+//                                        account = AccountRecordService.findByAdmin(admin, type, true);
                                 }
                         }
                 } catch (Exception e) {

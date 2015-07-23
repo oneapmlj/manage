@@ -26,13 +26,21 @@ public class CallDaoImpl extends DaoImplBase<Call> {
                 return Instance;
         }
 
-        public List<Call> findByAccountId(Long accountId, int number) {
+        public long countByAdminId(Long accountId){
+                try {
+                        DBObject object = new BasicDBObject("admin_id", accountId);
+                        return getDBCollection(TABLE_NAME).count(object);
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return 0;
+        }
+        public List<Call> findByAccountId(Long accountId, int number, int skip) {
                 List<Call> calls = new ArrayList<Call>();
-                ;
                 try {
                         DBObject object = new BasicDBObject("admin_id", accountId);
                         DBObject sort = new BasicDBObject("call_time", -1);
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort).limit(number);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort).skip(skip).limit(number);
                         while (cursor.hasNext()) {
                                 calls.add(getInfoFromResult(cursor.next()));
                         }

@@ -1271,12 +1271,12 @@ $(document).ready(function() {
 		});
 	});
 	
-	$(".view_p_button").mouseover(function(){
+	/*$(".view_p_button").mouseover(function(){
 		$(this).addClass("color_blue");
 	});
 	$(".view_p_button").mouseleave(function(){
 		$(this).removeClass("color_blue");
-	});
+	});*/
 	$("#add_call_tijiao").click(function(){
 		var type = $("#add_record_type_"+note).val();
 		if(type <= 0){

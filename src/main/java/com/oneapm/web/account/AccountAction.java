@@ -127,16 +127,30 @@ public class AccountAction extends SupportAction {
 
         private List<Control> controls;
         private int control;
-
+        private int page;
+        private int nowPage;
+        private int infoPage;
         public String account() {
                 if (!isLogin()) {
                         return "login";
                 }
-                account = AccountRecordService.findByAdmin(getAdmin(), type, true);
+                account = AccountRecordService.findByAdmin(getAdmin(), type, true, page, nowPage);
                 if (getAdmin().getId().equals(99999999L)) {
                         controls = ControlDaoImpl.getInstance().list();
                 }
                 return "account";
+        }
+        public void view() throws IOException {
+                if (!isLogin()) {
+                        getServletResponse().sendRedirect("/login.action");
+                        return;
+                }
+                try{
+                        String result = AccountRecordService.findByAdminId(getAdmin(), type, true, page, nowPage);
+                        getServletResponse().getWriter().print(result);
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
         }
 
         public void update_control() throws IOException {
@@ -414,6 +428,31 @@ public class AccountAction extends SupportAction {
 
         public void setControl(int control) {
                 this.control = control;
+        }
+
+        public int getPage() {
+                return page;
+        }
+
+        public void setPage(int page) {
+                this.page = page;
+        }
+
+
+        public int getInfoPage() {
+                return infoPage;
+        }
+
+        public void setInfoPage(int infoPage) {
+                this.infoPage = infoPage;
+        }
+
+        public int getNowPage() {
+                return nowPage;
+        }
+
+        public void setNowPage(int nowPage) {
+                this.nowPage = nowPage;
         }
 
 }

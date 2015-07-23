@@ -43,7 +43,7 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                 return infos;
         }
 
-        public List<Info> findByAdminId(Long adminId) {
+        public List<Info> findByAdminId(Long adminId, int number, int skip) {
                 List<Info> infos = new ArrayList<Info>();
                 try {
                         DBObject object = new BasicDBObject();
@@ -55,7 +55,7 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         object.put("$or", list);
                         DBObject sort = new BasicDBObject();
                         sort.put("contect_time", 1);
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort).skip(skip).limit(number);
                         infos = new ArrayList<Info>();
                         while (cursor.hasNext()) {
                                 infos.add(getInfoFromResult(cursor.next()));
@@ -65,6 +65,24 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         LOG.error(e.getMessage(), e);
                 }
                 return null;
+        }
+        
+        public long countAdminId(Long adminId){
+                try {
+                        DBObject object = new BasicDBObject();
+                        BasicDBList list = new BasicDBList();
+                        list.add(new BasicDBObject("admin_id", adminId));
+                        list.add(new BasicDBObject("sale", adminId));
+                        list.add(new BasicDBObject("support", adminId));
+                        list.add(new BasicDBObject("preSale", adminId));
+                        object.put("$or", list);
+                        DBObject sort = new BasicDBObject();
+                        sort.put("contect_time", 1);
+                        return getDBCollection(TABLE_NAME).count(object);
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return 0;
         }
 
         public List<Info> countSign() {

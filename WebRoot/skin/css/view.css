@@ -73,7 +73,7 @@
 	height: 25px;
 	padding-left: 10px;
 	margin:5px 0 0 0;
-	cursor: pointer;
+	/* cursor: pointer; */
 	line-height:25px;
 	color:#4F94CD;
 }
@@ -94,6 +94,12 @@
 	width:900px;
 	padding:3px;
 	margin:5px 0 0 0;	
+}
+.view_p_content_850{
+	float:left;
+	width:850px;
+	padding:3px;
+	/* margin:5px 0 5px 0;	 */
 }
 .view_p_content_350{
 	float:left;

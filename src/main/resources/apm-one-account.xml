@@ -37,6 +37,9 @@
 				/WEB-INF/pages/view/account.jsp
 			</result>
 		</action>
+		<action name="account_view" method="view"
+			class="com.oneapm.web.account.AccountAction">
+		</action>
 		
 		<action name="account_*" method="{1}"
 			class="com.oneapm.web.account.AccountAction">

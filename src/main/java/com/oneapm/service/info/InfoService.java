@@ -203,17 +203,21 @@ public class InfoService extends OneTools {
          * @param adminId
          * @return
          */
-        public static List<Info> findInfosByAdminId(Long adminId) {
-                List<Info> infos = InfoDaoImpl.getInstance().findByAdminId(adminId);
-                if (infos != null) {
-//                        for (Info info : infos) {
-//                                initAdmin(info);
-//                                initTag(info);
-//                        }
+        public static List<Info> findInfosByAdminId(Long adminId, int number, int skip) {
+                List<Info> infos =  InfoDaoImpl.getInstance().findByAdminId(adminId, number, skip);
+                if(infos != null && infos.size() > 0){
+                        for(Info info : infos){
+                                if(info.getProject() == null || info.getProject().trim().length() <= 0){
+                                        info.setProject(info.getCompany());
+                                }
+                        }
                 }
                 return infos;
         }
 
+        public static long countAdminId(Long adminId){
+                return InfoDaoImpl.getInstance().countAdminId(adminId);
+        }
         @SuppressWarnings("unchecked")
         public static String change(Admin admin, Long from, Long infoId, int type, Long messageId) {
                 JSONObject object = new JSONObject();
@@ -1009,6 +1013,7 @@ public class InfoService extends OneTools {
                         value.put("supportName", info.getSupportName());
                         value.put("preSaleName", info.getPreSaleName());
                         value.put("comming", info.getFrom());
+                        value.put("contectTime", info.getContectTime());
                         if (info.getCalls() != null) {
                                 value.put("calls", CallService.getArrayFromCall(info.getCalls()));
                         }
