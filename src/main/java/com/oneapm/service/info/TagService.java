@@ -15,6 +15,8 @@ import com.oneapm.dto.App;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.tag.Category;
+import com.oneapm.dto.tag.From;
+import com.oneapm.dto.tag.Fuwuqi;
 import com.oneapm.dto.tag.Language;
 import com.oneapm.dto.tag.Loudou;
 import com.oneapm.dto.tag.Metric;
@@ -412,12 +414,53 @@ public class TagService extends OneTools {
                         object.put("loudou", tag.getLoudou());
                         object.put("person", tag.getPerson());
                         object.put("province", tag.getProvince());
-//                        object.put("pv", tag.getPv());
-//                        object.put("uv", tag.getUv());
                         object.put("rongzi", tag.getRongzi());
                         object.put("category", tag.getCategory());
                         object.put("description", tag.getDescription());
                         object.put("from", tag.getFrom());
+                        object.put("fuwuqi", tag.getFuwuqi());
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return object;
+        }
+        
+        @SuppressWarnings("unchecked")
+        public static JSONObject getJSONFromTagName(Tag tag) {
+                if (tag == null)
+                        return null;
+                JSONObject object = new JSONObject();
+                try {
+                        if(tag.getPerson() > 0){
+                                object.put("person", Person.getName(tag.getPerson()));
+                        }else{
+                                object.put("person", "未知");
+                        }
+                        if(tag.getProvince() > 0){
+                                object.put("province", Province.getName(tag.getProvince()));
+                        }else{
+                                object.put("province", "未知");
+                        }
+                        if(tag.getRongzi() > 0){
+                                object.put("rongzi", Rongzi.getName(tag.getRongzi()));
+                        }else{
+                                object.put("rongzi", "未知");
+                        }
+                        if(tag.getCategory() > 0){
+                                object.put("category", Category.getName(tag.getCategory()));
+                        }else{
+                                object.put("category", "未知");
+                        }
+                        if(tag.getFrom() > 0){
+                                object.put("from", From.getName(tag.getFrom()));
+                        }else{
+                                object.put("from", "未知");
+                        }
+                        if(tag.getFuwuqi() > 0){
+                                object.put("fuwuqi", Fuwuqi.getName(tag.getFuwuqi()));
+                        }else{
+                                object.put("fuwuqi", "未知");
+                        }
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

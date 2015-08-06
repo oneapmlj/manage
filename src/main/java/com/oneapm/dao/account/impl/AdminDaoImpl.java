@@ -359,6 +359,15 @@ public class AdminDaoImpl extends DaoImplBase<Admin> {
                 }
                 return false;
         }
+        
+        public boolean updateXiaoshouyiId(Long adminId, Long xiaoshouyiId){
+                try{
+                        return getDBCollection(TABLE_NAME).update(new BasicDBObject("id", adminId), new BasicDBObject("$set",new BasicDBObject("xiaoshouyi_id", xiaoshouyiId))).getN() > -1;
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return false;
+        }
 
         private Admin getAdminFromResultSet(DBObject object) {
                 Admin admin = null;
@@ -378,9 +387,14 @@ public class AdminDaoImpl extends DaoImplBase<Admin> {
                         String grades = object.get("grades").toString();
                         String loginTime = object.get("login_time").toString();
                         String name = object.get("name").toString();
+                        Long xiaoshouyiId = null;
+                        try{
+                                xiaoshouyiId = Long.parseLong(object.get("xiaoshouyi_id").toString());
+                        }catch(Exception e){}
                         admin = new Admin(group, id, username, password, grade, status, createTime, createId, position, phone, email, nickName, grades);
                         admin.setName(name);
                         admin.setLoginTime(loginTime);
+                        admin.setXiaoshouyiId(xiaoshouyiId);
                 } catch (Exception e) {}
                 return admin;
         }

@@ -39,6 +39,26 @@ public class AppDaoImpl extends DaoImplBase<App> {
                 return false;
         }
         
+        public boolean exist(Long appId, int agent, boolean ai){
+                try {
+                        DBObject object = new BasicDBObject();
+                        object.put("app_id", appId);
+                        if(agent > 0){
+                                object.put("agent", agent);
+                        }else{
+                                if(ai){
+                                        object.put("agent", new BasicDBObject("$lte", 6));
+                                }
+                        }
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        return cursor.hasNext();
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return false;
+        }
+        
+        
         public List<App> findByAgent(int agent, String banben, boolean dataTime, String start, String end){
                 List<App> apps = new ArrayList<App>();
                 try{

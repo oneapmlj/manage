@@ -14,6 +14,7 @@ import com.oneapm.service.card.CardService;
 import com.oneapm.service.group.GroupService;
 import com.oneapm.service.info.AppService;
 import com.oneapm.service.info.DashboardService;
+import com.oneapm.service.info.GuanlianService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.info.ZhengzailianxiService;
 import com.oneapm.service.mail.MailService;
@@ -22,7 +23,6 @@ import com.oneapm.service.show.CallService;
 import com.oneapm.service.show.IndexShowService;
 import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
-import com.oneapm.web.JWT;
 import com.oneapm.web.KF5;
 import com.oneapm.web.LoginApi;
 import com.oneapm.web.SupportAction;
@@ -85,6 +85,46 @@ public class InfoAction extends SupportAction {
                 }
                 try{
                         String result = AppService.appMap(appId, agent, agentId);
+                        getServletResponse().getWriter().print(result);
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+        }
+        
+        private String guanlianId;
+        private Long guanlian;
+        public void guanlian_add() throws IOException{
+                if (!isLogin()) {
+                        getServletResponse().sendRedirect("/login.action");
+                        return;
+                }
+                try{
+                        guanlian = Long.parseLong(guanlianId);
+                        String result = GuanlianService.add(InfoService.findByIdSimple(infoId).getUserId(), guanlian);
+                        getServletResponse().getWriter().print(result);
+                }catch(Exception e){
+                        getServletResponse().getWriter().print(OneTools.getResult(0, "请输入userId"));
+                }
+        }
+        public void guanlian_remove() throws IOException{
+                if (!isLogin()) {
+                        getServletResponse().sendRedirect("/login.action");
+                        return;
+                }
+                try{
+                        String result = GuanlianService.remove(InfoService.findByIdSimple(infoId).getUserId(), guanlian);
+                        getServletResponse().getWriter().print(result);
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+        }
+        public void guanlian_change() throws IOException{
+                if (!isLogin()) {
+                        getServletResponse().sendRedirect("/login.action");
+                        return;
+                }
+                try{
+                        String result = GuanlianService.change(userId, guanlian);
                         getServletResponse().getWriter().print(result);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
@@ -169,6 +209,7 @@ public class InfoAction extends SupportAction {
                         LOG.error(e.getMessage(), e);
                 }
         }
+        
 
         public String language() {
                 if (!isLogin()) {
@@ -240,6 +281,7 @@ public class InfoAction extends SupportAction {
                 }
                 return "view";
         }
+        
         public String salespanel(){
                 return "salespanel";
         }
@@ -1058,4 +1100,19 @@ public class InfoAction extends SupportAction {
         public void setAgentId(long agentId) {
                 this.agentId = agentId;
         }
+
+        public String getGuanlianId() {
+                return guanlianId;
+        }
+
+        public void setGuanlianId(String guanlianId) {
+                this.guanlianId = guanlianId;
+        }
+        public Long getGuanlian() {
+                return guanlian;
+        }
+        public void setGuanlian(Long guanlian) {
+                this.guanlian = guanlian;
+        }
+
 }

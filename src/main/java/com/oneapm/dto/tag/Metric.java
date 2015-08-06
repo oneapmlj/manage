@@ -10,7 +10,7 @@ public enum Metric {
     POINT(1, "企业", ""),
     COMMON(3, "开发者", ""),
     UNBIN(2, "未定义", "")
-   /* ,UNUSE(4, "关闭", "")*/
+   ,UNUSE(4, "关闭", "")
     ;
     //TODO
     //黑名单

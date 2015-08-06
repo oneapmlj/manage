@@ -18,7 +18,7 @@ public class SendCloudService2 {
 
         private static final String URL_SEND = "https://sendcloud.sohu.com/webapi/mail.send.xml";
         private static final String ACCOUNT = "yunying";
-        private static final String KEY = "txTnvxQ7lgLefc1i";
+        private static final String KEY = "ird5WXui2GxtCDj9";
         private static final String FROM = "OneAPM@push.oneapm.com";
 
         protected static final Logger LOG = LoggerFactory.getLogger(SendCloudService2.class);
@@ -53,7 +53,7 @@ public class SendCloudService2 {
         
         public static void main(String[] args){
                 System.out.println(1);
-                sendMail("lijiang1225@qq.com", "测试<a href='http://www.oneapm.com'>1111</a>", "测试邮件", 0L);
+                sendMail("lijiang@oneapm.com", "测试<a href='http://www.oneapm.com'>1111</a>", "测试邮件", 0L);
                 System.out.println(2);
 //                sendMail("lijiang@oneapm.com", "测试邮件<a href='http://www.oneapm.com?from=1'>1111</a>", "测试", 10759L);
         }

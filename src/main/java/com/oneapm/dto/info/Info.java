@@ -123,6 +123,8 @@ public class Info {
         
         private String contectTime;
         
+        private List<Guanlian> guanlians;
+        
         public Info() {
         }
 
@@ -587,5 +589,13 @@ public class Info {
 
         public void setContectTime(String contectTime) {
                 this.contectTime = contectTime;
+        }
+
+        public List<Guanlian> getGuanlians() {
+                return guanlians;
+        }
+
+        public void setGuanlians(List<Guanlian> guanlians) {
+                this.guanlians = guanlians;
         }
 }

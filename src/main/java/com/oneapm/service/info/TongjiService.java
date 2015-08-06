@@ -52,9 +52,6 @@ public class TongjiService {
                                         index.setNext(true);
                                 }
                         }
-                        /*if(index.getTongjis().get(0).getData() > 410){
-                                index.getTongjis().get(0).setData((index.getTongjis().get(0).getData()-410)/2 + 410);
-                        }*/
                         return index;
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);

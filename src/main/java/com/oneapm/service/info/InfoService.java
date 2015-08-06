@@ -14,6 +14,7 @@ import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.card.Card;
 import com.oneapm.dto.group.Group;
 import com.oneapm.dto.group.GroupView;
+import com.oneapm.dto.info.Guanlian;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.tag.Language;
 import com.oneapm.dto.tag.Tag;
@@ -210,6 +211,7 @@ public class InfoService extends OneTools {
                                 if(info.getProject() == null || info.getProject().trim().length() <= 0){
                                         info.setProject(info.getCompany());
                                 }
+                                initTag(info);
                         }
                 }
                 return infos;
@@ -523,7 +525,11 @@ public class InfoService extends OneTools {
                                 TaskService.touch(id, admin.getId(), TimeTools.format());
                         }
                 }
-                
+                //获取关联帐号
+                if(info.getUserId() != null){
+                        List<Guanlian> guanlians = GuanlianService.findByUserId(info.getUserId());
+                        info.setGuanlians(guanlians);
+                }
                 return info;
         }
         /**
@@ -686,7 +692,7 @@ public class InfoService extends OneTools {
                                 if(info.getSupport() != null && info.getSupport() > 0L){
                                         info.setSupportName(AccountService.findById(info.getSupport()).getName());
                                 }
-                                if(info.getPreSale() == null || info.getPreSale() <= 0){
+                                if(info.getPreSale() != null && info.getPreSale() > 0){
                                         info.setPreSaleName(AccountService.findById(info.getPreSale()).getName());
                                 }
                                 // info.setLevel(adminId.equals(info.getSupport())
@@ -701,7 +707,7 @@ public class InfoService extends OneTools {
                                 if(info.getSupport() != null && info.getSupport() > 0L){
                                         info.setSupportName(AccountService.findById(info.getSupport()).getName());
                                 }
-                                if(info.getPreSale() == null || info.getPreSale() <= 0){
+                                if(info.getPreSale() != null || info.getPreSale() > 0){
                                         info.setPreSaleName(AccountService.findById(info.getPreSale()).getName());
                                 }
                                 // info.setLevel(adminId.equals(info.getPreSale())
@@ -1031,7 +1037,7 @@ public class InfoService extends OneTools {
                                 value.put("mails", MailService.getJSONArrayFromMails(info.getMails()).toString());
                         }
                         if (info.getTag() != null) {
-                                value.put("tag", TagService.getJSONFromTag(info.getTag()));
+                                value.put("tag", TagService.getJSONFromTagName(info.getTag()));
                         }
                 } catch (Exception e) {
                 }

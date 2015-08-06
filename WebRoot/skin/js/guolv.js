@@ -637,28 +637,36 @@ $(document).ready(function() {
 	
 	$("#duandian_agent").live('change', function(){
 		var agent = $("#duandian_agent").val();
-		/*if(agent == 7 || agent == 8){*/
-			$(".duandian_banben").removeClass("hidden");
-			$.ajax({
-				dataType:'json',
-				url:'duandian_versions.action',
-				data:{agent:agent}
-			}).done(function(da){
-				if(da.status == 1){
-					var html = "<option value='null'>全部</option>";
-					for(var i=0;i<da.versions.length;i++){
-						html += "<option value='"+da.versions[i]+"'>"+da.versions[i]+"</option>";
+			if(agent == 9){
+				var html = "<option value='0'>全部</option>";
+				html += "<option value='100'>独立部署</option>";
+				html += "<option value='101'>AI注入</option>";
+				html += "<option value='1'>java注入</option>";
+				html += "<option value='2'>php注入</option>";
+				html += "<option value='3'>nodejs注入</option>";
+				html += "<option value='4'>python注入</option>";
+				html += "<option value='5'>dotnet注入</option>";
+				html += "<option value='6'>ruby注入</option>";
+				$("#duandian_banben").html(html);
+				$(".duandian_banben").removeClass("hidden");
+			}else{
+				$.ajax({
+					dataType:'json',
+					url:'duandian_versions.action',
+					data:{agent:agent}
+				}).done(function(da){
+					if(da.status == 1){
+						var html = "<option value='null'>全部</option>";
+						for(var i=0;i<da.versions.length;i++){
+							html += "<option value='"+da.versions[i]+"'>"+da.versions[i]+"</option>";
+						}
+						$("#duandian_banben").html(html);
+						$(".duandian_banben").removeClass("hidden");
+					}else{
+						alert(alert(da.msg));
 					}
-					$("#duandian_banben").html(html);
-				}else{
-					alert(alert(da.msg));
-				}
-			});
-//		}
-	/*else{
-			$(".duandian_banben").addClass("hidden");
-			$("#duandian_banben").html("");
-		}*/
+				});
+			}
 	});
 	$("#duandian_data").live("change", function(){
 		var id = $(this).val();
@@ -742,15 +750,28 @@ $(document).ready(function() {
 			if(da.status == 1){
 				var html = "";
 				for(var i=0;i<da.infos.length;i++){
+					
 					html += "<tr>" 
-								+"<td></td>"
-								+"<td>"+da.infos[i].userId+"</td>"
-								+"<td>"+da.infos[i].name+"</td>"
-								+"<td>"+da.infos[i].company+"</td>"
-								+"<td>"+da.infos[i].project+"</td>"
-								+"<td>"+da.infos[i].language+"</td>"
-								+"<td>"+da.infos[i].comming+"</td>"
-								+"<td>"+da.infos[i].saleName+"</td>"
+						+"<td></td>"
+						+"<td>"+da.infos[i].userId+"</td>"
+						+"<td>"+da.infos[i].name+"</td>";
+					if(da.infos[i].project != null){
+						html += "<td>"+da.infos[i].project+"</td>";
+					}else{
+						html += "<td>"+da.infos[i].company+"</td>";
+					}
+					html += "<td>"+da.infos[i].language+"</td>"
+							+"<td>"+da.infos[i].comming+"</td>";
+					if(da.infos[i].tag != null){
+						html += "<td>"+da.infos[i].tag.province+"</td>"
+									+"<td>"+da.infos[i].tag.rongzi+"</td>"
+									+"<td>"+da.infos[i].tag.category+"</td>"
+									+"<td>"+da.infos[i].tag.person+"</td>"
+									+"<td>"+da.infos[i].tag.fuwuqi+"</td>"
+					}else{
+						html += "<td>未知</td><td>未知</td><td>未知</td><td>未知</td><td>未知</td>";
+					}
+						html += "<td>"+da.infos[i].saleName+"</td>"
 								+"<td>"+da.infos[i].preSaleName+"</td>"
 								+"<td>"+da.infos[i].supportName+"</td>"
 								+"<td><input val1='"+da.infos[i].id+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' /></td>"

@@ -43,6 +43,64 @@ var zhengzailianxi = function(){
 zhengzailianxi(); 
  
 $(document).ready(function() {
+	$(".guanlian").live("click", function(){
+		$("#guanlian_add").removeClass("hidden");
+		$("#guanlian_add_value").removeClass("hidden");
+		$(this).val("取消");
+		$(this).addClass("guanlian_quxiao");
+		$(this).removeClass("guanlian");
+	});
+	$(".guanlian_quxiao").live("click", function(){
+		$(this).val("增加");
+		$(this).addClass("guanlian");
+		$(this).removeClass("guanlian_quxiao");
+		$("#guanlian_add_value").val("");
+		$("#guanlian_add").addClass("hidden");
+		$("#guanlian_add_value").addClass("hidden");
+	});
+	$("#guanlian_add").live("click", function(){
+		var id = $("#guanlian_add_value").val();
+		if(isNaN(id)){
+			alert("请输入userId");
+			$("#guanlian_add_value").val("");
+			return;
+		}
+		var infoId = $("#view_infoId").val();
+		$.ajax({
+			dataType:'json',
+			url:'info_guanlian_add.action',
+			data:{infoId:infoId,guanlianId:id}
+		}).done(function(da){
+			if(da.status == '1'){
+				$("#guanlian_add_value").val("");
+				var html = $("#guanlian_value").html();
+				if(html == null || html.trim() == ""){
+					html ="<div style='width:210px;float:left;line-height:20px;margin-top:5px;'>"
+								+"<div style='float:left;width:80px;' class='menu_button hand  biankuang_gray_ding'>当前</div>"
+								+"<div class='menu_button  hand  biankuang_blue_ding' style='float:left;width:80px;'>主帐号</div>"
+								+"</div>"
+								+"<div style='width:210px;float:left;line-height:20px;margin-top:5px;'  id='guanlian_value_"+da.guanlian_id+"'>"
+								+"<div style='float:left;width:80px;' class='guanlian_view menu_button hand  biankuang_gray'>"+da.guanlian_id+"</div>"
+								/*+"<div class='menu_button  hand  biankuang_gray_ding' style='float:left;width:80px;'>定为主帐号</div>"
+								+"<div class='menu_button  hand  biankuang_gray_ding' style='float:left;width:20px;'>X</div>"*/
+								+"</div>";
+				}else{
+					html += "<div style='width:210px;float:left;line-height:20px;margin-top:5px;'  id='guanlian_value_"+da.guanlian_id+"'>"
+								+"<div style='float:left;width:80px;' class='guanlian_view menu_button hand  biankuang_gray'>"+da.guanlian_id+"</div>"
+								/*+"<div class='menu_button  hand  biankuang_gray_ding' style='float:left;width:80px;'>定为主帐号</div>"
+								+"<div class='menu_button  hand  biankuang_gray_ding' style='float:left;width:20px;'>X</div>"*/
+								+"</div>";
+				}
+				$("#guanlian_value").html(html);
+			}else{
+				alert(da.msg);
+			}
+		});
+	});
+	$(".guanlian_view").live("click", function(){
+		var userId = $(this).html();
+		window.open("/"+userId);
+	});
 	$(".group_area_1").live('click', function(){
 		$.ajax({
 			dataType:'json',
@@ -1242,7 +1300,7 @@ $(document).ready(function() {
 				for(var i=0;i<array.length;i++){
 					html += "<div>"+array[i].time+"</div>";
 				}
-				$(".app_data_view_content_"+da.appId+"_"+da.agentId).html(html);
+				$(".app_data_view_content_"+da.appId+"_"+da.agent+"_"+da.agentId).html(html);
 			}else{
 				alert(da.msg);
 			}
@@ -1250,10 +1308,11 @@ $(document).ready(function() {
 	});
 	$(".app_data_close").live("click", function(){
 		var appId = $(this).parent().parent().attr('val');
+		var agent = $(this).parent().attr("val1");
 		var agentId = $(this).parent().attr("val2");
 		$(this).addClass("app_data_view");
 		$(this).removeClass("app_data_close");
-		$(".app_data_view_content_"+appId+"_"+agentId).html("");
+		$(".app_data_view_content_"+appId+"_"+agent+"_"+agentId).html("");
 	});
 	$(".task_remove").live("click", function(){
 		var ids = $(this).parent().attr('id');

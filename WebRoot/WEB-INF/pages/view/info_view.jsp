@@ -317,7 +317,7 @@
 								<div style="margin-left:10px;width:300px;float:left;" val1="${agent}" val2="${agentId}">
 									<div style="width:180px;float:left;">最近数据：${dataTime }</div>
 									<div style="width:30px;float:left;color:blue;" class="hand app_data_view">>>>></div>
-									<div style="width:80px;float:left;" class="app_data_view_content_${appId }_${agentId}"></div>
+									<div style="width:80px;float:left;" class="app_data_view_content_${appId }_${agent }_${agentId}"></div>
 								</div>
 							</div>
 						</s:iterator>
@@ -431,6 +431,33 @@
 					</div>
 				</div>
 			</s:if>
+			<div style="width:250px;float:left;margin:30px 0 0 10px;font-size:12px;" class="biankuang_gray_ding">
+				<div style="float:left;width:210px;margin:5px 0 0 10px;font-size:16px;">关联帐号</div>
+				<div style="float:left;width:220px;margin:5px 0 0 10px;">
+					<input value="增加" type="button" class="left hand guanlian" id="guanlian"/>
+					<input type="text" class="hand left hidden" style="width:90px;" id="guanlian_add_value"/>
+					<input type="button" value="保存" class="hand hidden"  id="guanlian_add"/>
+					<div class="left" style="width:220px;" id="guanlian_value">
+						<s:iterator value="info.guanlians">
+							<div style="width:210px;float:left;line-height:20px;margin-top:5px;" id="guanlian_value_0">
+								<s:if test="%{userId == guanlianId}">
+									<div style="float:left;width:80px;" class="menu_button hand  biankuang_gray_ding">当前</div>
+								</s:if>
+								<s:else>
+									<div style="float:left;width:80px;" class="guanlian_view menu_button hand  biankuang_gray">${guanlianId }</div>
+								</s:else>
+								<s:if test="%{role == 1}">
+									<div class="menu_button  hand  biankuang_blue_ding" style="float:left;width:80px;">主帐号</div>
+								</s:if>
+								<s:else>
+									<!-- <div class="menu_button  hand  biankuang_gray_ding" style="float:left;width:80px;">定为主帐号</div> -->
+									<!-- <div class="menu_button  hand  biankuang_gray_ding" style="float:left;width:20px;">X</div> -->
+								</s:else>
+							</div>
+						</s:iterator>
+					</div>
+				</div>
+			</div>
 			<div style="width:250px;float:left;padding-bottom: 40px;margin:0 0 0 10px;font-size:14px;">
 				<div  id="right_side" style="margin:10px 0 0 0;width:250px;height:800px;" class="biankuang_gray_ding">
 					<s:if test="%{info.tag != null}">

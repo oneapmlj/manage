@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.oneapm.dao.info.impl.AppDaoImpl;
 import com.oneapm.dao.info.impl.AppDataDaoImpl;
 import com.oneapm.dao.opt.impl.AddDaoImpl;
 import com.oneapm.dto.Aplication;
@@ -49,6 +50,63 @@ public class AppService {
                                         }else{
                                                 apps.remove(i);
                                                 i--;
+                                        }
+                                }
+                        }
+                        if(agent == 9 && !banben.equals("0")){
+                                int number = Integer.parseInt(banben);
+                                for(int i=0;i<apps.size();i++){
+                                        switch (number) {
+                                        case 100:
+                                                if(AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 0, true)){
+                                                        apps.remove(i);
+                                                        i--;
+                                                }
+                                                break;
+                                        case 101:
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 0, true)){
+                                                        apps.remove(i);
+                                                        i--;
+                                                }
+                                                break;
+                                        case 1:
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 1, false)){
+                                                        apps.remove(i);
+                                                        i--;
+                                                }
+                                                break;
+                                        case 2:
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 1, false)){
+                                                        apps.remove(i);
+                                                        i--;
+                                                }
+                                                break;
+                                        case 3:
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 1, false)){
+                                                        apps.remove(i);
+                                                        i--;
+                                                }
+                                                break;
+                                        case 4:
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 1, false)){
+                                                        apps.remove(i);
+                                                        i--;
+                                                }
+                                                break;
+                                        case 5:
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 1, false)){
+                                                        apps.remove(i);
+                                                        i--;
+                                                }
+                                                break;
+                                        case 6:
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 1, false)){
+                                                        apps.remove(i);
+                                                        i--;
+                                                }
+                                                break;
+                                        default:
+                                                break;
                                         }
                                 }
                         }
@@ -97,6 +155,8 @@ public class AppService {
                         args2.add(appId);
                         args1.add("agentId");
                         args2.add(agentId);
+                        args1.add("agent");
+                        args2.add(agent);
                         return OneTools.getResult(1, args1, args2);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
@@ -111,7 +171,7 @@ public class AppService {
                 apps = AddDaoImpl.getInstance().findByUserId(userId);
                 long dataTime = 0;
                 try{
-                        TimeTools.formatTime.parse(TimeTools.getDateTime(0)).getTime();
+                        dataTime = TimeTools.formatTime.parse(TimeTools.getDateTime(0)).getTime();
                 }catch(Exception e){
                         LOG.error(e.getMessage() ,e);
                 }

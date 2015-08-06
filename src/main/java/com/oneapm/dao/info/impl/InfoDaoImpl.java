@@ -55,7 +55,12 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         object.put("$or", list);
                         DBObject sort = new BasicDBObject();
                         sort.put("contect_time", 1);
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort).skip(skip).limit(number);
+                        DBCursor cursor = null;
+                        if(number == 0){
+                                cursor = getDBCollection(TABLE_NAME).find(object);
+                        }else{
+                                cursor = getDBCollection(TABLE_NAME).find(object).sort(sort).skip(skip).limit(number);
+                        }
                         infos = new ArrayList<Info>();
                         while (cursor.hasNext()) {
                                 infos.add(getInfoFromResult(cursor.next()));
@@ -423,7 +428,6 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         DBObject object = new BasicDBObject();
                         DBObject value = new BasicDBObject();
                         value.put("xiaoshouyi", info.getXiaoshouyi());
-                        value.put("xiaoshouyiAdmin", info.getXiaoshouyiAdmin());
                         if(lableId != null && lableId.length() > 0){
                                 value.put("xiaoshouyi_lable_id", lableId);
                         }

@@ -23,11 +23,12 @@ public class PayAction extends SupportAction {
                         return "login";
                 }
                 try {
+//                        Shouhui.fuze();
 //                        Xiaoshouyi.tuisongxiaoshouyi();
 //                        Shouhui.wajue();
 //                       LOG.info("START LIANXUI");
 //                        Shouhui.genzongbaobiao();
-//                        Shouhui.xinxifugai();
+                        Shouhui.xinxifugai();
 //                        LOG.info("START DIAOSHUJU");
 //                        Shouhui.diaoshujuliebiao();
 //                        LOG.info("START LIUCUN");

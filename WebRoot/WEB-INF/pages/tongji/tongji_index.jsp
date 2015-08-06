@@ -35,21 +35,6 @@
 				  			<th style="width:65px;">数据</th>
 				  			<th style="width:65px;">数应</th>     
 				  			
-				  			<!-- <th style="width:65px;">企业</th>
-				  			<th style="width:65px;">开发者</th>
-				  			<th style="width:65px;">未定义</th> -->
-				  			<!-- <th style="width:65px;">关闭</th> -->
-				  			
-				  			<!-- <th style="width:65px;">交流</th>
-				  			<th style="width:65px;">测试</th> -->
-				  			<!-- <th style="width:65px;">采购</th>
-				  			<th style="width:65px;">完成</th>
-				  			<th style="width:65px;">成单</th>
-				  			<th style="width:65px;">输单</th> -->
-				  			<!-- <th style="width:80px;">活跃状态</th>
-				  			<th style="width:80px;">中间状态</th>
-				  			<th style="width:80px;">休眠状态</th>
-				  			<th style="width:80px;">隔离状态</th> -->
 						</tr> 
 					</thead> 
 					<tbody class="tbody"> 
@@ -57,18 +42,6 @@
 							<s:iterator value="index.tongjis">
 								<tr style="font-size:16px;" id="${id}"> 
 						 			<td>${data_time}</td>
-									<%-- <s:if test="%{totalUp == 1}">
-							 			<td style="color:red;">${total}</td>
-									</s:if>
-									<s:else>
-										<s:if test="%{totalUp == 3}">
-											<td style="color:blue;">${total}</td>
-										</s:if>
-										<s:else>
-											<td>${total}</td>
-										</s:else>
-									</s:else> --%>
-									
 									<s:if test="%{signUp == 1}">
 							 			<td style="color:red;"  class="hand view" id="${id}_2">${sign}</td>
 									</s:if>
@@ -135,118 +108,6 @@
 											<td  class="hand" id="${id}_17">${appData}</td>
 										</s:else>
 									</s:else>
-									<%-- <s:if test="%{pointUp == 1}">
-							 			<td style="color:red;"  class="hand view" id="${id}_7">${point}</td>
-									</s:if>
-									<s:else>
-										<s:if test="%{pointUp == 3}">
-											<td style="color:blue;"  class="hand view" id="${id}_7">${point}</td>
-										</s:if>
-										<s:else>
-											<td  class="hand view" id="${id}_7">${point}</td>
-										</s:else>
-									</s:else>
-									<s:if test="%{commonUp == 1}">
-							 			<td style="color:red;"  class="hand view" id="${id}_8">${common}</td>
-									</s:if>
-									<s:else>
-										<s:if test="%{commonUp == 3}">
-											<td style="color:blue;"  class="hand view" id="${id}_8">${common}</td>
-										</s:if>
-										<s:else>
-											<td  class="hand view" id="${id}_8">${common}</td>
-										</s:else>
-									</s:else>
-									<s:if test="%{unbinUp == 1}">
-							 			<td style="color:red;"  class="hand view" id="${id}_9">${unbin}</td>
-									</s:if>
-									<s:else>
-										<s:if test="%{unbinUp == 3}">
-											<td style="color:blue;"  class="hand view" id="${id}_9">${unbin}</td>
-										</s:if>
-										<s:else>
-											<td  class="hand view" id="${id}_9">${unbin}</td>
-										</s:else>
-									</s:else> --%>
-									<%-- <s:if test="%{unuseUp == 1}">
-							 			<td style="color:red;"  class="hand view" id="${id}_10">${unuse}</td>
-									</s:if>
-									<s:else>
-										<s:if test="%{unuseUp == 3}">
-											<td style="color:blue;"  class="hand view" id="${id}_10">${unuse}</td>
-										</s:if>
-										<s:else>
-											<td  class="hand view" id="${id}_10">${unuse}</td>
-										</s:else>
-									</s:else>
-									<s:if test="%{jiaoliuUp == 1}">
-							 			<td style="color:red;"  class="hand view" id="${id}_11">${jiaoliu}</td>
-									</s:if>
-									<s:else>
-										<s:if test="%{jiaoliuUp == 3}">
-											<td style="color:blue;"  class="hand view" id="${id}_11">${jiaoliu}</td>
-										</s:if>
-										<s:else>
-											<td  class="hand view" id="${id}_11">${jiaoliu}</td>
-										</s:else>
-									</s:else>
-									<s:if test="%{ceshiUp == 1}">
-							 			<td style="color:red;"  class="hand view" id="${id}_12">${ceshi}</td>
-									</s:if>
-									<s:else>
-										<s:if test="%{ceshiUp == 3}">
-											<td style="color:blue;"  class="hand view" id="${id}_12">${ceshi}</td>
-										</s:if>
-										<s:else>
-											<td  class="hand view" id="${id}_12">${ceshi}</td>
-										</s:else>
-									</s:else>
-									<s:if test="%{caigouUp == 1}">
-							 			<td style="color:red;"  class="hand view" id="${id}_13">${caigou}</td>
-									</s:if>
-									<s:else>
-										<s:if test="%{caigouUp == 3}">
-											<td style="color:blue;"  class="hand view" id="${id}_13">${caigou}</td>
-										</s:if>
-										<s:else>
-											<td  class="hand view" id="${id}_13">${caigou}</td>
-										</s:else>
-									</s:else>
-									<s:if test="%{wanchengUp == 1}">
-							 			<td style="color:red;"  class="hand view" id="${id}_14">${wancheng}</td>
-									</s:if>
-									<s:else>
-										<s:if test="%{wanchengUp == 3}">
-											<td style="color:blue;"  class="hand view" id="${id}_14">${wancheng}</td>
-										</s:if>
-										<s:else>
-											<td  class="hand view" id="${id}_14">${wancheng}</td>
-										</s:else>
-									</s:else>
-									
-									<s:if test="%{wancheng_successUp == 1}">
-							 			<td style="color:red;"  class="hand view" id="${id}_15">${wancheng_success}</td>
-									</s:if>
-									<s:else>
-										<s:if test="%{wancheng_successUp == 3}">
-											<td style="color:blue;"  class="hand view" id="${id}_15">${wancheng_success}</td>
-										</s:if>
-										<s:else>
-											<td  class="hand view" id="${id}_15">${wancheng_success}</td>
-										</s:else>
-									</s:else>
-									
-									<s:if test="%{wancheng_failUp == 1}">
-							 			<td style="color:red;"  class="hand view" id="${id}_16">${wancheng_fail}</td>
-									</s:if>
-									<s:else>
-										<s:if test="%{wancheng_failUp == 3}">
-											<td style="color:blue;"  class="hand view" id="${id}_16">${wancheng_fail}</td>
-										</s:if>
-										<s:else>
-											<td  class="hand view" id="${id}_16">${wancheng_fail}</td>
-										</s:else>
-									</s:else> --%>
 								</tr> 
 							</s:iterator>
 						</s:if>

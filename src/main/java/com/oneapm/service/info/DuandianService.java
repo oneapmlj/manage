@@ -36,9 +36,20 @@ public class DuandianService {
         public final static int pageNum = 30;
 
         
+        @SuppressWarnings("unchecked")
         public static String findVersions(int agent){
                 try{
                         List<String> versions = new ArrayList<String>();
+                        if(agent == 9){
+                                versions.add("独立部署");
+                                versions.add("AI注入");
+                                versions.add("java注入");
+                                versions.add("php注入");
+                                versions.add("python注入");
+                                versions.add("ruby注入");
+                                versions.add("dotnet注入");
+                                versions.add("nodejs注入");
+                        }
                         versions = DownloadService.findVersions(agent);
                         for(int i=0;i<versions.size();i++){
                                 for(int j=i+1;j<versions.size();j++){
@@ -55,6 +66,7 @@ public class DuandianService {
                         JSONObject object = new JSONObject();
                         object.put("status", 1);
                         object.put("versions", array);
+                        object.put("agent", agent);
                         return object.toJSONString();
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
@@ -935,9 +947,8 @@ public class DuandianService {
                         if(fuze == 1 && infos.size() > 0){
                                 for(int i=0;i<infos.size();i++){
                                         Info info = infos.get(i);
-                                        if(!(info.getSale() != null && info.getSale().equals(admin.getId())) || 
-                                                        (info.getPreSale() != null && info.getPreSale().equals(admin.getId())) || 
-                                                        (info.getSupport() != null && info.getSupport().equals(admin.getId()))){
+                                        if(!((info.getSale() != null && info.getSale().equals(admin.getId())) || (info.getPreSale() != null && info.getPreSale().equals(admin.getId())) || 
+                                                        (info.getSupport() != null && info.getSupport().equals(admin.getId())))){
                                                 infos.remove(i);
                                                 i--;
                                         }

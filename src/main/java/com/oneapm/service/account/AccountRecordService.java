@@ -65,7 +65,7 @@ public class AccountRecordService {
                                         if (type > 0) {
                                                 if (infos != null && infos.size() > 0) {
                                                         for (int i = 0; i < infos.size(); i++) {
-                                                                if (!match(type, infos.get(i).getId())) {
+                                                                if (!match(type, infos.get(i))) {
                                                                         infos.remove(i);
                                                                         i--;
                                                                 }
@@ -145,6 +145,20 @@ public class AccountRecordService {
         }
         
 
+        public static boolean match(int type, Info info) {
+                switch (type) {
+                case 1:
+                        return info.getTag().getMetric() == 1;
+                case 2:
+                        return info.getTag().getMetric() == 2;
+                case 3:
+                        return info.getTag().getMetric() == 3;
+                default:
+                        break;
+                }
+                return false;
+        }
+        
         public static boolean match(int type, Long infoId) {
                 switch (type) {
                 case 1:
@@ -153,20 +167,6 @@ public class AccountRecordService {
                         return TagService.findByInfoId(infoId).getMetric() == 2;
                 case 3:
                         return TagService.findByInfoId(infoId).getMetric() == 3;
-                case 4:
-                        return TagService.findByInfoId(infoId).getMetric() == 4;
-                case 5:
-                        return TagService.findByInfoId(infoId).getLoudou() == 0;
-                case 6:
-                        return TagService.findByInfoId(infoId).getLoudou() == 1;
-                case 7:
-                        return TagService.findByInfoId(infoId).getLoudou() == 2;
-                case 8:
-                        return TagService.findByInfoId(infoId).getLoudou() == 3;
-                case 9:
-                        return TagService.findByInfoId(infoId).getLoudou() == 4;
-                case 10:
-                        return TagService.findByInfoId(infoId).getLoudou() == 5;
                 default:
                         break;
                 }

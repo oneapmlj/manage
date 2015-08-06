@@ -59,6 +59,10 @@ public class AccountService {
                 Admin admin = AdminDaoImpl.getInstance().findByRealName(name);
                 return admin;
         }
+        
+        public static boolean updateXiaoshouyiId(Long adminId, Long xiaoshouyiId){
+                return AdminDaoImpl.getInstance().updateXiaoshouyiId(adminId, xiaoshouyiId);
+        }
 
         public static String findName(Long id) {
                 Admin admin = findById(id);
@@ -348,7 +352,7 @@ public class AccountService {
         }
 
         public static void main(String[] args) {
-                String str = string2MD5("wkqurfkj@#92dsnl");
+                String str = string2MD5("123456");
                 System.out.println(str);
                 // System.out.println(string2MD5(str));
                 // try {

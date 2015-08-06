@@ -43,6 +43,8 @@ public class Admin {
 	
 	private int duandian;
 	
+	private Long xiaoshouyiId;
+	
 	public Admin(int group, Long id, String username, String password, int grade,
 	        int status, String createTime, Long createId, String position, String phone,
 	        String email, String nickName, String grades){
@@ -224,6 +226,14 @@ public int getDuandian() {
 
 public void setDuandian(int duandian) {
         this.duandian = duandian;
+}
+
+public Long getXiaoshouyiId() {
+        return xiaoshouyiId;
+}
+
+public void setXiaoshouyiId(Long xiaoshouyiId) {
+        this.xiaoshouyiId = xiaoshouyiId;
 }
 	
 }

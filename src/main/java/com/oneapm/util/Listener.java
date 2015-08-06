@@ -26,7 +26,8 @@ public class Listener implements ServletContextListener {
         private static final Logger LOG = LoggerFactory.getLogger(Listener.class);
 
         public void contextDestroyed(ServletContextEvent arg0) {
-
+                Run.thread.stop();
+                MongoConnection.close();
                 LOG.info("error..........................................");
         }
 
@@ -97,7 +98,8 @@ public class Listener implements ServletContextListener {
                 }
                 LOG.info("init finished .....................................................");
                 LOG.info("start run ......................................................");
-//                new Thread(new Run()).start();
+                Run.thread.start();
+                new Thread(new Run()).start();
         }
 
         public static void initMongoDao(Element Element) throws UnknownHostException {
