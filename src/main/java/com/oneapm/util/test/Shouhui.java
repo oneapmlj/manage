@@ -28,6 +28,7 @@ import com.oneapm.dto.App;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.lable.Lable;
 import com.oneapm.dto.tag.Category;
+import com.oneapm.dto.tag.From;
 import com.oneapm.dto.tag.Fuwuqi;
 import com.oneapm.dto.tag.Metric;
 import com.oneapm.dto.tag.Person;
@@ -754,8 +755,8 @@ public class Shouhui {
                 String end = TimeTools.getDateTime(10);
                 String dataTime = TimeTools.getDateTime(0);
                 
-//                String start_sign = TimeTools.getDateTime(8);
-//                String end_sing = TimeTools.getDateTime(1);
+                String start_sign = TimeTools.getDateTime(10);
+                String end_sing = TimeTools.getDateTime(3);
                 try{
                         List<Aplication> aplications = AppDataDaoImpl.getInstance().findByAgent(0, start, end);
                         Set<Long> ids = new HashSet<Long>();
@@ -763,7 +764,7 @@ public class Shouhui {
                                 ids.add(aplication.getUserId());
                         }
                         List<Info> datas = new ArrayList<Info>();
-//                        List<Info> signs = InfoDaoImpl.getInstance().countSign(start_sign, end_sing);
+                        List<Info> signs = InfoDaoImpl.getInstance().countSign(start_sign, end_sing);
                         for(Long id : ids){
                                 datas.add(InfoService.findByUserId(id));
                         }
@@ -775,7 +776,7 @@ public class Shouhui {
                                 out = new FileOutputStream(file);
                                 osw = new OutputStreamWriter(out);
                                 bw = new BufferedWriter(osw);
-                                bw.append("序号,UserId,公司,注册时间,登录时间,地域,融资,分类,规模,平台,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,1,2,java,php,node,python,donet,ruby,android,ios,browser,server,运营,用户运营,销售").append("\r");
+                                bw.append("序号,UserId,公司,注册时间,登录时间,地域,融资,分类,规模,平台,24,25,26,27,28,29,30,31,1,2,3,4,5,6,7,8,9,java,php,node,python,donet,ruby,android,ios,browser,server,运营,用户运营,销售").append("\r");
                                 bw.newLine();
                                 int i =1;
                                 for(Info info : datas){
@@ -923,289 +924,289 @@ public class Shouhui {
                                         }
                                 }
                         }
-//                        List<Info> signs_geren = new ArrayList<Info>();
-//                        out = null;
-//                        osw = null;
-//                        bw = null;
-//                        try{
-//                                File file = new File("/data/filesystem/report/fugai.csv");
-//                                out = new FileOutputStream(file);
-//                                osw = new OutputStreamWriter(out);
-//                                bw = new BufferedWriter(osw);
-//                                bw.append("序号,UserId,公司,注册时间,登录时间,地域,融资,分类,规模,平台,来源").append("\r");
-//                                bw.newLine();
-//                                int i =1;
-//                                for(Info info : signs){
-//                                        info = InfoService.findByUserId(info.getUserId());
-//                                        if(info.getTag() != null && info.getTag().getMetric() == 3){
-//                                                signs_geren.add(info);
-//                                                continue;
-//                                        }
-//                                        bw.append(i+",").append(info.getUserId()+",");
-//                                        if(info.getProject() != null && info.getProject().trim().length() > 0){
-//                                                bw.append(info.getProject()+",");
-//                                        }else{
-//                                                bw.append(info.getCompany()+",");
-//                                        }
-//                                        bw.append(info.getCreateTime()+",").append(info.getLoginTime()+",");
-//                                        if(info.getTag() != null){
-//                                                if(info.getTag().getProvince() > 0){
-//                                                        bw.append(Province.getName(info.getTag().getProvince())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getRongzi() > 0){
-//                                                        bw.append(Rongzi.getName(info.getTag().getRongzi())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getCategory() > 0){
-//                                                        bw.append(Category.getName(info.getTag().getCategory())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getPerson() > 0){
-//                                                        bw.append(Person.getName(info.getTag().getPerson())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getFuwuqi() > 0){
-//                                                        bw.append(Fuwuqi.getName(info.getTag().getFuwuqi())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getFrom() > 0){
-//                                                        bw.append(From.getName(info.getTag().getFrom())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                        }else{
-//                                                bw.append("未知,未知,未知,未知,未知,未知,");
-//                                        }
-//                                        bw.newLine();
-//                                        i++;
-//                                }
-//                                for(Info info : signs_geren){
-//                                        bw.append(i+",").append(info.getUserId()+",");
-//                                        if(info.getProject() != null && info.getProject().trim().length() > 0){
-//                                                bw.append(info.getProject()+",");
-//                                        }else{
-//                                                bw.append(info.getCompany()+",");
-//                                        }
-//                                        bw.append(info.getCreateTime()+",").append(info.getLoginTime()+",");
-//                                        if(info.getTag() != null){
-//                                                if(info.getTag().getProvince() > 0){
-//                                                        bw.append(Province.getName(info.getTag().getProvince())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getRongzi() > 0){
-//                                                        bw.append(Rongzi.getName(info.getTag().getRongzi())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getCategory() > 0){
-//                                                        bw.append(Category.getName(info.getTag().getCategory())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getPerson() > 0){
-//                                                        bw.append(Person.getName(info.getTag().getPerson())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getFuwuqi() > 0){
-//                                                        bw.append(Fuwuqi.getName(info.getTag().getFuwuqi())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getFrom() > 0){
-//                                                        bw.append(From.getName(info.getTag().getFrom())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                        }else{
-//                                                bw.append("未知,未知,未知,未知,未知,未知,");
-//                                        }
-//                                        bw.append("个人,");
-//                                        bw.newLine();
-//                                        i++;
-//                                }
-//                        }catch(Exception e){
-//                                LOG.error(e.getMessage(), e);
-//                        }finally {
-//                                if (bw != null) {
-//                                        try {
-//                                                bw.close();
-//                                                bw = null;
-//                                        } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                        }
-//                                }
-//                                if (osw != null) {
-//                                        try {
-//                                                osw.close();
-//                                                osw = null;
-//                                        } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                        }
-//                                }
-//                                if (out != null) {
-//                                        try {
-//                                                out.close();
-//                                                out = null;
-//                                        } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                        }
-//                                }
-//                        }
-//                        
-//                        out = null;
-//                        osw = null;
-//                        bw = null;
-//                        try{
-//                                for(int i=0;i<signs.size();i++){
-//                                        if(!AppDataDaoImpl.getInstance().existByTimeAndUserId(start_sign, end_sing, signs.get(i).getUserId())){
-//                                            signs.remove(i);
-//                                            i--;
-//                                        }
-//                                }
-//                                for(int i=0;i<signs_geren.size();i++){
-//                                        if(!AppDataDaoImpl.getInstance().existByTimeAndUserId(start_sign, end_sing, signs_geren.get(i).getUserId())){
-//                                            signs_geren.remove(i);
-//                                            i--;
-//                                        }
-//                                }
-//                                File file = new File("/data/filesystem/report/datafugai.csv");
-//                                out = new FileOutputStream(file);
-//                                osw = new OutputStreamWriter(out);
-//                                bw = new BufferedWriter(osw);
-//                                bw.append("序号,UserId,公司,注册时间,登录时间,地域,融资,分类,规模,平台,来源").append("\r");
-//                                bw.newLine();
-//                                int i =1;
-//                                for(Info info : signs){
-//                                        info = InfoService.findByUserId(info.getUserId());
-//                                        if(info.getTag() != null && info.getTag().getMetric() == 3){
-//                                                continue;
-//                                        }
-//                                        bw.append(i+",").append(info.getUserId()+",");
-//                                        if(info.getProject() != null && info.getProject().trim().length() > 0){
-//                                                bw.append(info.getProject()+",");
-//                                        }else{
-//                                                bw.append(info.getCompany()+",");
-//                                        }
-//                                        bw.append(info.getCreateTime()+",").append(info.getLoginTime()+",");
-//                                        if(info.getTag() != null){
-//                                                if(info.getTag().getProvince() > 0){
-//                                                        bw.append(Province.getName(info.getTag().getProvince())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getRongzi() > 0){
-//                                                        bw.append(Rongzi.getName(info.getTag().getRongzi())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getCategory() > 0){
-//                                                        bw.append(Category.getName(info.getTag().getCategory())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getPerson() > 0){
-//                                                        bw.append(Person.getName(info.getTag().getPerson())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getFuwuqi() > 0){
-//                                                        bw.append(Fuwuqi.getName(info.getTag().getFuwuqi())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getFrom() > 0){
-//                                                        bw.append(From.getName(info.getTag().getFrom())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                        }else{
-//                                                bw.append("未知,未知,未知,未知,未知,未知,");
-//                                        }
-//                                        bw.newLine();
-//                                        i++;
-//                                }
-//                                for(Info info : signs_geren){
-//                                        bw.append(i+",").append(info.getUserId()+",");
-//                                        if(info.getProject() != null && info.getProject().trim().length() > 0){
-//                                                bw.append(info.getProject()+",");
-//                                        }else{
-//                                                bw.append(info.getCompany()+",");
-//                                        }
-//                                        bw.append(info.getCreateTime()+",").append(info.getLoginTime()+",");
-//                                        if(info.getTag() != null){
-//                                                if(info.getTag().getProvince() > 0){
-//                                                        bw.append(Province.getName(info.getTag().getProvince())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getRongzi() > 0){
-//                                                        bw.append(Rongzi.getName(info.getTag().getRongzi())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getCategory() > 0){
-//                                                        bw.append(Category.getName(info.getTag().getCategory())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getPerson() > 0){
-//                                                        bw.append(Person.getName(info.getTag().getPerson())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getFuwuqi() > 0){
-//                                                        bw.append(Fuwuqi.getName(info.getTag().getFuwuqi())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                                if(info.getTag().getFrom() > 0){
-//                                                        bw.append(From.getName(info.getTag().getFrom())+",");
-//                                                }else{
-//                                                        bw.append("未知,");
-//                                                }
-//                                        }else{
-//                                                bw.append("未知,未知,未知,未知,未知,未知,");
-//                                        }
-//                                        bw.append("个人,");
-//                                        bw.newLine();
-//                                        i++;
-//                                }
-//                        }catch(Exception e){
-//                                LOG.error(e.getMessage(), e);
-//                        }finally {
-//                                if (bw != null) {
-//                                        try {
-//                                                bw.close();
-//                                                bw = null;
-//                                        } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                        }
-//                                }
-//                                if (osw != null) {
-//                                        try {
-//                                                osw.close();
-//                                                osw = null;
-//                                        } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                        }
-//                                }
-//                                if (out != null) {
-//                                        try {
-//                                                out.close();
-//                                                out = null;
-//                                        } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                        }
-//                                }
-//                        }
+                        List<Info> signs_geren = new ArrayList<Info>();
+                        out = null;
+                        osw = null;
+                        bw = null;
+                        try{
+                                File file = new File("/data/filesystem/report/fugai.csv");
+                                out = new FileOutputStream(file);
+                                osw = new OutputStreamWriter(out);
+                                bw = new BufferedWriter(osw);
+                                bw.append("序号,UserId,公司,注册时间,登录时间,地域,融资,分类,规模,平台,来源").append("\r");
+                                bw.newLine();
+                                int i =1;
+                                for(Info info : signs){
+                                        info = InfoService.findByUserId(info.getUserId());
+                                        if(info.getTag() != null && info.getTag().getMetric() == 3){
+                                                signs_geren.add(info);
+                                                continue;
+                                        }
+                                        bw.append(i+",").append(info.getUserId()+",");
+                                        if(info.getProject() != null && info.getProject().trim().length() > 0){
+                                                bw.append(info.getProject()+",");
+                                        }else{
+                                                bw.append(info.getCompany()+",");
+                                        }
+                                        bw.append(info.getCreateTime()+",").append(info.getLoginTime()+",");
+                                        if(info.getTag() != null){
+                                                if(info.getTag().getProvince() > 0){
+                                                        bw.append(Province.getName(info.getTag().getProvince())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getRongzi() > 0){
+                                                        bw.append(Rongzi.getName(info.getTag().getRongzi())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getCategory() > 0){
+                                                        bw.append(Category.getName(info.getTag().getCategory())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getPerson() > 0){
+                                                        bw.append(Person.getName(info.getTag().getPerson())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getFuwuqi() > 0){
+                                                        bw.append(Fuwuqi.getName(info.getTag().getFuwuqi())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getFrom() > 0){
+                                                        bw.append(From.getName(info.getTag().getFrom())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                        }else{
+                                                bw.append("未知,未知,未知,未知,未知,未知,");
+                                        }
+                                        bw.newLine();
+                                        i++;
+                                }
+                                for(Info info : signs_geren){
+                                        bw.append(i+",").append(info.getUserId()+",");
+                                        if(info.getProject() != null && info.getProject().trim().length() > 0){
+                                                bw.append(info.getProject()+",");
+                                        }else{
+                                                bw.append(info.getCompany()+",");
+                                        }
+                                        bw.append(info.getCreateTime()+",").append(info.getLoginTime()+",");
+                                        if(info.getTag() != null){
+                                                if(info.getTag().getProvince() > 0){
+                                                        bw.append(Province.getName(info.getTag().getProvince())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getRongzi() > 0){
+                                                        bw.append(Rongzi.getName(info.getTag().getRongzi())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getCategory() > 0){
+                                                        bw.append(Category.getName(info.getTag().getCategory())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getPerson() > 0){
+                                                        bw.append(Person.getName(info.getTag().getPerson())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getFuwuqi() > 0){
+                                                        bw.append(Fuwuqi.getName(info.getTag().getFuwuqi())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getFrom() > 0){
+                                                        bw.append(From.getName(info.getTag().getFrom())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                        }else{
+                                                bw.append("未知,未知,未知,未知,未知,未知,");
+                                        }
+                                        bw.append("个人,");
+                                        bw.newLine();
+                                        i++;
+                                }
+                        }catch(Exception e){
+                                LOG.error(e.getMessage(), e);
+                        }finally {
+                                if (bw != null) {
+                                        try {
+                                                bw.close();
+                                                bw = null;
+                                        } catch (IOException e) {
+                                                e.printStackTrace();
+                                        }
+                                }
+                                if (osw != null) {
+                                        try {
+                                                osw.close();
+                                                osw = null;
+                                        } catch (IOException e) {
+                                                e.printStackTrace();
+                                        }
+                                }
+                                if (out != null) {
+                                        try {
+                                                out.close();
+                                                out = null;
+                                        } catch (IOException e) {
+                                                e.printStackTrace();
+                                        }
+                                }
+                        }
+                        
+                        out = null;
+                        osw = null;
+                        bw = null;
+                        try{
+                                for(int i=0;i<signs.size();i++){
+                                        if(!AppDataDaoImpl.getInstance().existByTimeAndUserId(start_sign, end_sing, signs.get(i).getUserId())){
+                                            signs.remove(i);
+                                            i--;
+                                        }
+                                }
+                                for(int i=0;i<signs_geren.size();i++){
+                                        if(!AppDataDaoImpl.getInstance().existByTimeAndUserId(start_sign, end_sing, signs_geren.get(i).getUserId())){
+                                            signs_geren.remove(i);
+                                            i--;
+                                        }
+                                }
+                                File file = new File("/data/filesystem/report/datafugai.csv");
+                                out = new FileOutputStream(file);
+                                osw = new OutputStreamWriter(out);
+                                bw = new BufferedWriter(osw);
+                                bw.append("序号,UserId,公司,注册时间,登录时间,地域,融资,分类,规模,平台,来源").append("\r");
+                                bw.newLine();
+                                int i =1;
+                                for(Info info : signs){
+                                        info = InfoService.findByUserId(info.getUserId());
+                                        if(info.getTag() != null && info.getTag().getMetric() == 3){
+                                                continue;
+                                        }
+                                        bw.append(i+",").append(info.getUserId()+",");
+                                        if(info.getProject() != null && info.getProject().trim().length() > 0){
+                                                bw.append(info.getProject()+",");
+                                        }else{
+                                                bw.append(info.getCompany()+",");
+                                        }
+                                        bw.append(info.getCreateTime()+",").append(info.getLoginTime()+",");
+                                        if(info.getTag() != null){
+                                                if(info.getTag().getProvince() > 0){
+                                                        bw.append(Province.getName(info.getTag().getProvince())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getRongzi() > 0){
+                                                        bw.append(Rongzi.getName(info.getTag().getRongzi())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getCategory() > 0){
+                                                        bw.append(Category.getName(info.getTag().getCategory())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getPerson() > 0){
+                                                        bw.append(Person.getName(info.getTag().getPerson())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getFuwuqi() > 0){
+                                                        bw.append(Fuwuqi.getName(info.getTag().getFuwuqi())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getFrom() > 0){
+                                                        bw.append(From.getName(info.getTag().getFrom())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                        }else{
+                                                bw.append("未知,未知,未知,未知,未知,未知,");
+                                        }
+                                        bw.newLine();
+                                        i++;
+                                }
+                                for(Info info : signs_geren){
+                                        bw.append(i+",").append(info.getUserId()+",");
+                                        if(info.getProject() != null && info.getProject().trim().length() > 0){
+                                                bw.append(info.getProject()+",");
+                                        }else{
+                                                bw.append(info.getCompany()+",");
+                                        }
+                                        bw.append(info.getCreateTime()+",").append(info.getLoginTime()+",");
+                                        if(info.getTag() != null){
+                                                if(info.getTag().getProvince() > 0){
+                                                        bw.append(Province.getName(info.getTag().getProvince())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getRongzi() > 0){
+                                                        bw.append(Rongzi.getName(info.getTag().getRongzi())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getCategory() > 0){
+                                                        bw.append(Category.getName(info.getTag().getCategory())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getPerson() > 0){
+                                                        bw.append(Person.getName(info.getTag().getPerson())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getFuwuqi() > 0){
+                                                        bw.append(Fuwuqi.getName(info.getTag().getFuwuqi())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                                if(info.getTag().getFrom() > 0){
+                                                        bw.append(From.getName(info.getTag().getFrom())+",");
+                                                }else{
+                                                        bw.append("未知,");
+                                                }
+                                        }else{
+                                                bw.append("未知,未知,未知,未知,未知,未知,");
+                                        }
+                                        bw.append("个人,");
+                                        bw.newLine();
+                                        i++;
+                                }
+                        }catch(Exception e){
+                                LOG.error(e.getMessage(), e);
+                        }finally {
+                                if (bw != null) {
+                                        try {
+                                                bw.close();
+                                                bw = null;
+                                        } catch (IOException e) {
+                                                e.printStackTrace();
+                                        }
+                                }
+                                if (osw != null) {
+                                        try {
+                                                osw.close();
+                                                osw = null;
+                                        } catch (IOException e) {
+                                                e.printStackTrace();
+                                        }
+                                }
+                                if (out != null) {
+                                        try {
+                                                out.close();
+                                                out = null;
+                                        } catch (IOException e) {
+                                                e.printStackTrace();
+                                        }
+                                }
+                        }
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
                 }
