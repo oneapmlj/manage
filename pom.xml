@@ -12,7 +12,6 @@
 	</properties>
 
 	<dependencies>
-		<!--kf5 -->
 		<!--excel -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -34,12 +33,15 @@
 			<artifactId>org.json</artifactId>
 			<version>20131017</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.mongodb</groupId> <artifactId>mongo-java-driver</artifactId> 
-			<version>2.11.1</version> </dependency> -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
-			<version>2.12.4</version>
+			<version>2.11.1</version>
+		</dependency> -->
+		<dependency>
+		  <groupId>org.mongodb</groupId>
+		  <artifactId>mongo-java-driver</artifactId>
+		  <version>2.12.4</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -110,6 +112,13 @@
 				<version>2.1.1</version>
 				<configuration>
 					<webXml>WebRoot\WEB-INF\web.xml</webXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+				<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 			<plugin>
