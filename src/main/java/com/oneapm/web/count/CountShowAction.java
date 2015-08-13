@@ -1,20 +1,17 @@
 package com.oneapm.web.count;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.oneapm.dto.Count.CountDto;
 import com.oneapm.service.count.CountService;
-import com.oneapm.util.ApiData;
-import com.oneapm.util.OneTools;
 import com.oneapm.web.SupportAction;
 
 public class CountShowAction extends SupportAction{
 	private static final long serialVersionUID = 1L;
-	
+
     protected static final Logger LOG = LoggerFactory.getLogger(CountShowAction.class);
     private List<CountDto> countDto;
     private String name;
@@ -61,10 +58,13 @@ public class CountShowAction extends SupportAction{
 	}
 	public void index(){
 		CountDto dto = new CountDto();
-		String jsonString;
+		List<String> jsonList;
 		try {
-			jsonString = CountService.findByEmail(dto);
-			getServletResponse().getWriter().print(jsonString);
+			jsonList = CountService.findByEmail(dto);
+			for(int i = 0; i < jsonList.size(); i ++){
+			String outJson = new String(jsonList.get(i).getBytes("iso-8859-1"),"utf-8");
+			getServletResponse().getWriter().print(outJson);
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,4 +85,5 @@ public class CountShowAction extends SupportAction{
         	
 
 	 } 
+    
 }

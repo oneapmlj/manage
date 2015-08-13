@@ -18,7 +18,7 @@ import com.oneapm.util.OneTools;
 
 public class CountService {
 	 protected static final Logger LOG = LoggerFactory.getLogger(CountService.class);
-	 private static final String GET_URL = "http://localhost:8081/wh/apitest?date=2015-8-5";
+	 private static final String GET_URL = "http://localhost:8081/wh/apitest?date=2015-8-4";
 	 public static List<CountDto> findAllCountDto() {
          List<CountDto> countDtoList = null;
          try {
@@ -29,34 +29,38 @@ public class CountService {
          }
          return countDtoList;
  }
-	 public static String findByEmail(CountDto dto) throws IOException {
+	 public static List<String> findByEmail(CountDto dto) throws IOException {
          long userId = 0l;
          List<String> key = new ArrayList<String>();
      	 List<Object> value = new ArrayList<Object>();
      	 String jsonString = null;
+     	 List<String> jsonList = new ArrayList<>();
      	ApiData data = new ApiData();
      	List<String> emailList = data.httpURLConectionGET(GET_URL);
      	for(int i = 0; i < emailList.size(); i++){
      	if(emailList.get(i) !=null && emailList.get(i) != ""){
      		CountDto dto1 = new CountDto();    
      		dto1.setEmail(emailList.get(i));
-     	    userId = UserIdDaoImpl.getInstance().findByEmail(dto.getEmail());
+     	    userId = UserIdDaoImpl.getInstance().findByEmail(dto1.getEmail());
      		key.add(emailList.get(i));
      		value.add(userId);
      		if(userId!=0l){
      		jsonString = OneTools.getResult(1, key, value);	
      		
-     		}else{
+     		}else{     		
+     		jsonString = OneTools.getResult(0, "not exists userId");
      		
-     		jsonString = OneTools.getResult(0, "未找到用户id");
      		}
      	}
+     	jsonList.add(jsonString);
+     	key.clear();
+     	value.clear();
      }
-		return jsonString;
+		return jsonList;
 		
  }
 	 public static void insertCountDto(CountDto dto) {
-         
+       
          try {
         	 CountDaoImpl.getInstance().insertCount(dto);
                 
