@@ -14,6 +14,9 @@ public class CountDto {
 		this.id = id;
 		this.event = event;
 	}
+	public CountDto() {
+		
+	}
 	public String getEmail() {
 		return email;
 	}

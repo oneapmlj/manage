@@ -1,16 +1,20 @@
 package com.oneapm.web.count;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.oneapm.dto.Count.CountDto;
 import com.oneapm.service.count.CountService;
+import com.oneapm.util.ApiData;
+import com.oneapm.util.OneTools;
 import com.oneapm.web.SupportAction;
 
 public class CountShowAction extends SupportAction{
 	private static final long serialVersionUID = 1L;
-
+	
     protected static final Logger LOG = LoggerFactory.getLogger(CountShowAction.class);
     private List<CountDto> countDto;
     private String name;
@@ -55,22 +59,30 @@ public class CountShowAction extends SupportAction{
 	public void setCountDto(List<CountDto> countDto) {
 		this.countDto = countDto;
 	}
-	public String index(){
-		return "countindex";
+	public void index(){
+		CountDto dto = new CountDto();
+		String jsonString;
+		try {
+			jsonString = CountService.findByEmail(dto);
+			getServletResponse().getWriter().print(jsonString);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	 public String insert() {
-         if (!isLogin()) {
-                 return "login";
-         }
-         try {
-        	long l = 0l;
-        	CountDto dto = new CountDto(this.email, this.number, l, this.labelid, this.event);
-        	CountService.insertCountDto(dto);
-                
-         } catch (Exception e) {
-                 LOG.error(e.getMessage(), e);
-         }
-         return "success";
- }
-    
+	 public void insert() {
+ 
+       
+		 try {
+			getServletResponse().getWriter().print("1111");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        	 
+        		
+        		
+        	
+
+	 } 
 }

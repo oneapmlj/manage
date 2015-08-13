@@ -20,15 +20,10 @@
 		</global-results>
 		<action name="count_index" method="index"
 			class="com.oneapm.web.count.CountShowAction">
-			<result name="countindex">
-				/WEB-INF/pages/count/count_index.jsp
-			</result>			
+					
 		</action>
 	<action name="count_insert" method="insert"
 		class="com.oneapm.web.count.CountShowAction">
-		<result name="success">
-			/WEB-INF/pages/count/count_index.jsp
-		</result>
-	</action>
+		</action>
 	</package>
 </struts>

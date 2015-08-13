@@ -24,7 +24,7 @@ public class CountDaoImpl extends DaoImplBase<Info>{
 	public static CountDaoImpl getInstance() {
         return Instance;
 }
-	public String insertCount(CountDto dto,String url){
+	public String insertCount(CountDto dto){
 	    try{
 /*	    	ApiData data = new ApiData();		
 			List<String> email;	
