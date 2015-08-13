@@ -87,4 +87,12 @@ public class OneTools {
                 }
                 return object.toJSONString();
         }
+        @SuppressWarnings("unchecked")
+		public static String getResult(int status, String args1, long args2) {
+            JSONObject object = new JSONObject();
+            object.put("status", status);
+            object.put("email", args1);
+            object.put("userId", args2);
+            return object.toJSONString();
+    }
 }

@@ -18,7 +18,7 @@ import com.oneapm.util.OneTools;
 
 public class CountService {
 	 protected static final Logger LOG = LoggerFactory.getLogger(CountService.class);
-	 private static final String GET_URL = "http://localhost:8081/wh/apitest?date=2015-8-4";
+	 private static  StringBuffer GET_URL_NOPARAM = new StringBuffer("http://localhost:8081/wh/apitest?");
 	 public static List<CountDto> findAllCountDto() {
          List<CountDto> countDtoList = null;
          try {
@@ -29,23 +29,27 @@ public class CountService {
          }
          return countDtoList;
  }
-	 public static List<String> findByEmail(CountDto dto) throws IOException {
+	 public static List<String> findByEmail(CountDto dto,String date) throws IOException {
          long userId = 0l;
-         List<String> key = new ArrayList<String>();
-     	 List<Object> value = new ArrayList<Object>();
+       /*  List<String> key = new ArrayList<String>();
+     	 List<Object> value = new ArrayList<Object>();*/
      	 String jsonString = null;
      	 List<String> jsonList = new ArrayList<>();
      	ApiData data = new ApiData();
+     	int start = GET_URL_NOPARAM.indexOf("?")+1;
+     	/*System.out.println(start);*/
+     	StringBuffer sb = GET_URL_NOPARAM.delete(start, GET_URL_NOPARAM.length());
+     	String GET_URL = sb.append("date="+date).toString();
      	List<String> emailList = data.httpURLConectionGET(GET_URL);
      	for(int i = 0; i < emailList.size(); i++){
      	if(emailList.get(i) !=null && emailList.get(i) != ""){
      		CountDto dto1 = new CountDto();    
      		dto1.setEmail(emailList.get(i));
      	    userId = UserIdDaoImpl.getInstance().findByEmail(dto1.getEmail());
-     		key.add(emailList.get(i));
-     		value.add(userId);
+     		/*key.add(emailList.get(i));
+     		value.add(userId);*/
      		if(userId!=0l){
-     		jsonString = OneTools.getResult(1, key, value);	
+     		jsonString = OneTools.getResult(1, emailList.get(i), userId);
      		
      		}else{     		
      		jsonString = OneTools.getResult(0, "not exists userId");
@@ -53,10 +57,10 @@ public class CountService {
      		}
      	}
      	jsonList.add(jsonString);
-     	key.clear();
-     	value.clear();
+    /* 	key.clear();
+     	value.clear();*/
      }
-		return jsonList;
+ 		return jsonList;
 		
  }
 	 public static void insertCountDto(CountDto dto) {

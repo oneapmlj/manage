@@ -19,7 +19,14 @@ public class CountShowAction extends SupportAction{
     private String email;
     private String labelid;
     private int number;
+    private String date;
     
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public int getNumber() {
 		return number;
 	}
@@ -59,8 +66,9 @@ public class CountShowAction extends SupportAction{
 	public void index(){
 		CountDto dto = new CountDto();
 		List<String> jsonList;
+		this.date = date;
 		try {
-			jsonList = CountService.findByEmail(dto);
+			jsonList = CountService.findByEmail(dto,date);
 			for(int i = 0; i < jsonList.size(); i ++){
 			String outJson = new String(jsonList.get(i).getBytes("iso-8859-1"),"utf-8");
 			getServletResponse().getWriter().print(outJson);
