@@ -6,16 +6,25 @@ public class CountDto {
 	private long userId;
 	private String id;
 	private String event;
-	public CountDto(String email, int number, long userId, String id,String event) {
+	private String create_time;
+	public CountDto(String email, int number, long userId, String id,String event,String create_time) {
 		super();
 		this.email = email;
 		this.number = number;
 		this.userId = userId;
 		this.id = id;
 		this.event = event;
+		this.create_time = create_time;
 	}
 	public CountDto() {
 		
+	}
+	
+	public String getCreate_time() {
+		return create_time;
+	}
+	public void setCreate_time(String create_time) {
+		this.create_time = create_time;
 	}
 	public String getEmail() {
 		return email;

@@ -31,7 +31,7 @@ public class ApiData {
 			Matcher matcher = pattern.matcher(line);
 
 			while (matcher.find()) {
-				/* System.out.println(matcher.group()); */
+				 System.out.println(matcher.group()); 
 				string = new String(matcher.group());
 				
 				str.add(string);
@@ -40,7 +40,51 @@ public class ApiData {
 			for (int i = 0; i < str.size(); i++) {
 				System.out.println(str.get(i));
 			}
+			
 		}
+		
+			br.close();
+			connection.disconnect();// 断开连接
+
+            
+			return str;
+			}
+	
+	public List<String> httpURLConectionGETJsonData(String GET_URL) throws IOException {
+		String string = null;
+		URL url = null;
+		HttpURLConnection connection;
+		BufferedReader br;
+		String[] email;
+		url = new URL(GET_URL); // 把字符串转换为URL请求地址
+		connection = (HttpURLConnection) url.openConnection();// 打开连接
+		connection.connect();// 连接会话
+		// 获取输入流
+		br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		String line;
+		StringBuilder sb = new StringBuilder();
+		List<String> str = new ArrayList<String>();
+		while ((line = br.readLine()) != null) {// 循环读取流
+			sb.append(line);
+			
+			
+			Pattern pattern = Pattern.compile("(\\{[^\\}]+})");
+			Matcher matcher = pattern.matcher(line);
+
+			while (matcher.find()) {
+				
+				string = new String(matcher.group());
+				
+				str.add(string);
+
+			}
+			for (int i = 0; i < str.size(); i++) {
+				System.out.println(str.get(i));
+				
+			}
+			System.out.println(str.size());
+		}
+		
 			br.close();
 			connection.disconnect();// 断开连接
 

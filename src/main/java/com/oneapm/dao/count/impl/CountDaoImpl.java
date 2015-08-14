@@ -39,6 +39,7 @@ public class CountDaoImpl extends DaoImplBase<Info>{
             value.put("userId", userId);
             value.put("number", dto.getNumber());
             value.put("event", dto.getEvent());
+            value.put("create_time", dto.getCreate_time());
             if(getDBCollection(TABLE_NAME).insert(value).getN() > -1){
                 return "success";
             }
@@ -63,6 +64,29 @@ public class CountDaoImpl extends DaoImplBase<Info>{
             LOG.error(e.getMessage(), e);
         }
 	    return dtoList;
+	}
+	public String insertCountList(List<CountDto> dtolist){
+	    try{
+	    	CountDto dto = new CountDto();
+	    	List<DBObject> valuelist = new ArrayList<DBObject>();
+	    	for(int i = 0; i < dtolist.size(); i++){
+	    	long userId = UserIdDaoImpl.getInstance().findByEmail(dtolist.get(i).getEmail());
+	    	DBObject value = new BasicDBObject();
+	    	value.put("email", dtolist.get(i).getEmail());
+            value.put("userId", userId);
+            value.put("number", dtolist.get(i).getNumber());
+            value.put("event", dtolist.get(i).getEvent());
+            value.put("create_time", dtolist.get(i).getCreate_time());
+            valuelist.add(value);
+	    	}
+	    	 if(getDBCollection(TABLE_NAME).insert(valuelist).getN() > -1){
+	                return "success";
+	            }
+	    
+        }catch(Exception e){
+            LOG.error(e.getMessage(), e);
+        }
+	    return null;
 	}
 
 }
