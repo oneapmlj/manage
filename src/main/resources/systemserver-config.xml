@@ -14,8 +14,8 @@
 	<mongodb>
 		<mongodata>
 			<!-- <serverNode>10.251.129.94</serverNode> -->
-			<serverNode>10.128.8.222</serverNode>
-			<!-- <serverNode>manager.mgo.010251193010.ali.bj</serverNode> -->
+			<!-- <serverNode>10.128.8.222</serverNode> -->
+			<serverNode>manager.mgo.010251193010.ali.bj</serverNode>
 			<serverPort>27017</serverPort>
 			<autoConnectRetry>true</autoConnectRetry>
 			<connectionsPerHost>300</connectionsPerHost>
