@@ -36,9 +36,23 @@ mixpanel.init("07b964ce199f56c69b9f4bd327456e42");</script>
 	</script>
 	<script type="text/javascript" src="http://maven.natero.com/source/natero_analytics.min.js"></script>
 	<script>
+	var test = function(modle){
+		_na = new na('aveonfeko5uuhe6r0ziv4zhlcizxkovo ', '879bc0f9c414b2fda47c4cee1cd91eaf',
+                {
+   		userId:'123456',
+       		accountId:'654321',
+                    trackUnload: true,
+                    debugUrl:
+                       "http://test.natero.com/api/submitEvents/aveonfeko5uuhe6r0ziv4zhlcizxkovo",
+
+                    disableEventSend: false, // disable the sending of events
+                    debug: false // disable console debug prints
+                });
+   		_na.setModuleId(modle);
+	}
     window.onload = function() {
-    	
-        _na = new na('aveonfeko5uuhe6r0ziv4zhlcizxkovo ', '879bc0f9c414b2fda47c4cee1cd91eaf',
+    	test("test");
+        /* _na = new na('aveonfeko5uuhe6r0ziv4zhlcizxkovo ', '879bc0f9c414b2fda47c4cee1cd91eaf',
                      {
         		userId:'123456',
             		accountId:'654321',
@@ -49,8 +63,13 @@ mixpanel.init("07b964ce199f56c69b9f4bd327456e42");</script>
                          disableEventSend: false, // disable the sending of events
                          debug: false // disable console debug prints
                      });
-        _na.setModuleId('test');
+        _na.setModuleId(module); */
     };
+    $("#biaoji").live('click', function(){
+    	alert(1);;
+  //  	test("22222");
+  	_na.sendFeatureEvent("biaoji");
+    });
 </script>
 
 <div class="warming hidden">
@@ -69,15 +88,15 @@ mixpanel.init("07b964ce199f56c69b9f4bd327456e42");</script>
 	</hgroup>
 </header>
 <div class="header_menu">
-	<div class="user">
-		<p>${admin.name}</p>
+	<div id="biaoji" class="user">
+		<p >${admin.name}</p>
 		<input id="adminId" class="hidden" value="${admin.id}" /> <input
 			id="admin_group" class="hidden" value="${admin.group}" />
 	</div>
 	<div style="margin-left: 20px; float: left; width: 1000px; height: 38px;">
 		<div class="message_history biankuang_gray menu_button"
 			style="width: 80px;">消息</div>
-		<div class="click_to_mark biankuang_gray menu_button">标记</div>
+		<div class="click_to_mark biankuang_gray menu_button" >标记</div>
 		<div class="click_to_add menu_button biankuang_gray" title="添加">
 			添加</div>
 		<div class="click_to_search menu_button biankuang_gray" title="搜索">

@@ -570,16 +570,20 @@ public class Shouhui {
                 OutputStreamWriter osw = null;
                 BufferedWriter bw = null;
                 try{
-                        File file = new File("/data/filesystem/report/from.csv");
+                        File file = new File("/oneapm/filesystem/report/from.csv");
                         out = new FileOutputStream(file);
                         osw = new OutputStreamWriter(out);
                         bw = new BufferedWriter(osw);
-                        bw.append("来源,参数,注册,下载,应用,活跃,活跃应用,活跃/注册（%）,活跃应用/活跃（%）").append("\r");
+                        bw.append("来源,参数,注册,下载,应用").append("\r");
+//                        bw.append("来源,参数,注册,下载,应用,活跃,活跃应用,活跃/注册（%）,活跃应用/活跃（%）").append("\r");
                         bw.newLine();
                         for(Laiyuan laiyuan : laiyuans){
+//                                bw.append(laiyuan.getName()+",").append(laiyuan.getFrom()+",").append(laiyuan.getSign()+",").append(laiyuan.getDownload()+",")
+//                                .append(laiyuan.getApp()+",").append(laiyuan.getData()+",").append(laiyuan.getData_app()+",")
+//                                .append(laiyuan.getData_sign()+",").append(laiyuan.getData_app_data()+"").append("\r");
+//                                bw.newLine();
                                 bw.append(laiyuan.getName()+",").append(laiyuan.getFrom()+",").append(laiyuan.getSign()+",").append(laiyuan.getDownload()+",")
-                                .append(laiyuan.getApp()+",").append(laiyuan.getData()+",").append(laiyuan.getData_app()+",")
-                                .append(laiyuan.getData_sign()+",").append(laiyuan.getData_app_data()+"").append("\r");
+                                .append(laiyuan.getApp()+"").append("\r");
                                 bw.newLine();
                         }
                 }catch(Exception e){
@@ -611,7 +615,7 @@ public class Shouhui {
                         }
                 }
                 try{
-                        File file = new File("/data/filesystem/report/from_list.csv");
+                        File file = new File("/oneapm/filesystem/report/from_list.csv");
                         out = new FileOutputStream(file);
                         osw = new OutputStreamWriter(out);
                         bw = new BufferedWriter(osw);

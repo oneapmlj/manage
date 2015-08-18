@@ -6,7 +6,7 @@
 	<!--项目地址 -->
 	<basePath>http://manage.oneapm.com/</basePath>
 	<!-- <basePath>http://203.195.178.106:8180/manage/</basePath> -->
-	<fileSystem>/data/filesystem/</fileSystem>
+	<fileSystem>/oneapm/filesystem/</fileSystem>
 	<!--工单地址 -->
 	<crmAddress>https://oneapm.kf5.com/</crmAddress>
 
@@ -14,8 +14,8 @@
 	<mongodb>
 		<mongodata>
 			<!-- <serverNode>10.251.129.94</serverNode> -->
-			<!-- <serverNode>10.128.8.222</serverNode> -->
-			<serverNode>203.195.178.106</serverNode>
+			<serverNode>10.128.8.222</serverNode>
+			<!-- <serverNode>manager.mgo.010251193010.ali.bj</serverNode> -->
 			<serverPort>27017</serverPort>
 			<autoConnectRetry>true</autoConnectRetry>
 			<connectionsPerHost>300</connectionsPerHost>
@@ -25,9 +25,10 @@
 	</mongodb>
 	<redis>
 		<manage>
-			<serverNode>10.251.129.94</serverNode>
+			<serverNode>31b0ed9225774881.m.cnbja.kvstore.aliyuncs.com</serverNode>
 			<poolSize>10</poolSize>
 			<serverPort>6379</serverPort>
+			<password>31b0ed9225774881:HCmqeD1jTTAm</password>
 		</manage>
 	</redis>
 </xml-body>

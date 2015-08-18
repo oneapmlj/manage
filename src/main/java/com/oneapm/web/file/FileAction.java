@@ -227,7 +227,7 @@ public class FileAction extends SupportAction{
             if(getAdmin().getGroup() < 4){
                 getServletResponse().getWriter().print("{'status':1,'msg':'没有权限'}");
             }
-            name = new String(name.getBytes("ISO8859-1"),"UTF-8"); 
+//            name = new String(name.getBytes("ISO8859-1"),"UTF-8"); 
             String result = FileService.rename(id, name, getAdmin());
             getServletResponse().getWriter().print(result);
         }catch(Exception e){
@@ -241,7 +241,7 @@ public class FileAction extends SupportAction{
             return;
         }
         try{
-            name = new String(name.getBytes("ISO8859-1"),"UTF-8");
+//            name = new String(name.getBytes("ISO8859-1"),"UTF-8");
             String result = FileService.create(getAdmin(), name, filegrade, type, father, status, password);
             getServletResponse().getWriter().print(result);
         }catch(Exception e){

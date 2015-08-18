@@ -185,24 +185,24 @@ public class InfoAction extends SupportAction {
                         return;
                 }
                 try {
-                        if (qq != null) {
-                                qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (project != null) {
-                                project = new String(project.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (name != null) {
-                                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (phone != null) {
-                                phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (email != null) {
-                                email = new String(email.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (license != null) {
-                                license = new String(license.getBytes("ISO8859-1"), "UTF-8");
-                        }
+//                        if (qq != null) {
+//                                qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (project != null) {
+//                                project = new String(project.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (name != null) {
+//                                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (phone != null) {
+//                                phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (email != null) {
+//                                email = new String(email.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (license != null) {
+//                                license = new String(license.getBytes("ISO8859-1"), "UTF-8");
+//                        }
                         String result = InfoService.edit(id, project, qq, name, phone, email, license, gender, pay_level, getAdmin());
                         getServletResponse().getWriter().print(result);
                 } catch (Exception e) {
@@ -292,9 +292,9 @@ public class InfoAction extends SupportAction {
                         return;
                 }
                 try{
-                        if (xiaoshou != null) {
-                                xiaoshou = new String(xiaoshou.getBytes("ISO8859-1"), "UTF-8");
-                        }
+//                        if (xiaoshou != null) {
+//                                xiaoshou = new String(xiaoshou.getBytes("ISO8859-1"), "UTF-8");
+//                        }
                         if(!quanxian(getAdmin().getGrades(), getGRADE().getMap().get(116))){
                                 getServletResponse().getWriter().print(OneTools.getResult(0, "权限不足"));
                                 return;
@@ -389,15 +389,15 @@ public class InfoAction extends SupportAction {
                 if (!isLogin()) {
                         return "login";
                 }
-                if (company != null) {
-                        company = new String(company.getBytes("ISO8859-1"), "UTF-8");
-                }
-                if (name != null) {
-                        name = new String(name.getBytes("ISO8859-1"), "UTF-8");
-                }
-                if (qq != null) {
-                        qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
-                }
+//                if (company != null) {
+//                        company = new String(company.getBytes("ISO8859-1"), "UTF-8");
+//                }
+//                if (name != null) {
+//                        name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                }
+//                if (qq != null) {
+//                        qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
+//                }
                 infos = InfoService.addSearch(getAdmin(), email, name, phone, company, qq, false);
                 return "add";
         }
@@ -413,12 +413,12 @@ public class InfoAction extends SupportAction {
                         return;
                 }
                 try {
-                        name = new String(name.getBytes("ISO8859-1"), "UTF-8");
-                        company = new String(company.getBytes("ISO8859-1"), "UTF-8");
-                        position = new String(position.getBytes("ISO8859-1"), "UTF-8");
-                        branch = new String(branch.getBytes("ISO8859-1"), "UTF-8");
-                        qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
-                        project = new String(project.getBytes("ISO8859-1"), "UTF-8");
+//                        name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                        company = new String(company.getBytes("ISO8859-1"), "UTF-8");
+//                        position = new String(position.getBytes("ISO8859-1"), "UTF-8");
+//                        branch = new String(branch.getBytes("ISO8859-1"), "UTF-8");
+//                        qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
+//                        project = new String(project.getBytes("ISO8859-1"), "UTF-8");
                         String result = InfoService.insertInfo(new Card(null, name, branch, position, phone, email, null, getAdmin().getId(), null, null, gender, qq), project, company);
                         getServletResponse().getWriter().print(result);
                 } catch (Exception e) {
@@ -461,15 +461,15 @@ public class InfoAction extends SupportAction {
                         getServletResponse().sendRedirect("/login.action");
                         return;
                 }
-                if (name != null) {
-                        name = new String(name.getBytes("ISO8859-1"), "UTF-8").trim();
-                }
-                if (company != null) {
-                        company = new String(company.getBytes("ISO8859-1"), "UTF-8");
-                }
-                if (qq != null) {
-                        qq = new String(qq.getBytes("ISO8859-1"), "UTF-8").trim();
-                }
+//                if (name != null) {
+//                        name = new String(name.getBytes("ISO8859-1"), "UTF-8").trim();
+//                }
+//                if (company != null) {
+//                        company = new String(company.getBytes("ISO8859-1"), "UTF-8");
+//                }
+//                if (qq != null) {
+//                        qq = new String(qq.getBytes("ISO8859-1"), "UTF-8").trim();
+//                }
                 String result = InfoService.searchOut(email, name, phone, company, in, getAdmin(), qq);
                 getServletResponse().getWriter().print(result);
         }
@@ -505,24 +505,24 @@ public class InfoAction extends SupportAction {
                         }
                 }
                 try {
-                        if (name != null) {
-                                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (position != null) {
-                                position = new String(position.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (branch != null) {
-                                branch = new String(branch.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (phone != null) {
-                                phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (email != null) {
-                                email = new String(email.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (qq != null) {
-                                qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
-                        }
+//                        if (name != null) {
+//                                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (position != null) {
+//                                position = new String(position.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (branch != null) {
+//                                branch = new String(branch.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (phone != null) {
+//                                phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (email != null) {
+//                                email = new String(email.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (qq != null) {
+//                                qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
+//                        }
                         String result = CardService.insert(new Card(userId, name, branch, position, phone, email, null, getAdmin().getId(), infoId, null, gender, qq), getAdmin().getName());
                         getServletResponse().getWriter().print(result);
                 } catch (Exception e) {
@@ -536,24 +536,24 @@ public class InfoAction extends SupportAction {
                         return;
                 }
                 try {
-                        if (name != null) {
-                                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (position != null) {
-                                position = new String(position.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (branch != null) {
-                                branch = new String(branch.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (phone != null) {
-                                phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (email != null) {
-                                email = new String(email.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (qq != null) {
-                                qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
-                        }
+//                        if (name != null) {
+//                                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (position != null) {
+//                                position = new String(position.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (branch != null) {
+//                                branch = new String(branch.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (phone != null) {
+//                                phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (email != null) {
+//                                email = new String(email.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (qq != null) {
+//                                qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
+//                        }
                         String result = CardService.update(cardId, name, branch, phone, qq, gender, email, position);
                         getServletResponse().getWriter().print(result);
                 } catch (Exception e) {
@@ -579,30 +579,32 @@ public class InfoAction extends SupportAction {
                         }
                 }
                 try {
-                        mark = new String(mark.getBytes("ISO8859-1"), "UTF-8");
-                        if (phone != null) {
-                                phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (email != null) {
-                                email = new String(email.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (qq != null) {
-                                qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (name != null) {
-                                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (position != null) {
-                                position = new String(position.getBytes("ISO8859-1"), "UTF-8");
-                        }
-                        if (branch != null) {
-                                branch = new String(branch.getBytes("ISO8859-1"), "UTF-8");
-                        }
+                        LOG.info("ADD CALL : "+mark);
+//                        mark = new String(mark.getBytes("ISO8859-1"), "UTF-8");
+//                        if (phone != null) {
+//                                phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (email != null) {
+//                                email = new String(email.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (qq != null) {
+//                                qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (name != null) {
+//                                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (position != null) {
+//                                position = new String(position.getBytes("ISO8859-1"), "UTF-8");
+//                        }
+//                        if (branch != null) {
+//                                branch = new String(branch.getBytes("ISO8859-1"), "UTF-8");
+//                        }
                         if (add_time == null || add_time.trim().length() < 1) {
                                 putTime = TimeTools.format();
                         } else {
                                 putTime = add_time;
                         }
+                        LOG.info("ADD CALL : "+mark);
                         String result = CallService.insert(infoId, cardId, qq, time, gongdan, mark, recordType, getAdmin(), putTime, name, phone, email, gender, position, branch, add_call_point);
                         getServletResponse().getWriter().print(result);
                 } catch (Exception e) {

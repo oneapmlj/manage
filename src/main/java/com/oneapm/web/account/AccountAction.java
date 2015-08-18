@@ -35,9 +35,9 @@ public class AccountAction extends SupportAction {
         }
         
         public void at() throws IOException{
-                if(name != null){
-                        name = new String(name.getBytes("ISO8859-1"), "UTF-8");
-                }
+//                if(name != null){
+//                        name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                }
                 if(name == null || name.indexOf(" ") > -1){
                         getServletResponse().getWriter().print(OneTools.getResult(0, ""));
                         return;
@@ -245,8 +245,8 @@ public class AccountAction extends SupportAction {
                         getServletResponse().getWriter().print("{'status':0,'msg':'激活失败'}");
                         return;
                 }
-                nickName = new String(nickName.getBytes("ISO8859-1"), "UTF-8");
-                position = new String(position.getBytes("ISO8859-1"), "UTF-8");
+//                nickName = new String(nickName.getBytes("ISO8859-1"), "UTF-8");
+//                position = new String(position.getBytes("ISO8859-1"), "UTF-8");
                 String result = AccountService.update(id, token, phone, position, nickName, password, username);
                 getServletResponse().getWriter().print(result);
         }
@@ -261,7 +261,7 @@ public class AccountAction extends SupportAction {
                         getServletResponse().getWriter().print("{'status':0,'msg':'权限不足'}");
                         return;
                 }
-                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
                 String result = AccountService.insert(email, name, quanxian, id, getAdmin().getId(), group);
                 getServletResponse().getWriter().print(result);
         }

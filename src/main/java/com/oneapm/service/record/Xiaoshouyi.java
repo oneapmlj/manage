@@ -113,7 +113,7 @@ public class Xiaoshouyi {
                         try{
                                 record.put("comment", info.getTag().getDescription());
                         }catch(Exception e){}
-                        record.put("dimDepart", "180022");                                                    //所属部门
+                        record.put("dimDepart", "116395");                                                    //所属部门
                         record.put("dbcVarchar1", info.getUserId());
                         record.put("dbcVarchar2", "未知");      //融资
                         try{

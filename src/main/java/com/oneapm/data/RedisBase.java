@@ -21,10 +21,11 @@ public class RedisBase<T> {
         protected static ConcurrentMap<Long, Download> DOWNLOAD;
         protected static ConcurrentMap<Long, App> APP;
 
-        public static void init(String serverNode, int poolSize, String port) {
+        public static void init(String serverNode, int poolSize, String port, String password) {
                 Config config = new Config();
                 config.setConnectionPoolSize(poolSize);
                 config.addAddress(serverNode + ":" + port);
+                config.setPassword("");
                 redisson = Redisson.create(config);
                 USER_INFO = (redisson.getMap("user_info"));
                 INFO = (redisson.getMap("info"));

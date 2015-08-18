@@ -130,7 +130,8 @@ public class Listener implements ServletContextListener {
                 String port = element.getTextTrim();
                 element = (Element) Element.selectSingleNode("poolSize");
                 int poolSize = Integer.parseInt(element.getTextTrim());
-                RedisBase.init(host, poolSize, port);
+                String passwordString = Element.selectSingleNode("password").getText();
+                RedisBase.init(host, poolSize, port, passwordString);
         }
 
 }

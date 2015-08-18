@@ -44,7 +44,7 @@ public class LableAction extends SupportAction {
                                 return;
                         }
                         if (name != null) {
-                                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
                                 if(name.trim().length() <= 0 || name.trim().length() > 20){
                                         getServletResponse().getWriter().print(OneTools.getResult(0, "分类不符合规则"));
                                         return;
@@ -54,7 +54,7 @@ public class LableAction extends SupportAction {
                                 return;
                         }
                         if (description != null) {
-                                description = new String(description.getBytes("ISO8859-1"), "UTF-8");
+//                                description = new String(description.getBytes("ISO8859-1"), "UTF-8");
                         }else{
                                 description="";
                         }

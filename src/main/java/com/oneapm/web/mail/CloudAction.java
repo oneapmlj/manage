@@ -37,7 +37,7 @@ public class CloudAction extends SupportAction{
             getServletResponse().sendRedirect("/login.action");
             return;
         }
-        description = new String(description.getBytes("ISO8859-1"),"UTF-8"); 
+//        description = new String(description.getBytes("ISO8859-1"),"UTF-8"); 
         String result = CloudService.insert(description, timeType, title, status, content);
         getServletResponse().getWriter().print(result);
     }

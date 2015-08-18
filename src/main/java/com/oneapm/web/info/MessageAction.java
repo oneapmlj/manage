@@ -41,7 +41,7 @@ public class MessageAction extends SupportAction {
                                 return;
                         }
                         if (warming != null) {
-                                warming = new String(warming.getBytes("ISO8859-1"), "UTF-8");
+//                                warming = new String(warming.getBytes("ISO8859-1"), "UTF-8");
                                 if (warming.length() > 0) {
                                         MessageService.setWarming(warming);
                                 }

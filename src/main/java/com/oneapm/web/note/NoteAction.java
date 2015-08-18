@@ -36,7 +36,7 @@ public class NoteAction extends SupportAction{
             return;
         }
         try{
-            name = new String(name.getBytes("ISO8859-1"),"UTF-8"); 
+//            name = new String(name.getBytes("ISO8859-1"),"UTF-8"); 
             String result = NoteService.insert(father, name, description, getAdmin().getId(), todu);
             getServletResponse().getWriter().print(result);
         }catch(Exception e){
