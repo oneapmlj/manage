@@ -156,6 +156,20 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                 }
                 return null;
         }
+        public Info findEmail(Long userId, int emailStatus){
+                try{
+                        DBObject object = new BasicDBObject();
+                        object.put("email_status", emailStatus);
+                        object.put("user_id", userId);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        if(cursor.hasNext()){
+                                return getInfoFromResult(cursor.next());
+                        }
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return null;
+        }
 
         public Info findByEmail(String email) {
                 try {

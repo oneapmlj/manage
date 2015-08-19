@@ -7,15 +7,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oneapm.dao.info.impl.AppDaoImpl;
+import com.oneapm.dao.info.impl.AppDataDaoImpl;
 import com.oneapm.dao.info.impl.DataDaoImpl;
 import com.oneapm.dao.mail.impl.MailDaoImpl;
 import com.oneapm.dao.mail.impl.MailModeDaoImpl;
+import com.oneapm.dto.Aplication;
 import com.oneapm.dto.App;
 import com.oneapm.dto.Download;
 import com.oneapm.dto.Mail;
@@ -187,13 +192,31 @@ public class SendMailService extends OneTools {
                         }else{
                                 List<Info> infos = new ArrayList<Info>();
                                 switch (to) {
-                                case 1:
-                                        infos = InfoService.findAll();
-                                        break;
-                                case 2:
-                                        infos = InfoService.findEmail(0);
-                                default:
-                                        break;
+                                        case 1:
+                                                infos = InfoService.findAll();
+                                                break;
+                                        case 2:
+                                                infos = InfoService.findEmail(0);
+                                                break;
+                                        case 3:
+                                                List<App> apps = AppDaoImpl.getInstance().findByAgent(7, null, false, null, null);
+                                                Set<Long> userIds = new HashSet<Long>();
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                apps = AppDaoImpl.getInstance().findByAgent(8, null, false, null, null);
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        default:
+                                                break;
                                 }
                                 push(infos, mail, mailContent, admin, title, from, lable);
                         }
