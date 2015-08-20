@@ -438,21 +438,30 @@
 					<input type="text" class="hand left hidden" style="width:90px;" id="guanlian_add_value"/>
 					<input type="button" value="保存" class="hand hidden"  id="guanlian_add"/>
 					<div class="left" style="width:220px;" id="guanlian_value">
-						<s:iterator value="info.guanlians">
-							<div style="width:210px;float:left;line-height:20px;margin-top:5px;" id="guanlian_value_0">
+						<s:iterator value="info.guanlians" id="ingl">
+							<div style="width:210px;float:left;line-height:20px;margin-top:5px;" id="guanlian_value_${guanlianId}">
 								<s:if test="%{userId == guanlianId}">
-									<div style="float:left;width:80px;" class="menu_button hand  biankuang_gray_ding">当前</div>
-								</s:if>
-								<s:else>
-									<div style="float:left;width:80px;" class="guanlian_view menu_button hand  biankuang_gray">${guanlianId }</div>
-								</s:else>
-								<s:if test="%{role == 1}">
-									<div class="menu_button  hand  biankuang_blue_ding" style="float:left;width:80px;">主帐号</div>
-								</s:if>
-								<s:else>
-									<!-- <div class="menu_button  hand  biankuang_gray_ding" style="float:left;width:80px;">定为主帐号</div> -->
-									<!-- <div class="menu_button  hand  biankuang_gray_ding" style="float:left;width:20px;">X</div> -->
-								</s:else>
+									<div style="float:left;width:80px;" class="menu_button hand  biankuang_gray_ding" id="guanlian_value_${userId}">当前</div>
+									<s:if test="%{ role == 1}">								
+									 <div class="guanlian_change menu_button  hand  biankuang_blue_ding" style="float:left;width:80px;">主帐号</div> 									
+									</s:if>
+								</s:if> 
+								
+								 <s:if test="%{userId != guanlianId}">		 							
+									<div style="float:left;width:80px;" class="guanlian_view menu_button hand  biankuang_gray" id="${guanlianId}">${guanlianId }</div>
+									<s:if test="%{role  == 1}">
+									
+									 <div class="guanlian_change menu_button  hand  biankuang_blue_ding" style="float:left;width:80px;">主帐号</div> 
+									
+									</s:if>
+									<s:else>		 							
+											 <div class="guanlian_change menu_button  hand  biankuang_gray_ding" style="float:left;width:80px;">定为主帐号</div> 
+											 <div class="guanlian_remove menu_button  hand  biankuang_gray_ding" style="float:left;width:20px;">X</div>
+								 		</s:else> 
+								 </s:if> 
+								 	
+								 		
+							
 							</div>
 						</s:iterator>
 					</div>
@@ -954,7 +963,11 @@
 			});
 		};
 		language();
+		var userId =${info.userId };
 		$(document).ready(function(){
+			
+		
+		
 			$("#add").click(function(){
 				var title = $("#title").val();
 				var id = $("#mode_id").val();
@@ -990,6 +1003,7 @@
 			$(".call_add").addClass("hidden");
 			$(".keyboard_call_enter").val("1");
 		});
+		
 	</script>
 </body>
 </html>
