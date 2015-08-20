@@ -92,8 +92,8 @@ mixpanel.init("07b964ce199f56c69b9f4bd327456e42");</script>
 		<s:if test="%{(admin.group >= 4 || admin.manage == 1) && admin.group != 1}"> 
 			<div class="click_to_tongji menu_button biankuang_gray" title="统计">
 				统计</div>
-			<div class="click_to_baobiao menu_button biankuang_gray" title="报表">
-				报表</div>
+			<!-- <div class="click_to_baobiao menu_button biankuang_gray" title="报表">
+				报表</div> -->
 		</s:if>
 		<s:if test="%{admin.group >= 4 || admin.duandian == 1}"> 
 			<div class="click_to_duandian menu_button biankuang_gray" title="过滤" >过滤</div>

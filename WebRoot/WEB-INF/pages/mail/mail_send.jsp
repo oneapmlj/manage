@@ -70,6 +70,7 @@
 									<option value="0">${info.email }</option>
 									<option value="1">所有注册用户</option>
 									<option value="2">所有白名单用户</option>
+									<option value="3">MI用户</option>
 								</select>
 							</div>
 						</s:if>

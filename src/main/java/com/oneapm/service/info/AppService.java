@@ -76,31 +76,31 @@ public class AppService {
                                                 }
                                                 break;
                                         case 2:
-                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 1, false)){
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 2, false)){
                                                         apps.remove(i);
                                                         i--;
                                                 }
                                                 break;
                                         case 3:
-                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 1, false)){
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 3, false)){
                                                         apps.remove(i);
                                                         i--;
                                                 }
                                                 break;
                                         case 4:
-                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 1, false)){
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 4, false)){
                                                         apps.remove(i);
                                                         i--;
                                                 }
                                                 break;
                                         case 5:
-                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 1, false)){
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 5, false)){
                                                         apps.remove(i);
                                                         i--;
                                                 }
                                                 break;
                                         case 6:
-                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 1, false)){
+                                                if(!AppDaoImpl.getInstance().exist(apps.get(i).getAppId(), 6, false)){
                                                         apps.remove(i);
                                                         i--;
                                                 }
