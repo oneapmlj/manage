@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xml-body>
 	<!--静态资源地址 -->
+	<!-- <staticPath>http://manage.oneapm.com/</staticPath> -->
 	<staticPath>http://manage.oneapm.com/</staticPath>
-	<!-- <staticPath>http://203.195.178.106:8180/manage/</staticPath> -->
 	<!--项目地址 -->
-	<basePath>http://manage.oneapm.com/</basePath>
-	<!-- <basePath>http://203.195.178.106:8180/manage/</basePath> -->
+	<!-- <basePath>http://manage.oneapm.com/</basePath> -->
+	 <basePath>http://manage.oneapm.com/</basePath> 
 	<fileSystem>/oneapm/filesystem/</fileSystem>
 	<!--工单地址 -->
 	<crmAddress>https://oneapm.kf5.com/</crmAddress>
@@ -14,7 +14,8 @@
 	<mongodb>
 		<mongodata>
 			<!-- <serverNode>10.251.129.94</serverNode> -->
-			<serverNode>10.128.8.222</serverNode>
+			<!-- <serverNode>10.128.8.222</serverNode> -->
+			<serverNode>10.128.8.80</serverNode>
 			<!-- <serverNode>manager.mgo.010251193010.ali.bj</serverNode> -->
 			<serverPort>27017</serverPort>
 			<autoConnectRetry>true</autoConnectRetry>

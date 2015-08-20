@@ -1,5 +1,6 @@
 package com.oneapm.service.info;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -7,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.info.impl.GuanlianDaoImpl;
+import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dto.info.Guanlian;
 import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
@@ -20,6 +22,9 @@ public class GuanlianService {
                         if(userId == null){
                                 return  OneTools.getResult(0, "必须是注册用户");
                         }
+                        if(!InfoDaoImpl.getInstance().exist(guanlianId)){
+                        	return OneTools.getResult(0, guanlianId+"关联账号不存在，请核对后添加");
+                        }
                         if(!GuanlianDaoImpl.getInstance().exist(userId, guanlianId)){
                                 if(GuanlianDaoImpl.getInstance().exist(guanlianId)){
                                         return OneTools.getResult(0, guanlianId+"已经有关联帐号，请进入添加");
@@ -28,7 +33,9 @@ public class GuanlianService {
                                         GuanlianDaoImpl.getInstance().insert(GuanlianDaoImpl.getInstance().getIdest(),
                                                         userId, userId, 1, TimeTools.format());
                                         GuanlianDaoImpl.getInstance().insert(GuanlianDaoImpl.getInstance().getIdest(),
-                                                        guanlianId, userId, 1, TimeTools.format());
+                                        				guanlianId, guanlianId, 0, TimeTools.format());
+                                        GuanlianDaoImpl.getInstance().insert(GuanlianDaoImpl.getInstance().getIdest(),
+                                                        guanlianId, userId, 0, TimeTools.format());
                                         GuanlianDaoImpl.getInstance().insert(GuanlianDaoImpl.getInstance().getIdest(),
                                                         userId, guanlianId, 0, TimeTools.format());
                                 }else{
@@ -38,14 +45,17 @@ public class GuanlianService {
                                         for(Guanlian guanlian : guanlians){
                                                 if(guanlian.getRole() == 1){
                                                         GuanlianDaoImpl.getInstance().insert(GuanlianDaoImpl.getInstance().getIdest(),
-                                                                        guanlianId, guanlian.getGuanlianId(), 1, TimeTools.format());
+                                                                        guanlianId, guanlian.getGuanlianId(), 0, TimeTools.format());
                                                 }else{
                                                         GuanlianDaoImpl.getInstance().insert(GuanlianDaoImpl.getInstance().getIdest(),
                                                                         guanlianId, guanlian.getGuanlianId(), 0, TimeTools.format());
                                                 }
                                                 GuanlianDaoImpl.getInstance().insert(GuanlianDaoImpl.getInstance().getIdest(),
                                                                 guanlian.getGuanlianId(), guanlianId, 0, TimeTools.format());
+                              
                                         }
+                                        GuanlianDaoImpl.getInstance().insert(GuanlianDaoImpl.getInstance().getIdest(),
+                                        		guanlianId, guanlianId, 0, TimeTools.format());
                                 }
                                 JSONObject object = new JSONObject();
                                 object.put("status", 1);
@@ -70,6 +80,9 @@ public class GuanlianService {
                                 return OneTools.getResult(0, "不是主帐号，无权限移除关联帐号");
                         }
                         if(GuanlianDaoImpl.getInstance().drop(guanlianId)){
+                        	if(GuanlianDaoImpl.getInstance().findTheMainSize(userId)==1){
+                        		GuanlianDaoImpl.getInstance().drop(userId);
+                        	}
                                 JSONObject object = new JSONObject();
                                 object.put("status", 1);
                                 object.put("guanlian_id", guanlianId);
@@ -84,6 +97,27 @@ public class GuanlianService {
         public static List<Guanlian> findByUserId(Long userId){
                 return GuanlianDaoImpl.getInstance().findByUserId(userId);
         }
+        public static String findAllGuanlian(List<Long> userIdList){
+        	/*List<Guanlian> listAll = new ArrayList<Guanlian>();*/
+        	JSONObject object = new JSONObject();
+        	int role = 1;
+        	for(int i = 0; i < userIdList.size(); i++){
+        		List<Guanlian> list = GuanlianDaoImpl.getInstance().findByUserId(userIdList.get(i));
+        		for(int l = 0; l < list.size(); l++){
+        		/*listAll.add(list.get(l));*/
+        		if(list.get(l).getRole() == role){
+        			 object.put("status", 1);
+        	         object.put("user_id", list.get(l).getUserId());
+        	         
+        		}
+        		}
+        	}
+        	
+        	
+           
+            
+            return object.toString();
+    }
         
         public static String change(Long userId, Long guanlianId){
                 try{

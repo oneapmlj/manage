@@ -674,7 +674,12 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         try{
                                 gender = Integer.parseInt(object.get("gender").toString().trim());
                         }catch(Exception e){}
-                        String contectTime = object.get("contect_time").toString();
+                        String contectTime = null;
+                        try {
+                        		contectTime = object.get("contect_time").toString();
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
                         info = new Info(userId, name, email, company, phone, loginTime, createTime, language, kfId, adminId, support, sale, preSale, customer, status, qq, project);
                         info.setContectTime(contectTime);
                         info.setDataTime(dataTime);

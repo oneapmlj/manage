@@ -100,6 +100,21 @@ public class GuanlianDaoImpl extends DaoImplBase<Active>{
                 return guanlians;
         }
 	
+	public int findTheMainSize(Long userId){
+		DBCursor cursor = null;
+        try{
+                DBObject object = new BasicDBObject();
+                object.put("user_id", userId);
+                cursor = getDBCollection(TABLE_NAME).find(object);
+                while(cursor.hasNext()){
+                     return  cursor.size();
+                }
+        }catch(Exception e){
+                LOG.error(e.getMessage(), e);
+        }
+        return cursor.size();
+}
+	
 	public int findUserRole(Long userId){
 	        try{
 	                DBObject object = new BasicDBObject();
@@ -147,7 +162,7 @@ public class GuanlianDaoImpl extends DaoImplBase<Active>{
 	                list.add(new BasicDBObject("guanlian_id", guanlianId));
 	                list.add(new BasicDBObject("user_id", guanlianId));
 	                DBObject object = new BasicDBObject();
-	                object.put("$or", object);
+	                object.put("$or", list);
 	                return getDBCollection(TABLE_NAME).remove(object).getN() > -1;
 	        }catch(Exception e){
 	                LOG.error(e.getMessage(), e);
@@ -157,7 +172,10 @@ public class GuanlianDaoImpl extends DaoImplBase<Active>{
 	
 	public boolean remove(Long userId){
 	        try{
-	                DBObject object = new BasicDBObject("guanlian_id", userId);
+	        		DBObject object = new BasicDBObject();
+	        		object.put("guanlian_id", userId);
+	        		object.put("user_id", userId);
+	                
 	                DBObject value = new BasicDBObject("$set", new BasicDBObject("role", 0));
 	                return getDBCollection(TABLE_NAME).update(object, value).getN() > -1;
 	        }catch(Exception e){
@@ -169,6 +187,7 @@ public class GuanlianDaoImpl extends DaoImplBase<Active>{
 	public boolean add(Long userId){
 	        try{
 	                DBObject object = new BasicDBObject("guanlian_id", userId);
+	                object.put("user_id", userId);
                         DBObject value = new BasicDBObject("$set", new BasicDBObject("role", 1));
                         return getDBCollection(TABLE_NAME).update(object, value).getN() > -1;
 	        }catch(Exception e){

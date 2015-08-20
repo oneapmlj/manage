@@ -17,8 +17,9 @@
 		</global-results>
 		<action name="login" method="login"
 			class="com.oneapm.web.account.AccountAction">
-			<result name="show" type="redirect">
-				http://manage.oneapm.com
+			<result name="show" >
+				<!-- http://manage.oneapm.com -->
+				/WEB-INF/pages/view/account.jsp
 			</result>
 		</action>
 		

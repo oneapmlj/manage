@@ -2,12 +2,14 @@ package com.oneapm.web.info;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.oneapm.dto.Call;
 import com.oneapm.dto.Mail;
 import com.oneapm.dto.MailMode;
 import com.oneapm.dto.card.Card;
+import com.oneapm.dto.info.Guanlian;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.tag.Language;
 import com.oneapm.service.card.CardService;
@@ -93,6 +95,24 @@ public class InfoAction extends SupportAction {
         
         private String guanlianId;
         private Long guanlian;
+        public void guanlian_view() throws IOException{
+		if (!isLogin()) {
+			getServletResponse().sendRedirect("/login.action");
+			return;
+		}
+		try {
+			List<Long> userIdList = new ArrayList<Long>();
+			List<Guanlian> guanlianList = GuanlianService.findByUserId(InfoService.findByIdSimple(infoId).getUserId());
+			for (int i = 0; i < guanlianList.size(); i++) {
+				userIdList.add(guanlianList.get(i).getGuanlianId());
+			}
+			String result = GuanlianService.findAllGuanlian(userIdList);
+			getServletResponse().getWriter().print(result);
+          }catch(Exception e){
+                  getServletResponse().getWriter().print(OneTools.getResult(0, "显示错误"));
+          }
+        }
+        
         public void guanlian_add() throws IOException{
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
@@ -112,6 +132,7 @@ public class InfoAction extends SupportAction {
                         return;
                 }
                 try{
+                		guanlian = Long.parseLong(guanlianId);
                         String result = GuanlianService.remove(InfoService.findByIdSimple(infoId).getUserId(), guanlian);
                         getServletResponse().getWriter().print(result);
                 }catch(Exception e){
@@ -124,7 +145,8 @@ public class InfoAction extends SupportAction {
                         return;
                 }
                 try{
-                        String result = GuanlianService.change(userId, guanlian);
+                		guanlian = Long.parseLong(guanlianId);
+                        String result = GuanlianService.change(InfoService.findByIdSimple(infoId).getUserId(), guanlian);
                         getServletResponse().getWriter().print(result);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);

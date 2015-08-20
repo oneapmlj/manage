@@ -41,8 +41,9 @@ var zhengzailianxi = function(){
 	}, 3000);
 }
 zhengzailianxi(); 
- 
+
 $(document).ready(function() {
+
 	$(".guanlian").live("click", function(){
 		$("#guanlian_add").removeClass("hidden");
 		$("#guanlian_add_value").removeClass("hidden");
@@ -58,6 +59,41 @@ $(document).ready(function() {
 		$("#guanlian_add").addClass("hidden");
 		$("#guanlian_add_value").addClass("hidden");
 	});
+
+	function findMainAcount(){
+		
+		var infoId = $("#view_infoId").val();
+		
+		$.ajax({
+			dataType:'json',
+			url:'info_guanlian_view.action',
+			data:{infoId:infoId}
+		}).done(function(da){
+			if(da.status == '1'){
+				var html = $("#guanlian_value_"+da.user_id+"").html();
+				
+				if(da.user_id!=userId){
+				
+				html = "<div style='width:210px;float:left;line-height:20px;margin-top:5px;'  id='guanlian_value_"+da.user_id+"'>"
+				+"<div style='float:left;width:80px;' class='guanlian_view menu_button hand  biankuang_gray'>"+da.user_id+"</div>"
+				+"<div class='menu_button  hand  biankuang_blue_ding' style='float:left;width:80px;'>主帐号</div></div>";
+				$("#guanlian").hide();
+				$(".guanlian_change").hide();
+				$(".guanlian_remove").hide();
+				}else{
+					html = "<div style='width:210px;float:left;line-height:20px;margin-top:5px;'  id='guanlian_value_"+da.user_id+"'>"
+					+"<div style='float:left;width:80px;' class='guanlian_view menu_button hand  biankuang_gray'>当前</div>"
+					+"<div class='menu_button  hand  biankuang_blue_ding' style='float:left;width:80px;'>主帐号</div></div>";
+					
+				}
+				
+				$("#guanlian_value_"+da.user_id+"").html(html);
+			}
+			
+			
+		});
+	}
+	findMainAcount();
 	$("#guanlian_add").live("click", function(){
 		var id = $("#guanlian_add_value").val();
 		if(isNaN(id)){
@@ -75,20 +111,20 @@ $(document).ready(function() {
 				$("#guanlian_add_value").val("");
 				var html = $("#guanlian_value").html();
 				if(html == null || html.trim() == ""){
-					html ="<div style='width:210px;float:left;line-height:20px;margin-top:5px;'>"
-								+"<div style='float:left;width:80px;' class='menu_button hand  biankuang_gray_ding'>当前</div>"
+					html ="<div style='width:210px;float:left;line-height:20px;margin-top:5px;' id='guanlian_value_"+userId+"'>"
+								+"<div style='float:left;width:80px;' class='menu_button hand  biankuang_gray_ding' >当前</div>"
 								+"<div class='menu_button  hand  biankuang_blue_ding' style='float:left;width:80px;'>主帐号</div>"
 								+"</div>"
 								+"<div style='width:210px;float:left;line-height:20px;margin-top:5px;'  id='guanlian_value_"+da.guanlian_id+"'>"
 								+"<div style='float:left;width:80px;' class='guanlian_view menu_button hand  biankuang_gray'>"+da.guanlian_id+"</div>"
-								/*+"<div class='menu_button  hand  biankuang_gray_ding' style='float:left;width:80px;'>定为主帐号</div>"
-								+"<div class='menu_button  hand  biankuang_gray_ding' style='float:left;width:20px;'>X</div>"*/
+								+"<div class='guanlian_change menu_button  hand  biankuang_gray_ding' style='float:left;width:80px;'>定为主帐号</div>"
+								+"<div class='guanlian_remove menu_button  hand  biankuang_gray_ding' style='float:left;width:20px;'>X</div>"
 								+"</div>";
 				}else{
 					html += "<div style='width:210px;float:left;line-height:20px;margin-top:5px;'  id='guanlian_value_"+da.guanlian_id+"'>"
 								+"<div style='float:left;width:80px;' class='guanlian_view menu_button hand  biankuang_gray'>"+da.guanlian_id+"</div>"
-								/*+"<div class='menu_button  hand  biankuang_gray_ding' style='float:left;width:80px;'>定为主帐号</div>"
-								+"<div class='menu_button  hand  biankuang_gray_ding' style='float:left;width:20px;'>X</div>"*/
+								+"<div class='guanlian_change menu_button  hand  biankuang_gray_ding' style='float:left;width:80px;'>定为主帐号</div>"
+								+"<div class='guanlian_remove menu_button  hand  biankuang_gray_ding' style='float:left;width:20px;'>X</div>"
 								+"</div>";
 				}
 				$("#guanlian_value").html(html);
@@ -97,9 +133,71 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	$(".guanlian_remove").live("click",function(){
+		var id = $(this).prev().prev().html();
+		var infoId = $("#view_infoId").val();
+		var statu = confirm("确认删除吗?");
+	        if(!statu){
+	            return false;
+	        }
+		$.ajax({
+			dataType:'json',
+			url:'info_guanlian_remove.action',
+			data:{infoId:infoId,guanlianId:id}
+		}).done(function(da){
+			var html = $("#guanlian_value").html();
+			if(da.status == '1'){
+				
+				location.reload(); 
+			}else{
+				alert(da.msg);
+			}
+		});
+		
+		
+	});
+	$(".guanlian_change").live("click",function(){
+		var id = $(this).prev().html();
+		var infoId = $("#view_infoId").val();
+		
+		$.ajax({
+			dataType:'json',
+			url:'info_guanlian_change.action',
+			data:{infoId:infoId,guanlianId:id}
+		}).done(function(da){
+			if(da.status == '1'){
+			var html = $("#guanlian_value_"+da.guanlian_id+"").html();
+				html = "<div style='width:210px;float:left;line-height:20px;margin-top:5px;'  id='guanlian_value_"+da.guanlian_id+"'>"
+				+"<div style='float:left;width:80px;' class='guanlian_view menu_button hand  biankuang_gray'>"+da.guanlian_id+"</div>"
+				+"<div class='menu_button  hand  biankuang_blue_ding' style='float:left;width:80px;'>主帐号</div></div>";
+				$("#guanlian_value_"+da.guanlian_id+"").html(html);
+			var rehtml = $("#guanlian_value_"+da.user_id+"").html();
+			rehtml = "<div style='width:210px;float:left;line-height:20px;margin-top:5px;'  id='guanlian_value_"+da.user_id+"'>"
+			+"<div style='float:left;width:80px;' class='guanlian_view menu_button hand  biankuang_gray'>当前</div>"
+			+"</div>";
+			
+			$("#guanlian_value_"+da.user_id+"").html(rehtml);
+			$("#guanlian").hide();
+			$("#guanlian_add_value").hide();
+			$("#guanlian_add").hide();
+			$(".guanlian_change").hide();
+			$(".guanlian_remove").hide();
+			
+			}else{
+				alert(da.msg);
+			}
+			/*window.location.reload();*/	
+		});
+		
+		
+	});
 	$(".guanlian_view").live("click", function(){
 		var userId = $(this).html();
-		window.open("/"+userId);
+		
+			/*window.open("/"+userId);*/
+		window.location.href = "http://manage.oneapm.com/"+userId+"";
+		
 	});
 	$(".group_area_1").live('click', function(){
 		$.ajax({
