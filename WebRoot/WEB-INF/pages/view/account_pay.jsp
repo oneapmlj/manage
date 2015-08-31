@@ -117,7 +117,11 @@
 					url:'payadd.action',
 					data:{endTime:end,userId:userId,level:level}
 				}).done(function(da){
-					alert(da.msg);
+					if(da.status == 1){
+						alert("成功");
+					}else{
+						alert(da.msg);
+					}
 				});
 			});
 		});

@@ -119,7 +119,7 @@ public class Shouhui {
         protected static final Logger LOG = LoggerFactory.getLogger(Shouhui.class);
         
         public static void fuze(){
-                List<Info> infos2 = InfoService.findInfosByAdminId(40000014L, 0, 0);
+                List<Info> infos2 = InfoService.findInfosByAdminId(40000033L, 0, 0);
                 List<Info> infos = new ArrayList<Info>();
                 for(Info info : infos2){
                         infos.add( InfoService.findByUserId(info.getUserId()));
@@ -128,7 +128,7 @@ public class Shouhui {
                 OutputStreamWriter osw = null;
                 BufferedWriter bw = null;
                 try{
-                        File file = new File("/data/filesystem/report/puxiaojuan.csv");
+                        File file = new File("/oneapm/filesystem/report/wuhuiping.csv");
                         out = new FileOutputStream(file);
                         osw = new OutputStreamWriter(out);
                         bw = new BufferedWriter(osw);

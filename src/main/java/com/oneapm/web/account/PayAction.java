@@ -50,8 +50,8 @@ public class PayAction extends SupportAction {
                         getServletResponse().getWriter().print(result);
                 }catch(Exception e){
                         LOG.error(e.getMessage(),  e);
+                        getServletResponse().getWriter().print(OneTools.getResult(0, "服务器内部错误"));
                 }
-                getServletResponse().getWriter().print(OneTools.getResult(0, "服务器内部错误"));
         }
         public int getType() {
                 return type;
