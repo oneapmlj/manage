@@ -4,9 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +24,14 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.json.JSONObject;
 
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
 import com.oneapm.dao.info.impl.InfoDaoImpl;
 
 public class KF5 {
-        
+	
+        private static final String return_to="http://oneapm.kf5.com/apiv2/requests.json";
         public static String getUrl(Long id, String email, String name, String company, Long userId, String adminEmail, String phone){
                 Long kfId = getKfId(id, email, name, company, userId, phone);
                 String return_to = "https://oneapm.kf5.com/agent/#/user/"+kfId+"/tickets";
@@ -117,6 +119,52 @@ public class KF5 {
 //                                +"&token="+token+"&return_to="+return_to;
 //                System.out.println(url);
         }
+      
+ 
+        /*public static String callInterface(Long id, String email, String name, String company, Long userId, String adminEmail, String phone) throws IOException{
+            Long kfId = getKfId(id, email, name, company, userId, phone);
+           
+            long now=System.currentTimeMillis()/1000;
+                    
+            StringBuffer msg=new StringBuffer().append(adminEmail).append(now).append("ef1cd5c3205104eceff100d7c57738");
+            MessageDigest md;
+            String token = null;
+            try {
+                    md = MessageDigest.getInstance("MD5");
+                    token = Sdk.byte2hex(md.digest(msg.toString().getBytes("utf-8")));
+            } catch (Exception e) {
+            }
+            String crul = "http://oneapm.kf5.com/user/remote?username="+adminEmail+"&time="+now
+                                +"&token="+token+"&return_to="+return_to;
+            ApiData getJson = new ApiData();
+            getJson.httpURLConectionGETJsonData("http://oneapm.kf5.com/user/remote?username="+adminEmail+"&time="+now
+                    +"&token="+token+"");
+            getJson.httpURLConectionGETJsonData(return_to);
+            return crul;
+    }  */
+      
+        private static String converToBASE64(String s) {  
+            if (s == null)  
+                return null;  
+            String encoder = new BASE64Encoder().encode(s.getBytes());  
+           
+                return encoder;  
+              
+        }
+      
+
+        private static String getFromBASE64(String s) {  
+            if (s == null)  
+                return null;  
+            BASE64Decoder decoder = new BASE64Decoder();  
+            try {  
+                byte[] b = decoder.decodeBuffer(s);  
+                return new String(b);  
+            } catch (Exception e) {  
+                return null;  
+            }  
+        }
+      
         public static Long getKfId(Long id, String email, String name, String company, Long userId, String phone){
                 Long kfId = InfoDaoImpl.getInstance().findKFById(id);
                 if(kfId == null){
@@ -148,6 +196,7 @@ public class KF5 {
                 return kfId;
         }
         
+      
         
 
         public static String getUser(String email) {
