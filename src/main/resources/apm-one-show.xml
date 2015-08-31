@@ -58,6 +58,9 @@
 			<result name="dashboard_show">
 				/WEB-INF/dashboard/dashboard.jsp
 			</result>
+			<result name="gongdan">
+				/WEB-INF/pages/view/info_gongdan.jsp
+			</result>
 		</action>
 		
 		<action name="salespanel" method='salespanel' 

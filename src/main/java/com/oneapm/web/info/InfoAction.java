@@ -2,6 +2,8 @@ package com.oneapm.web.info;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +25,14 @@ import com.oneapm.service.mail.MailService;
 import com.oneapm.service.record.Xiaoshouyi;
 import com.oneapm.service.show.CallService;
 import com.oneapm.service.show.IndexShowService;
+import com.oneapm.util.ApiData;
 import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
+import com.oneapm.web.Kf5ApiV1;
+import com.oneapm.web.DecodeUni;
 import com.oneapm.web.KF5;
 import com.oneapm.web.LoginApi;
+import com.oneapm.web.Sdk;
 import com.oneapm.web.SupportAction;
 
 public class InfoAction extends SupportAction {
@@ -679,8 +685,71 @@ public class InfoAction extends SupportAction {
 //                String url = JWT.getUrl(getAdmin().getEmail(), getAdmin().getName(), "http://oneapm.udesk.cn/entry/customer_center/customers/" + udeskId);
                 getServletResponse().sendRedirect(url);
         }
+        
+        
+        private String gongdanJson;
+        public void gongdan() throws IOException {
+		            String result = Sdk.getResult("ticket/list", Kf5ApiV1.gongdanList());
+		            gongdanJson = DecodeUni.decodeUnicode(result);
+		 /*           getRequest().setCharacterEncoding("utf-8");
+		            response.setCharacterEncoding("utf-8");*/
+		            
+		            getServletResponse().getWriter().print(result);
+					/*return "gongdan";*/
+		            
+		    }
+        
+        private String gongdanId;
+        private String gongdanContent;
+        private String gongdanUserName;
+        public void gongdanReply() throws IOException {
+        	//response.setCharacterEncoding("UTF-8");
+        	//getRequest().setCharacterEncoding("UTF-8");
+        	
+        	gongdanContent = URLDecoder.decode(gongdanContent,"utf-8");
+        	gongdanContent = URLDecoder.decode(gongdanContent,"utf-8");
+            String result = Sdk.getResult("ticket/reply", Kf5ApiV1.gongdanReply(gongdanId, gongdanContent, gongdanUserName, "0"));
+            gongdanJson = DecodeUni.decodeUnicode(result);
+ /*           getRequest().setCharacterEncoding("utf-8");
+            response.setCharacterEncoding("utf-8");*/
+            System.out.println(gongdanJson);
+            getServletResponse().getWriter().print(result);
+			/*return "gongdan";*/
+            
+    }
+        
+        public String getGongdanId() {
+			return gongdanId;
+		}
 
-        private List<Call> calls;
+		public void setGongdanId(String gongdanId) {
+			this.gongdanId = gongdanId;
+		}
+
+		public String getGongdanContent() {
+			return gongdanContent;
+		}
+
+		public void setGongdanContent(String gongdanContent) {
+			this.gongdanContent = gongdanContent;
+		}
+
+		public String getGongdanUserName() {
+			return gongdanUserName;
+		}
+
+		public void setGongdanUserName(String gongdanUserName) {
+			this.gongdanUserName = gongdanUserName;
+		}
+
+		public String getGongdanJson() {
+			return gongdanJson;
+		}
+
+		public void setGongdanJson(String gongdanJson) {
+			this.gongdanJson = gongdanJson;
+		}
+		private List<Call> calls;
 
         public String calls() {
                 if (!isLogin()) {
