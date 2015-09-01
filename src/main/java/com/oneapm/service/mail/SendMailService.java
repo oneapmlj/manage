@@ -20,6 +20,7 @@ import com.oneapm.dao.info.impl.AppDataDaoImpl;
 import com.oneapm.dao.info.impl.DataDaoImpl;
 import com.oneapm.dao.mail.impl.MailDaoImpl;
 import com.oneapm.dao.mail.impl.MailModeDaoImpl;
+import com.oneapm.dao.opt.impl.DownDaoImpl;
 import com.oneapm.dto.Aplication;
 import com.oneapm.dto.App;
 import com.oneapm.dto.Download;
@@ -191,6 +192,10 @@ public class SendMailService extends OneTools {
                                 }
                         }else{
                                 List<Info> infos = new ArrayList<Info>();
+                                List<Integer> agents = new ArrayList<Integer>();
+                                List<App> apps = null;
+                                List<Download> downloads = null;
+                                Set<Long> userIds = null;
                                 switch (to) {
                                         case 1:
                                                 infos = InfoService.findAll();
@@ -199,14 +204,214 @@ public class SendMailService extends OneTools {
                                                 infos = InfoService.findEmail(0);
                                                 break;
                                         case 3:
-                                                List<App> apps = AppDaoImpl.getInstance().findByAgent(7, null, false, null, null);
-                                                Set<Long> userIds = new HashSet<Long>();
+                                                agents.add(7);
+                                                agents.add(8);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
                                                 for(App app : apps){
                                                         userIds.add(app.getUserId());
                                                 }
-                                                apps = AppDaoImpl.getInstance().findByAgent(8, null, false, null, null);
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        case 4:
+                                                agents.add(7);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
                                                 for(App app : apps){
                                                         userIds.add(app.getUserId());
+                                                }
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        case 5:
+                                                agents.add(8);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        case 6:
+                                                agents.add(1);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        case 7:
+                                                agents.add(2);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        case 8:
+                                                agents.add(5);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        case 9:
+                                                agents.add(4);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        case 10:
+                                                agents.add(6);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        case 11:
+                                                agents.add(3);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        case 12:
+                                                agents.add(9);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        case 13:
+                                                agents.add(10);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
+                                                }
+                                                for(Long userId:userIds){
+                                                        Info info1 = InfoService.findEmail(userId, 0);
+                                                        if(info1 != null){
+                                                                infos.add(info1);
+                                                        }
+                                                }
+                                                break;
+                                        case 14:
+                                                agents.add(11);
+                                                apps = AppDaoImpl.getInstance().find(agents);
+                                                userIds = new HashSet<Long>();
+                                                for(App app : apps){
+                                                        userIds.add(app.getUserId());
+                                                }
+                                                downloads = DownDaoImpl.getInstance().find(agents);
+                                                for(Download download : downloads){
+                                                        userIds.add(download.getUserId());
                                                 }
                                                 for(Long userId:userIds){
                                                         Info info1 = InfoService.findEmail(userId, 0);

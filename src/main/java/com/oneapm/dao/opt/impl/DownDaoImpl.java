@@ -12,6 +12,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.oneapm.dao.DaoImplBase;
+import com.oneapm.dto.App;
 import com.oneapm.dto.Download;
 
 public class DownDaoImpl extends DaoImplBase<Download> {
@@ -43,6 +44,30 @@ public class DownDaoImpl extends DaoImplBase<Download> {
                         LOG.error(e.getMessage(), e);
                 }
                 return versions;
+        }
+        
+        public List<Download> find(List<Integer> agents){
+                try{
+                        List<Download> downloads = new ArrayList<Download>();
+                        DBObject object = new BasicDBObject();
+                        if(agents.size() == 1){
+                                object.put("agent", agents.get(0));
+                        }else{
+                                BasicDBList list = new BasicDBList();
+                                for(int agent : agents){
+                                        list.add(new BasicDBObject("agent", agent));
+                                }
+                                object.put("$or", list);
+                        }
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        while(cursor.hasNext()){
+                                downloads.add(getInfoFromResult(cursor.next()));
+                        }
+                        return downloads;
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return null;
         }
         
         public List<Download> findByAgent(int agent, String banben, String start, String end){

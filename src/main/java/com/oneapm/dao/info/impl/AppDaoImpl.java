@@ -58,6 +58,30 @@ public class AppDaoImpl extends DaoImplBase<App> {
                 return false;
         }
         
+        public List<App> find(List<Integer> agents){
+                try{
+                        List<App> apps = new ArrayList<App>();
+                        DBObject object = new BasicDBObject();
+                        if(agents.size() == 1){
+                                object.put("agent", agents.get(0));
+                        }else{
+                                BasicDBList list = new BasicDBList();
+                                for(int agent : agents){
+                                        list.add(new BasicDBObject("agent", agent));
+                                }
+                                object.put("$or", list);
+                        }
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        while(cursor.hasNext()){
+                                apps.add(getAppFromResult(cursor.next()));
+                        }
+                        return apps;
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return null;
+        }
+        
         
         public List<App> findByAgent(int agent, String banben, boolean dataTime, String start, String end){
                 List<App> apps = new ArrayList<App>();
