@@ -386,9 +386,9 @@ var JmessageNum = function(number){
 					data:{type:104}
 				}).done(function(da){
 					if(da.status == 1){
-						window.location.href = "http://manage.oneapm.com/info_gongdan.action?id="+id+"";
+						//window.location.href = "http://manage.oneapm.com/info_gongdan.action?id="+id+"";
 					
-						/*window.open("/info_check_udesk.action?id="+id);*/
+						window.open("/info_check_udesk.action?id="+id);
 					}else{
 						alert(da.msg);
 					}
