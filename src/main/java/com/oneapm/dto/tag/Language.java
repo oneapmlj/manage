@@ -12,7 +12,9 @@ public enum Language {
     ANDROID(7, "Android"),
     IOS(8, "iOS"),
     BROWSER(9, "browser"),
-    SERVER(10, "server");
+    SERVER(10, "server"),
+    CI(11, "ci"),
+    PLUGIN(12, "plugin");
     private Integer id;
     private String name;
     private Language(Integer id, String name){

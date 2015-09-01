@@ -63,6 +63,8 @@
 								<option value="8">ios</option>
 								<option value="9">browser</option>
 								<option value="10">server</option>
+								<option value="11">ci</option>
+								<option value="12">plugin</option>
 							</select>
 						</div>
 						<div class="hidden duandian_banben" style="width:150px;float:left;height:30px;">

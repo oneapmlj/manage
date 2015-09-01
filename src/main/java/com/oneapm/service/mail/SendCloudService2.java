@@ -1,5 +1,8 @@
 package com.oneapm.service.mail;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +15,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.mysql.jdbc.Buffer;
 
 @SuppressWarnings("deprecation")
 public class SendCloudService2 {
@@ -51,11 +56,67 @@ public class SendCloudService2 {
                 return false;
         }
         
+        public static boolean sendMail(String to, String html, String title, Long lable, String from) {
+                try {
+                        HttpClient httpclient = new DefaultHttpClient();
+                        HttpPost httpost = new HttpPost(URL_SEND);
+                        List<BasicNameValuePair> nvps = new ArrayList<BasicNameValuePair>();
+                        nvps.add(new BasicNameValuePair("api_user", ACCOUNT));
+                        nvps.add(new BasicNameValuePair("api_key", KEY));
+                        nvps.add(new BasicNameValuePair("from", from));
+                        nvps.add(new BasicNameValuePair("to", to));
+                        nvps.add(new BasicNameValuePair("subject", title));
+                        if(lable != null && lable > 0L){
+                                nvps.add(new BasicNameValuePair("label", lable.toString()));
+                        }
+                        nvps.add(new BasicNameValuePair("html", html));
+                        httpost.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
+                        // 请求
+                        HttpResponse response = httpclient.execute(httpost);
+                        // 处理响应
+                        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) { // 正常返回
+                                return true;
+                        }
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return false;
+        }
+        
         public static void main(String[] args){
-                System.out.println(1);
-                sendMail("lijiang@oneapm.com", "测试<a href='http://www.oneapm.com'>1111</a>", "测试邮件", 0L);
-                System.out.println(2);
-//                sendMail("lijiang@oneapm.com", "测试邮件<a href='http://www.oneapm.com?from=1'>1111</a>", "测试", 10759L);
+                try{
+                        File file = new File("/home/abc/download/OneAlert.html");
+                        FileReader fReader = new FileReader(file);
+                        BufferedReader bReader = new BufferedReader(fReader);
+                        String string = null;
+                        StringBuilder builder = new StringBuilder();
+                        while((string = bReader.readLine()) != null){
+                                builder.append(string);
+                        }
+                        String html = builder.toString();
+                        bReader = null;
+                        fReader = null;
+                        file = new File("/home/abc/download/alert.txt");
+                        List<String> emails = new ArrayList<String>();
+                        fReader = new FileReader(file);
+                        bReader = new BufferedReader(fReader);
+                        while((string = bReader.readLine()) != null){
+                                emails.add(string.trim());
+                        }
+                        int i = 0;
+                        for(String email : emails){
+//                                System.out.println(email);
+                                if(email != null){
+                                        i++;
+                                        sendMail(email, html, "OneAlert 更快更有效处理 IT 告警", 14736L, "OneAlert@push.oneapm.com");
+                                        if(i %50 == 0){
+                                                System.out.println(i);
+                                        }
+                                }
+                        }
+                }catch(Exception e){
+                        e.printStackTrace();
+                }
         }
 
 }

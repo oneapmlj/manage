@@ -71,6 +71,17 @@
 									<option value="1">所有注册用户</option>
 									<option value="2">所有白名单用户</option>
 									<option value="3">MI用户</option>
+									<option value="4">MI用户Android</option>
+									<option value="5">MI用户IOS</option>
+									<option value="6">java</option>
+									<option value="7">php</option>
+									<option value="8">dotnet</option>
+									<option value="9">python</option>
+									<option value="10">ruby</option>
+									<option value="11">nodejs</option>
+									<option value="12">browser</option>
+									<option value="13">server</option>
+									<option value="14">ci</option>
 								</select>
 							</div>
 						</s:if>
