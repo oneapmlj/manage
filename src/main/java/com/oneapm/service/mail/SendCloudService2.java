@@ -85,7 +85,7 @@ public class SendCloudService2 {
         
         public static void main(String[] args){
                 try{
-                        File file = new File("/home/abc/download/OneAlert.html");
+                        File file = new File("/home/abc/download/EDM-warning.html");
                         FileReader fReader = new FileReader(file);
                         BufferedReader bReader = new BufferedReader(fReader);
                         String string = null;
@@ -96,7 +96,7 @@ public class SendCloudService2 {
                         String html = builder.toString();
                         bReader = null;
                         fReader = null;
-                        file = new File("/home/abc/download/alert.txt");
+                        file = new File("/home/abc/maillist");
                         List<String> emails = new ArrayList<String>();
                         fReader = new FileReader(file);
                         bReader = new BufferedReader(fReader);
@@ -105,10 +105,9 @@ public class SendCloudService2 {
                         }
                         int i = 0;
                         for(String email : emails){
-//                                System.out.println(email);
                                 if(email != null){
                                         i++;
-                                        sendMail(email, html, "OneAlert 更快更有效处理 IT 告警", 14736L, "OneAlert@push.oneapm.com");
+                                        sendMail(email, html, "OneAPM 告警分发策略升级通知", 15367L, "OneAlert@push.oneapm.com");
                                         if(i %50 == 0){
                                                 System.out.println(i);
                                         }
