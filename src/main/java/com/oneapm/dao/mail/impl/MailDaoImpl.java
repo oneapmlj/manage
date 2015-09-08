@@ -159,7 +159,6 @@ public class MailDaoImpl extends DaoImplBase<Mail> {
                 return mail;
         }
     	public List<SendCloudDto> findSendCloudByEmail(String email){
-    		email= "740793661@qq.com";
     		Connection conn=null;
     		PreparedStatement pst=null;
     		List<SendCloudDto> list = new ArrayList<SendCloudDto>();
