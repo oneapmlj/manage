@@ -1,5 +1,9 @@
 package com.oneapm.dao.mail.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +13,10 @@ import org.slf4j.LoggerFactory;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.oneapm.dao.DBManager;
 import com.oneapm.dao.DaoImplBase;
 import com.oneapm.dto.Mail;
+import com.oneapm.dto.mail.SendCloudDto;
 
 public class MailDaoImpl extends DaoImplBase<Mail> {
         protected static final Logger LOG = LoggerFactory.getLogger(MailDaoImpl.class);
@@ -152,4 +158,41 @@ public class MailDaoImpl extends DaoImplBase<Mail> {
                 }
                 return mail;
         }
+    	public List<SendCloudDto> findSendCloudByEmail(String email){
+    		Connection conn=null;
+    		PreparedStatement pst=null;
+    		List<SendCloudDto> list = new ArrayList<SendCloudDto>();
+    		try {
+    			conn=DBManager.getConncection();
+    			String sql="select * from sendcloud_new where email='"+email+"' and date_sub(curdate(), INTERVAL 14 DAY) <= date";
+    			System.out.println("QUERY_SQL:"+sql);
+    			pst=conn.prepareStatement(sql);
+    			ResultSet rs=pst.executeQuery(sql);
+    			
+    			 while(rs.next()){                      
+    				 SendCloudDto sd = new SendCloudDto();
+    				 sd.setId(rs.getString("id"));
+    				 sd.setEvent(rs.getString("event"));
+    				 sd.setEmail(rs.getString("email"));
+    				 sd.setDate(rs.getString("date"));
+    				 sd.setLabelId(rs.getString("labelid"));
+    				 sd.setUrl(rs.getString("url"));
+    	             list.add(sd);       
+    		}
+    			 return list;
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    			
+    		}finally{
+    			try {
+    				pst.close();
+    				conn.close();
+    			} catch (SQLException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+    		}
+			return list;
+    	}
 }

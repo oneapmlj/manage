@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import com.mongodb.MongoClientOptions;
 import com.mongodb.ServerAddress;
+import com.oneapm.dao.DBManager;
 import com.oneapm.dao.MongoConnection;
 import com.oneapm.data.RedisBase;
 import com.oneapm.web.SupportAction;
@@ -96,6 +97,12 @@ public class Listener implements ServletContextListener {
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }
+                LOG.info("init mysql ...................................................");
+                try {
+                        initMysql((Element) root.selectSingleNode("mysql/manage"));
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
                 LOG.info("init finished .....................................................");
                 LOG.info("start run ......................................................");
                 Run.thread.start();
@@ -133,5 +140,17 @@ public class Listener implements ServletContextListener {
                 String passwordString = Element.selectSingleNode("password").getText();
                 RedisBase.init(host, poolSize, port, passwordString);
         }
+        
+        public static void initMysql(Element Element){
+        	Element element = (Element) Element.selectSingleNode("driver");
+            String driver = element.getTextTrim();
+            element = (Element) Element.selectSingleNode("url");
+            String url = element.getTextTrim();
+            element = (Element) Element.selectSingleNode("username");
+            String username = element.getText().trim();
+            element = (Element) Element.selectSingleNode("password");
+            String password = element.getText().trim();
+            DBManager.init(driver, url, username, password);
+    }
 
 }
