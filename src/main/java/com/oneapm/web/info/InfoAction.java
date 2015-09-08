@@ -13,6 +13,7 @@ import com.oneapm.dto.MailMode;
 import com.oneapm.dto.card.Card;
 import com.oneapm.dto.info.Guanlian;
 import com.oneapm.dto.info.Info;
+import com.oneapm.dto.mail.SendCloudDto;
 import com.oneapm.dto.tag.Language;
 import com.oneapm.service.card.CardService;
 import com.oneapm.service.group.GroupService;
@@ -21,6 +22,7 @@ import com.oneapm.service.info.DashboardService;
 import com.oneapm.service.info.GuanlianService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.info.ZhengzailianxiService;
+import com.oneapm.service.mail.CloudService;
 import com.oneapm.service.mail.MailService;
 import com.oneapm.service.record.Xiaoshouyi;
 import com.oneapm.service.show.CallService;
@@ -717,8 +719,23 @@ public class InfoAction extends SupportAction {
 			/*return "gongdan";*/
             
     }
+        private List<SendCloudDto> sdList;
+        public void findByEmail() throws IOException {
+        	String result = CloudService.findSendCloudByEmail(email);
+        	System.out.println(result);
+        	 getServletResponse().getWriter().print(result);
+    }
         
-        public String getGongdanId() {
+        
+        public List<SendCloudDto> getSdList() {
+			return sdList;
+		}
+
+		public void setSdList(List<SendCloudDto> sdList) {
+			this.sdList = sdList;
+		}
+
+		public String getGongdanId() {
 			return gongdanId;
 		}
 

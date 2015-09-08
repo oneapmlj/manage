@@ -154,7 +154,7 @@
 						<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_name_name">编辑</div>
 					</div>
 					<div class="boder_line" style="width:350px;margin-left:30px;float:left;"></div>
-					<s:if test="%{info.userId != null}"><div style="margin-left:20px;width:380px;float:left;">邮箱：<span>${info.email }</span></div></s:if>
+					<s:if test="%{info.userId != null}"><div style="margin-left:20px;width:380px;float:left;">邮箱：<span  id="email">${info.email }</span></div></s:if>
 					<s:else>
 						<div style="margin-left:20px;width:380px;float:left;">
 							<div style="float:left;width:340px;"><div style="float:left;width:48px;">邮箱：</div>
@@ -392,6 +392,24 @@
 						<span>暂无邮件信息</span>
 					</s:else>
 				</div>
+				
+				<div id="sendcloud"  style="overflow:scroll;display:none; width:460px;position:relative;max-height:300px">
+						
+							
+							<!-- <div id="sendcloud_date" style="margin-left:5px;width:70px;float:left;"></div>
+								<div id="sendcloud_id" style="margin-left:5px;width:70px;float:left;"></div>
+								<div id="sendcloud_event" style="margin-left:5px;width:80px;float:left;"></div>
+								<div id="sendcloud_email" style="margin-left:5px;width:80px;float:left;"></div>
+								<div id="sendcloud_url" style="margin-left:5px;width:80px;float:left;"></div>
+								<div id="sendcloud_labelId" style="margin-left:5px;width:80px;float:left;"></div>
+							
+							 -->
+						
+				
+					
+				</div>
+				<input type = "button" id = "sendcloudbtn" value="查看用户邮件记录"/>
+				
 			</div>
 			<s:if test="%{info.pushs != null}">
 				<div style="width:250px;float:left;margin:30px 0 0 10px;font-size:12px; " class="biankuang_gray_ding">
@@ -935,6 +953,63 @@
 	<script type="text/javascript" src="${applicationScope.staticPath}skin/js/index.js"></script>
 	<script type="text/javascript" src="${applicationScope.staticPath}skin/js/view.js"></script>
 	<script type="text/javascript">
+	
+		  $("#sendcloudbtn").click(function(){
+			 
+		  	var email = $("#email").html();
+			if(email==null){
+				email =  $(".email_name").html();
+			}
+			if(email==null){
+				return false;
+			}
+		
+			$("#sendcloud").slideToggle(50);
+		/* 	     $("#sendcloud").slideToggle(50); */
+		 	     $.ajax({
+						dataType:'json',
+						url:'info_findByEmail.action',
+						data:{email:email}
+					}).done(function(data){
+						if(data.status==1){
+								 var listCnter = $("#sendcloud").empty();
+								var rows = data.sdList; 
+								var table = $('<table  width="500" border="0" cellspacing="0" cellpadding="0"></table>').appendTo(listCnter);
+								var titleTr = $('<tr height="25px;"></tr>').appendTo(table);
+								var dateTd = $('<td width="61"></td>').appendTo(titleTr);
+								var eventTd = $('<td width="61"></td>').appendTo(titleTr);						
+								var labelIdTd = $('<td width="61"></td>').appendTo(titleTr);						
+								var urlTd = $('<td width="61"></td>').appendTo(titleTr);		
+								var dateSpan = $('<span></span>').html("日期").appendTo(dateTd);
+								var eventSpan = $('<span></span>').html("事件").appendTo(eventTd);
+								var labelIdSpan = $('<span></span>').html("labelId").appendTo(labelIdTd);
+								var urlSpan = $('<span></span>').html("URL").appendTo(urlTd);
+								 for(var i=0; i<rows.length; i++){
+									var r = rows[i];
+									var table = $('<table  width="500" border="0" cellspacing="0" cellpadding="0"></table>').appendTo(listCnter);
+									var titleTr = $('<tr height="25px;"></tr>').appendTo(table);
+									var dateTd = $('<td width="125"></td>').appendTo(titleTr);
+									var eventTd = $('<td width="125"></td>').appendTo(titleTr);						
+									var labelIdTd = $('<td width="125"></td>').appendTo(titleTr);						
+									var urlTd = $('<td width="125"></td>').appendTo(titleTr);		
+									var dateSpan = $('<span></span>').html(r.date?r.date:"").appendTo(dateTd);
+									var eventSpan = $('<span></span>').html(r.event?r.event:"").appendTo(eventTd);
+									var labelIdSpan = $('<span></span>').html(r.labelId?r.labelId:"").appendTo(labelIdTd);
+									var urlSpan = $('<span></span>').html(r.url?r.url:"").appendTo(urlTd);
+									
+								} 
+							
+						}
+					});
+			    }) 
+			   /*   $("#sendcloud").mouseout(function(){
+			    	$(this).slideUp(50);
+			    
+			    })  */
+			    
+		
+
+	
 		var call_height = function(){
 			var height = Number($("#calls").height());
 			if(height > 299){
@@ -964,6 +1039,7 @@
 		};
 		language();
 		var userId =${info.userId };
+		
 		$(document).ready(function(){
 			
 		

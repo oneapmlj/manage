@@ -13,9 +13,9 @@
 	<!--mongodb参数 -->
 	<mongodb>
 		<mongodata>
-			<!-- <serverNode>10.128.8.80</serverNode> -->
+			<serverNode>10.128.8.80</serverNode> 
 			<!-- <serverNode>manager.mgo.010251193010.ali.bj</serverNode> -->
-			<serverNode>manager.mgo.010251193010.ali.bj</serverNode>
+			<!-- <serverNode>manager.mgo.010251193010.ali.bj</serverNode> -->
 			<serverPort>27017</serverPort>
 			<autoConnectRetry>true</autoConnectRetry>
 			<connectionsPerHost>300</connectionsPerHost>
@@ -31,4 +31,16 @@
 			<password>31b0ed9225774881:HCmqeD1jTTAm</password>
 		</manage>
 	</redis>
+	<mysql>
+		<manage>
+			<driver>com.mysql.jdbc.Driver</driver>
+			<url>jdbc:mysql://100.98.70.86:3306/managerdb</url>
+			<username>manage_saas</username>
+			<password>3acr89Mc0bc2a:HCmqeD1jTTAm</password> 
+			<!-- <driver>com.mysql.jdbc.Driver</driver>
+			<url>jdbc:mysql://119.29.28.190:3306/webhook</url>
+			<username>root</username>
+			<password>qinh_webhook123</password> -->
+		</manage>
+	</mysql>
 </xml-body>
