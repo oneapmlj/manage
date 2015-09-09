@@ -70,8 +70,6 @@ public class ApiData {
                         }
                         System.out.println(str.size());
                 }
-                // }
-                // }
                 br.close();
                 connection.disconnect();// 断开连接
                 return str;
