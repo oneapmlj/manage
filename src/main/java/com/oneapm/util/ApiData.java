@@ -16,7 +16,6 @@ public class ApiData {
                 URL url = null;
                 HttpURLConnection connection;
                 BufferedReader br;
-
                 url = new URL(GET_URL); // 把字符串转换为URL请求地址
                 connection = (HttpURLConnection) url.openConnection();// 打开连接
                 connection.connect();// 连接会话
@@ -29,23 +28,17 @@ public class ApiData {
                         sb.append(line);
                         Pattern pattern = Pattern.compile("[\\w[.-]]+\\@[\\w[.-]]{2,}\\.com+");
                         Matcher matcher = pattern.matcher(line);
-
                         while (matcher.find()) {
                                 System.out.println(matcher.group());
                                 string = new String(matcher.group());
-
                                 str.add(string);
-
                         }
                         for (int i = 0; i < str.size(); i++) {
                                 System.out.println(str.get(i));
                         }
-
                 }
-
                 br.close();
                 connection.disconnect();// 断开连接
-
                 return str;
         }
 
@@ -65,26 +58,15 @@ public class ApiData {
                 List<String> str = new ArrayList<String>();
                 while ((line = br.readLine()) != null) {// 循环读取流
                         sb.append(line);
-
                         Pattern pattern = Pattern.compile("(\\{[^\\}]+})");
                         Matcher matcher = pattern.matcher(line);
-
-                        // while (matcher.find()) {
-                        //
-                        // Pattern pattern =
-                        // Pattern.compile("[\\w[.-]]+\\@[\\w[.-]]{2,}\\.com+");
-                        // Matcher matcher = pattern.matcher(line);
-
                         while (matcher.find()) {
                                 /* System.out.println(matcher.group()); */
                                 string = new String(matcher.group());
-
                                 str.add(string);
-
                         }
                         for (int i = 0; i < str.size(); i++) {
                                 System.out.println(str.get(i));
-
                         }
                         System.out.println(str.size());
                 }
