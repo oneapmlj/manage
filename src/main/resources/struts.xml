@@ -23,4 +23,5 @@
 	<include file="apm-one-note.xml"></include>
 	<include file="apm-one-duandian.xml"></include>
 	<include file="apm-one-group.xml"></include>
+	<include file="apm-one-count.xml"></include>
 </struts>
