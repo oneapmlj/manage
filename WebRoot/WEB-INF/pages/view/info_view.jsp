@@ -974,7 +974,7 @@
 						if(data.status==1){
 								 var listCnter = $("#sendcloud").empty();
 								var rows = data.sdList; 
-								var table = $('<table  width="500" border="0" cellspacing="0" cellpadding="0"></table>').appendTo(listCnter);
+								var table = $('<table  width="400" border="0" cellspacing="0" cellpadding="0"></table>').appendTo(listCnter);
 								var titleTr = $('<tr height="25px;"></tr>').appendTo(table);
 								var dateTd = $('<td width="61"></td>').appendTo(titleTr);
 								var eventTd = $('<td width="61"></td>').appendTo(titleTr);						
@@ -986,16 +986,23 @@
 								var urlSpan = $('<span></span>').html("URL").appendTo(urlTd);
 								 for(var i=0; i<rows.length; i++){
 									var r = rows[i];
-									var table = $('<table  width="500" border="0" cellspacing="0" cellpadding="0"></table>').appendTo(listCnter);
+									var table = $('<table  width="400" border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed;"></table>').appendTo(listCnter);
 									var titleTr = $('<tr height="25px;"></tr>').appendTo(table);
-									var dateTd = $('<td width="125"></td>').appendTo(titleTr);
-									var eventTd = $('<td width="125"></td>').appendTo(titleTr);						
-									var labelIdTd = $('<td width="125"></td>').appendTo(titleTr);						
-									var urlTd = $('<td width="125"></td>').appendTo(titleTr);		
+									var dateTd = $('<td width="61"></td>').appendTo(titleTr);
+									var eventTd = $('<td width="61"></td>').appendTo(titleTr);						
+									var labelIdTd = $('<td width="61"></td>').appendTo(titleTr);						
+									var urlTd = $('<td width="61"></td>').appendTo(titleTr);		
 									var dateSpan = $('<span></span>').html(r.date?r.date:"").appendTo(dateTd);
 									var eventSpan = $('<span></span>').html(r.event?r.event:"").appendTo(eventTd);
 									var labelIdSpan = $('<span></span>').html(r.labelId?r.labelId:"").appendTo(labelIdTd);
-									var urlSpan = $('<span></span>').html(r.url?r.url:"").appendTo(urlTd);
+									if(r.url=="null"){
+										r.url="";										
+									}
+									var url_sub = r.url;
+									if(r.url.length>20){
+										url_sub=r.url.substring(0,20)+"...";
+									}
+									var urlSpan = $('<a href="'+r.url+'" target="_Blank" title="'+r.url+'"></a>').html(url_sub).appendTo(urlTd);
 									
 								} 
 							
