@@ -1,5 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+<!-- Totango Tracking Code -->
+<script> 
+	
+	var totango_options = {
+		service_id : "SP-9085-01",
+		user : {
+			id : "geliang@oneapm.com",
+			name : "admin"
+		},
+		account : {
+			id : "1001",
+			name : "email1",
+			status : "Paying",
+			"Create Date" : "2011-12-20T19:25:58.0Z"
+		},
+	};
+	(function() {
+		var tracker_name = window.totango_options.tracker_name || "totango";
+		window.totango_tmp_stack = [];
+		window[tracker_name] = {
+			go : function() {
+				return -1;
+			},
+			setAccountAttributes : function() {
+			},
+			identify : function() {
+			},
+			track : function(t, o, n, a) {
+				window.totango_tmp_stack.push({
+					activity : t,
+					module : o,
+					org : n,
+					user : a
+				});
+				return -1;
+			}
+		};
+		var e = document.createElement('script');
+		e.type = 'text/javascript';
+		e.async = true;
+		e.src = ('https:' == document.location.protocol ? 'https://'
+				: 'http://')
+				+ 'tracker.totango.com/totango3.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(e, s);
+	})();
+</script>
+<!-- End Totango Tracking Code -->
 <!-- Begin Inspectlet Embed Code -->
 <%-- <script type="text/javascript" id="inspectletjs">
 	window.__insp = window.__insp || [];
@@ -13,14 +61,6 @@
 		}
 	})();
 </script> --%>
-<script type="text/javascript">
-    (function(d,s,i,r) {
-      if (d.getElementById(i)){return;}
-      var n=d.createElement(s),e=d.getElementsByTagName(s)[0];
-      n.id=i;n.src='//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/1555350.js';
-      e.parentNode.insertBefore(n, e);
-    })(document,"script","hs-analytics",300000);
-  </script>
 <!-- End Inspectlet Embed Code -->
 <%-- <script type="text/javascript">
 		mixpanel.track("Video play");
