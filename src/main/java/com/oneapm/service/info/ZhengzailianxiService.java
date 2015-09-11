@@ -1,5 +1,7 @@
 package com.oneapm.service.info;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -40,9 +42,9 @@ public class ZhengzailianxiService {
                       if(zhengzailianxis != null && zhengzailianxis.size() > 0){
                               for(Zhengzailianxi zhengzailianxi : zhengzailianxis){
                                       if(zhengzailianxi.getStatus() != 0 && zhengzailianxi.getEndTime() != null){
-                                              zhengzailianxi.setStay((int)(TimeTools.formatTime.parse(zhengzailianxi.getEndTime()).getTime() - TimeTools.formatTime.parse(zhengzailianxi.getStartTime()).getTime())/1000/60);
+                                              zhengzailianxi.setStay((int)((TimeTools.formatTime.parse(zhengzailianxi.getEndTime()).getTime() - TimeTools.formatTime.parse(zhengzailianxi.getStartTime()).getTime())/1000/60));
                                       }else{
-                                              zhengzailianxi.setStay((int)(TimeTools.formatTime.parse(TimeTools.format()).getTime() - TimeTools.formatTime.parse(zhengzailianxi.getStartTime()).getTime())/1000/60);
+                                              zhengzailianxi.setStay((int)((new Date().getTime() - TimeTools.formatTime.parse(zhengzailianxi.getStartTime()).getTime())/1000/60));
                                       }
                                       ZhengzailianxiDaoImpl.getInstance().updateStay(zhengzailianxi);
                               }
@@ -50,6 +52,11 @@ public class ZhengzailianxiService {
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
                 }
+        }
+        
+        public static void main(String[] args) throws ParseException{
+                System.out.println(new Date().getTime());
+                System.out.println((new Date().getTime() - TimeTools.formatTime.parse("2015-09-11 16:00:00").getTime())/1000/60);
         }
         
         public static String findPush(Long infoId, Admin admin){
