@@ -353,6 +353,19 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                 }
                 return false;
         }
+        
+        public boolean updateEmailStatus(String email) {
+            try {
+                    DBObject object = new BasicDBObject();
+                    object.put("email", email);
+                    DBObject value = new BasicDBObject();
+                    value.put("$set", new BasicDBObject("email_status", 1));
+                    return getDBCollection(TABLE_NAME).update(object, value).getN() > -1;
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return false;
+    }
 
         public Long findKFById(Long id) {
                 try {
@@ -694,7 +707,13 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
 						} catch (Exception e) {
 							// TODO: handle exception
 						}
-                        info = new Info(userId, name, email, company, phone, loginTime, createTime, language, kfId, adminId, support, sale, preSale, customer, status, qq, project);
+                        int emailstatus = 0;
+                        try {
+                        		emailstatus = Integer.parseInt(object.get("email_status").toString().trim());
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+                        info = new Info(userId, name, email, company, phone, loginTime, createTime, language, kfId, adminId, support, sale, preSale, customer, status, qq, project,emailstatus);
                         info.setContectTime(contectTime);
                         info.setDataTime(dataTime);
                         info.setId(id);
@@ -702,6 +721,7 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         info.setPayTime(payTime);
                         info.setExpireTime(expireTime);
                         info.setComming(comming);
+                        info.setEmailstatus(emailstatus);
                         if(comming != null){
                                 if(comming.equals("invite")){
                                         info.setFrom("邀请");

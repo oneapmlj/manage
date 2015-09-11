@@ -750,8 +750,7 @@ $(document).ready(function() {
 			if(da.status == 1){
 				var html = "";
 				for(var i=0;i<da.infos.length;i++){
-					
-					html += "<tr>" 
+					html += "<tr id='"+da.infos[i].id+"'>" 
 						+"<td></td>"
 						+"<td>"+da.infos[i].userId+"</td>"
 						+"<td>"+da.infos[i].name+"</td>";

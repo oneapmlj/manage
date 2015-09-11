@@ -125,10 +125,12 @@ public class Info {
         
         private List<Guanlian> guanlians;
         
+        private int emailstatus;
+        
         public Info() {
         }
 
-        public Info(Long userId, String name, String email, String company, String phone, String loginTime, String createTime, String language, String kfId, Long adminId, Long support, Long sale, Long preSale, Long customer, int status, String qq, String project) {
+        public Info(Long userId, String name, String email, String company, String phone, String loginTime, String createTime, String language, String kfId, Long adminId, Long support, Long sale, Long preSale, Long customer, int status, String qq, String project, int emailstatus) {
                 setUserId(userId);
                 setName(name);
                 setEmail(email);
@@ -146,11 +148,12 @@ public class Info {
                 setQq(qq);
                 setProject(project);
                 setCustomer(customer);
+                setEmailstatus(emailstatus);
                 if(userId != null){
                         setUserIdPaixu(userId.toString());
                 }
         }
-
+        
         public Long getUserId() {
                 return userId;
         }
@@ -598,4 +601,13 @@ public class Info {
         public void setGuanlians(List<Guanlian> guanlians) {
                 this.guanlians = guanlians;
         }
+
+		public int getEmailstatus() {
+			return emailstatus;
+		}
+
+		public void setEmailstatus(int emailstatus) {
+			this.emailstatus = emailstatus;
+		}
+        
 }

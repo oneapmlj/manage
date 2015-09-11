@@ -165,6 +165,43 @@ public class MailDaoImpl extends DaoImplBase<Mail> {
     		try {
     			conn=DBManager.getConncection();
     			String sql="select * from sendcloud_new where email='"+email+"' and date_sub(curdate(), INTERVAL 14 DAY) <= date";
+    			pst=conn.prepareStatement(sql);
+    			ResultSet rs=pst.executeQuery(sql);
+    			
+    			 while(rs.next()){                      
+    				 SendCloudDto sd = new SendCloudDto();
+    				 sd.setId(rs.getString("id"));
+    				 sd.setEvent(rs.getString("event"));
+    				 sd.setEmail(rs.getString("email"));
+    				 sd.setDate(rs.getString("date"));
+    				 sd.setLabelId(rs.getString("labelid"));
+    				 sd.setUrl(rs.getString("url"));
+    	             list.add(sd);       
+    		}
+    			 return list;
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    			
+    		}finally{
+    			try {
+    				pst.close();
+    				conn.close();
+    			} catch (SQLException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+    		}
+			return list;
+    	}
+    	
+    	public List<SendCloudDto> findBadEventDto(){
+    		Connection conn=null;
+    		PreparedStatement pst=null;
+    		List<SendCloudDto> list = new ArrayList<SendCloudDto>();
+    		try {
+    			conn=DBManager.getConncection();
+    			String sql="select * from sendcloud_new where  event='report_spam' or event='invalid' or event='bounce' or event='unsubcribes'";
     			System.out.println("QUERY_SQL:"+sql);
     			pst=conn.prepareStatement(sql);
     			ResultSet rs=pst.executeQuery(sql);
@@ -195,4 +232,7 @@ public class MailDaoImpl extends DaoImplBase<Mail> {
     		}
 			return list;
     	}
+    	
+    	
+    	
 }
