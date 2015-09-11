@@ -36,13 +36,17 @@ public class ZhengzailianxiService {
         
         public static void push(){
                 try{
-//                      List<Zhengzailianxi> zhengzailianxis = ZhengzailianxiDaoImpl.getInstance().findAll();
-//                      if(zhengzailianxis != null && zhengzailianxis.size() > 0){
-//                              for(Zhengzailianxi zhengzailianxi : zhengzailianxis){
-//                                      zhengzailianxi.setStay((int)(TimeTools.formatTime.parse(TimeTools.format()).getTime() - TimeTools.formatTime.parse(zhengzailianxi.getStartTime()).getTime())/1000/60);
-//                                      ZhengzailianxiDaoImpl.getInstance().updateStay(zhengzailianxi);
-//                              }
-//                      }
+                      List<Zhengzailianxi> zhengzailianxis = ZhengzailianxiDaoImpl.getInstance().findAll();
+                      if(zhengzailianxis != null && zhengzailianxis.size() > 0){
+                              for(Zhengzailianxi zhengzailianxi : zhengzailianxis){
+                                      if(zhengzailianxi.getStatus() != 0 && zhengzailianxi.getEndTime() != null){
+                                              zhengzailianxi.setStay((int)(TimeTools.formatTime.parse(zhengzailianxi.getEndTime()).getTime() - TimeTools.formatTime.parse(zhengzailianxi.getStartTime()).getTime())/1000/60);
+                                      }else{
+                                              zhengzailianxi.setStay((int)(TimeTools.formatTime.parse(TimeTools.format()).getTime() - TimeTools.formatTime.parse(zhengzailianxi.getStartTime()).getTime())/1000/60);
+                                      }
+                                      ZhengzailianxiDaoImpl.getInstance().updateStay(zhengzailianxi);
+                              }
+                      }
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
                 }

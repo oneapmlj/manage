@@ -30,7 +30,6 @@ public class ZhengzailianxiDaoImpl extends DaoImplBase<Zhengzailianxi> {
                 List<Zhengzailianxi> zhengzailianxis = new ArrayList<Zhengzailianxi>();
                 try{
                       DBObject object = new BasicDBObject();
-                      object.put("status", 0);
                       DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
                       while(cursor.hasNext()){
                               zhengzailianxis.add(getZhengzailianxiFromObject(cursor.next()));

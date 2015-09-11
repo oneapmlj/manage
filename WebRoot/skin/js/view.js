@@ -30,6 +30,9 @@ var zhengzailianxi = function(){
 				var html = "<div style='color:red;float:left;' >"+da.admin_name+"正在联系.......</div>";
 				if(da.quxiao == 1){
 					html += "<div style='float:left;'><input  id='unzhengzailianxi'  class='hand' style='color:red;' type='button' value='联系完毕'/></div>";
+					$(".phone_name_hidden").addClass("hidden");
+					$(".phone_name").removeClass("hidden");
+					$(".click_edit_phone_name").removeClass("hidden");
 				}
 				$("#lianxi").html(html);
 			}
@@ -367,6 +370,9 @@ $(document).ready(function() {
 				var html = "<div style='color:red;float:left;' >"+da.admin_name+"正在联系.......</div>"
 						+"<div style='float:left;'><input  id='unzhengzailianxi'  class='hand' style='color:red;' type='button' value='联系完毕'/></div>";
 				$("#lianxi").html(html);
+				$(".phone_name_hidden").addClass("hidden");
+				$(".phone_name").removeClass("hidden");
+				$(".click_edit_phone_name").removeClass("hidden");
 			}else{
 				alert(da.msg);
 			}
@@ -383,6 +389,9 @@ $(document).ready(function() {
 			if(da.status == 1){
 				var html = "<input type='button' value='现在联系' class='hand' id='zhengzailianxi'/>";
 				$("#lianxi").html(html);
+				$(".phone_name_hidden").removeClass("hidden");
+				$(".phone_name").addClass("hidden");
+				$(".click_edit_phone_name").addClass("hidden");
 			}else{
 				alert(da.msg);
 			}
