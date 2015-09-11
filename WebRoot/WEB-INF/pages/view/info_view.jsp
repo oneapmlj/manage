@@ -165,11 +165,22 @@
 						</div>
 					</s:else>
 					<div style="margin-left:20px;width:380px;float:left;">
-						<div style="float:left;width:340px;"><div style="float:left;width:48px;">电话：</div>
-							<div style="float:left;" ><span class="phone_name">${info.phone }</span></div>
-							<input style="float:left;margin-top:3px;" class="edit_phone_name hidden"/>
-						</div>
-						<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_phone_name">编辑</div>
+						<s:if test="%{info.zhengzailianxi != null && info.zhengzailianxi.adminId == admin.id}">
+							<div style="float:left;width:340px;"><div style="float:left;width:48px;">电话：</div>
+								<div style="float:left;" ><span class="phone_name">${info.phone }</span></div>
+								<div style="float:left;" ><span class="phone_name_hidden hidden">联系可见</span></div>
+								<input style="float:left;margin-top:3px;" class="edit_phone_name hidden"/>
+							</div>
+							<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_phone_name">编辑</div>
+						</s:if>
+						<s:else>
+							<div style="float:left;width:340px;"><div style="float:left;width:48px;">电话：</div>
+								<div style="float:left;" ><span class="phone_name hidden">${info.phone }</span></div>
+								<div style="float:left;" ><span class="phone_name_hidden">联系可见</span></div>
+								<input style="float:left;margin-top:3px;" class="edit_phone_name hidden"/>
+							</div>
+							<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_phone_name hidden">编辑</div>
+						</s:else>
 					</div>
 					<div style="margin-left:20px;width:380px;float:left;">
 						<div style="float:left;width:340px;"><div style="float:left;width:48px;">QQ：</div>
