@@ -390,6 +390,11 @@ $("#export_excel").click(function(){
 		var id = $(this).attr("id");
 		arr.push(id+"");
 		});
+	if(arr.length==0){
+		alert("无可导数据，请查询后导出");
+		 $("#export_excel").html("导出excel");
+		return false;
+	}
 	var stringInt = "";
 	for(var i=0;i<arr.length;i++){
 	    stringInt = stringInt+arr[i]+",";//连接符其实可以换的
@@ -406,6 +411,7 @@ $("#export_excel").click(function(){
 				 $("#export_excel").html("导出excel");
 			}else{
 				alert(data.msg);
+				$("#export_excel").html("导出excel");
 			}		
 		})  
 })</script>
