@@ -420,7 +420,7 @@
 					
 				</div>
 				<input type = "button" id = "sendcloudbtn" value="查看用户邮件记录"/>
-				
+				<!-- <input type = "button" id = "exportexcel" value="导出成excel"/> -->
 			</div>
 			<s:if test="%{info.pushs != null}">
 				<div style="width:250px;float:left;margin:30px 0 0 10px;font-size:12px; " class="biankuang_gray_ding">
@@ -966,7 +966,6 @@
 	<script type="text/javascript">
 	
 		  $("#sendcloudbtn").click(function(){
-			 
 		  	var email = $("#email").html();
 			if(email==null){
 				email =  $(".email_name").html();
@@ -974,9 +973,7 @@
 			if(email==null){
 				return false;
 			}
-		
 			$("#sendcloud").slideToggle(50);
-		/* 	     $("#sendcloud").slideToggle(50); */
 		 	     $.ajax({
 						dataType:'json',
 						url:'info_findByEmail.action',
@@ -1020,14 +1017,28 @@
 						}
 					});
 			    }) 
-			   /*   $("#sendcloud").mouseout(function(){
-			    	$(this).slideUp(50);
+		/* 	$("#exportexcel").click(function(){
+				var name = $(".name_name").html();
+				var email = $("#email").html();
+				var phone = $(".phone_name").html();
+				var qq = $(".qq_name").html();
+				 $.ajax({
+						dataType:'json',
+						url:'info_exportExcel.action',
+						data:{id:infoId}
+					}).done(function(data){
+						if(data.status==1){
+							alert(data.msg);
+						}else{
+							alert(data.msg);
+						}
+					
+					
+					
+					
+					})
+			}) */
 			    
-			    })  */
-			    
-		
-
-	
 		var call_height = function(){
 			var height = Number($("#calls").height());
 			if(height > 299){
@@ -1057,7 +1068,7 @@
 		};
 		language();
 		var userId =${info.userId };
-		
+		var infoId =${info.id };
 		$(document).ready(function(){
 			
 		

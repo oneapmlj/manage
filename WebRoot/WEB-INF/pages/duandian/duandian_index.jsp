@@ -201,8 +201,11 @@
 						<div style="width:75px;float:left;height:30px;">
 							<div id="duandian_fuze" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">我负责的</div>
 						</div>
-						<div style="hieght:30px;width:135px;float:left;">
+						<div style="hieght:30px;width:75px;float:left;">
 							<div id="duandian_chaxun" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">查询</div>
+						</div>
+						<div style="hieght:30px;width:75px;float:left;">
+							<div id="export_excel" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">导出excel</div>
 						</div>
 					</div>
 					<div style="float:left;width:1200px;height:30px;">
@@ -379,4 +382,31 @@
 	<script type="text/javascript" src="${applicationScope.staticPath}skin/js/jquery.equalHeight.js"></script>
 	<script type="text/javascript" src="${applicationScope.staticPath}skin/js/index.js"></script>
 </body>
+<script>
+$("#export_excel").click(function(){	
+	 var arr=[];
+	 $("#export_excel").html("导出中");
+	jQuery("#duandian_result tr").each(function() {
+		var id = $(this).attr("id");
+		arr.push(id+"");
+		});
+	var stringInt = "";
+	for(var i=0;i<arr.length;i++){
+	    stringInt = stringInt+arr[i]+",";//连接符其实可以换的
+	}
+	stringInt = stringInt.substring(0,stringInt.length-1);
+	  $.ajax({
+		 	type:"post",
+			dataType:'json',
+			url:'info_exportExcel.action',
+			data:{"ids":stringInt}
+		}).done(function(data){
+			if(data.status==1){
+				alert(data.msg);
+				 $("#export_excel").html("导出excel");
+			}else{
+				alert(data.msg);
+			}		
+		})  
+})</script>
 </html>

@@ -69,6 +69,11 @@ public class CloudService {
              args2.add(getArrayFromList(sdList));
              return OneTools.getResult(1, args1, args2);
     }
+        
+        public static  List<SendCloudDto> findSendCloudBeanByEmail(String email) {
+         	List<SendCloudDto> sdList = MailDaoImpl.getInstance().findSendCloudByEmail(email);
+             return sdList;
+    }
         @SuppressWarnings("unchecked")
         public static JSONArray getArrayFromList(List<SendCloudDto> list) {
                 JSONArray array = new JSONArray();

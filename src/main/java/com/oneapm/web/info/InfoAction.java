@@ -1,16 +1,25 @@
 package com.oneapm.web.info;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import com.oneapm.dto.Call;
+import com.oneapm.dto.Download;
 import com.oneapm.dto.Mail;
 import com.oneapm.dto.MailMode;
 import com.oneapm.dto.card.Card;
+import com.oneapm.dto.info.ExcelDto;
 import com.oneapm.dto.info.Guanlian;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.mail.SendCloudDto;
@@ -19,6 +28,7 @@ import com.oneapm.service.card.CardService;
 import com.oneapm.service.group.GroupService;
 import com.oneapm.service.info.AppService;
 import com.oneapm.service.info.DashboardService;
+import com.oneapm.service.info.ExportExcelService;
 import com.oneapm.service.info.GuanlianService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.info.ZhengzailianxiService;
@@ -718,15 +728,55 @@ public class InfoAction extends SupportAction {
             getServletResponse().getWriter().print(result);
 			/*return "gongdan";*/
             
-    }
+        }
         private List<SendCloudDto> sdList;
         public void findByEmail() throws IOException {
         	String result = CloudService.findSendCloudByEmail(email);
-        	System.out.println(result);
         	 getServletResponse().getWriter().print(result);
+        }
+        
+        public void changeEmailStatus() throws IOException {
+        	 InfoService.updateBadEventStatus();
+        	 getServletResponse().getWriter().print("OK");
+        }
+        
+        private String ids;
+        
+
+		public String getIds() {
+			return ids;
+		}
+
+		public void setIds(String ids) {
+			this.ids = ids;
+		}
+
+		@SuppressWarnings("unused")
+		public String exportExcel() throws IOException  {
+			List<Info> infoList = new ArrayList<Info>();
+        	 if (!isLogin()) {
+                 return "login";
+         }
+        	 String[] sl = ids.split(",");
+        	 for(String s : sl){
+        		 info = InfoService.findById(Long.parseLong(s),getAdmin());
+        		 infoList.add(info);
+        	 }
+        	 
+            String result;
+			try {
+				result = ExportExcelService.exportExcelJson(infoList);
+				getServletResponse().getWriter().print(result);
+			} catch (IOException e) {
+				e.printStackTrace();
+				result  = OneTools.getResult(0, "找不到路径，请在D盘建立“用户邮件分析Excel”文件夹");
+				getServletResponse().getWriter().print(result);
+			}
+			
+			return null;
+            
+            
     }
-        
-        
         public List<SendCloudDto> getSdList() {
 			return sdList;
 		}

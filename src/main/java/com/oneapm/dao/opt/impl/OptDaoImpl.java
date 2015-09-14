@@ -125,7 +125,7 @@ public class OptDaoImpl extends DaoImplBase<Admin>{
             try{
                 version = object.get("version").toString().trim();
             }catch(Exception e){}
-            info = new Info(userId, name, email, company, phone, loginTime, createTime,language, null, null, null, null, null, null, 0, null, null);
+            info = new Info(userId, name, email, company, phone, loginTime, createTime,language, null, null, null, null, null, null, 0, null, null,0);
             info.setDataTime(dataTime);
             info.setVersion(version);
         }catch(Exception e){

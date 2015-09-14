@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.info.impl.InfoDaoImpl;
+import com.oneapm.dao.mail.impl.MailDaoImpl;
 import com.oneapm.dto.Zhengzailianxi;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.card.Card;
@@ -16,6 +17,7 @@ import com.oneapm.dto.group.Group;
 import com.oneapm.dto.group.GroupView;
 import com.oneapm.dto.info.Guanlian;
 import com.oneapm.dto.info.Info;
+import com.oneapm.dto.mail.SendCloudDto;
 import com.oneapm.dto.tag.Language;
 import com.oneapm.dto.tag.Tag;
 import com.oneapm.record.MailPush;
@@ -550,6 +552,18 @@ public class InfoService extends OneTools {
                 }
                 return info;
         }
+        /**
+         * 导出excel
+         * @param id
+         * @return
+         */
+        public static Info findByIdForExcel(Long id) {
+                Info info = InfoDaoImpl.getInstance().findById(id);
+                if (info != null) {
+                	initInfo(info);
+                }
+                return info;
+        }
 
         public static String edit(Long id, String project, String qq, String name, String phone, String email, String expireTime, int gender, int pay_level, Admin admin) {
                 try {
@@ -915,12 +929,24 @@ public class InfoService extends OneTools {
         public static boolean update(Info info) {
                 return InfoDaoImpl.getInstance().update(info);
         }
+        
+        public static void updateBadEventStatus() {
+        	List<SendCloudDto> list = MailDaoImpl.getInstance().findBadEventDto();
+        	for(SendCloudDto sd : list){
+        		Info info = findByEmail(sd.getEmail());
+        		if(info!=null){
+        			if(info.getEmailstatus()==0){
+        				InfoDaoImpl.getInstance().updateEmailStatus(info.getEmail());
+        			}
+        		}
+        	}         
+        }
 
         @SuppressWarnings("unchecked")
         public static String insertInfo(Card card, String project, String company) {
                 JSONObject object = new JSONObject();
                 try {
-                        Info info = new Info(null, card.getName(), card.getEmail(), company, card.getPhone(), null, TimeTools.format(), null, null, card.getFrom(), null, null, null, null, 0, card.getQq(), company);
+                        Info info = new Info(null, card.getName(), card.getEmail(), company, card.getPhone(), null, TimeTools.format(), null, null, card.getFrom(), null, null, null, null, 0, card.getQq(), company,0);
                         info = InfoService.insertAndGet(info);
                         if (info == null) {
                                 return OneTools.getResult(0, "添加失败");
