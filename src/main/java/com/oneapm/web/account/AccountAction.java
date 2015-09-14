@@ -151,6 +151,19 @@ public class AccountAction extends SupportAction {
                         LOG.error(e.getMessage(), e);
                 }
         }
+        
+        public void admin() throws IOException {
+                if (!isLogin()) {
+                        getServletResponse().sendRedirect("/login.action");
+                        return;
+                }
+                try{
+                        String result = AccountRecordService.Admin(getAdmin());
+                        getServletResponse().getWriter().print(result);
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+        }
 
         public void update_control() throws IOException {
                 if (!isLogin()) {

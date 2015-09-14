@@ -187,6 +187,8 @@ public class SupportAction extends ActionSupport implements ServletRequestAware,
                         String password = UserCookieHelper.getCookieValue(SessionKeys.PASSWORD, request);
                         setAdmin(AccountService.verify(username, password));
                         if (admin != null) {
+                                getRequest().setAttribute("admin_id", admin.getId());
+                                getRequest().setAttribute("username", admin.getUsername());
                                 if (admin.getGrades() != null) {
                                         admin.setAssign(admin.getGrades().indexOf(getGRADE().getMap().get(105).getQuanxian()) > -1 ? 1 : admin.getGrades().indexOf(getGRADE().getMap().get(999).getQuanxian()) > -1 ? 1 : 0);
                                         admin.setManage(admin.getGrades().indexOf(getGRADE().getMap().get(109).getQuanxian()) > -1 ? 1 : admin.getGrades().indexOf(getGRADE().getMap().get(999).getQuanxian()) > -1 ? 1 : 0);
