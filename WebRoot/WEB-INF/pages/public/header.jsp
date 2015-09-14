@@ -2,7 +2,21 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!-- Totango Tracking Code -->
 <script> 
-	
+	var admin_id = "${attr.admin_id}";
+	var username = "${attr.username}";
+	/* var admin = function(){
+		$.ajax({
+			dataType:'json',
+			url:'account_admin.action',
+			data:{}
+		}).done(function(da){
+			if(da.status == 1){
+				admin_id=da.admin_id;
+				username=da.username;
+			}
+		});
+	}
+	admin(); */
 	var totango_options = {
 		service_id : "SP-9085-01",
 		user : {
@@ -10,8 +24,8 @@
 			name : "admin"
 		},
 		account : {
-			id : "1001",
-			name : "email1",
+			id : admin_id,
+			name : username,
 			status : "Paying",
 			"Create Date" : "2011-12-20T19:25:58.0Z"
 		},

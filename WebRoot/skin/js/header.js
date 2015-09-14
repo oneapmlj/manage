@@ -299,12 +299,14 @@ var JmessageNum = function(number){
 				window.location.href="baobiao_liucun_yunying.action"; 
 			});
 			$(".click_to_duandian").live('click', function(){
+				totango.track("guolv_click", "guolv"); 
 				window.location.href="duandian_index.action"; 
 			});
 			$(".click_to_language").live('click', function(){
 				window.location.href="info_language.action"; 
 			})
 			$(".click_to_tongji").live('click', function(){
+				totango.track("tongji_click", "tongji"); 
 				window.location.href="tongji_index.action";
 			});
 			$(".message_click_to_close").live('click',function(){

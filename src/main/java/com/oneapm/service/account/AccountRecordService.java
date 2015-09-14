@@ -46,6 +46,20 @@ public class AccountRecordService {
                 }
                 return OneTools.getResult(0, "服务器内部错误");
         }
+        public static String Admin(Admin admin){
+                try{
+                        JSONObject object = new JSONObject();
+                        object.put("admin_id", admin.getId());
+                        object.put("name", admin.getName());
+                        object.put("username", admin.getUsername());
+                        object.put("email", admin.getEmail());
+                        object.put("status", 1);
+                        return object.toJSONString();
+                }catch(Exception e){
+                        LOG.error(e.getMessage() ,e);
+                }
+                return OneTools.getResult(0, "服务器内部错误");
+        }
         public static Account findByAdmin(Admin admin, int type, boolean self, int page, int nowPage) {
                 int number = 30;
                 if (admin == null)

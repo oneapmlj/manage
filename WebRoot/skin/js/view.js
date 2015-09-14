@@ -1102,6 +1102,7 @@ $(document).ready(function() {
 		});
 	});
 	$(".add_call").click(function(){
+		totango.track("add_call_click", "add_call"); 
 		$.ajax({
 			dataType:'json',
 			url:'account_grade.action',
