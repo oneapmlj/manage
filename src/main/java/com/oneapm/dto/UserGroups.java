@@ -18,6 +18,8 @@ public class UserGroups {
         private Long parentId;
         private int deleted;
         
+        private String createTime;
+        
         private Long sale;
         private Long support;
         private Long preSale;
@@ -289,6 +291,12 @@ public class UserGroups {
 		public void setMark(Mark mark) {
 			this.mark = mark;
 		}
+                public String getCreateTime() {
+                        return createTime;
+                }
+                public void setCreateTime(String createTime) {
+                        this.createTime = createTime;
+                }
 		
         
 }

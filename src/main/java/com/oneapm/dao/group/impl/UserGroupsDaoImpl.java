@@ -1,8 +1,12 @@
 package com.oneapm.dao.group.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -38,6 +42,37 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group>{
 	        return null;
 	}
 	
+	public UserGroups findById(Long groupId){
+                try{
+                        DBObject object = new BasicDBObject();
+                        object.put("group_id", groupId);
+                        DBCursor cursor= getDBCollection(TABLE_NAME).find(object);
+                        if(cursor.hasNext()){
+                                return findComplicatedGroupsByObject(cursor.next());
+                        }
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return null;
+        }
+	public List<Long> findByTime(String start, String end){
+	        try{
+	                DBObject object = new BasicDBObject();
+	                BasicDBList list = new BasicDBList();
+	                list.add(new BasicDBObject("create_time", new BasicDBObject("$gte", start)));
+	                list.add(new BasicDBObject("create_time", new BasicDBObject("$lt", end)));
+	                object.put("$and", list);
+	                DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+	                List<Long> ids = new ArrayList<Long>();
+	                while(cursor.hasNext()){
+	                        ids.add(Long.parseLong(cursor.next().get("group_id").toString()));
+	                }
+	                return ids;
+	        }catch(Exception e){
+	                LOG.error(e.getMessage(), e);
+	        }
+	        return null;
+	}
 	
 	
 	private UserGroups findUserGroupsByObject(DBObject object){
@@ -70,8 +105,11 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group>{
 	              String comming = object.get("comming").toString();
 	              int emailStatus = Integer.parseInt(object.get("emailStatus").toString());
 	              String contectTime = object.get("contectTime").toString();
-	              return new UserGroups( groupId,  adminId,  groupName,  parentId,  deleted,  sale,  support,
-	              		 preSale,  payLevel,  payTime,  comming,  emailStatus,  contectTime);
+	              String createTime = object.get("create_time").toString();
+	              UserGroups userGroups = new UserGroups( groupId,  adminId,  groupName,  parentId,  deleted,  sale,  support,
+	                                 preSale,  payLevel,  payTime,  comming,  emailStatus,  contectTime);
+	              userGroups.setCreateTime(createTime);
+	              return userGroups;
 	      }catch(Exception e){
 	              LOG.error(e.getMessage(), e);
 	      }

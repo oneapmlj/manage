@@ -10,26 +10,17 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.oneapm.dao.info.impl.AppDataDaoImpl;
+import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
 import com.oneapm.dao.info.impl.DataDaoImpl;
 import com.oneapm.dao.info.impl.LoginDaoImpl;
-import com.oneapm.dao.info.impl.SignDaoImpl;
 import com.oneapm.dao.info.impl.TianjiaDaoImpl;
 import com.oneapm.dao.info.impl.TongjiDaoImpl;
 import com.oneapm.dao.info.impl.XiazaiDaoImpl;
-import com.oneapm.dao.opt.impl.AddDaoImpl;
-import com.oneapm.dao.opt.impl.AddMDaoImpl;
-import com.oneapm.dao.opt.impl.DownDaoImpl;
-import com.oneapm.dto.Aplication;
-import com.oneapm.dto.App;
-import com.oneapm.dto.Download;
+import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.info.Tongji;
 import com.oneapm.dto.info.TongjiIndex;
-import com.oneapm.dto.tag.Language;
-import com.oneapm.dto.tag.Loudou;
-import com.oneapm.dto.tag.Metric;
 import com.oneapm.dto.tag.Tag;
 import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
@@ -157,11 +148,14 @@ public class TongjiService {
                         boolean find = false;
                         List<Tag> tags = null;
                         boolean byId = false;
+                        List<Long> upsgroup = new ArrayList<Long>();
+                        List<Long> downsgroup = new ArrayList<Long>();
+                        List<Long> commongroup = new ArrayList<Long>();
                         switch (type) {
                         // 注册
                         case 2:
                                 index.setName("新注册用户");
-                                ids = SignDaoImpl.getInstance().findByTime(start, end);
+                                ids = UserGroupsDaoImpl.getInstance().findByTime(start, end);
                                 ups = ids;
                                 index.setName("新注册用户");
                                 break;
@@ -222,6 +216,27 @@ public class TongjiService {
                                                 downs.add(IDS.get(i));
                                         }
                                 }
+                                for(Long iduser : ups){
+                                        UserGroups group = UserGroupsDaoImpl.getInstance().findByAdminId(iduser);
+                                        if(group != null){
+                                                upsgroup.add(group.getGroupId());
+                                        }
+                                }
+                                for(Long iduser : downs){
+                                        UserGroups group = UserGroupsDaoImpl.getInstance().findByAdminId(iduser);
+                                        if(group != null){
+                                                downsgroup.add(group.getGroupId());
+                                        }
+                                }
+                                for(Long iduser : common){
+                                        UserGroups group = UserGroupsDaoImpl.getInstance().findByAdminId(iduser);
+                                        if(group != null){
+                                                commongroup.add(group.getGroupId());
+                                        }
+                                }
+                                ups = upsgroup;
+                                downs = downsgroup;
+                                common = commongroup;
                                 break;
                         case 4:
                                 index.setName("当日下载");
@@ -240,6 +255,27 @@ public class TongjiService {
                                         }
                                 }
                                 ups = ids;
+                                for(Long iduser : ups){
+                                        UserGroups group = UserGroupsDaoImpl.getInstance().findByAdminId(iduser);
+                                        if(group != null){
+                                                upsgroup.add(group.getGroupId());
+                                        }
+                                }
+                                for(Long iduser : downs){
+                                        UserGroups group = UserGroupsDaoImpl.getInstance().findByAdminId(iduser);
+                                        if(group != null){
+                                                downsgroup.add(group.getGroupId());
+                                        }
+                                }
+                                for(Long iduser : common){
+                                        UserGroups group = UserGroupsDaoImpl.getInstance().findByAdminId(iduser);
+                                        if(group != null){
+                                                commongroup.add(group.getGroupId());
+                                        }
+                                }
+                                ups = upsgroup;
+                                downs = downsgroup;
+                                common = commongroup;
                                 break;
                         case 5:
                                 index.setName("当日添加应用");
@@ -451,14 +487,15 @@ public class TongjiService {
                 return infos;
         }
 
-        public static List<Info> getInfosFromUserIds(List<Long> ids, Admin admin) {
+        public static List<UserGroups> getInfosFromUserIds(List<Long> ids, Admin admin) {
                 if (ids == null || ids.size() <= 0)
                         return null;
-                List<Info> infos = new ArrayList<Info>();
+                List<UserGroups> infos = new ArrayList<UserGroups>();
                 Set<Long> set = new HashSet<Long>();
                 for (Long id : ids) {
                         if (!set.contains(id)) {
                                 try {
+                                        UserGroups groups = UserGroupsDaoImpl.getInstance().findById(id);
                                         Info info = InfoService.findByUserIdSingle(id);
                                         InfoService.power(admin.getId(), admin.getGroup(), info);
                                         infos.add(info);
