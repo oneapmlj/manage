@@ -29,8 +29,13 @@ public class MarkService {
                 List<Mark> marks = MarkDaoImpl.getInstance().findByAdminId(adminId);
                 if (marks != null && marks.size() > 0) {
                         for (Mark mark : marks) {
+                        	if(mark.getGroupId()!=null){
                                 UserGroups userGroups = UserGroupService.findByGroupIdSingle(mark.getGroupId());
                                 mark.setProjectName(userGroups.getGroupName());
+                        	}else{
+                        		Info info = InfoService.findByIdSimple(mark.getInfoId());
+                        		mark.setProjectName(info.getCompany());
+                        	}
                         }
                 }
                 return marks;
@@ -41,21 +46,22 @@ public class MarkService {
         }
 
         @SuppressWarnings("unchecked")
-        public static String add(Long infoId, Long adminId) {
+        public static String add(Long groupId, Long adminId) {
                 JSONObject object = new JSONObject();
                 try {
                         object.put("status", 0);
-                        Info info = InfoService.findByIdSimple(infoId);
-                        if (info == null) {
+                        //Info info = InfoService.findByIdSimple(infoId);
+                        UserGroups userGroups = UserGroupService.findByGroupIdSingle(groupId);
+                        if (userGroups == null) {
                                 object.put("msg", "参数错误");
                                 return object.toJSONString();
                         }
-                        Mark mark = MarkDaoImpl.getInstance().findAdminIdAndInfoId(adminId, infoId);
+                        Mark mark = MarkDaoImpl.getInstance().findAdminIdAndGroupId(adminId, groupId);
                         if(mark != null){
                                 return OneTools.getResult(0, "已经标记了");
                         }
                                         
-                        mark = new Mark(null, infoId, TimeTools.format(), 0, adminId);
+                        mark = new Mark(null, groupId, TimeTools.format(), 0, adminId);
                         mark = insert(mark);
                         if (mark == null) {
                                 object.put("msg", "服务器内部错误");
@@ -111,6 +117,7 @@ public class MarkService {
                         object.put("infoId", mark.getInfoId());
                         object.put("adminId", mark.getAdminId());
                         object.put("createTime", mark.getCreateTime());
+                        object.put("groupId", mark.getGroupId());
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

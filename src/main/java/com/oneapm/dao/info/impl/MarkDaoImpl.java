@@ -132,6 +132,7 @@ public class MarkDaoImpl extends DaoImplBase<Mark> {
                         object.put("info_id", mark.getInfoId());
                         object.put("status", mark.getStatus());
                         object.put("create_time", mark.getCreateTime());
+                        object.put("group_id", mark.getGroupId());
                         if (getDBCollection(TABLE_NAME).insert(object).getN() > -1) {
                                 return mark;
                         }
@@ -161,12 +162,15 @@ public class MarkDaoImpl extends DaoImplBase<Mark> {
                         try{
                         	 infoId = Long.parseLong(object.get("info_id").toString().trim());
                         }catch(Exception e){
-                        	e.printStackTrace();
                         }
                         String createTime = object.get("create_time").toString();
                         int status = Integer.parseInt(object.get("status").toString().trim());
                         Long adminId = Long.parseLong(object.get("admin_id").toString().trim());
-                        Long groupId = Long.parseLong(object.get("group_id").toString().trim());
+                        Long groupId = null;
+                        try{
+                        groupId = Long.parseLong(object.get("group_id").toString().trim());
+                       }catch(Exception e){
+                       }
                         mark = new Mark(id, infoId, createTime, status, adminId);
                         mark.setGroupId(groupId);
                 } catch (Exception e) {

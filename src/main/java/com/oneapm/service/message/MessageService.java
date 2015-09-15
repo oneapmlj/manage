@@ -86,11 +86,11 @@ public class MessageService {
                 JSONObject object = new JSONObject();
                 try {
                         object.put("status", 0);
-                        Long infoId = close(messageId);
+                        Long groupId = close(messageId);
 //                        if (infoId != null) {
                                 object.put("status", 1);
                                 object.put("id", messageId);
-                                object.put("infoId", infoId);
+                                object.put("groupId", groupId);
 //                        }
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
@@ -215,7 +215,7 @@ public class MessageService {
                 try{
                         message.setStatus(3);
                         if(MessageDaoImpl.getInstance().update(message)){
-                                return message.getInfoId();
+                                return message.getGroupId();
                         }
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);

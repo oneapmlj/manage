@@ -64,6 +64,9 @@
 			<result name="view">
 				/WEB-INF/pages/view/info_view.jsp
 			</result>
+			<result name="onlianxi">
+				/WEB-INF/pages/view/info_onlianxi.jsp
+			</result>
 		</action>
 		
 		<action name="salespanel" method='salespanel' 

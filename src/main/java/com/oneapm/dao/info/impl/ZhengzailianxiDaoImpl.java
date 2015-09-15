@@ -170,8 +170,13 @@ public class ZhengzailianxiDaoImpl extends DaoImplBase<Zhengzailianxi> {
                         }catch(Exception e){}
                         int status = Integer.parseInt(object.get("status").toString().trim());
                         int stay = Integer.parseInt(object.get("stay").toString().trim());
-                        Long infoId = Long.parseLong(object.get("info_id").toString().trim());
+                        Long infoId = null;
+                        try{
+                        	infoId = Long.parseLong(object.get("info_id").toString().trim());
+                        }catch(Exception e){}
+                        Long groupId = Long.parseLong(object.get("group_id").toString().trim());
                         zhengzailianxi = new Zhengzailianxi(id, adminId, startTime, endTime, status, stay, infoId);
+                        zhengzailianxi.setGroupId(groupId);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

@@ -10,7 +10,7 @@ public class Zhengzailianxi {
         private int stay;
         private String adminName;
         private Long infoId;
-        
+        private Long groupId;
         public Zhengzailianxi(){}
         public Zhengzailianxi(Long id, Long adminId, String startTime, String endTime, int status, int stay, Long infoId){
                 setId(id);
@@ -69,4 +69,11 @@ public class Zhengzailianxi {
         public void setInfoId(Long infoId) {
                 this.infoId = infoId;
         }
+		public Long getGroupId() {
+			return groupId;
+		}
+		public void setGroupId(Long groupId) {
+			this.groupId = groupId;
+		}
+        
 }

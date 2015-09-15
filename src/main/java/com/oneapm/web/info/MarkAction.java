@@ -18,7 +18,7 @@ public class MarkAction extends SupportAction {
         private Long infoId;
         private int status;
         private Long id;
-
+        private Long groupId;
         public String list() {
                 if (!isLogin()) {
                         return "login";
@@ -32,7 +32,7 @@ public class MarkAction extends SupportAction {
                         getServletResponse().sendRedirect("/login.action");
                         return;
                 }
-                String result = MarkService.add(infoId, getAdmin().getId());
+                String result = MarkService.add(groupId, getAdmin().getId());
                 getServletResponse().getWriter().print(result);
         }
 
@@ -78,4 +78,13 @@ public class MarkAction extends SupportAction {
                 this.id = id;
         }
 
+		public Long getGroupId() {
+			return groupId;
+		}
+
+		public void setGroupId(Long groupId) {
+			this.groupId = groupId;
+		}
+        
+        
 }

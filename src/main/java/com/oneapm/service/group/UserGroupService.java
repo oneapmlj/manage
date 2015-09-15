@@ -1,5 +1,6 @@
 package com.oneapm.service.group;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
@@ -108,7 +109,23 @@ public class UserGroupService {
         return userGroups;
     }
     
-    
+    public static List<UserGroups> onlianxi(Admin admin){
+        List<UserGroups> UserGroupsList = null;
+        try{
+                List<Zhengzailianxi> zhengzailianxis = ZhengzailianxiService.findByAdminId(admin.getId());
+                if(zhengzailianxis != null && zhengzailianxis.size() > 0){
+                	UserGroupsList = new ArrayList<UserGroups>();
+                        for(Zhengzailianxi zhengzailianxi : zhengzailianxis){
+                                UserGroups userGroups = findByGroupIdSingle(zhengzailianxi.getGroupId());
+                                userGroups.setZhengzailianxi(zhengzailianxi);
+                                UserGroupsList.add(userGroups);
+                        }
+                }
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
+        return UserGroupsList;
+}
     
 	public static void initUserGroups(UserGroups userGroups) {
 		userGroups.setMails(MailService.findMailsById(userGroups.getGroupId()));

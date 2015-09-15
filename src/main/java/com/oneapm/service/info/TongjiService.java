@@ -487,10 +487,10 @@ public class TongjiService {
                 return infos;
         }
 
-        public static List<UserGroups> getInfosFromUserIds(List<Long> ids, Admin admin) {
+        public static List<Info> getInfosFromUserIds(List<Long> ids, Admin admin) {
                 if (ids == null || ids.size() <= 0)
                         return null;
-                List<UserGroups> infos = new ArrayList<UserGroups>();
+                List<Info> infos = new ArrayList<Info>();
                 Set<Long> set = new HashSet<Long>();
                 for (Long id : ids) {
                         if (!set.contains(id)) {

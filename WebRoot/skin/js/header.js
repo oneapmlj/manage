@@ -144,7 +144,7 @@ var JmessageNum = function(number){
 		 message(); 
 		$(document).ready(function(){
 			$(".click_to_zhengzailianxi").live('click', function(){
-				window.open("/info_onlianxi.action");
+				window.open("/user_group_onlianxi.action");
 			});
 			$(".message_history").live('click', function(){
 				window.open("/message_index.action");
@@ -250,7 +250,7 @@ var JmessageNum = function(number){
 				}).done(function(da){
 					if(da.status == 1){
 						$("#list_message_"+da.id).css("color","gray");
-						window.open("/info_view.action?id="+da.infoId);
+						window.open("/user_group_view.action?id="+da.id);
 					}else{
 						alert(da.msg);
 					}

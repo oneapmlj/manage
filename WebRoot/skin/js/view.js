@@ -294,10 +294,11 @@ $(document).ready(function() {
 	});
 	$(".add_mark_view").live("click", function(){
 		var infoId = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
 			url:'mark_add.action',
-			data:{infoId:infoId}
+			data:{groupId:groupId}
 		}).done(function(da){
 			if(da.status == 1){
 				$(".add_mark_view").css("width","100px");

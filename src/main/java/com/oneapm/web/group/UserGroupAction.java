@@ -37,6 +37,7 @@ public class UserGroupAction extends SupportAction{
      private String contectTime;
      private Info info;
      private List<Info> infos;
+     private List<UserGroups> userGroupsList;
      private UserGroups userGroups;
      private List<UserGroup> userGroupList;
      private UserGroup userGroup;
@@ -44,8 +45,9 @@ public class UserGroupAction extends SupportAction{
          if (!isLogin()) {
                  return "login";
          }
-         info = InfoService.findUserId(id);
-         userGroups = UserGroupService.findByGroupId(info.getUserId(),getAdmin());
+         //info = InfoService.findUserId(id);
+        // userGroups = UserGroupService.findByGroupId(info.getUserId(),getAdmin());
+         userGroups = UserGroupService.findByGroupId(id,getAdmin());
          infos = new ArrayList<Info>();
          userGroupList = UserGroupService.findUsersByGroupId(userGroups.getGroupId());
          for(UserGroup userGroup : userGroupList ){
@@ -62,6 +64,19 @@ public class UserGroupAction extends SupportAction{
          UserGroupService.initUserGroups(userGroups);
          userGroups.setUserGroups(userGroupList);
          return "view";
+ }
+     
+     
+     public String onlianxi(){
+         if (!isLogin()) {
+                 return "login";
+         }
+         try{
+                 userGroupsList = UserGroupService.onlianxi(getAdmin());
+         }catch(Exception e){
+                 LOG.error(e.getMessage(), e);
+         }
+         return "onlianxi";
  }
 	public Long getGroupId() {
 		return groupId;
@@ -207,6 +222,16 @@ public class UserGroupAction extends SupportAction{
 	}
 	public void setUserGroup(UserGroup userGroup) {
 		this.userGroup = userGroup;
+	}
+
+
+	public List<UserGroups> getUserGroupsList() {
+		return userGroupsList;
+	}
+
+
+	public void setUserGroupsList(List<UserGroups> userGroupsList) {
+		this.userGroupsList = userGroupsList;
 	}
 	
      

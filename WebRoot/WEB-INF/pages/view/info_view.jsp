@@ -146,7 +146,7 @@
 					<input style="float:left;margin-top:3px;" class="edit_name_name hidden"/>
 				</div>
 				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:90px;">Groug_ID：</div>
-					<div style="float:left;"><span class="project_name">${userGroups.groupId }</span></div>
+					<div style="float:left;"><span class="project_name" id="group_id">${userGroups.groupId }</span></div>
 					<input style="float:left;margin-top:3px;" class="edit_name_name hidden"/>
 				</div>
 				<div style="float:left;width:340px;"><div style="float:left;width:48px;">激活：</div>
@@ -213,16 +213,16 @@
 						<s:if test="%{info.zhengzailianxi != null && info.zhengzailianxi.adminId == admin.id}">
 							<div style="float:left;width:340px;"><div style="float:left;width:48px;">电话：</div>
 								<div style="float:left;" ><span class="phone_name">${info.phone }</span></div>
-								<div style="float:left;" ><span class="phone_name_hidden hidden">联系可见</span></div>
+								<%-- <div style="float:left;" ><span class="phone_name_hidden hidden">联系可见</span></div> --%>
 								<input style="float:left;margin-top:3px;" class="edit_phone_name hidden"/>
 							</div>
 							<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_phone_name">编辑</div>
 						</s:if>
 						<s:else>
 							<div style="float:left;width:340px;"><div style="float:left;width:48px;">电话：</div>
-								<div style="float:left;" ><span class="phone_name hidden">${info.phone }</span></div>
-								<div style="float:left;" ><span class="phone_name_hidden">联系可见</span></div>
-								<input style="float:left;margin-top:3px;" class="edit_phone_name hidden"/>
+								<div style="float:left;" ><span >${info.phone }</span></div>
+								<%-- <div style="float:left;" ><span class="phone_name_hidden">联系可见</span></div>
+								<input style="float:left;margin-top:3px;" class="edit_phone_name hidden"/> --%>
 							</div>
 							<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_phone_name hidden">编辑</div>
 						</s:else>
@@ -401,7 +401,7 @@
 				</s:if>
 			</div>
 			<div style="width:430px;float:left;padding-bottom: 40px;margin-top:30px;margin-left:30px;font-size:14px;">
-				<div style="width:430px;height:25px;float:left;font-size:16px;" id="lianxi">
+				<%-- <div style="width:430px;height:25px;float:left;font-size:16px;" id="lianxi">
 					<s:if test="%{info.zhengzailianxi != null}">
 						<div style="color:red;float:left;" >${info.zhengzailianxi.adminName }正在联系.......</div>
 						<s:if test="%{info.zhengzailianxi.adminId == admin.id}"><div style="float:left;"><input id="unzhengzailianxi" class="hand" style="color:red;" type="button" value="联系完毕"/></div></s:if>
@@ -409,7 +409,7 @@
 					<s:else>
 						<input type="button" value="现在联系" class="hand" id="zhengzailianxi"/>
 					</s:else>
-				</div>
+				</div> --%>
 				<div class="add_call biankuang_gray hand" style="float:left;padding:3px;width:400px;margin:5px 0 0 0;height:20px;">
 					<div style="width:100%;height:20px;font-size:16px;text-align: center;line-height:20px;">
 						<strong>添加记录</strong>

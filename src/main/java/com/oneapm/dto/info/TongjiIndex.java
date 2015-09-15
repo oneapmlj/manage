@@ -10,10 +10,10 @@ public class TongjiIndex {
         private Long id;
         private boolean isNext;
 
-        private List<UserGroups> today;
-        private List<UserGroups> yestoday;
-        private List<UserGroups> todayUp;
-        private List<UserGroups> todayDown;
+        private List<Info> today;
+        private List<Info> yestoday;
+        private List<Info> todayUp;
+        private List<Info> todayDown;
         private String name;
         private String date;
 
@@ -41,39 +41,40 @@ public class TongjiIndex {
                 this.tongjis = tongjis;
         }
 
-        public List<UserGroups> getToday() {
-                return today;
-        }
 
-        public void setToday(List<UserGroups> today) {
-                this.today = today;
-        }
+        public List<Info> getToday() {
+			return today;
+		}
 
-        public List<UserGroups> getYestoday() {
-                return yestoday;
-        }
+		public void setToday(List<Info> today) {
+			this.today = today;
+		}
 
-        public void setYestoday(List<UserGroups> yestoday) {
-                this.yestoday = yestoday;
-        }
+		public List<Info> getYestoday() {
+			return yestoday;
+		}
 
-        public List<UserGroups> getTodayUp() {
-                return todayUp;
-        }
+		public void setYestoday(List<Info> yestoday) {
+			this.yestoday = yestoday;
+		}
 
-        public void setTodayUp(List<UserGroups> todayUp) {
-                this.todayUp = todayUp;
-        }
+		public List<Info> getTodayUp() {
+			return todayUp;
+		}
 
-        public List<UserGroups> getTodayDown() {
-                return todayDown;
-        }
+		public void setTodayUp(List<Info> todayUp) {
+			this.todayUp = todayUp;
+		}
 
-        public void setTodayDown(List<UserGroups> todayDown) {
-                this.todayDown = todayDown;
-        }
+		public List<Info> getTodayDown() {
+			return todayDown;
+		}
 
-        public String getName() {
+		public void setTodayDown(List<Info> todayDown) {
+			this.todayDown = todayDown;
+		}
+
+		public String getName() {
                 return name;
         }
 

@@ -32,10 +32,10 @@
 						</tr> 
 					</thead> 
 					<tbody class="tbody"> 
-						<s:if test="%{infos != null && infos.size >0}">
-							<s:iterator value="infos">
+						<s:if test="%{userGroupsList != null && userGroupsList.size >0}">
+							<s:iterator value="userGroupsList">
 								<tr style="font-size:16px;"> 
-						 			<td><a href="info_view.action?id=${id }" target="_blank">${company}</a></td>
+						 			<td><a href="user_group_view.action?id=${groupId }" target="_blank">${groupName}</a></td>
 						 			<td>${zhengzailianxi.startTime}</td>
 						 			<td>${zhengzailianxi.stay}</td>
 								</tr> 

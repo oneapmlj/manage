@@ -27,7 +27,7 @@
 					<s:iterator value="marks">
 						<div id="list_mark_${id }" style="line-height:30px;font-size:16px;width:100%;float:left;">
 							<div style="float:left;width:60px;color:red;" id="${id }" class="list_mark_d biankuang_gray menu_button_2">取消标记</div>
-							<div style="margin-left:10px;float:left;width:200px;"><a style="text-decoration : none;color:#000000;" href="info_view.action?id=${infoId}">${projectName }</a></div>
+							<div style="margin-left:10px;float:left;width:200px;"><a style="text-decoration : none;color:#000000;" href="user_group_view.action?id=${groupId}">${projectName }</a></div>
 							<div style="width:200px;float:left;">${createTime}</div>
 						</div>
 					</s:iterator>
