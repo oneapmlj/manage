@@ -45,6 +45,10 @@ var zhengzailianxi = function(){
 }
 zhengzailianxi(); 
 
+
+function showAll(){
+	$("#download_view_"+userId+"").slideToggle(50);
+}
 $(document).ready(function() {
 
 	$(".guanlian").live("click", function(){

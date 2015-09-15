@@ -777,6 +777,20 @@ public class InfoAction extends SupportAction {
             
             
     }
+		
+		  public void download_view() throws IOException{
+              if (!isLogin()) {
+                      getServletResponse().sendRedirect("/login.action");
+                      return;
+              }
+              try{
+              		guanlian = Long.parseLong(guanlianId);
+                      String result = GuanlianService.remove(InfoService.findByIdSimple(infoId).getUserId(), guanlian);
+                      getServletResponse().getWriter().print(result);
+              }catch(Exception e){
+                      LOG.error(e.getMessage(), e);
+              }
+      }
         public List<SendCloudDto> getSdList() {
 			return sdList;
 		}

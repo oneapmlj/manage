@@ -14,6 +14,7 @@ public class MessageVo {
     
     private Long infoId;
     
+    private Long groupId;
     public MessageVo(){}
     
     public MessageVo(Message message, String fromName, String toName, String company){
@@ -63,4 +64,13 @@ public class MessageVo {
         this.infoId = infoId;
     }
 
+	public Long getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
+    
+    
 }

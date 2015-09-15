@@ -57,6 +57,20 @@ public class TagDaoImpl extends DaoImplBase<Tag> {
                 }
                 return null;
         }
+        
+        public Tag findByGroupId(Long groupId) {
+            try {
+                    DBObject object = new BasicDBObject();
+                    object.put("group_id", groupId);
+                    DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                    if (cursor.hasNext()) {
+                            return getTagFromResult(cursor.next());
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return null;
+    }
 
         public List<Tag> findTagsByMetric(int metric) {
                 List<Tag> tags = null;

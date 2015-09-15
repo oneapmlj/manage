@@ -228,7 +228,8 @@ $(document).ready(function() {
 		});
 	$(".check_view").live("click", function(){
 			var id = $(this).attr("val1");
-			window.open("info_view.action?id="+id);
+			//window.open("info_view.action?id="+id);
+			window.open("user_group_view.action?id="+id);
 	});
 	
 	$(".check_remove").click(function(){

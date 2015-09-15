@@ -302,6 +302,22 @@ public class TagService extends OneTools {
                 initTag(tag);
                 return tag;
         }
+        
+        public static Tag findByGroupId(Long groupId)  {
+            Tag tag = TagDaoImpl.getInstance().findByGroupId(groupId);
+            if (tag == null) {
+                    tag = new Tag(null, groupId, 0, 0, new Integer(0), new Integer(0), null, 0, new Integer(0), new Integer(0), null, new Integer(0), new Integer(0));
+                    initLanguage(tag);
+                    tag = TagDaoImpl.getInstance().insert(tag);
+            } else {
+                    if (tag.getLanguage() == null || tag.getLanguage().trim().equals("") || tag.getLanguage().equals("0")) {
+                            initLanguage(tag);
+                            update(tag);
+                    }
+            }
+            initTag(tag);
+            return tag;
+    }
 
         public static void initLanguage(Tag tag)  {
                 if (tag == null)

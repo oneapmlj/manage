@@ -58,8 +58,11 @@
 			<result name="dashboard_show">
 				/WEB-INF/dashboard/dashboard.jsp
 			</result>
-			<result name="gongdan">
-				/WEB-INF/pages/view/info_gongdan.jsp
+		</action>
+		<action name="user_group_*" method="{1}" 
+			class="com.oneapm.web.group.UserGroupAction">
+			<result name="view">
+				/WEB-INF/pages/view/info_view.jsp
 			</result>
 		</action>
 		

@@ -27,6 +27,9 @@ public class GroupService {
         public static GroupView findByInfoId(Long infoId){
                 return GroupViewDaoImpl.getInstance().findByInfoId(infoId);
         }
+        public static GroupView findByUserGroupId(Long usergroupId){
+            return GroupViewDaoImpl.getInstance().findByUserGroupId(usergroupId);
+    }
         public static int count(Long groupId){
                 Group group = findById(groupId);
                 if(group == null)return 0;

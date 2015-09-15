@@ -88,7 +88,34 @@ public class CallService {
                 }
                 return calls;
         }
-
+        
+        
+        public static List<Call> findByGroupId(Long groupId) {
+            List<Call> calls = null;
+            try {
+                    calls = CallDaoImpl.getInstance().findByGroupId(groupId);
+                    for (Call call : calls) {
+                            addAmin(call);
+                            if (call.getCardId() != null && call.getCardId() >= 100) {
+                                    Card card = CardService.findById(call.getCardId());
+                                    if (card != null) {
+                                            call.setCardName(card.getName());
+                                    }
+                            } else {
+                                    call.setCardName("注册");
+                            }
+                            if (call.getType() != null && call.getType() > 0) {
+                                    NoteType note = NoteService.findTypeById(call.getType());
+                                    if (note != null) {
+                                            call.setTypeName(note.getName());
+                                    }
+                            }
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return calls;
+    }
         public static void addAmin(Call call) {
                 if (call.getAdminId() == null || call.getAdminId() <= 0)
                         return;

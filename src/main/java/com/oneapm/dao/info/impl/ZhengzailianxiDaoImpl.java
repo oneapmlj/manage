@@ -54,6 +54,21 @@ public class ZhengzailianxiDaoImpl extends DaoImplBase<Zhengzailianxi> {
                 return null;
         }
         
+        public Zhengzailianxi findByGroupId(Long groupId){
+            try{
+                    DBObject object = new BasicDBObject();
+                    object.put("group_id", groupId);
+                    object.put("status", 0);
+                    DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                    if(cursor.hasNext()){
+                            return getZhengzailianxiFromObject(cursor.next());
+                    }
+            }catch(Exception e){
+                    LOG.error(e.getMessage(), e);
+            }
+            return null;
+    }
+        
         public List<Zhengzailianxi> findByAdminId(Long adminId){
                 List<Zhengzailianxi> zhengzailianxis = new ArrayList<Zhengzailianxi>();
                 try{

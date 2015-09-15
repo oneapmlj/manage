@@ -23,14 +23,15 @@ public class DBManager {
     
     public static Connection getConncection() throws SQLException, Exception {
     	 driver = "com.mysql.jdbc.Driver";
-         url = "jdbc:mysql://100.98.70.86:3306/managerdb";
-    	 //url = "jdbc:mysql://localhost:3306/webhook";
-    	 //url = "jdbc:mysql://119.29.28.190:3306/webhook";
-       username = "manage_saas";
-       password = "3acr89Mc0bc2a";
-    	// username = "root";
+        /* url = "jdbc:mysql://100.98.70.86:3306/managerdb";
+         username = "manage_saas";
+         password = "3acr89Mc0bc2a";*/
+    	 url = "jdbc:mysql://localhost:3306/webhook";
+    	 username = "root";
+    	 password = "";
+    	 //url = "jdbc:mysql://119.29.28.190:3306/webhook";         	
     	// password = "qinh_webhook123";
-    	// password = "";
+    	
         Class.forName(driver);
         return DriverManager.getConnection(url,username,password);
     }

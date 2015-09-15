@@ -13,6 +13,7 @@ import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
 import com.oneapm.record.Message;
 import com.oneapm.service.account.AccountService;
+import com.oneapm.service.group.UserGroupService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.info.TaskService;
 import com.oneapm.service.record.RecordService;
@@ -257,11 +258,11 @@ public class MessageService {
                         String fromName = AccountService.findById(message.getFrom()).getName();
                         String toName = AccountService.findById(message.getTo()).getName();
                         String company = null;
-                        if (message.getInfoId() != null) {
-                                company = InfoService.findByIdSingle(message.getInfoId()).getCompany();
+                        if (message.getGroupId() != null) {
+                                company = UserGroupService.findByGroupIdSingle(message.getGroupId()).getGroupName();
                         }
                         vo = new MessageVo(message, fromName, toName, company);
-                        vo.setInfoId(message.getInfoId());
+                        vo.setGroupId(message.getGroupId());
                 } catch (Exception e) {
                 }
                 return vo;

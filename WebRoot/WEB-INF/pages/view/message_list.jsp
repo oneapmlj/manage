@@ -25,7 +25,7 @@
 			<div style="width:1200px;margin-left: auto;margin-right: auto;min-height:500px;">
 				<s:if test="%{vos != null}">
 					<s:iterator value="vos">
-						<div id="list_message_${message.id }" 
+						<div id="list_message_${message.groupId }" 
 							style="line-height:40px;font-size:14px;margin-left:200px;width:800px;float:left;<s:if test='%{message.status==0}'>color:red;</s:if><s:else>color:gray;</s:else>">
 							<div style="float:left;width:150px;font-size:12px;">${message.createTime }</div>
 							<div style="float:left;width:400px;"><span style="font-size:16px;">${fromName } </span>

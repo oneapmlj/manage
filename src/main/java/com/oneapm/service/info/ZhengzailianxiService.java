@@ -131,6 +131,9 @@ public class ZhengzailianxiService {
         public static Zhengzailianxi findByInfoId(Long infoId){
                 return ZhengzailianxiDaoImpl.getInstance().findByInfoId(infoId);
         }
+        public static Zhengzailianxi findByGroupId(Long groupId){
+            return ZhengzailianxiDaoImpl.getInstance().findByGroupId(groupId);
+        }
         
         public static Zhengzailianxi findById(Long id){
                 return ZhengzailianxiDaoImpl.getInstance().findById(id);

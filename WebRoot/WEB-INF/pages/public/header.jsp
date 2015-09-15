@@ -134,7 +134,7 @@
 		<div class="message_history biankuang_gray menu_button"
 			style="width: 80px;">消息</div>
 		<div class="click_to_mark biankuang_gray menu_button">标记</div>
-		<div class="click_to_add menu_button biankuang_gray" title="添加">
+		<div class="click_to_add menu_button biankuang_gray" title="添加" style="display:none">
 			添加</div>
 		<div class="click_to_search menu_button biankuang_gray" title="搜索">
 			搜索</div>

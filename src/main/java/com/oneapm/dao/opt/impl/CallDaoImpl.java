@@ -139,6 +139,25 @@ public class CallDaoImpl extends DaoImplBase<Call> {
                 }
                 return calls;
         }
+        
+        public List<Call> findByGroupId(Long groupId) {
+            List<Call> calls = null;
+            try {
+                    DBObject object = new BasicDBObject();
+                    object.put("group_id", groupId);
+                    DBObject sort = new BasicDBObject();
+                    sort.put("call_time", -1);
+                    DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort);
+                    calls = new ArrayList<Call>();
+                    while (cursor.hasNext()) {
+                            calls.add(getInfoFromResult(cursor.next()));
+                    }
+
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return calls;
+    }
 
         public Call getInfoFromResult(DBObject object) {
                 Call call = null;

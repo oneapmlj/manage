@@ -41,6 +41,20 @@ public class GroupViewDaoImpl extends DaoImplBase<GroupView>{
 	        return null;
 	}
 	
+	public GroupView findByUserGroupId(Long usergroupId){
+        try{
+                DBObject object = new BasicDBObject();
+                object.put("user_group_id", usergroupId);
+                DBCursor cursor= getDBCollection(TABLE_NAME).find(object);
+                if(cursor.hasNext()){
+                        return findGroupViewByObject(cursor.next());
+                }
+        }catch(Exception e){
+                LOG.error(e.getMessage(), e);
+        }
+        return null;
+}
+	
 	public List<GroupView> findById(Long id){
 	        List<GroupView> groups = new ArrayList<GroupView>();
 	        try{

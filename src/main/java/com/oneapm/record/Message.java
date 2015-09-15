@@ -13,7 +13,7 @@ public class Message {
          * 1.申请销售负责人 2.申请运营负责人 3.
          */
         private int type;
-
+        private Long groupId;
         public Message() {
         }
 
@@ -101,4 +101,12 @@ public class Message {
                 this.type = type;
         }
 
+		public Long getGroupId() {
+			return groupId;
+		}
+
+		public void setGroupId(Long groupId) {
+			this.groupId = groupId;
+		}
+        
 }

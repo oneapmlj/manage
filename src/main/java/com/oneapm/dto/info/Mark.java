@@ -13,6 +13,8 @@ public class Mark {
         private Long adminId;
         
         private String projectName;
+        
+        private Long groupId;
 
         public Mark(Long id, Long infoId, String createTime, int status,Long adminId) {
                 setId(id);
@@ -69,5 +71,14 @@ public class Mark {
         public void setProjectName(String projectName) {
                 this.projectName = projectName;
         }
+
+		public Long getGroupId() {
+			return groupId;
+		}
+
+		public void setGroupId(Long groupId) {
+			this.groupId = groupId;
+		}
+        
 
 }

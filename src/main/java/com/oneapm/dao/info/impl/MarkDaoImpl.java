@@ -77,6 +77,23 @@ public class MarkDaoImpl extends DaoImplBase<Mark> {
                 }
                 return null;
         }
+        
+
+        public Mark findAdminIdAndGroupId(Long adminId, Long groupId) {
+                try {
+                        DBObject object = new BasicDBObject();
+                        object.put("admin_id", adminId);
+                        object.put("group_id", groupId);
+                        object.put("status", 0);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        if (cursor.hasNext()) {
+                                return getTagFromResult(cursor.next());
+                        }
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return null;
+        }
 
         public Mark findById(Long id) {
                 try {
@@ -140,11 +157,18 @@ public class MarkDaoImpl extends DaoImplBase<Mark> {
                 Mark mark = null;
                 try {
                         Long id = Long.parseLong(object.get("id").toString().trim());
-                        Long infoId = Long.parseLong(object.get("info_id").toString().trim());
+                        Long infoId = null;
+                        try{
+                        	 infoId = Long.parseLong(object.get("info_id").toString().trim());
+                        }catch(Exception e){
+                        	e.printStackTrace();
+                        }
                         String createTime = object.get("create_time").toString();
                         int status = Integer.parseInt(object.get("status").toString().trim());
                         Long adminId = Long.parseLong(object.get("admin_id").toString().trim());
+                        Long groupId = Long.parseLong(object.get("group_id").toString().trim());
                         mark = new Mark(id, infoId, createTime, status, adminId);
+                        mark.setGroupId(groupId);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

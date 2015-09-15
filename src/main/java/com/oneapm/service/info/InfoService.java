@@ -54,6 +54,9 @@ public class InfoService extends OneTools {
         public static List<Info> findEmail(int emailStatus){
                 return InfoDaoImpl.getInstance().findEmail(emailStatus);
         }
+        public static Info findUserId(Long id){
+            return InfoDaoImpl.getInstance().findById(id);
+    }
         
         public static Info findEmail(Long userId, int emailStatus){
                 return InfoDaoImpl.getInstance().findEmail(userId ,emailStatus);

@@ -109,6 +109,23 @@ public class MailPushDaoImpl extends DaoImplBase<MailPush> {
                 }
                 return false;
         }
+        
+        public boolean touchByGroupId(Long groupId, Long adminId, String touchTime) {
+            try {
+                    DBObject object = new BasicDBObject();
+                    object.put("group_id", groupId);
+                    object.put("admin_id", adminId);
+                    object.put("status", 0);
+                    DBObject value = new BasicDBObject();
+                    value.put("touch_time", touchTime);
+                    value.put("warming", 0);
+                    value.put("warming_time", null);
+                    return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value), false, true).getN() > -1;
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return false;
+    }
 
         public List<MailPush> findByInfoIdAndAdmin(Long infoId, Long adminId) {
                 List<MailPush> pushs = new ArrayList<MailPush>();
@@ -142,6 +159,21 @@ public class MailPushDaoImpl extends DaoImplBase<MailPush> {
                 }
                 return pushs;
         }
+        public List<MailPush> findByGroupId(Long groupId) {
+            List<MailPush> pushs = new ArrayList<MailPush>();
+            try {
+                    DBObject object = new BasicDBObject();
+                    object.put("group_id", groupId);
+                    object.put("status", 0);
+                    DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                    while (cursor.hasNext()) {
+                            pushs.add(getPushFromObject(cursor.next()));
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return pushs;
+    }
 
         public MailPush findByInfoIdAdminType(Long infoId, Long adminId, int type) {
                 try {

@@ -23,7 +23,7 @@
 				<div style="float:left;width:40px;">销售：</div>
 				<s:if test="%{info.sale > 0}">
 					<div style="float:left;">
-						<div style="float:left;color:blue;margin-right:10px;">${info.saleName}</div>
+						<div style="float:left;color:blue;margin-right:10px;">${userGroups.saleName}</div>
 							<s:if test="%{admin.id == info.sale}">
 								<div style="float:left;width:40px;">
 									<input style="width:38px;"  id="view_info_delete_sale" class="biankuang_blue_ding hand" type="button" value="放弃"/>
@@ -119,13 +119,13 @@
 			</div>
 		</div>
 		<div style="width:350px;float:left;">
-			<s:if test="%{info.mark != null}">
-				<div style="float:left;width:100px;color:red;"  class="remove_mark_view biankuang_gray menu_button">取消标记</div><input type="text" value="${info.mark.id}"  class="add_mark_view_id hidden"/>
+			<s:if test="%{userGroups.mark != null}">
+				<div style="float:left;width:100px;color:red;"  class="remove_mark_view biankuang_gray menu_button">取消标记</div><input type="text" value="${userGroups.mark.id}"  class="add_mark_view_id hidden"/>
 			</s:if>
 			<s:else><div style="float:left;width:60px;"  class="add_mark_view biankuang_gray menu_button">标记</div><input type="text"  class="add_mark_view_id hidden"/></s:else>
 			<div val1="${info.id}" style="float:left;width:60px;"  class="check_gongdan biankuang_gray menu_button">工单</div>
 			
-			<s:if test="%{info.xiaoshouyi != null && info.xiaoshouyi > 0}">
+			<s:if test="%{userGroups.xiaoshouyi != null && userGroups.xiaoshouyi > 0}">
 				<div style="float:left;width:120px;color:blue;"  class="biankuang_gray_ding menu_button">已推送销售</div>
 			</s:if>
 			<s:else><div style="float:left;width:80px;"  class="add_xiaoshouyi_view biankuang_gray menu_button">推送销售</div>
@@ -136,16 +136,61 @@
 	<input class="hidden" id="view_infoId" value="${info.id}"/>
 	<div style="width:100%;min-width:1200px;">
 		<div style="width:1150px;margin-left: auto;margin-right: auto;">
+			<div class="view_info biankuang_gray_ding" style="margin-top:30px;width:1120px;margin-left:10px;float:left;line-height:25px;font-size:16px;">
+				<div style="margin-left:20px;width:380px;float:left;">公司：<span>${userGroups.groupName }</span></div>
+				<div style="float:left;width:340px;"><div style="float:left;width:48px;">项目：</div>
+					<div style="float:left;"><span class="project_name">${userGroups.groupName }</span></div>
+				</div>
+				<div style="float:left;width:340px;"><div style="float:left;width:48px;">姓名：</div>
+					<div style="float:left;" ><span class="name_name">${info.name }</span></div>
+					<input style="float:left;margin-top:3px;" class="edit_name_name hidden"/>
+				</div>
+				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:90px;">Groug_ID：</div>
+					<div style="float:left;"><span class="project_name">${userGroups.groupId }</span></div>
+					<input style="float:left;margin-top:3px;" class="edit_name_name hidden"/>
+				</div>
+				<div style="float:left;width:340px;"><div style="float:left;width:48px;">激活：</div>
+					<div style="float:left;"><span class="project_name">
+					<s:if test="%{userGroup.deleted == 0}">是</s:if>
+							<s:else>否</s:else>
+					</span></div>
+				</div>
+				<div style="float:left;width:340px;"><div style="float:left;width:80px;">用户状态：</div>
+					<div style="float:left;"><span class="project_name"></span></div>
+				</div>
+				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:48px;">邮箱：</div>
+					<div style="float:left;" ><span class="name_name">${userGroups.userGroups[0].email }</span></div>
+					<input style="float:left;margin-top:3px;" class="edit_name_name hidden"/>
+				</div>
+				<div style="float:left;width:340px;"><div style="float:left;width:80px;">到期时间：</div>
+					<div style="float:left;"><span class="project_name">${userGroups.expireTime }</span></div>
+				</div>
+				
+				<div style="float:left;width:340px;"><div style="float:left;width:90px;">Parent_ID：</div>
+					<div style="float:left;"><span class="project_name">
+					<s:if test="%{userGroup.parentId == 0}">无</s:if>
+							<s:else><input type="button" value="跳转"/></s:else>
+					
+					</span></div>
+				</div>
+		
+			</div>
+			
 			<div style="width:400px;margin-left:10px;float:left;padding-bottom: 40px;">
 				<div class="view_info biankuang_gray_ding" style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">
-					<div style="margin-left:20px;width:380px;float:left;">公司：<span>${info.company }</span></div>
+				<s:if test="%{userGroups.userGroups != null && userGroups.userGroups.size > 0}">
+					<div >
+						<s:iterator value="userGroups.userGroups" >
+								
+						
+					<%-- <div style="margin-left:20px;width:380px;float:left;">公司：<span>${info.company }</span></div>
 					<div style="margin-left:20px;width:380px;float:left;">
 						<div style="float:left;width:340px;"><div style="float:left;width:48px;">项目：</div>
 							<div style="float:left;"><span class="project_name">${info.project }</span></div>
 							<input style="float:left;margin-top:3px;" class="edit_project_name hidden"/>
 						</div>
 						<div style="float:left;font-size:14px;" class="blue hand click_edit_project_name">编辑</div>
-					</div>
+					</div> --%>
 					<div style="margin-left:20px;width:380px;float:left;">
 						<div style="float:left;width:340px;"><div style="float:left;width:48px;">姓名：</div>
 							<div style="float:left;" ><span class="name_name">${info.name }</span></div>
@@ -192,10 +237,10 @@
 					<s:if test="%{info.userId != null}">
 						<div class="boder_line" style="width:350px;margin-left:30px;float:left;"></div>
 						<div style="margin-left:20px;width:70px;float:left;">激活：
-							<s:if test="%{info.status == 1}">是</s:if>
+							<s:if test="%{status == 1}">是</s:if>
 							<s:else>否</s:else>
 						</div>
-						<div style="margin-left:20px;width:120px;float:left;">UserId：<span>${info.userId}</span></div>
+						<div style="margin-left:20px;width:110px;float:left;">UserId：<span>${info.userId}</span></div>
 						<div style="margin-left:20px;width:140px;float:left;">
 							<div style="float:left;width:110px;"><div style="float:left;width:48px;">性别：</div>
 								<div style="float:left;" ><span class="gender_name">
@@ -214,7 +259,26 @@
 					<s:else>
 						<div style="margin-left:20px;width:300px;float:left;">注册：否</div>
 					</s:else>
-					<div style="margin-left:20px;width:380px;float:left;">
+					<div style="margin-left:20px;width:140px;float:left;">
+							<div style="float:left;width:110px;"><div style="float:left;width:48px;">角色：</div>
+								<div style="float:left;" ><span class="gender_name">
+									<s:if test="%{role=='admin'}">admin</s:if>
+									<s:if test="%{role=='manager'}">manager</s:if>
+									<s:if test="%{role=='normal'}">normal</s:if>
+								</span></div>
+								<select style="float:left;margin-top:3px;" class="edit_gender_name hidden">
+								</select>
+							</div>
+					</div>
+					<div style="width:400px;float:left;line-height:25px;font-size:16px;">
+						<div style="margin-left:20px;width:300px;float:left;">下载信息:<a href="javascript:showAll();" style="font-size:14px;color:blue;">  显示全部</a></div>
+					</div>
+					</s:iterator>
+					</div>
+					</s:if>
+				
+					
+					<%-- <div style="margin-left:20px;width:380px;float:left;">
 						<div style="float:left;width:340px;"><div style="float:left;width:80px;">到期时间：</div>
 							<div style="float:left;" ><span class="license_name">${info.expireTime }</span></div>
 							<input style="float:left;width:150px;" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" class="edit_license_name hidden"/>
@@ -233,10 +297,10 @@
 						<div style="float:left;width:240px;"><div style="float:left;width:80px;">用户状态：</div>
 							<div style="float:left;" class="pay_level"><span <s:if test="%{info.payLevel == 20 || info.payLevel == 40}">style="color:red;"</s:if>>${info.pay_level }</span></div>
 						</div>
-					</div>
+					</div> --%>
 				</div>
 				<s:if test="%{info.level >= 1}">
-					<div style="width:410px;float:left;line-height:25px;font-size:12px;">
+					<%-- <div style="width:410px;float:left;line-height:25px;font-size:12px;">
 						<div class="view_p_button"><strong>名片:</strong></div>
 						<div class="add_card biankuang_gray hand" style="float:left;padding:3px;width:400px;margin:5px 0 0 0;height:20px;">
 							<div style="width:100%;height:20;font-size:16px;text-align: center;line-height:20px;">
@@ -299,12 +363,12 @@
 								</s:iterator>
 							</s:if>
 						</div>
-					</div>
-					<div style="width:400px;float:left;line-height:25px;font-size:16px;">
-						<div class="view_p_button"><strong>下载信息:</strong></div>
-					</div>
+					</div> --%>
+					
+					
 					<s:if test="%{info.downloads != null && info.downloads.size > 0}">
-						<s:iterator value="info.downloads">
+					<div id="download_view_${info.userId }"  style="display:none">
+						<s:iterator value="info.downloads" >
 							<div class="view_p_content biankuang_gray_ding">
 								<div style="margin-left:10px;width:165px;float:left;">ID：${id }</div>
 								<div style="margin-left:5px;width:170px;float:left;">Agent：${agentName }</div>
@@ -312,12 +376,13 @@
 								<div style="margin-left:5px;width:170px;float:left;">时间：${downloadTime }</div>
 							</div>
 						</s:iterator>
+					</div>
 					</s:if>
 					<div style="width:400px;float:left;line-height:25px;font-size:16px;">
 						<div class="view_p_button"><strong>添加应用信息:</strong></div>
 					</div>
-					<s:if test="%{info.apps != null && info.apps.size > 0}">
-						<s:iterator value="info.apps">
+					<s:if test="%{userGroups.apps != null && userGroups.apps.size > 0}">
+						<s:iterator value="userGroups.apps">
 							<div class="view_p_content biankuang_gray_ding" val="${appId }">
 								<div style="margin-left:10px;width:165px;float:left;">ID：${appId }</div>
 								<div style="margin-left:5px;width:170px;float:left;">时间：${createTime }</div>
@@ -351,8 +416,8 @@
 					</div>
 				</div>
 				<div id="calls" style="width:410px;height:300px;">
-					<s:if test="%{info.calls != null && info.calls.size > 0}">
-					<s:iterator value="info.calls">
+					<s:if test="%{userGroups.calls != null && userGroups.calls.size > 0}">
+					<s:iterator value="userGroups.calls">
 						<div class="view_p_content biankuang_gray_ding">
 							<div style="margin-left:5px;width:175px;float:left;">操作:${adminName }</div>
 							<div style="margin-left:5px;width:180px;float:left;">时间:${callTime }</div>
@@ -388,8 +453,8 @@
 					</div>
 				</div>
 				<div id="mails" style="overflow:scroll;width:430px;max-height:300px">
-					<s:if test="%{info.mails != null && info.mails.size > 0}">
-						<s:iterator value="info.mails">
+					<s:if test="%{userGroups.mails != null && userGroups.mails.size > 0}">
+						<s:iterator value="userGroups.mails">
 							<div class="view_p_content biankuang_gray_ding">
 								<div style="margin-left:5px;width:170px;float:left;">操作者：${adminName }</div>
 								<div style="margin-left:5px;width:180px;float:left;">时间：${sendTime }</div>
@@ -426,7 +491,7 @@
 				<div style="width:250px;float:left;margin:30px 0 0 10px;font-size:12px; " class="biankuang_gray_ding">
 					<div style="width:100%;height:20px;margin:5px 0 0 10px;font-size:14px;">任务:</div>
 					<div style="100%">
-						<s:iterator value="info.pushs">
+						<s:iterator value="userGroups.pushs">
 							<div style="<s:if test='%{point}'>color:red;</s:if>border-top: 1px solid #9BA0AF;width:230px;margin-left:10px;height:30px;line-height:30px;">
 								<div style="float:left;width:60px;">
 									<s:if test="%{type == 1}">未激活</s:if>
@@ -499,7 +564,7 @@
 			<div style="width:250px;float:left;padding-bottom: 40px;margin:0 0 0 10px;font-size:14px;">
 				<div  id="right_side" style="margin:10px 0 0 0;width:250px;height:800px;" class="biankuang_gray_ding">
 					<s:if test="%{info.tag != null}">
-						<input id="view_tag_id" class="hidden"  value="${info.tag.id}"/>
+						<input id="view_tag_id" class="hidden"  value="${userGroups.tag.id}"/>
 						<div id="view_edit_tag" style="width:230px;line-height:30px;">
 							<div style="width:230px;height:20px;margin:15px 0 0 15px;">
 								<div style="float:left;width:60px;">注册：</div>
@@ -512,15 +577,15 @@
 							<div style="width:230px;height:20px;margin:15px 0 0 15px;">
 								<div style="float:left;width:80px;">用户状态：</div>
 								<div style="float:left;width:120px;" class="group_edit_1">
-									<s:if test="%{info.group == null}">
+									<s:if test="%{userGroups.group == null}">
 										<input val="0" type="button" class="group_area_1 biankuang_white_ding hand" style="float:left;width:110px;height:23px;line-height:20px;" value="状态未知"/>
 									</s:if>
 									<s:else>
-										<s:if test="%{info.groupFather != null}">
-											<input val="${info.groupFather.id }" type="button" class="group_area_1 biankuang_white_ding hand" style="float:left;width:110px;height:23px;line-height:20px;" value="${info.groupFather.name}"/>
+										<s:if test="%{userGroups.groupFather != null}">
+											<input val="${userGroups.groupFather.id }" type="button" class="group_area_1 biankuang_white_ding hand" style="float:left;width:110px;height:23px;line-height:20px;" value="${userGroups.groupFather.name}"/>
 										</s:if>
 										<s:else>
-											<input val="${info.group.id }" type="button" class="group_area_1 biankuang_white_ding hand" style="float:left;width:110px;height:23px;line-height:20px;" value="${info.group.name}"/>
+											<input val="${userGroups.group.id }" type="button" class="group_area_1 biankuang_white_ding hand" style="float:left;width:110px;height:23px;line-height:20px;" value="${userGroups.group.name}"/>
 										</s:else>
 									</s:else>
 								</div>
@@ -528,8 +593,8 @@
 							<div style="width:230px;height:20px;margin:15px 0 0 15px;">
 								<div style="float:left;width:80px;">状态分类：</div>
 								<div style="float:left;width:120px;" class="group_edit_2">
-									<s:if test="%{info.groupFather != null}">
-										<input type="button" class="group_area_2 biankuang_white_ding hand" style="float:left;width:110px;height:23px;line-height:20px;" value="${info.group.name}"/>
+									<s:if test="%{userGroups.groupFather != null}">
+										<input type="button" class="group_area_2 biankuang_white_ding hand" style="float:left;width:110px;height:23px;line-height:20px;" value="${userGroups.group.name}"/>
 									</s:if>
 									<s:else>
 										<input type="button" class="group_area_2 biankuang_white_ding hand" style="float:left;width:110px;height:23px;line-height:20px;" value="无"/>
@@ -542,7 +607,7 @@
 								<div style="float:left;width:180px;">
 									<s:iterator value="METRIC">
 										<s:if test="%{id > 0}">
-											<s:if test="%{info.tag.metric == id}">
+											<s:if test="%{userGroups.tag.metric == id}">
 												<input id="view_edit_tag_metric_${id}" type="button" class="view_edit_tag_metric biankuang_blue_ding hand" style="margin: 5px 0 0 5px;width:50px;height:20px;line-height:18px;" value="${name}"/>
 											</s:if>
 											<s:else>
@@ -587,30 +652,30 @@
 								<div style="float:left;width:60px;">来源：</div>
 								<div style="float:left;width:170px;color:#4F4F4F;">
 									<div style="width:120px;" id="view_edit_tag_from">
-										<s:if test="%{info.tag.from==0}">未填写</s:if>
-										<s:if test="%{info.tag.from == 1}">搜索</s:if>
-										<s:if test="%{info.tag.from == 2}">朋友介绍</s:if>
-										<s:if test="%{info.tag.from == 3}">展会</s:if>
-										<s:if test="%{info.tag.from == 4}">媒体</s:if>
-										<s:if test="%{info.tag.from==5}">QQ群</s:if>
-										<s:if test="%{info.tag.from == 6}">微博</s:if>
-										<s:if test="%{info.tag.from == 7}">微信</s:if>
-										<s:if test="%{info.tag.from == 8}">邮件</s:if>
-										<s:if test="%{info.tag.from == 9}">论坛</s:if>
-										<s:if test="%{info.tag.from == 10}">开发者平台</s:if>
+										<s:if test="%{userGroups.tag.from==0}">未填写</s:if>
+										<s:if test="%{userGroups.tag.from == 1}">搜索</s:if>
+										<s:if test="%{userGroups.tag.from == 2}">朋友介绍</s:if>
+										<s:if test="%{userGroups.tag.from == 3}">展会</s:if>
+										<s:if test="%{userGroups.tag.from == 4}">媒体</s:if>
+										<s:if test="%{userGroups.tag.from==5}">QQ群</s:if>
+										<s:if test="%{userGroups.tag.from == 6}">微博</s:if>
+										<s:if test="%{userGroups.tag.from == 7}">微信</s:if>
+										<s:if test="%{userGroups.tag.from == 8}">邮件</s:if>
+										<s:if test="%{userGroups.tag.from == 9}">论坛</s:if>
+										<s:if test="%{userGroups.tag.from == 10}">开发者平台</s:if>
 									</div>
 									<select class="hand hidden" style="width:120px;" id="view_edit_tag_from_val">
-										<option value="0" <s:if test="%{info.tag.from==0}">selected = "selected" </s:if>>不确定</option>
-										<option value="1" <s:if test="%{info.tag.from==1}">selected = "selected" </s:if>>搜索</option>
-										<option value="2" <s:if test="%{info.tag.from==2}">selected = "selected" </s:if>>朋友介绍</option>
-										<option value="3" <s:if test="%{info.tag.from==3}">selected = "selected" </s:if>>展会</option>
-										<option value="4" <s:if test="%{info.tag.from==4}">selected = "selected" </s:if>>媒体</option>
-										<option value="5" <s:if test="%{info.tag.from==5}">selected = "selected" </s:if>>QQ群</option>
-										<option value="6" <s:if test="%{info.tag.from==6}">selected = "selected" </s:if>>微博</option>
-										<option value="7" <s:if test="%{info.tag.from==7}">selected = "selected" </s:if>>微信</option>
-										<option value="8" <s:if test="%{info.tag.from==8}">selected = "selected" </s:if>>邮件</option>
-										<option value="9" <s:if test="%{info.tag.from==9}">selected = "selected" </s:if>>论坛</option>
-										<option value="10" <s:if test="%{info.tag.from==10}">selected = "selected" </s:if>>开发者平台</option>
+										<option value="0" <s:if test="%{userGroups.tag.from==0}">selected = "selected" </s:if>>不确定</option>
+										<option value="1" <s:if test="%{userGroups.tag.from==1}">selected = "selected" </s:if>>搜索</option>
+										<option value="2" <s:if test="%{userGroups.tag.from==2}">selected = "selected" </s:if>>朋友介绍</option>
+										<option value="3" <s:if test="%{userGroups.tag.from==3}">selected = "selected" </s:if>>展会</option>
+										<option value="4" <s:if test="%{userGroups.tag.from==4}">selected = "selected" </s:if>>媒体</option>
+										<option value="5" <s:if test="%{userGroups.tag.from==5}">selected = "selected" </s:if>>QQ群</option>
+										<option value="6" <s:if test="%{userGroups.tag.from==6}">selected = "selected" </s:if>>微博</option>
+										<option value="7" <s:if test="%{userGroups.tag.from==7}">selected = "selected" </s:if>>微信</option>
+										<option value="8" <s:if test="%{userGroups.tag.from==8}">selected = "selected" </s:if>>邮件</option>
+										<option value="9" <s:if test="%{userGroups.tag.from==9}">selected = "selected" </s:if>>论坛</option>
+										<option value="10" <s:if test="%{userGroups.tag.from==10}">selected = "selected" </s:if>>开发者平台</option>
 									</select>
 								</div>
 							</div>
@@ -619,10 +684,10 @@
 								<%-- <div style="float:left;width:170px;">${info.tag.lou.name}</div> --%>
 								<div style="float:left;width:170px;color:#4F4F4F;">
 									<div style="width:120px;" id="view_edit_tag_province">
-										<s:if test="%{info.tag.province==0}">未填写</s:if>
+										<s:if test="%{userGroups.tag.province==0}">未填写</s:if>
 										<s:else>
 											<s:iterator value="PROVINCE">
-											<s:if test="%{info.tag.province == id}">
+											<s:if test="%{userGroups.tag.province == id}">
 												${name}
 											</s:if>
 										</s:iterator>
@@ -630,7 +695,7 @@
 									</div>
 									<select class="hand hidden" style="width:120px;" id="view_edit_tag_province_val">
 										<s:iterator value="PROVINCE">
-											<s:if test="%{info.tag.province == id}">
+											<s:if test="%{userGroups.tag.province == id}">
 												<option  selected = "selected" value="${id}">${name}</option>
 											</s:if>
 											<s:else>
@@ -645,10 +710,10 @@
 								<%-- <div style="float:left;width:170px;">${info.tag.lou.name}</div> --%>
 								<div style="float:left;width:170px;color:#4F4F4F;">
 									<div style="width:120px;" id="view_edit_tag_person">
-										<s:if test="%{info.tag.person==0}">未填写</s:if>
+										<s:if test="%{userGroups.tag.person==0}">未填写</s:if>
 										<s:else>
 											<s:iterator value="PERSON">
-											<s:if test="%{info.tag.person == id}">
+											<s:if test="%{userGroups.tag.person == id}">
 												${name}
 											</s:if>
 										</s:iterator>
@@ -656,7 +721,7 @@
 									</div>
 									<select class="hand hidden" style="width:120px;" id="view_edit_tag_person_val">
 										<s:iterator value="PERSON">
-											<s:if test="%{info.tag.person == id}">
+											<s:if test="%{userGroups.tag.person == id}">
 												<option  selected = "selected" value="${id}">${name}</option>
 											</s:if>
 											<s:else>
@@ -696,10 +761,10 @@
 								<div style="float:left;width:60px;">融资：</div>
 								<div style="float:left;width:170px;color:#4F4F4F;">
 									<div style="width:120px;" id="view_edit_tag_rongzi">
-										<s:if test="%{info.tag.rongzi == 0}">未定义</s:if>
+										<s:if test="%{userGroups.tag.rongzi == 0}">未定义</s:if>
 										<s:else>
 											<s:iterator value="RONGZI">
-												<s:if test="%{info.tag.rongzi == id}">
+												<s:if test="%{userGroups.tag.rongzi == id}">
 													${name}
 												</s:if>
 											</s:iterator>
@@ -707,7 +772,7 @@
 									</div>
 									<select class="hand hidden" style="width:120px;" id="view_edit_tag_rongzi_val">
 										<s:iterator value="RONGZI">
-											<s:if test="%{info.tag.rongzi == id}">
+											<s:if test="%{userGroups.tag.rongzi == id}">
 												<option  selected = "selected" value="${id}">${name}</option>
 											</s:if>
 											<s:else>
@@ -721,10 +786,10 @@
 								<div style="float:left;width:60px;">分类：</div>
 								<div style="float:left;width:170px;color:#4F4F4F;">
 									<div style="width:120px;" id="view_edit_tag_category">
-										<s:if test="%{info.tag.category == 0}">未填写</s:if>
+										<s:if test="%{userGroups.tag.category == 0}">未填写</s:if>
 										<s:else>
 											<s:iterator value="CATEGORY">
-												<s:if test="%{info.tag.category == id}">
+												<s:if test="%{userGroups.tag.category == id}">
 													${name}
 												</s:if>
 											</s:iterator>
@@ -732,7 +797,7 @@
 									</div>
 									<select class="hand hidden" style="width:120px;" id="view_edit_tag_category_val">
 										<s:iterator value="CATEGORY">
-											<s:if test="%{info.tag.category == id}">
+											<s:if test="%{userGroups.tag.category == id}">
 												<option  selected = "selected" value="${id}">${name}</option>
 											</s:if>
 											<s:else>
@@ -746,10 +811,10 @@
 								<div style="float:left;width:60px;">平台：</div>
 								<div style="float:left;width:170px;color:#4F4F4F;">
 									<div style="width:120px;" id="view_edit_tag_fuwuqi">
-										<s:if test="%{info.tag.fuwuqi == 0}">未选择</s:if>
+										<s:if test="%{userGroups.tag.fuwuqi == 0}">未选择</s:if>
 										<s:else>
 											<s:iterator value="FUWUQI">
-												<s:if test="%{info.tag.fuwuqi == id}">
+												<s:if test="%{userGroups.tag.fuwuqi == id}">
 													${name}
 												</s:if>
 											</s:iterator>
@@ -757,7 +822,7 @@
 									</div>
 									<select class="hand hidden" style="width:120px;" id="view_edit_tag_fuwuqi_val">
 										<s:iterator value="FUWUQI">
-											<s:if test="%{info.tag.fuwuqi == id}">
+											<s:if test="%{userGroups.tag.fuwuqi == id}">
 												<option  selected = "selected" value="${id}">${name}</option>
 											</s:if>
 											<s:else>
@@ -771,12 +836,12 @@
 								<div style="float:left;width:150px;">简介：</div>
 							</div>
 							<div style="margin-left:15px;float:left;width:220px;font-size:12px;height:200px;">
-								<s:if test="%{info.tag.description != null && info.tag.description.length() > 0}">
+								<s:if test="%{userGroups.tag.description != null && userGroups.tag.description.length() > 0}">
 									<div style="width:190px;margin-left:15px;color:#4F4F4F;" id="view_edit_tag_description">
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${info.tag.description}</div>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${userGroups.tag.description}</div>
 								</s:if>
 								<s:else><div style="width:190px;margin-left:15px;color:#4F4F4F;" id="view_edit_tag_description">未填写</div></s:else>
-								<textarea style="height:80px;width:200px;" class="hidden" id="view_edit_tag_description_val">${info.tag.description}</textarea>
+								<textarea style="height:80px;width:200px;" class="hidden" id="view_edit_tag_description_val">${userGroups.tag.description}</textarea>
 							</div>
 						</div>
 					</s:if>
@@ -966,6 +1031,8 @@
 	<script type="text/javascript">
 	
 		  $("#sendcloudbtn").click(function(){
+			  
+		  
 		  	var email = $("#email").html();
 			if(email==null){
 				email =  $(".email_name").html();

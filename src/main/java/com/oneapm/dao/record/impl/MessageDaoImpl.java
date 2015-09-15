@@ -191,8 +191,13 @@ public class MessageDaoImpl extends DaoImplBase<Admin> {
                         Long id = Long.parseLong(object.get("id").toString().trim());
                         Long from = Long.parseLong(object.get("from").toString().trim());
                         Long to = Long.parseLong(object.get("to").toString().trim());
-                        Long infoId = Long.parseLong(object.get("info_id").toString().trim());
+                        Long infoId = null;
+                        try {
+                        	infoId = Long.parseLong(object.get("info_id").toString().trim());
+	                    } catch (Exception e) {
+	                    }
                         int status = Integer.parseInt(object.get("status").toString().trim());
+                        Long groupId = Long.parseLong(object.get("group_id").toString().trim());
                         String viewTime = null;
                         try {
                                 viewTime = object.get("view_time").toString().trim();
@@ -206,6 +211,7 @@ public class MessageDaoImpl extends DaoImplBase<Admin> {
                         int type = Integer.parseInt(object.get("type").toString().trim());
                         String createTime = object.get("create_time").toString();
                         message = new Message(id, from, to, status, infoId, createTime, viewTime, closeTime, type);
+                        message.setGroupId(groupId);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

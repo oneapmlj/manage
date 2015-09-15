@@ -42,6 +42,9 @@ public class TaskService extends OneTools {
         public static List<MailPush> findByInfoId(Long infoId) {
                 return MailPushDaoImpl.getInstance().findByInfoId(infoId);
         }
+        public static List<MailPush> findByGroupId(Long groupId) {
+            return MailPushDaoImpl.getInstance().findByGroupId(groupId);
+    }
 
         public static MailPush findByInfoIdAdminType(Long infoId, Long adminId, int type) {
                 return MailPushDaoImpl.getInstance().findByInfoIdAdminType(infoId, adminId, type);
@@ -50,6 +53,9 @@ public class TaskService extends OneTools {
         public static boolean touch(Long infoId, Long adminId, String touchTime) {
                 return MailPushDaoImpl.getInstance().touch(infoId, adminId, touchTime);
         }
+        public static boolean touchByGroupId(Long groupId, Long adminId, String touchTime) {
+            return MailPushDaoImpl.getInstance().touchByGroupId(groupId, adminId, touchTime);
+    }
 
         public static String pass(Long id, Admin admin, Admin adm) {
                 try {

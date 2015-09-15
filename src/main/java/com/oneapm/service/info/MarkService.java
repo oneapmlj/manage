@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.info.impl.MarkDaoImpl;
+import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.info.Mark;
+import com.oneapm.service.group.UserGroupService;
 import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
 
@@ -19,13 +21,16 @@ public class MarkService {
         public static Mark findByAdminIdAndInfoId(Long adminId, Long infoId) {
                 return MarkDaoImpl.getInstance().findAdminIdAndInfoId(adminId, infoId);
         }
+        public static Mark findByAdminIdAndGroupId(Long adminId, Long infoId) {
+            return MarkDaoImpl.getInstance().findAdminIdAndGroupId(adminId, infoId);
+        }
 
         public static List<Mark> findByAdminId(Long adminId) {
                 List<Mark> marks = MarkDaoImpl.getInstance().findByAdminId(adminId);
                 if (marks != null && marks.size() > 0) {
                         for (Mark mark : marks) {
-                                Info info = InfoService.findByIdSimple(mark.getInfoId());
-                                mark.setProjectName(info.getCompany());
+                                UserGroups userGroups = UserGroupService.findByGroupIdSingle(mark.getGroupId());
+                                mark.setProjectName(userGroups.getGroupName());
                         }
                 }
                 return marks;
