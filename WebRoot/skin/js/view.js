@@ -411,10 +411,11 @@ $(document).ready(function() {
 		$(".click_save_project_name").removeClass("click_save_project_name");
 		$(".click_edit_project_name").html("编辑");
 		var id = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_edit.action',
-			data:{id:id,project:project}
+			url:'user_group_edit.action',
+			data:{groupId:groupId,project:project}
 		}).done(function(da){
 			if(da.status == 1){
 				$(".edit_project_name").addClass("hidden");

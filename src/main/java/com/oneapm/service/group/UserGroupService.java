@@ -5,20 +5,19 @@ import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
 import com.oneapm.dao.group.impl.UserGroupDaoImpl;
-import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Zhengzailianxi;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.group.Group;
 import com.oneapm.dto.group.GroupView;
 import com.oneapm.dto.info.Guanlian;
-import com.oneapm.dto.info.Info;
 import com.oneapm.record.MailPush;
 import com.oneapm.service.account.AccountService;
-import com.oneapm.service.card.CardService;
 import com.oneapm.service.info.AppService;
 import com.oneapm.service.info.GuanlianService;
 import com.oneapm.service.info.KFService;
@@ -28,10 +27,12 @@ import com.oneapm.service.info.TaskService;
 import com.oneapm.service.info.ZhengzailianxiService;
 import com.oneapm.service.mail.MailService;
 import com.oneapm.service.show.CallService;
+import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
 import com.oneapm.dto.UserGroup;
 
-public class UserGroupService {
+public class UserGroupService extends OneTools{
+	protected static final Logger LOG = LoggerFactory.getLogger(UserGroupService.class);
 	public static UserGroups findGroupsById(Long admin_id){
 		return UserGroupsDaoImpl.getInstance().findByAdminId(admin_id);
 	}
@@ -40,7 +41,7 @@ public class UserGroupService {
 	}
 	
     public static UserGroups findByGroupId(Long groupId, Admin admin) {
-    	UserGroups userGroups = UserGroupsDaoImpl.getInstance().findByAdminId(groupId);
+    	UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(groupId);
         if (userGroups != null) {
                 try{
                         Zhengzailianxi zhengzailianxi = ZhengzailianxiService.findByGroupId(userGroups.getGroupId());
@@ -179,7 +180,8 @@ public class UserGroupService {
         	  userGroups.setPreSaleName(AccountService.findById(userGroups.getPreSale()).getName());
           }
   }
-	  public static JSONArray getArrayFromUserGroups(List<UserGroups> groups) {
+	  @SuppressWarnings("unchecked")
+	public static JSONArray getArrayFromUserGroups(List<UserGroups> groups) {
 	                JSONArray array = new JSONArray();
 	                if (groups == null || groups.size() <= 0) {
 	                        return array;
@@ -218,5 +220,28 @@ public class UserGroupService {
 	                }
 	                return value;
 	        }
-
+	        public static String edit(Long groupId, String project,  String email,  Admin admin) {
+                try {
+                        if (groupId == null || groupId <= 0) {
+                                return OneTools.getResult(0, "参数错误");
+                        }
+                        UserGroups userGroups = findByGroupIdSimple(groupId);
+                        if (project != null && project.trim().length() > 0) {
+                        	userGroups.setProject(project);
+                        }
+                        List<String> args1 = new ArrayList<String>();
+                        List<Object> args2 = new ArrayList<Object>();
+                        args1.add("project");
+                        args2.add(userGroups.getProject());
+                        if (update(userGroups)) {
+                                return getResult(1, args1, args2);
+                        }
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return getResult(0, "服务器内部错误");
+        }
+	        public static boolean update(UserGroups userGroups) {
+                return UserGroupsDaoImpl.getInstance().update(userGroups);
+        }
 }

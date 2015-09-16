@@ -53,6 +53,7 @@ public class UserGroupAction extends SupportAction{
      private boolean add_call_point;
      private Long cardId;
      private Long recordType;
+     private String project;
      public String view() {
          if (!isLogin()) {
                  return "login";
@@ -77,7 +78,36 @@ public class UserGroupAction extends SupportAction{
          userGroups.setUserGroups(userGroupList);
          return "view";
  }
-     
+     public void edit() throws IOException {
+         if (!isLogin()) {
+                 getServletResponse().sendRedirect("/login.action");
+                 return;
+         }
+         try {
+//                 if (qq != null) {
+//                         qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
+//                 }
+                 if (project != null) {
+                         project = new String(project.getBytes("ISO8859-1"), "UTF-8");
+                 }
+//                 if (name != null) {
+//                         name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                 }
+//                 if (phone != null) {
+//                         phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
+//                 }
+//                 if (email != null) {
+//                         email = new String(email.getBytes("ISO8859-1"), "UTF-8");
+//                 }
+//                 if (license != null) {
+//                         license = new String(license.getBytes("ISO8859-1"), "UTF-8");
+//                 }
+                 String result = UserGroupService.edit(groupId, project, email,  getAdmin());
+                 getServletResponse().getWriter().print(result);
+         } catch (Exception e) {
+                 LOG.error(e.getMessage(), e);
+         }
+ }
      
      public String onlianxi(){
          if (!isLogin()) {
@@ -433,7 +463,13 @@ public class UserGroupAction extends SupportAction{
 	public void setGuanlian(Long guanlian) {
 		this.guanlian = guanlian;
 	}
-
+	public String getProject() {
+		return project;
+	}
+	public void setProject(String project) {
+		this.project = project;
+	}
+	
 
 	
 	

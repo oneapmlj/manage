@@ -138,50 +138,51 @@
 		<div style="width:1150px;margin-left: auto;margin-right: auto;">
 			<div class="view_info biankuang_gray_ding" style="margin-top:30px;width:1120px;margin-left:10px;float:left;line-height:25px;font-size:16px;">
 				<div style="margin-left:20px;width:380px;float:left;">公司：<span>${userGroups.groupName }</span></div>
-				<div style="float:left;width:340px;"><div style="float:left;width:48px;">项目：</div>
-					<div style="float:left;"><span class="project_name">${userGroups.groupName }</span></div>
+				<div style="float:left;width:280px;"><div style="float:left;width:48px;">项目：</div>
+					<div style="float:left;"><span class="project_name">${userGroups.project }</span></div>
+					
+					<input style="float:left;" class="edit_project_name hidden"/>
+					
 				</div>
+				<div style="float:left;font-size:14px;width:60px" class="blue hand click_edit_project_name">编辑</div>
 				<div style="float:left;width:340px;"><div style="float:left;width:48px;">姓名：</div>
 					<div style="float:left;" ><span class="name_name">${info.name }</span></div>
 					<input style="float:left;margin-top:3px;" class="edit_name_name hidden"/>
 				</div>
 				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:90px;">Groug_ID：</div>
-					<div style="float:left;"><span class="project_name" id="group_id">${userGroups.groupId }</span></div>
-					<input style="float:left;margin-top:3px;" class="edit_name_name hidden"/>
-				</div>
-				<div style="float:left;width:340px;"><div style="float:left;width:48px;">激活：</div>
-					<div style="float:left;"><span class="project_name">
-					<s:if test="%{userGroup.deleted == 0}">是</s:if>
-							<s:else>否</s:else>
-					</span></div>
+					<div style="float:left;"><span  id="group_id">${userGroups.groupId }</span></div>
+					
 				</div>
 				<div style="float:left;width:340px;"><div style="float:left;width:80px;">用户状态：</div>
-					<div style="float:left;"><span class="project_name"></span></div>
+					<div style="float:left;"><div style="float:left;"><span >
+					<s:if test="%{deleted == 0}">存在</s:if>
+					<s:else>已删除</s:else>
+					</span></div></div>
+				</div>
+				<div style="float:left;width:340px;"><div style="float:left;width:90px;">Parent_ID：</div>
+					<div style="float:left;"><span>
+					<s:if test="%{userGroups.parentId == 0}">无</s:if>
+					<s:else><a href="http://manage.oneapm.com/user_group_view.action?id=${userGroups.parentId }">${userGroups.parentId }</a></s:else>
+					</span></div>
 				</div>
 				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:48px;">邮箱：</div>
 					<div style="float:left;" ><span class="name_name">${userGroups.userGroups[0].email }</span></div>
 					<input style="float:left;margin-top:3px;" class="edit_name_name hidden"/>
 				</div>
 				<div style="float:left;width:340px;"><div style="float:left;width:80px;">到期时间：</div>
-					<div style="float:left;"><span class="project_name">${userGroups.expireTime }</span></div>
+					<div style="float:left;"><span >${userGroups.expireTime }</span></div>
 				</div>
 				
-				<div style="float:left;width:340px;"><div style="float:left;width:90px;">Parent_ID：</div>
-					<div style="float:left;"><span class="project_name">
-					<s:if test="%{userGroup.parentId == 0}">无</s:if>
-							<s:else><input type="button" value="跳转"/></s:else>
-					
-					</span></div>
-				</div>
+				
 		
 			</div>
 			
 			<div style="width:400px;margin-left:10px;float:left;padding-bottom: 40px;">
 				<div class="view_info biankuang_gray_ding" style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">
 				<s:if test="%{infos != null && infos.size > 0}">
-					<div >
+					<div  >
 						<s:iterator value="infos" >
-								
+					<div>			
 						
 					<%-- <div style="margin-left:20px;width:380px;float:left;">公司：<span>${info.company }</span></div>
 					<div style="margin-left:20px;width:380px;float:left;">
@@ -272,6 +273,7 @@
 					</div>
 					<div style="width:400px;float:left;line-height:25px;font-size:16px;">
 						<div style="margin-left:20px;width:300px;float:left;">下载信息:<a href="javascript:showAll();" style="font-size:14px;color:blue;">  显示全部</a></div>
+					</div>
 					</div>
 					</s:iterator>
 					</div>

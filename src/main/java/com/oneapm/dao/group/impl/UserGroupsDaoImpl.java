@@ -35,7 +35,7 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group>{
 	                object.put("admin_id", admin_id);
 	                DBCursor cursor= getDBCollection(TABLE_NAME).find(object);
 	                if(cursor.hasNext()){
-	                        return findUserGroupsByObject(cursor.next());
+	                        return findComplicatedGroupsByObject(cursor.next());
 	                }
 	        }catch(Exception e){
 	                LOG.error(e.getMessage(), e);
@@ -103,29 +103,106 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group>{
  }
 	
 	private UserGroups findComplicatedGroupsByObject(DBObject object){
-	      try{
-	              Long groupId = Long.parseLong(object.get("group_id").toString());
-	              Long parentId = Long.parseLong(object.get("parent_id").toString());
-	              int deleted = Integer.parseInt(object.get("deleted").toString());
-	              String groupName = object.get("group_name").toString();
-	              Long adminId = Long.parseLong(object.get("admin_id").toString());
-	              Long sale = Long.parseLong(object.get("sale").toString());
-	              Long support = Long.parseLong(object.get("support").toString());
-	              Long preSale = Long.parseLong(object.get("preSale").toString());
-	              int payLevel = Integer.parseInt(object.get("payLevel").toString());
-	              String payTime = object.get("payTime").toString();
-	              String comming = object.get("comming").toString();
-	              int emailStatus = Integer.parseInt(object.get("emailStatus").toString());
-	              String contectTime = object.get("contectTime").toString();
-	              String createTime = object.get("create_time").toString();
-	              UserGroups userGroups = new UserGroups( groupId,  adminId,  groupName,  parentId,  deleted,  sale,  support,
+		UserGroups userGroups = null;
+	      try{	  
+				  Long groupId = null;
+				  try {
+					  groupId = Long.parseLong(object.get("group_id").toString());
+				  } catch (Exception e) {
+				  }
+				  Long parentId = null;
+				  try {
+					  parentId = Long.parseLong(object.get("parent_id").toString());
+				  } catch (Exception e) {
+				  }
+				  Long adminId = null;
+				  try {
+					  adminId = Long.parseLong(object.get("admin_id").toString());
+				  } catch (Exception e) {
+				  }
+				  Long sale  = null;
+				  try {
+					  sale = Long.parseLong(object.get("sale").toString());
+				  } catch (Exception e) {
+				  }
+				  Long support = null;
+				  try {
+					  support = Long.parseLong(object.get("support").toString());
+				  } catch (Exception e) {
+				  }
+				  Long preSale = null;
+				  try {
+					  preSale = Long.parseLong(object.get("preSale").toString());
+				  } catch (Exception e) {
+				  }
+				  int deleted = 0;
+				  try {
+					  deleted = Integer.parseInt(object.get("deleted").toString());
+				  } catch (Exception e) {
+				  }
+				  String groupName = null;
+				  try {
+					  groupName = object.get("group_name").toString();
+				  } catch (Exception e) {
+				  }
+				  int payLevel = 0;
+				  try {
+					  payLevel = Integer.parseInt(object.get("payLevel").toString());
+				  } catch (Exception e) {
+				  }
+				  String payTime = null;
+				  try {
+					  payTime = object.get("payTime").toString();
+				  } catch (Exception e) {
+				  }
+				  String comming = null;
+				  try {
+					  comming = object.get("comming").toString();
+				  } catch (Exception e) {
+				  }
+				  int emailStatus = 0;
+				  try {
+					  emailStatus = Integer.parseInt(object.get("emailStatus").toString());
+				  } catch (Exception e) {
+				  }
+				  String contectTime = null;
+				  try {
+					  contectTime = object.get("contectTime").toString();
+				  } catch (Exception e) {
+				  }
+				  String createTime = null;
+				  try {
+					  createTime = object.get("createTime").toString();
+				  } catch (Exception e) {
+				  }
+				  String project = null;
+				  try {
+					  project = object.get("project").toString();
+				  } catch (Exception e) {
+				  }
+	              userGroups = new UserGroups( groupId,  adminId,  groupName,  parentId,  deleted,  sale,  support,
 	                                 preSale,  payLevel,  payTime,  comming,  emailStatus,  contectTime);
 	              userGroups.setCreateTime(createTime);
+	              userGroups.setProject(project);
 	              return userGroups;
 	      }catch(Exception e){
 	              LOG.error(e.getMessage(), e);
 	      }
-	      return null;
+	      return userGroups;
 	}
-	
+		 public boolean update(UserGroups userGroups) {
+	         try {
+	                 DBObject object = new BasicDBObject();
+	                 object.put("group_id", userGroups.getGroupId());
+	                 DBObject value = new BasicDBObject();
+	                 if (userGroups.getGroupId() != null && userGroups.getGroupId() > 0) {
+	                         value.put("group_id", userGroups.getGroupId());
+	                 }
+	                 value.put("project", userGroups.getProject());
+	                 return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value)).getN() > -1;
+	         } catch (Exception e) {
+	                 LOG.error(e.getMessage(), e);
+	         }
+	         return false;
+	 }
 }
