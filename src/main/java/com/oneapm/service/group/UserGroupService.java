@@ -3,6 +3,9 @@ package com.oneapm.service.group;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
 import com.oneapm.dao.group.impl.UserGroupDaoImpl;
 import com.oneapm.dao.info.impl.InfoDaoImpl;
@@ -176,4 +179,44 @@ public class UserGroupService {
         	  userGroups.setPreSaleName(AccountService.findById(userGroups.getPreSale()).getName());
           }
   }
+	  public static JSONArray getArrayFromUserGroups(List<UserGroups> groups) {
+	                JSONArray array = new JSONArray();
+	                if (groups == null || groups.size() <= 0) {
+	                        return array;
+	                }
+	                for (UserGroups userGroups : groups) {
+	                        array.add(getJSONFromUserGroups(userGroups));
+	                }
+	                return array;
+	        }
+
+	        @SuppressWarnings("unchecked")
+	        public static JSONObject getJSONFromUserGroups(UserGroups userGroups) {
+	                JSONObject value = new JSONObject();
+	                if (userGroups == null)
+	                        return value;
+	                try {
+	                        value.put("groupId", userGroups.getGroupId());
+	                        value.put("company", userGroups.getGroupName());
+	                        value.put("createTime", userGroups.getCreateTime());
+	                        value.put("project", userGroups.getProject());
+	                        value.put("saleName", userGroups.getSaleName());
+	                        value.put("supportName", userGroups.getSupportName());
+	                        value.put("preSaleName", userGroups.getPreSaleName());
+	                        value.put("comming", userGroups.getComming());
+	                        value.put("contectTime", userGroups.getContectTime());
+	                        if (userGroups.getCalls() != null) {
+	                                value.put("calls", CallService.getArrayFromCall(userGroups.getCalls()));
+	                        }
+	                        if (userGroups.getMails() != null) {
+	                                value.put("mails", MailService.getJSONArrayFromMails(userGroups.getMails()).toString());
+	                        }
+	                        if (userGroups.getTag() != null) {
+	                                value.put("tag", TagService.getJSONFromTagName(userGroups.getTag()));
+	                        }
+	                } catch (Exception e) {
+	                }
+	                return value;
+	        }
+
 }

@@ -47,6 +47,7 @@ public class UserGroups {
         private int daoqi;
         private String pay_level;
         private Mark mark;
+        private String project;
 
         public UserGroups(Long groupId, Long adminId, String groupName, Long parentId, int deleted){
                 setGroupId(groupId);
@@ -296,6 +297,12 @@ public class UserGroups {
                 }
                 public void setCreateTime(String createTime) {
                         this.createTime = createTime;
+                }
+                public String getProject() {
+                        return project;
+                }
+                public void setProject(String project) {
+                        this.project = project;
                 }
 		
         

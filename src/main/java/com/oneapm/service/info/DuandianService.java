@@ -11,6 +11,7 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
 import com.oneapm.dao.info.impl.AppDaoImpl;
 import com.oneapm.dao.info.impl.AppDataDaoImpl;
 import com.oneapm.dao.info.impl.InfoDaoImpl;
@@ -19,10 +20,12 @@ import com.oneapm.dao.opt.impl.DownDaoImpl;
 import com.oneapm.dto.Aplication;
 import com.oneapm.dto.App;
 import com.oneapm.dto.Download;
+import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.lable.Lable;
 import com.oneapm.dto.tag.Language;
+import com.oneapm.service.group.UserGroupService;
 import com.oneapm.service.lable.LableService;
 import com.oneapm.service.mail.DownloadService;
 import com.oneapm.util.OneTools;
@@ -768,14 +771,15 @@ public class DuandianService {
                                         }
                                 }
                         }
-                        List<Info> infos = new ArrayList<Info>();
+//                        List<Info> infos = new ArrayList<Info>();
+                        List<UserGroups> groups = new ArrayList<UserGroups>();
                         try{
                                 //有数据查询，（无数据，独立用户，登录，版本，语言）
                                 if(data > 0){
                                         List<Aplication> aplications = AppService.findAplicationByAgent(agent, dataStart, banben, dataEnd);
                                         if(aplications.size() <= 0){
                                                 args1.add("infos");
-                                                args2.add(InfoService.getArrayFromInfos(infos));
+//                                                args2.add(InfoService.getArrayFromInfos(infos));
                                                 return OneTools.getResult(1, args1, args2);
                                         }
                                         for(int i=0;i<aplications.size()-1;i++){
@@ -787,6 +791,12 @@ public class DuandianService {
                                                 }
                                         }
                                         for(int i=0;i<aplications.size();i++){
+                                                UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(aplications.get(i).getUserId());
+                                                if(userGroups == null){
+                                                        aplications.remove(i);
+                                                        i--;
+                                                        continue;
+                                                }
                                                 if(nodata > 0){
                                                         if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(nodataStart, nodataEnd, aplications.get(i).getUserId(), agent)){
                                                                 aplications.remove(i);
@@ -795,7 +805,7 @@ public class DuandianService {
                                                         }
                                                 }
                                                 if(login > 0){
-                                                        if(!LoginDaoImpl.getInstance().exit(loginStart, loginEnd, aplications.get(i).getUserId())){
+                                                        if(!LoginDaoImpl.getInstance().exit(loginStart, loginEnd, userGroups.getAdminId())){
                                                                 aplications.remove(i);
                                                                 i--;
                                                                 continue;
@@ -830,7 +840,8 @@ public class DuandianService {
                                                 }
                                         }
                                         for(Aplication aplication : aplications){
-                                                infos.add(InfoService.findByUserId(aplication.getUserId()));
+                                                groups.add(UserGroupService.findByGroupId(aplication.getUserId(), admin));
+//                                                infos.add(InfoService.findByUserId(aplication.getUserId()));
                                         }
                                 }else{
                                         if(caozuo > 0){
@@ -848,7 +859,7 @@ public class DuandianService {
                                                                                 }
                                                                         }
                                                                         for(Download download: downloads){
-                                                                                infos.add(InfoService.findByUserId(download.getUserId()));
+                                                                                groups.add(UserGroupsDaoImpl.getInstance().findByAdminId(download.getUserId()));
                                                                         }
                                                                 }
                                                                 break;
@@ -864,7 +875,7 @@ public class DuandianService {
                                                                                 }
                                                                         }
                                                                         for(App app : apps){
-                                                                                infos.add(InfoService.findByUserId(app.getUserId()));
+                                                                                groups.add(UserGroupService.findByGroupId(app.getUserId(), admin));
                                                                         }
                                                                 }
                                                                 break;
@@ -880,23 +891,23 @@ public class DuandianService {
                                                                                 }
                                                                         }
                                                                         for(App app : aps){
-                                                                                infos.add(InfoService.findByUserId(app.getUserId()));
+                                                                                groups.add(UserGroupService.findByGroupId(app.getUserId(), admin));
                                                                         }
                                                                 }
                                                                 break;
                                                         default:break;
                                                 }
-                                                for(int i=0;i<infos.size();i++){
+                                                for(int i=0;i<groups.size();i++){
                                                         if(nodata > 0){
-                                                                if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(nodataStart, nodataEnd, infos.get(i).getUserId(), agent)){
-                                                                        infos.remove(i);
+                                                                if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(nodataStart, nodataEnd, groups.get(i).getGroupId(), agent)){
+                                                                        groups.remove(i);
                                                                         i--;
                                                                         continue;
                                                                 }
                                                         }
                                                         if(login > 0){
-                                                                if(!LoginDaoImpl.getInstance().exit(loginStart, loginEnd, infos.get(i).getUserId())){
-                                                                        infos.remove(i);
+                                                                if(!LoginDaoImpl.getInstance().exit(loginStart, loginEnd, groups.get(i).getGroupId())){
+                                                                        groups.remove(i);
                                                                         i--;
                                                                         continue;
                                                                 }
@@ -932,7 +943,7 @@ public class DuandianService {
                                                                                         }
                                                                                 }
                                                                         }
-                                                                        infos.add(InfoService.findByUserId(logins.get(i)));
+                                                                        groups.add(UserGroupsDaoImpl.getInstance().findByAdminId(logins.get(i)));
                                                                 }
                                                         }
                                                 }else{
@@ -944,26 +955,26 @@ public class DuandianService {
                                 LOG.error(e.getMessage(), e);
                                 return OneTools.getResult(0, "服务器错误！");
                         }
-                        if(fuze == 1 && infos.size() > 0){
-                                for(int i=0;i<infos.size();i++){
-                                        Info info = infos.get(i);
-                                        if(!((info.getSale() != null && info.getSale().equals(admin.getId())) || (info.getPreSale() != null && info.getPreSale().equals(admin.getId())) || 
-                                                        (info.getSupport() != null && info.getSupport().equals(admin.getId())))){
-                                                infos.remove(i);
+                        if(fuze == 1 && groups.size() > 0){
+                                for(int i=0;i<groups.size();i++){
+                                        UserGroups userGroups = groups.get(i);
+                                        if(!((userGroups.getSale() != null && userGroups.getSale().equals(admin.getId())) || (userGroups.getPreSale() != null && userGroups.getPreSale().equals(admin.getId())) || 
+                                                        (userGroups.getSupport() != null && userGroups.getSupport().equals(admin.getId())))){
+                                                groups.remove(i);
                                                 i--;
                                         }
                                 }
                         }
-                        if(paixu > 0 && infos.size() > 1){
-                                SortList<Info> sortList = new SortList<Info>();  
+                        if(paixu > 0 && groups.size() > 1){
+                                SortList<UserGroups> sortList = new SortList<UserGroups>();  
                                 switch (paixu) {
-                                        case 1:sortList.Sort(infos, "getCreateTime", null);break;
-                                        case 2:sortList.Sort(infos, "getUserIdPaixu", null);break;
+                                        case 1:sortList.Sort(groups, "getCreateTime", null);break;
+                                        case 2:sortList.Sort(groups, "getUserIdPaixu", null);break;
                                         default:break;
                                 }
                         }
                         args1.add("infos");
-                        args2.add(InfoService.getArrayFromInfos(infos));
+                        args2.add(UserGroupService.getArrayFromUserGroups(groups));
                         return OneTools.getResult(1, args1, args2);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
