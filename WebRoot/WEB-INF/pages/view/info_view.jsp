@@ -178,9 +178,9 @@
 			
 			<div style="width:400px;margin-left:10px;float:left;padding-bottom: 40px;">
 				<div class="view_info biankuang_gray_ding" style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">
-				<s:if test="%{userGroups.userGroups != null && userGroups.userGroups.size > 0}">
+				<s:if test="%{infos != null && infos.size > 0}">
 					<div >
-						<s:iterator value="userGroups.userGroups" >
+						<s:iterator value="infos" >
 								
 						
 					<%-- <div style="margin-left:20px;width:380px;float:left;">公司：<span>${info.company }</span></div>
@@ -262,9 +262,9 @@
 					<div style="margin-left:20px;width:140px;float:left;">
 							<div style="float:left;width:110px;"><div style="float:left;width:48px;">角色：</div>
 								<div style="float:left;" ><span class="gender_name">
-									<s:if test="%{role=='admin'}">admin</s:if>
-									<s:if test="%{role=='manager'}">manager</s:if>
-									<s:if test="%{role=='normal'}">normal</s:if>
+									<s:if test="%{info.role=='admin'}">admin</s:if>
+									<s:if test="%{info.role=='manager'}">manager</s:if>
+									<s:if test="%{info.role=='normal'}">normal</s:if>
 								</span></div>
 								<select style="float:left;margin-top:3px;" class="edit_gender_name hidden">
 								</select>

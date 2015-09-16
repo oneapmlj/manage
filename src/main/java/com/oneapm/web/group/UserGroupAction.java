@@ -65,14 +65,13 @@ public class UserGroupAction extends SupportAction{
          userGroupList = UserGroupService.findUsersByGroupId(userGroups.getGroupId());
          for(UserGroup userGroup : userGroupList ){
          info = InfoService.findByUserId(userGroup.getUserId(), getAdmin());
-        
          if (info != null) {
              if (quanxian(getAdmin().getGrades(), getGRADE().getMap().get(105))) {
                      info.setAssign(1);
                      
              }
          }
-         userGroup.setInfo(info);
+         infos.add(info);
          }
          UserGroupService.initUserGroups(userGroups);
          userGroups.setUserGroups(userGroupList);

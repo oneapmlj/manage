@@ -36,12 +36,12 @@ public class UserGroupDaoImpl extends DaoImplBase<Group>{
 	                DBObject object = new BasicDBObject();
 	                object.put("group_id", groupId);
 	                DBCursor cursor= getDBCollection(TABLE_NAME).find(object);
-	                if(cursor.hasNext()){	                	
+	                while(cursor.hasNext()){	                	
 	                	UserGroup userGroups = findUserGroupsByObject(cursor.next());
 	                	list.add(userGroups);
 	               
 	                }
-	                return list;
+	               
 	        }catch(Exception e){
 	                LOG.error(e.getMessage(), e);
 	        }
