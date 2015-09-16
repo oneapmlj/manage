@@ -97,6 +97,7 @@ public class CallDaoImpl extends DaoImplBase<Call> {
                         value.put("gongdan", call.getGongdan());
                         value.put("time", call.getTime());
                         value.put("todu", call.getTodu());
+                        value.put("group_id", call.getGroupId());
                         if (getDBCollection(TABLE_NAME).insert(value).getN() > -1) {
                                 return call;
                         }

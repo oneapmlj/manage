@@ -178,6 +178,7 @@ public class MessageDaoImpl extends DaoImplBase<Admin> {
                         value.put("status", message.getStatus());
                         value.put("create_time", message.getCreateTime());
                         value.put("type", message.getType());
+                        value.put("group_id", message.getGroupId());
                         return getDBCollection(TABLE_NAME).insert(value).getN() > -1;
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);

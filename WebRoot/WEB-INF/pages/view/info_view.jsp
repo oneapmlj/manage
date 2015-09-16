@@ -452,7 +452,7 @@
 						<strong>发送邮件</strong>
 					</div>
 				</div>
-				<div id="mails" style="overflow:scroll;width:430px;max-height:300px">
+				<%-- <div id="mails" style="overflow:scroll;width:430px;max-height:300px">
 					<s:if test="%{userGroups.mails != null && userGroups.mails.size > 0}">
 						<s:iterator value="userGroups.mails">
 							<div class="view_p_content biankuang_gray_ding">
@@ -467,7 +467,7 @@
 					<s:else>
 						<span>暂无邮件信息</span>
 					</s:else>
-				</div>
+				</div> --%>
 				
 				<div id="sendcloud"  style="overflow:scroll;display:none; width:460px;position:relative;max-height:300px">
 						
@@ -934,7 +934,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="contact"  style="width:440px;float:left;line-height:23px;"><div style="float:left;width:46px;">QQ:</div>
+						<%-- <div class="contact"  style="width:440px;float:left;line-height:23px;"><div style="float:left;width:46px;">QQ:</div>
 							<div style="float:left;"><input id="call_add_qq" style="float:left;width:160px;" type="text" /></div>
 							<div style="float:left;width:46px;margin-left:10px;">姓名:</div>
 							<div style="float:left;"><input id="call_add_name" style="float:left;width:160px;" type="text" /></div>	
@@ -961,7 +961,7 @@
 								</select></div>
 							<div style="float:left;width:46px;margin-left:15px;"">工单:</div>
 							<div style="float:left;"><input id="call_add_gongdan"  style="float:left;width:160px;" type="text" /></div>
-						</div>
+						</div> --%>
 					</div>
 					<div style="margin:5px 0 0 10px;float:left;width:440px;height:">
 						<div class="todu call_add_sale hidden"  style="color:blue;">附带操作：推送销售</div>

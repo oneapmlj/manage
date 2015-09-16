@@ -49,6 +49,9 @@ public class TaskService extends OneTools {
         public static MailPush findByInfoIdAdminType(Long infoId, Long adminId, int type) {
                 return MailPushDaoImpl.getInstance().findByInfoIdAdminType(infoId, adminId, type);
         }
+        public static MailPush findByGroupIdAdminType(Long groupId, Long adminId, int type) {
+            return MailPushDaoImpl.getInstance().findByGroupIdAdminType(groupId, adminId, type);
+    }
 
         public static boolean touch(Long infoId, Long adminId, String touchTime) {
                 return MailPushDaoImpl.getInstance().touch(infoId, adminId, touchTime);
@@ -171,6 +174,23 @@ public class TaskService extends OneTools {
                         LOG.error(e.getMessage(), e);
                 }
         }
+        
+        public static void dealWithGroupId(Long groupId, Long adminId, Long callId) {
+            try {
+                    List<MailPush> pushs = MailPushDaoImpl.getInstance().findByGroupIdAndAdmin(groupId, adminId);
+                    if (pushs.size() <= 0) {
+                            return;
+                    }
+                    for (MailPush push : pushs) {
+                            push.setNumber(push.getNumber() + 1);
+                            if (MailPushDaoImpl.getInstance().update(push)) {
+                                    PushDealDaoImpl.getInstance().insert(new PushDeal(PushDealDaoImpl.getInstance().getIdest(), push.getId(), adminId, 4, TimeTools.format(), null, -1, callId, null));
+                            }
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+    }
 
         public static int mailType(MailPush push) {
                 switch (push.getType()) {
@@ -273,6 +293,21 @@ public class TaskService extends OneTools {
                 push.setFromId(from);
                 return MailPushDaoImpl.getInstance().insert(push);
         }
+        public static boolean insertWithGroupId(Long groupId, Long adminId, int type, String putTime, Long from, boolean point) {
+            MailPush pp = findByGroupIdAdminType(groupId, adminId, type);
+            if (pp != null) {
+                    pp.setPutTime(putTime);
+                    pp.setPoint(point);
+                    MailPushDaoImpl.getInstance().update(pp);
+                    return false;
+            }
+            Long infoId=0l;
+            MailPush push = new MailPush(MailPushDaoImpl.getInstance().getIdest(), TimeTools.format(), 0,
+                            adminId, type, infoId, putTime, 0, TimeTools.format(), 2, 0, null, point);
+            push.setGroupId(groupId);
+            push.setFromId(from);
+            return MailPushDaoImpl.getInstance().insert(push);
+    }
 
         public static MailDto findByTaskType(int type) {
                 int m = 0;

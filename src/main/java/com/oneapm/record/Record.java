@@ -13,7 +13,7 @@ public class Record {
     private Integer loudou;
     private Integer lou;
     private Integer me;
-    
+    private Long groupId;
     public Record(){};
     public Record(Long id, Long adminId, Long infoId, int type, String createTime,Long fromId,
             int status, Integer metric, Integer loudou, int lou, int me){
@@ -95,5 +95,11 @@ public class Record {
     public void setMe(Integer me) {
         this.me = me;
     }
+	public Long getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
     
 }

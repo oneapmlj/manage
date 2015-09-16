@@ -29,6 +29,8 @@ public class Call {
         private Long gongdan;
 
         private int todu;
+        
+        private Long groupId;
 
         public Call(Long infoId, Long callId, Long cardId, String callTime, String mark, Long adminId, String company, Long type, String time, Long gongdan) {
                 setInfoId(infoId);
@@ -158,4 +160,14 @@ public class Call {
         public void setTypeName(String typeName) {
                 this.typeName = typeName;
         }
+
+		public Long getGroupId() {
+			return groupId;
+		}
+
+		public void setGroupId(Long groupId) {
+			this.groupId = groupId;
+		}
+        
+        
 }

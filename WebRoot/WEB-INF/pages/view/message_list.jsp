@@ -45,7 +45,9 @@
 								<s:if test="%{message.type==21}">中@了你</s:if>
 							</div>
 							<div style="float:left;width:150px;">
+							<s:if test='%{message.groupId!=null}'>
 								<div class="hand  message_view_check_chakan" style="width:60px;float:left;">查看</div>
+								</s:if>
 								<s:if test='%{message.status==0}'>
 									<div class="hand message_view_queding" style="width:60px;float:left;">确定</div>
 								</s:if>

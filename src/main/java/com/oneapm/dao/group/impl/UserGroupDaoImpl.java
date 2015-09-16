@@ -30,8 +30,9 @@ public class UserGroupDaoImpl extends DaoImplBase<Group>{
 
 		
 		public List<UserGroup> findUsersByGroupId(Long groupId){
+			List<UserGroup> list = new ArrayList<UserGroup>();
 	        try{	
-	        		List<UserGroup> list = new ArrayList<UserGroup>();
+	        		
 	                DBObject object = new BasicDBObject();
 	                object.put("group_id", groupId);
 	                DBCursor cursor= getDBCollection(TABLE_NAME).find(object);
@@ -44,7 +45,7 @@ public class UserGroupDaoImpl extends DaoImplBase<Group>{
 	        }catch(Exception e){
 	                LOG.error(e.getMessage(), e);
 	        }
-	        return null;
+	        return list;
 		}
 		
 		private UserGroup findUserGroupsByObject(DBObject object){

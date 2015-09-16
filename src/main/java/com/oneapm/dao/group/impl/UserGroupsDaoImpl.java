@@ -13,6 +13,7 @@ import com.mongodb.DBObject;
 import com.oneapm.dao.DaoImplBase;
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.group.Group;
+import com.oneapm.dto.info.Info;
 
 public class UserGroupsDaoImpl extends DaoImplBase<Group>{
 	protected static final Logger LOG = LoggerFactory.getLogger(UserGroupsDaoImpl.class);
@@ -88,7 +89,18 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group>{
 	      }
 	      return null;
 	}
-	
+	 public boolean update_contectTime(UserGroups userGroups) {
+         try {
+                 DBObject object = new BasicDBObject();
+                 object.put("group_id", userGroups.getGroupId());
+                 BasicDBObject value = new BasicDBObject();
+                 value.put("$set", new BasicDBObject("contect_time", userGroups.getContectTime()));
+                 return getDBCollection(TABLE_NAME).update(object, value).getN() > -1;
+         } catch (Exception e) {
+                 LOG.error(e.getMessage(), e);
+         }
+         return false;
+ }
 	
 	private UserGroups findComplicatedGroupsByObject(DBObject object){
 	      try{

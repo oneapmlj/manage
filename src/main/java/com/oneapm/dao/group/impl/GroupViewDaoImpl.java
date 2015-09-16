@@ -103,16 +103,27 @@ public class GroupViewDaoImpl extends DaoImplBase<GroupView>{
 	
 	
 	private GroupView findGroupViewByObject(DBObject object){
-	      try{
-	              Long infoId = Long.parseLong(object.get("info_id").toString());
-	              Long groupId = Long.parseLong(object.get("group_id").toString());
+	      try{	
+	    	  	  Long infoId = 0L;
+	    	  	  try{
+	               infoId = Long.parseLong(object.get("info_id").toString());
+	               }catch(Exception e){}
+	    	  	 Long groupId = 0L;
+	    	  	  try{
+	    	  		groupId = Long.parseLong(object.get("group_id").toString());
+	               }catch(Exception e){}
+					Long userGroupId = 0L;
+					try {
+						userGroupId = Long.parseLong(object.get("user_group_id").toString());
+					} catch (Exception e) {
+					}
 	              int score = Integer.parseInt(object.get("score").toString());
 	              String typeTime = null;
 	              try{
 	                      typeTime = object.get("type_time").toString();
 	              }catch(Exception e){}
 	              String changeTime = object.get("change_time").toString();
-	              return new GroupView(infoId, groupId, score, typeTime, changeTime);
+	              return new GroupView(infoId, groupId, score, typeTime, changeTime, userGroupId);
 	      }catch(Exception e){
 	              LOG.error(e.getMessage(), e);
 	      }

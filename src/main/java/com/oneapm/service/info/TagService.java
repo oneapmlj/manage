@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.info.impl.TagDaoImpl;
 import com.oneapm.dto.App;
+import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.tag.Category;
@@ -25,6 +26,7 @@ import com.oneapm.dto.tag.Province;
 import com.oneapm.dto.tag.Rongzi;
 import com.oneapm.dto.tag.Tag;
 import com.oneapm.service.account.AccountService;
+import com.oneapm.service.group.UserGroupService;
 import com.oneapm.service.message.MessageService;
 import com.oneapm.service.record.RecordService;
 import com.oneapm.util.OneTools;
@@ -107,6 +109,31 @@ public class TagService extends OneTools {
                 }
                 return OneTools.getResult(0, "服务器错误");
         }
+        
+        public static String metricWithGroupId(Long groupId, int metric, Admin admin) {
+            try {
+                    UserGroups userGroups = UserGroupService.findByGroupIdSimple(groupId);
+                    if (!SupportAction.quanxian(admin.getGrades(), SupportAction.getGRADE().getMap().get(106)) && (userGroups.getSale() == null || ((userGroups.getSale() != null && userGroups.getSale() > 0) && !userGroups.getSale().equals(admin.getId())))) {
+                            return OneTools.getResult(0, "权限不足");
+                    }
+                    Tag tag = findByGroupId(groupId);
+                    if (tag.getMetric() == metric) {
+                            return OneTools.getResult(0, "定位已经是" + Metric.findById(metric).getName() + "了");
+                    }
+                    Long infoId = 0L;
+                    RecordService.insertWithGroupId(admin.getId(), 19, infoId, null, 0, metric, 0, tag.getMetric(), tag.getLoudou(),userGroups.getGroupId());
+                    tag.setMetric(metric);
+                    update(tag);
+                    List<String> args1 = new ArrayList<String>();
+                    List<Object> args2 = new ArrayList<Object>();
+                    args1.add("metric");
+                    args2.add(metric);
+                    return OneTools.getResult(1, args1, args2);
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return OneTools.getResult(0, "服务器错误");
+    }
 
         public static String loudou(Long infoId, Admin admin) {
                 try {
@@ -307,11 +334,12 @@ public class TagService extends OneTools {
             Tag tag = TagDaoImpl.getInstance().findByGroupId(groupId);
             if (tag == null) {
                     tag = new Tag(null, groupId, 0, 0, new Integer(0), new Integer(0), null, 0, new Integer(0), new Integer(0), null, new Integer(0), new Integer(0));
-                    initLanguage(tag);
+                    tag.setGroupId(groupId);
+                    initLanguageByGroupId(tag);
                     tag = TagDaoImpl.getInstance().insert(tag);
             } else {
                     if (tag.getLanguage() == null || tag.getLanguage().trim().equals("") || tag.getLanguage().equals("0")) {
-                            initLanguage(tag);
+                            initLanguageByGroupId(tag);
                             update(tag);
                     }
             }
@@ -350,6 +378,38 @@ public class TagService extends OneTools {
                 }
                 tag.setLanguage(builder.toString());
         }
+        
+        public static void initLanguageByGroupId(Tag tag)  {
+            if (tag == null)
+                    return;
+            UserGroups userGroups = UserGroupService.findByGroupIdSimple(tag.getGroupId());
+            if (userGroups == null)
+                    return;
+            List<App> apps = AppService.findByGroupId(userGroups.getGroupId());
+//            List<App> appsM = AppService.findByUserIdM(info.getUserId());
+            StringBuilder builder = new StringBuilder();
+            Set<String> set = new HashSet<String>();
+            if (apps != null && apps.size() > 0) {
+                    for (App app : apps) {
+                            if (Language.getName(app.getAgent()) != null) {
+                                    set.add(Language.getName(app.getAgent()));
+                            }
+                    }
+            }
+//            if (appsM != null && appsM.size() > 0) {
+//                    for (App app : appsM) {
+//                            if (Language.getName(app.getAgent()) != null) {
+//                                    set.add(Language.getName(app.getAgent()));
+//                            }
+//                    }
+//            }
+            if (set.size() > 0) {
+                    for (String s : set) {
+                            builder.append(Language.getId(s.trim())).append(OneTools.sp);
+                    }
+            }
+            tag.setLanguage(builder.toString());
+    }
 
         public static void initTag(Tag tag) {
                 if (tag == null) {

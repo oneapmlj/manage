@@ -31,7 +31,7 @@ public class Tag {
         private String rongziName;
         private int fuwuqi;
         private String fuwuqiName;
-
+        private Long groupId;
         public Tag() {
         };
 
@@ -245,4 +245,13 @@ public class Tag {
         public void setFuwuqiName(String fuwuqiName) {
                 this.fuwuqiName = fuwuqiName;
         }
+
+		public Long getGroupId() {
+			return groupId;
+		}
+
+		public void setGroupId(Long groupId) {
+			this.groupId = groupId;
+		}
+        
 }

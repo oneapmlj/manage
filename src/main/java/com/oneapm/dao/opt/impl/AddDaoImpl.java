@@ -118,7 +118,25 @@ public class AddDaoImpl extends DaoImplBase<App> {
                 }
                 return apps;
         }
-
+        
+        public List<App> findByGroupId(Long groupId) {
+            List<App> apps = null;
+            try {
+                    DBObject object = new BasicDBObject();
+                    object.put("group_id", groupId);
+                    object.put("parent_id", 0);
+                    DBObject sort = new BasicDBObject();
+                    sort.put("create_time", -1);
+                    DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort);
+                    apps = new ArrayList<App>();
+                    while (cursor.hasNext()) {
+                            apps.add(getInfoFromResult(cursor.next()));
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return apps;
+    }
         public App findById(Long appId, Long agentId, int agent) {
                 try {
                         DBObject object = new BasicDBObject();
@@ -203,8 +221,13 @@ public class AddDaoImpl extends DaoImplBase<App> {
                         try{
                                 agentId = Long.parseLong(object.get("agent_id").toString());
                         }catch(Exception e){}
+                        Long groupId = 0L;
+                        try{
+                        	groupId = Long.parseLong(object.get("group_id").toString());
+                        }catch(Exception e){}
                         app = new App(userId, createTime, language, appId, appName, dataTime, agent, agentId);
                         app.setVersion(version);
+                        app.setGroupId(groupId);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

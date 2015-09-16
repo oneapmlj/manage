@@ -9,16 +9,19 @@ import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.account.impl.AdminDaoImpl;
 import com.oneapm.dao.card.impl.CardDaoImpl;
+import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
 import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dao.opt.impl.CallDaoImpl;
 import com.oneapm.dto.Call;
 import com.oneapm.dto.NoteType;
+import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.card.Card;
 import com.oneapm.dto.info.Info;
 import com.oneapm.record.MessageType;
 import com.oneapm.service.account.AccountService;
 import com.oneapm.service.card.CardService;
+import com.oneapm.service.group.UserGroupService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.info.TaskService;
 import com.oneapm.service.message.MessageService;
@@ -214,6 +217,84 @@ public class CallService {
                 return object.toJSONString();
         }
         
+        @SuppressWarnings("unchecked")
+        public static String insertWithGroupId(Long groupId, Long cardId,  String mark, Long type, Admin admin, 
+                        String putTime, boolean point) {
+                JSONObject object = new JSONObject();
+                try {
+                        UserGroups userGroups = UserGroupService.findByGroupIdSimple(groupId);
+                        if (userGroups == null) {
+                                return OneTools.getResult(0, "参数错误");
+                        }
+                        Long infoId = 0L;
+                        Long gongdan = null;
+                        Call call = new Call(infoId, null, cardId, TimeTools.format(), mark, admin.getId(), userGroups.getGroupName(), type, putTime, gongdan);
+                        call.setGongdan(null);
+                        call.setGroupId(groupId);
+                        if (cardId == null || cardId <= 0) {
+                                if ( call.getType() <= 0) {
+                                        return OneTools.getResult(0, "至少填一项信息!");
+                                }
+                                        Card card = new Card();
+                                        card.setId(CardDaoImpl.getInstance().getIdes());
+                                        card.setCreateTime(TimeTools.format());
+                                        card.setFrom(admin.getId());
+                                        CardService.insertAndGet(card);
+                                        call.setCardId(card.getId());
+                                        card.setFromName(admin.getName());
+                                        object.put("card", CardService.getJSONFromCard(card));
+                                }
+                        call.setAdminName(admin.getName());
+                        if (call.getType() > 0) {
+                                NoteType note = NoteService.findTypeById(type);
+                                if (note != null) {
+                                        if (NoteService.toduWithGroupId(note.getTodu(), userGroups.getGroupId(), admin, putTime, point)) {
+                                                call.setTodu(note.getTodu());
+                                                if (note.getTodu() == 1002) {
+                                                        if (call.getMark() == null) {
+                                                                call.setMark(putTime + "再联系");
+                                                        } else {
+                                                                call.setMark(putTime + "再联系<br/>" + call.getMark());
+                                                        }
+                                                }
+                                        }
+                                        if (note != null) {
+                                                call.setTypeName(note.getName());
+                                        }
+                                }
+                        }
+                        call = insertAndGetWithGroupId(call);
+                        if (call == null) {
+                                throw new DataException();
+                        }
+                        userGroups.setContectTime(TimeTools.format());
+                        UserGroupsDaoImpl.getInstance().update_contectTime(userGroups);
+                        TaskService.dealWithGroupId(userGroups.getGroupId(), admin.getId(), call.getCallId());
+                        JSONObject value = getJSONFromCall(call);
+                        while(mark != null && mark.indexOf("@") > -1){
+                                if(mark.length() > mark.indexOf("@")+1){
+                                        mark = mark.substring(mark.indexOf("@")+1, mark.length());
+                                        if(mark.indexOf(" ") > -1){
+                                                String at = mark.substring(0, mark.indexOf(" ") +1);
+                                                Admin ad = AccountService.findByRealName(at.trim());
+                                                if(ad != null){
+                                                        MessageService.insertWithGroupId(admin.getId(), ad.getId(), 0, userGroups.getGroupId(), 21);
+                                                }
+                                        }
+                                }
+                        }
+                        object.put("status", 1);
+                        object.put("call", value);
+                } catch (PramaException e) {
+                        LOG.error(e.getMessage(), e);
+                        return OneTools.getResult(0, "公司信息不存在！");
+                } catch (DataException e) {
+                        LOG.error(e.getMessage(), e);
+                        return OneTools.getResult(0, "服务器内部错误！");
+                }
+                return object.toJSONString();
+        }
+        
         public static Call insertAndGet(Call call) throws PramaException {
                 Info info = InfoService.findByIdSimple(call.getInfoId());
                 if (info == null) {
@@ -238,6 +319,31 @@ public class CallService {
                 }
                 return call;
         }
+        
+        public static Call insertAndGetWithGroupId(Call call) throws PramaException {
+            UserGroups userGroups = UserGroupService.findByGroupIdSimple(call.getGroupId());
+            if (userGroups == null) {
+                    throw new PramaException();
+            }
+            if (call.getCardId() != null && call.getCardId() >= 100) {
+                    Card card = CardService.findById(call.getCardId());
+                    if (card != null) {
+                            call.setCardName(card.getName());
+                    }
+            } else {
+                    call.setCardName("注册");
+            }
+            call.setCompany(userGroups.getGroupName());
+            call.setCallTime(TimeTools.format());
+            call = CallDaoImpl.getInstance().insertAndGet(call);
+            if (!call.getAdminId().equals(userGroups.getSupport())) {
+                    MessageService.insertWithGroupId(call.getAdminId(), userGroups.getSupport(), 0, userGroups.getGroupId(), MessageType.ADD_RECORD);
+            }
+            if (!call.getAdminId().equals(userGroups.getSale())) {
+                    MessageService.insertWithGroupId(call.getAdminId(), userGroups.getSale(), 0, userGroups.getGroupId(), MessageType.ADD_RECORD);
+            }
+            return call;
+    }
 
         @SuppressWarnings("unchecked")
         public static JSONArray getArrayFromCall(List<Call> calls) {
@@ -267,6 +373,7 @@ public class CallService {
                         object.put("gongdan", call.getGongdan());
                         object.put("todu", call.getTodu());
                         object.put("typeName", call.getTypeName());
+                        object.put("group_id", call.getGroupId());
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

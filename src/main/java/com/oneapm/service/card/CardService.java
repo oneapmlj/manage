@@ -229,6 +229,7 @@ public class CardService {
                         object.put("gender", card.getGender());
                         object.put("qq", card.getQq());
                         object.put("fromName", card.getFromName());
+                        object.put("group_id", card.getGroupId());
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

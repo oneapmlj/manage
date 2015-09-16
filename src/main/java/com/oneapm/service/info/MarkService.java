@@ -62,6 +62,7 @@ public class MarkService {
                         }
                                         
                         mark = new Mark(null, groupId, TimeTools.format(), 0, adminId);
+                        mark.setGroupId(groupId);
                         mark = insert(mark);
                         if (mark == null) {
                                 object.put("msg", "服务器内部错误");

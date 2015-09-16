@@ -70,11 +70,11 @@ $(document).ready(function() {
 	function findMainAcount(){
 		
 		var infoId = $("#view_infoId").val();
-		
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_guanlian_view.action',
-			data:{infoId:infoId}
+			url:'user_group_guanlian_view.action',
+			data:{groupId:groupId}
 		}).done(function(da){
 			if(da.status == '1'){
 				var html = $("#guanlian_value_"+da.user_id+"").html();
@@ -109,10 +109,11 @@ $(document).ready(function() {
 			return;
 		}
 		var infoId = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_guanlian_add.action',
-			data:{infoId:infoId,guanlianId:id}
+			url:'user_group_guanlian_add.action',
+			data:{groupId:groupId,guanlianId:id}
 		}).done(function(da){
 			if(da.status == '1'){
 				$("#guanlian_add_value").val("");
@@ -144,14 +145,15 @@ $(document).ready(function() {
 	$(".guanlian_remove").live("click",function(){
 		var id = $(this).prev().prev().html();
 		var infoId = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		var statu = confirm("确认删除吗?");
 	        if(!statu){
 	            return false;
 	        }
 		$.ajax({
 			dataType:'json',
-			url:'info_guanlian_remove.action',
-			data:{infoId:infoId,guanlianId:id}
+			url:'user_group_guanlian_remove.action',
+			data:{groupId:groupId,guanlianId:id}
 		}).done(function(da){
 			var html = $("#guanlian_value").html();
 			if(da.status == '1'){
@@ -167,11 +169,11 @@ $(document).ready(function() {
 	$(".guanlian_change").live("click",function(){
 		var id = $(this).prev().html();
 		var infoId = $("#view_infoId").val();
-		
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_guanlian_change.action',
-			data:{infoId:infoId,guanlianId:id}
+			url:'user_group_guanlian_change.action',
+			data:{groupId:groupId,guanlianId:id}
 		}).done(function(da){
 			if(da.status == '1'){
 			var html = $("#guanlian_value_"+da.guanlian_id+"").html();
@@ -203,7 +205,7 @@ $(document).ready(function() {
 		var userId = $(this).html();
 		
 			/*window.open("/"+userId);*/
-		window.location.href = "http://manage.oneapm.com/"+userId+"";
+		window.location.href = "http://manage.oneapm.com/user_group_view.action?id="+userId+"";
 		
 	});
 	$(".group_area_1").live('click', function(){
@@ -1456,9 +1458,10 @@ $(document).ready(function() {
 			return;
 		}
 		var cardId = $("#add_call_card").val();
-		var qq = $("#call_add_qq").val();
-		var gongdan = $("#call_add_gongdan").val();
 		var mark = $("#add_call_mark").val();
+		/*var qq = $("#call_add_qq").val();
+		var gongdan = $("#call_add_gongdan").val();
+		
 		var infoId = $("#view_infoId").val();
 		var name = $("#call_add_name").val();
 		var phone = $("#call_add_phone").val();
@@ -1466,14 +1469,16 @@ $(document).ready(function() {
 		var gender = $("#call_add_gender").val();
 		var call_add_time = $("#call_add_time").val();
 		var position = $("#call_add_position").val();
-		var branch = $("#call_add_branch").val();
+		var branch = $("#call_add_branch").val();*/
+		var groupId = $("#group_id").html();
 		var call_add_point = document.getElementById("call_add_point").checked;
-		var o = {cardId:cardId, mark:mark,infoId:infoId,recordType:type,qq:qq,gongdan:gongdan,name:name,
-				phone:phone,email:email,gender:gender,add_time:call_add_time,branch:branch,position:position,add_call_point:call_add_point};
+		/*var o = {cardId:cardId, mark:mark,infoId:infoId,recordType:type,qq:qq,gongdan:gongdan,name:name,
+				phone:phone,email:email,gender:gender,add_time:call_add_time,branch:branch,position:position,add_call_point:call_add_point};*/
+		var u = {cardId:cardId, groupId:groupId, add_call_point:call_add_point, mark:mark ,recordType:type};
 		$.ajax({
 			dataType:'json',
-			url:'info_add_call.action',
-			data:o
+			url:'user_group_add_call.action',
+			data:u
 		}).done(function(da){
 			if(da.status == "1"){
 				$("#add_call_window_close").click();

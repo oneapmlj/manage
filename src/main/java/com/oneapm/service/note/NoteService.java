@@ -142,6 +142,40 @@ public class NoteService {
                 }
                 return false;
         }
+        
+        
+        public static boolean toduWithGroupId(int todu, Long groupId, Admin admin, String putTime, boolean point) {
+            try {
+                    if (todu <= 0)
+                            return false;
+                    if (todu > 0) {
+                            switch (todu) {
+                            // 销售
+                            case 1000:
+                                    TaskService.insertWithGroupId(groupId, 80000028L, 10, TimeTools.format(), admin.getId(), point);
+                                    break;
+                            // 支持
+                            case 1001:
+                                    TaskService.insertWithGroupId(groupId, 10000005L, 11, TimeTools.format(), admin.getId(), point);
+                                    break;
+                            // 再联系
+                            case 1002:
+                                    TaskService.insertWithGroupId(groupId, admin.getId(), 9, putTime, admin.getId(), point);
+                                    break;
+                            // 关闭
+                            case 1003:
+                                    TagService.metric(groupId, 4, admin);
+                                    break;
+                            default:
+                                    break;
+                            }
+                    }
+                    return true;
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return false;
+    }
 
         @SuppressWarnings("unchecked")
         public static String getTypeById(Long id) {

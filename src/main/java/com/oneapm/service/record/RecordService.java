@@ -60,6 +60,12 @@ public class RecordService {
                 Record record = new Record(null, adminId, infoId, type, TimeTools.format(), fromId, status, metric, loudou, me, lou);
                 return RecordDaoImpl.getInstance().insert(record);
         }
+        
+        public static boolean insertWithGroupId(Long adminId, int type, Long infoId, Long fromId, int status, int metric, int loudou, int me, int lou, Long groupId) {
+            Record record = new Record(null, adminId, infoId, type, TimeTools.format(), fromId, status, metric, loudou, me, lou);
+            record.setGroupId(groupId);
+            return RecordDaoImpl.getInstance().insert(record);
+    }
 
         public static RecordVo getRecordVoFromRecord(Record record) {
                 if (record == null)

@@ -239,6 +239,11 @@ public class MessageService {
                 Message message = new Message(null, from, to, status, infoId, TimeTools.format(), null, null, type);
                 return MessageDaoImpl.getInstance().insert(message);
         }
+        public static boolean insertWithGroupId(Long from, Long to, int status, Long groupId, int type) {
+            Message message = new Message(null, from, to, status, groupId, TimeTools.format(), null, null, type);
+            message.setGroupId(groupId);
+            return MessageDaoImpl.getInstance().insert(message);
+    }
 
         public static MessageVo findVoApplyByInfoId(Long infoId, int type) {
                 return getMessageVoFromMessage(findApplyByInfoId(infoId, type));

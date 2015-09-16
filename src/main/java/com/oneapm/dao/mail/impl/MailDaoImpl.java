@@ -50,6 +50,23 @@ public class MailDaoImpl extends DaoImplBase<Mail> {
                 }
                 return mails;
         }
+        public List<Mail> findByGroupId(Long groupId) {
+            List<Mail> mails = null;
+            try {
+                    DBObject object = new BasicDBObject();
+                    object.put("group_id", groupId);
+                    DBObject sort = new BasicDBObject();
+                    sort.put("send_time", -1);
+                    DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort);
+                    mails = new ArrayList<Mail>();
+                    while (cursor.hasNext()) {
+                            mails.add(getRecordFromResult(cursor.next()));
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return mails;
+    }
 
         public Mail findByMailId(Long id) {
                 try {
@@ -147,12 +164,20 @@ public class MailDaoImpl extends DaoImplBase<Mail> {
                 Mail mail = null;
                 try {
                         Long id = Long.parseLong(object.get("id").toString().trim());
-                        Long infoId = Long.parseLong(object.get("info_id").toString());
+                        Long infoId = 0L;
+                        try{
+                         infoId = Long.parseLong(object.get("info_id").toString());
+                        }catch(Exception e){}
+                        Long groupId = 0L;
+                        try{
+                        	groupId = Long.parseLong(object.get("group_id").toString());
+                        }catch(Exception e){}
                         int mailMode = Integer.parseInt(object.get("mail_mode").toString());
                         String sendTime = object.get("send_time").toString();
                         Long adminId = Long.parseLong(object.get("admin_id").toString().trim());
                         String mailContent = object.get("mail_content").toString();
                         mail = new Mail(id, infoId, sendTime, mailMode, adminId, mailContent);
+                        mail.setGroupId(groupId);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

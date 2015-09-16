@@ -32,6 +32,8 @@ public class Card {
     
     private String qq;
     
+    private Long groupId;
+    
     public Card(Long id, String name, String branch, String position, String phone, String email,
             String createTime, Long from, Long infoId, String changeTime,
             int gender, String qq){
@@ -162,5 +164,12 @@ public class Card {
     public void setQq(String qq) {
         this.qq = qq;
     }
+	public Long getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
+    
     
 }

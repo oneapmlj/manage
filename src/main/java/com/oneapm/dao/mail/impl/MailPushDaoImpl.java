@@ -144,6 +144,23 @@ public class MailPushDaoImpl extends DaoImplBase<MailPush> {
                 return pushs;
         }
         
+        public List<MailPush> findByGroupIdAndAdmin(Long groupId, Long adminId) {
+            List<MailPush> pushs = new ArrayList<MailPush>();
+            try {
+                    DBObject object = new BasicDBObject();
+                    object.put("group_id", groupId);
+                    object.put("status", 0);
+                    object.put("admin_id", adminId);
+                    DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                    while (cursor.hasNext()) {
+                            pushs.add(getPushFromObject(cursor.next()));
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return pushs;
+    }
+        
         public List<MailPush> findByInfoId(Long infoId) {
                 List<MailPush> pushs = new ArrayList<MailPush>();
                 try {
@@ -191,6 +208,23 @@ public class MailPushDaoImpl extends DaoImplBase<MailPush> {
                 }
                 return null;
         }
+        
+        public MailPush findByGroupIdAdminType(Long groupId, Long adminId, int type) {
+            try {
+                    DBObject object = new BasicDBObject();
+                    object.put("group_id", groupId);
+                    object.put("status", 0);
+                    object.put("admin_id", adminId);
+                    object.put("type", type);
+                    DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                    if (cursor.hasNext()) {
+                            return getPushFromObject(cursor.next());
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return null;
+    }
 
         public boolean insert(MailPush push) {
                 try {
@@ -207,6 +241,7 @@ public class MailPushDaoImpl extends DaoImplBase<MailPush> {
                         object.put("from_id", push.getFromId());
                         object.put("warmin", push.getWarming());
                         object.put("point", push.isPoint());
+                        object.put("group_id", push.getGroupId());
                         return getDBCollection(TABLE_NAME).insert(object).getN() > -1;
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
@@ -228,6 +263,7 @@ public class MailPushDaoImpl extends DaoImplBase<MailPush> {
                         value.put("from_id", push.getFromId());
                         value.put("warming", push.getWarming());
                         value.put("point", push.isPoint());
+                        value.put("group_id", push.getGroupId());
                         return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value)).getN() > -1;
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
@@ -247,7 +283,12 @@ public class MailPushDaoImpl extends DaoImplBase<MailPush> {
                         } catch (Exception e) {
                         }
                         int type = Integer.parseInt(object.get("type").toString().trim());
-                        Long infoId = Long.parseLong(object.get("info_id").toString().trim());
+                        Long infoId = null;
+                        try{
+                         infoId = Long.parseLong(object.get("info_id").toString().trim());
+                        }catch(Exception e){
+                        	
+                        }
                         String putTime = object.get("put_time").toString();
                         int number = 0;
                         try {
@@ -269,6 +310,11 @@ public class MailPushDaoImpl extends DaoImplBase<MailPush> {
                                 fromId = Long.parseLong(object.get("from_id").toString().trim());
                         } catch (Exception e) {
                         }
+                        Long groupId = null;
+                        try {
+                        	groupId = Long.parseLong(object.get("group_id").toString().trim());
+                        } catch (Exception e) {
+                        }
                         int warming = 0;
                         try {
                                 warming = Integer.parseInt(object.get("warming").toString().trim());
@@ -285,6 +331,7 @@ public class MailPushDaoImpl extends DaoImplBase<MailPush> {
                         }catch(Exception e){}
                         push = new MailPush(id, createTime, status, adminId, type, infoId, putTime, number, touchTime, from, warming, warmingTime, point);
                         push.setFromId(fromId);
+                        push.setGroupId(groupId);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

@@ -83,6 +83,7 @@ public class CardDaoImpl extends DaoImplBase<Card>{
             value.put("change_time", card.getChangeTime());
             value.put("gender", card.getGender());
             value.put("qq", card.getQq());
+            value.put("group_id", card.getGroupId());
             if(getDBCollection(TABLE_NAME).insert(value).getN() > -1){
                 return card;
             }
@@ -172,15 +173,23 @@ public class CardDaoImpl extends DaoImplBase<Card>{
 		    try{
 		        from = Long.parseLong(object.get("from").toString().trim());
 		    }catch(Exception e){}
-		    Long infoId = Long.parseLong(object.get("info_id").toString().trim());
+		    Long infoId = null;
+		    try{
+		    	infoId = Long.parseLong(object.get("info_id").toString().trim());
+		    }catch(Exception e){}
 		    String changeTime = object.get("change_time").toString();
 		    int gender = Integer.parseInt(object.get("gender").toString().trim());
 		    String qq = null;
 		    try{
 		        qq = object.get("qq").toString();
 		    }catch(Exception e){}
+		    Long groupId = null;
+		    try{
+		    	groupId = Long.parseLong(object.get("group_id").toString().trim());
+		    }catch(Exception e){}
 		    card = new Card(id, name, branch, position, 
 		            phone, email, createTime, from, infoId, changeTime, gender, qq);
+		    card.setGroupId(groupId);
 		}catch(Exception e){
 			LOG.error(e.getMessage(), e);
 		}

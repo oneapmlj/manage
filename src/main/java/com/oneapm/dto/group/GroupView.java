@@ -6,6 +6,7 @@ public class GroupView {
         private int score;
         private String typeTime;
         private String changeTime;
+        private Long userGroupId;
         public GroupView(Long infoId, Long groupId, int score, String typeTime, String changeTime){
                 setInfoId(infoId);
                 setGroupId(groupId);
@@ -13,6 +14,14 @@ public class GroupView {
                 setTypeTime(typeTime);
                 setChangeTime(changeTime);
         }
+        public GroupView(Long infoId, Long groupId, int score, String typeTime, String changeTime, Long userGroupId){
+            setInfoId(infoId);
+            setGroupId(groupId);
+            setScore(score);
+            setTypeTime(typeTime);
+            setChangeTime(changeTime);
+            setUserGroupId(userGroupId);
+    }
         public Long getInfoId() {
                 return infoId;
         }
@@ -43,4 +52,11 @@ public class GroupView {
         public void setChangeTime(String changeTime) {
                 this.changeTime = changeTime;
         }
+		public Long getUserGroupId() {
+			return userGroupId;
+		}
+		public void setUserGroupId(Long userGroupId) {
+			this.userGroupId = userGroupId;
+		}
+        
 }

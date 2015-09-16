@@ -1,13 +1,19 @@
 package com.oneapm.web.group;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.UserGroup;
+import com.oneapm.dto.info.Guanlian;
 import com.oneapm.dto.info.Info;
 import com.oneapm.service.group.UserGroupService;
+import com.oneapm.service.info.GuanlianService;
 import com.oneapm.service.info.InfoService;
+import com.oneapm.service.show.CallService;
+import com.oneapm.util.OneTools;
+import com.oneapm.util.TimeTools;
 import com.oneapm.web.SupportAction;
 public class UserGroupAction extends SupportAction{
 	 /**
@@ -41,12 +47,19 @@ public class UserGroupAction extends SupportAction{
      private UserGroups userGroups;
      private List<UserGroup> userGroupList;
      private UserGroup userGroup;
+     private String mark;
+     private String putTime;
+     private String add_time;
+     private boolean add_call_point;
+     private Long cardId;
+     private Long recordType;
      public String view() {
          if (!isLogin()) {
                  return "login";
          }
          //info = InfoService.findUserId(id);
         // userGroups = UserGroupService.findByGroupId(info.getUserId(),getAdmin());
+         System.out.println(id);
          userGroups = UserGroupService.findByGroupId(id,getAdmin());
          infos = new ArrayList<Info>();
          userGroupList = UserGroupService.findUsersByGroupId(userGroups.getGroupId());
@@ -78,6 +91,114 @@ public class UserGroupAction extends SupportAction{
          }
          return "onlianxi";
  }
+     
+     
+     public void add_call() throws IOException {
+         if (!isLogin()) {
+                 getServletResponse().sendRedirect("/login.action");
+                 return;
+         }
+         if (!quanxian(getAdmin().getGrades(), getGRADE().getMap().get(103))) {
+                 try {
+                         getServletResponse().getWriter().print("{'status':0,'msg':'无此操作权限'}");
+                         return;
+                 } catch (Exception e) {
+                         LOG.error(e.getMessage(), e);
+                 }
+         }
+         try {
+                 LOG.info("ADD CALL : "+mark);
+                mark = new String(mark.getBytes("ISO8859-1"), "UTF-8");
+//                 if (phone != null) {
+//                         phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
+//                 }
+//                 if (email != null) {
+//                         email = new String(email.getBytes("ISO8859-1"), "UTF-8");
+//                 }
+//                 if (qq != null) {
+//                         qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
+//                 }
+//                 if (name != null) {
+//                         name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                 }
+//                 if (position != null) {
+//                         position = new String(position.getBytes("ISO8859-1"), "UTF-8");
+//                 }
+//                 if (branch != null) {
+//                         branch = new String(branch.getBytes("ISO8859-1"), "UTF-8");
+//                 }
+                 if (add_time == null || add_time.trim().length() < 1) {
+                         putTime = TimeTools.format();
+                 } else {
+                         putTime = add_time;
+                 }
+                 LOG.info("ADD CALL : "+mark);
+                 String result = CallService.insertWithGroupId(groupId, cardId,  mark, recordType, getAdmin(), putTime, add_call_point);
+                 getServletResponse().getWriter().print(result);
+         } catch (Exception e) {
+                 LOG.error(e.getMessage(), e);
+         }
+ }
+     
+     private String guanlianId;
+     private Long guanlian;
+     public void guanlian_view() throws IOException{
+		if (!isLogin()) {
+			getServletResponse().sendRedirect("/login.action");
+			return;
+		}
+		try {
+			List<Long> userIdList = new ArrayList<Long>();
+			List<Guanlian> guanlianList = GuanlianService.findByUserId(groupId);
+			for (int i = 0; i < guanlianList.size(); i++) {
+				userIdList.add(guanlianList.get(i).getGuanlianId());
+			}
+			String result = GuanlianService.findAllGuanlian(userIdList);
+			getServletResponse().getWriter().print(result);
+       }catch(Exception e){
+               getServletResponse().getWriter().print(OneTools.getResult(0, "显示错误"));
+       }
+     }
+     
+     public void guanlian_add() throws IOException{
+             if (!isLogin()) {
+                     getServletResponse().sendRedirect("/login.action");
+                     return;
+             }
+             try{
+                     guanlian = Long.parseLong(guanlianId);
+                     String result = GuanlianService.add(groupId, guanlian);
+                     getServletResponse().getWriter().print(result);
+             }catch(Exception e){
+                     getServletResponse().getWriter().print(OneTools.getResult(0, "请输入userId"));
+             }
+     }
+     public void guanlian_remove() throws IOException{
+             if (!isLogin()) {
+                     getServletResponse().sendRedirect("/login.action");
+                     return;
+             }
+             try{
+             		guanlian = Long.parseLong(guanlianId);
+                     String result = GuanlianService.remove(groupId, guanlian);
+                     getServletResponse().getWriter().print(result);
+             }catch(Exception e){
+                     LOG.error(e.getMessage(), e);
+             }
+     }
+     public void guanlian_change() throws IOException{
+             if (!isLogin()) {
+                     getServletResponse().sendRedirect("/login.action");
+                     return;
+             }
+             try{
+             		guanlian = Long.parseLong(guanlianId);
+                     String result = GuanlianService.change(groupId, guanlian);
+                     getServletResponse().getWriter().print(result);
+             }catch(Exception e){
+                     LOG.error(e.getMessage(), e);
+             }
+     }
 	public Long getGroupId() {
 		return groupId;
 	}
@@ -233,6 +354,89 @@ public class UserGroupAction extends SupportAction{
 	public void setUserGroupsList(List<UserGroups> userGroupsList) {
 		this.userGroupsList = userGroupsList;
 	}
+
+
+	public String getMark() {
+		return mark;
+	}
+
+
+	public void setMark(String mark) {
+		this.mark = mark;
+	}
+
+
+	public String getAdd_time() {
+		return add_time;
+	}
+
+
+	public void setAdd_time(String add_time) {
+		this.add_time = add_time;
+	}
+
+
+	public String getPutTime() {
+		return putTime;
+	}
+
+
+	public void setPutTime(String putTime) {
+		this.putTime = putTime;
+	}
+
+
+	public boolean isAdd_call_point() {
+		return add_call_point;
+	}
+
+
+	public void setAdd_call_point(boolean add_call_point) {
+		this.add_call_point = add_call_point;
+	}
+
+
+	public Long getCardId() {
+		return cardId;
+	}
+
+
+	public void setCardId(Long cardId) {
+		this.cardId = cardId;
+	}
+
+
+	public Long getRecordType() {
+		return recordType;
+	}
+
+
+	public void setRecordType(Long recordType) {
+		this.recordType = recordType;
+	}
+
+
+	public String getGuanlianId() {
+		return guanlianId;
+	}
+
+
+	public void setGuanlianId(String guanlianId) {
+		this.guanlianId = guanlianId;
+	}
+
+
+	public Long getGuanlian() {
+		return guanlian;
+	}
+
+
+	public void setGuanlian(Long guanlian) {
+		this.guanlian = guanlian;
+	}
+
+
+	
 	
      
 }

@@ -107,6 +107,7 @@ public class RecordDaoImpl extends DaoImplBase<Record> {
             value.put("loudou", record.getLoudou());
             value.put("me", record.getMe());
             value.put("lou", record.getLou());
+            value.put("group_id", record.getGroupId());
             return getDBCollection(TABLE_NAME).insert(value).getN() > -1;
         }catch(Exception e){
             LOG.error(e.getMessage(), e);

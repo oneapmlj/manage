@@ -21,7 +21,7 @@ public class MailPush {
         private boolean remove;
 
         private boolean point;
-
+        private Long groupId;
         public MailPush(Long id, String createTime, int status, Long adminId, int type, Long infoId, String putTime, int number, String touchTime, int from, int warming, String warmingTime, boolean point) {
                 setId(id);
                 setCreateTime(createTime);
@@ -180,4 +180,14 @@ public class MailPush {
         public void setRemove(boolean remove) {
                 this.remove = remove;
         }
+
+		public Long getGroupId() {
+			return groupId;
+		}
+
+		public void setGroupId(Long groupId) {
+			this.groupId = groupId;
+		}
+        
+        
 }

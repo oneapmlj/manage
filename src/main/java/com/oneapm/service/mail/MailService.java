@@ -58,6 +58,16 @@ public class MailService {
                 return mails;
         }
 
+        public static List<Mail> findMailsByGroupId(Long groupId) {
+            List<Mail> mails = MailDaoImpl.getInstance().findByGroupId(groupId);
+            if (mails != null) {
+                    for (Mail mail : mails) {
+                            mail.setAdminName(AdminDaoImpl.getInstance().findById(mail.getAdminId()).getName());
+                            mail.setModeName(MailModeDaoImpl.getInstance().findById(mail.getMailMode()).getDescription());
+                    }
+            }
+            return mails;
+    }
         public static List<Mail> findByAccountId(Long accountId) {
                 List<Mail> mails = new ArrayList<Mail>();
 //                List<Mail> mails = MailDaoImpl.getInstance().findByAccountId(accountId);

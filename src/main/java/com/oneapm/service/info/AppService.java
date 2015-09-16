@@ -195,7 +195,38 @@ public class AppService {
                 }
                 return apps;
         }
-
+        
+        public static List<App> findByGroupId(Long groupId) {
+            List<App> apps = null;
+            if (groupId == null || groupId <= 0)
+                    return null;
+            apps = AddDaoImpl.getInstance().findByGroupId(groupId);
+            long dataTime = 0;
+            try{
+                    dataTime = TimeTools.formatTime.parse(TimeTools.getDateTime(0)).getTime();
+            }catch(Exception e){
+                    LOG.error(e.getMessage() ,e);
+            }
+            for (App app : apps) {
+                    try {
+                            if (app.getDataTime() == null) {
+                                    app.setDataTime("未记录");
+                            } else {
+                                    if(TimeTools.formatTime.parse(app.getDataTime()).getTime() >= dataTime){
+                                            app.setDataTime("今日");
+                                    }else{
+                                            app.setDataTime(app.getDataTime().substring(0,10));
+                                    }
+                            }
+                            if(app.getAppName().length() > 20){
+                                    app.setAppName(app.getAppName().substring(0, 17)+"…");
+                            }
+                    } catch (Exception e) {
+                            LOG.error(e.getMessage(), e);
+                    }
+            }
+            return apps;
+    }
 //        public static List<App> findByUserIdM(Long userId) {
 //                List<App> apps = null;
 //                if (userId == null || userId <= 0)

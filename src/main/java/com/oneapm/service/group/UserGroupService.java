@@ -93,7 +93,7 @@ public class UserGroupService {
                 }
         }
         //获取关联帐号
-        if(userGroups.getGroupId() != null){
+        if(userGroups.getGroupId() != null&& userGroups != null){
                 List<Guanlian> guanlians = GuanlianService.findByUserId(userGroups.getGroupId());
                 userGroups.setGuanlians(guanlians);
         }
@@ -106,6 +106,10 @@ public class UserGroupService {
     public static UserGroups findByGroupIdSingle(Long groupId) {
     	UserGroups userGroups = UserGroupsDaoImpl.getInstance().findByAdminId(groupId);
         initTag(userGroups);
+        return userGroups;
+    }
+    public static UserGroups findByGroupIdSimple(Long groupId) {
+    	UserGroups userGroups = UserGroupsDaoImpl.getInstance().findByAdminId(groupId);
         return userGroups;
     }
     
@@ -128,10 +132,11 @@ public class UserGroupService {
 }
     
 	public static void initUserGroups(UserGroups userGroups) {
-		userGroups.setMails(MailService.findMailsById(userGroups.getGroupId()));
+		//userGroups.setMails(MailService.findMailsById(userGroups.getGroupId()));
+		userGroups.setMails(MailService.findMailsByGroupId(userGroups.getGroupId()));
 		userGroups.setCalls(CallService.findByGroupId(userGroups.getGroupId()));
 		userGroups.setApps(AppService.findByUserId(userGroups.getGroupId()));
-		//userGroups.setCards(CardService.findByInfoId(userGroups.getGroupId()));
+		//userGroups.setApps(AppService.findByGroupId(userGroups.getGroupId()));
 		userGroups.setGongdans(KFService.findByUserId(userGroups.getGroupId()));
         initTag(userGroups);
         initSupport(userGroups);

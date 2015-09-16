@@ -10,7 +10,7 @@ public class Mail {
     private String modeName;
     private String companyName;
     private String mailContent;
-    
+    private Long groupId;
     public Mail(){}
     public Mail(Long id, Long infoId, String sendTime, int mailMode, Long adminId, String mailContent){
         setSendTime(sendTime);
@@ -74,4 +74,11 @@ public String getMailContent() {
 public void setMailContent(String mailContent) {
         this.mailContent = mailContent;
 }
+public Long getGroupId() {
+	return groupId;
+}
+public void setGroupId(Long groupId) {
+	this.groupId = groupId;
+}
+
 }

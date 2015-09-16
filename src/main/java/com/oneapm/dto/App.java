@@ -25,7 +25,7 @@ public class App {
 	
 	private Long agentId;
 	
-	
+	private Long groupId;
 	public App(Long userId, String createTime, String language, Long appId, String appName, String dataTime, int agent, Long agentId){
 		setAppId(appId);
 		setUserId(userId);
@@ -128,5 +128,14 @@ public Long getAgentId() {
 public void setAgentId(Long agentId) {
         this.agentId = agentId;
 }
+
+public Long getGroupId() {
+	return groupId;
+}
+
+public void setGroupId(Long groupId) {
+	this.groupId = groupId;
+}
+
 
 }

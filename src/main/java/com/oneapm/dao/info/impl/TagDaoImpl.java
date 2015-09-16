@@ -151,6 +151,7 @@ public class TagDaoImpl extends DaoImplBase<Tag> {
 //                        object.put("pv", tag.getPv());
 //                        object.put("uv", tag.getUv());
                         object.put("rongzi", tag.getRongzi());
+                        object.put("group_id", tag.getGroupId());
                         if (getDBCollection(TABLE_NAME).insert(object).getN() > -1) {
                                 return tag;
                         }
@@ -178,6 +179,7 @@ public class TagDaoImpl extends DaoImplBase<Tag> {
 //                        value.put("pv", tag.getPv());
 //                        value.put("uv", tag.getUv());
                         value.put("rongzi", tag.getRongzi());
+                        value.put("group_id", tag.getGroupId());
                         return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value)).getN() > -1;
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
@@ -234,7 +236,10 @@ public class TagDaoImpl extends DaoImplBase<Tag> {
                 Tag tag = null;
                 try {
                         Long id = Long.parseLong(object.get("id").toString().trim());
-                        Long infoId = Long.parseLong(object.get("info_id").toString().trim());
+                        Long infoId = 0L;
+                        try{
+                        	infoId = Long.parseLong(object.get("info_id").toString().trim());
+                        }catch(Exception e){}
                         int category = Integer.parseInt(object.get("category").toString().trim());
                         int from = Integer.parseInt(object.get("from").toString().trim());
                         Integer metric = Integer.parseInt(object.get("metric").toString().trim());
@@ -278,7 +283,12 @@ public class TagDaoImpl extends DaoImplBase<Tag> {
                         try{
                                 rongzi = Integer.parseInt(object.get("rongzi").toString().trim());
                         }catch(Exception e){}
+                        Long groupId = 0L;
+                        try{
+                        	groupId = Long.parseLong(object.get("group_id").toString().trim());
+                        }catch(Exception e){}
                         tag = new Tag(id, infoId, category, from, metric, loudou, description, status, province, person, language, rongzi, fuwuqi);
+                        tag.setGroupId(groupId);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }
