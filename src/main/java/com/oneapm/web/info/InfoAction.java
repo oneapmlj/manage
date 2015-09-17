@@ -326,15 +326,15 @@ public class InfoAction extends SupportAction {
                 return "salespanel";
         }
         private String xiaoshou;
-        public void xiaoshouyi() throws IOException {
+      /*  public void xiaoshouyi() throws IOException {
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
                         return;
                 }
                 try{
-//                        if (xiaoshou != null) {
-//                                xiaoshou = new String(xiaoshou.getBytes("ISO8859-1"), "UTF-8");
-//                        }
+                        if (xiaoshou != null) {
+                                xiaoshou = new String(xiaoshou.getBytes("ISO8859-1"), "UTF-8");
+                        }
                         if(!quanxian(getAdmin().getGrades(), getGRADE().getMap().get(116))){
                                 getServletResponse().getWriter().print(OneTools.getResult(0, "权限不足"));
                                 return;
@@ -344,7 +344,7 @@ public class InfoAction extends SupportAction {
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
                 }
-        }
+        }*/
 
         public void support() throws IOException {
                 if (!isLogin()) {
@@ -517,14 +517,14 @@ public class InfoAction extends SupportAction {
         private Long from;
         private Long messageId;
 
-        public void change() throws IOException {
+      /*  public void change() throws IOException {
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
                         return;
                 }
                 String result = InfoService.change(getAdmin(), from, id, type, messageId);
                 getServletResponse().getWriter().print(result);
-        }
+        }*/
 
         private Long infoId;
         private int gender;

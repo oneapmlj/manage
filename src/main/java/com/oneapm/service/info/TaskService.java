@@ -157,6 +157,23 @@ public class TaskService extends OneTools {
                         LOG.error(e.getMessage(), e);
                 }
         }
+        
+        public static void closeWithGroupId(Long groupId, Long adminId) {
+            try {
+                    List<MailPush> pushs = MailPushDaoImpl.getInstance().findByGroupIdAndAdmin(groupId, adminId);
+                    if (pushs.size() <= 0) {
+                            return;
+                    }
+                    for (MailPush push : pushs) {
+                            push.setStatus(1);
+                            if (MailPushDaoImpl.getInstance().update(push)) {
+                                    PushDealDaoImpl.getInstance().insert(new PushDeal(PushDealDaoImpl.getInstance().getIdest(), push.getId(), adminId, 6, TimeTools.format(), null, -1, null, null));
+                            }
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+    }
 
         public static void deal(Long infoId, Long adminId, Long callId) {
                 try {

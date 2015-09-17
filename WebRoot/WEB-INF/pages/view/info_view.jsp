@@ -21,10 +21,10 @@
 		<div style="float:left;margin-left:20px;">
 			<div style="float:left;height:20px;line-height:20px;margin:5px 0 0 5px;" class="sale_assign">
 				<div style="float:left;width:40px;">销售：</div>
-				<s:if test="%{info.sale > 0}">
+				<s:if test="%{userGroups.sale > 0}">
 					<div style="float:left;">
 						<div style="float:left;color:blue;margin-right:10px;">${userGroups.saleName}</div>
-							<s:if test="%{admin.id == info.sale}">
+							<s:if test="%{admin.id == userGroups.sale}">
 								<div style="float:left;width:40px;">
 									<input style="width:38px;"  id="view_info_delete_sale" class="biankuang_blue_ding hand" type="button" value="放弃"/>
 								</div>
@@ -53,11 +53,11 @@
 			</div>
 			<div style="float:left;height:20px;line-height:20px;margin:5px 0 0 5px;" class="presale_assign">
 				<div style="float:left;width:40px;">售前：</div>
-				<s:if test="%{info.preSale > 0}">
+				<s:if test="%{userGroups.preSale > 0}">
 					<div style="float:left;">
-						<div style="float:left;margin-right:10px;color:blue;">${info.preSaleName}</div>
+						<div style="float:left;margin-right:10px;color:blue;">${userGroups.preSaleName}</div>
 						<%-- <s:if test="%{info.supportApply == null}"> --%>
-							<s:if test="%{admin.id == info.preSale}">
+							<s:if test="%{admin.id == userGroups.preSale}">
 								<div style="float:left;width:40px;">
 									<input style="width:38px;"  id="view_info_delete_presale" class="biankuang_blue_ding hand" type="button" value="放弃"/>
 								</div>
@@ -86,11 +86,11 @@
 			</div>
 			<div style="float:left;height:20px;line-height:20px;margin:5px 0 0 5px;" class="support_assign">
 				<div style="float:left;width:40px;">运营：</div>
-				<s:if test="%{info.support > 0}">
+				<s:if test="%{userGroups.support > 0}">
 					<div style="float:left;">
-						<div style="float:left;color:blue;margin-right:10px;">${info.supportName}</div>
+						<div style="float:left;color:blue;margin-right:10px;">${userGroups.supportName}</div>
 						<%-- <s:if test="%{info.supportApply == null}"> --%>
-							<s:if test="%{admin.id == info.support}">
+							<s:if test="%{admin.id == userGroups.support}">
 								<div style="float:left;width:40px;">
 										<input style="width:38px;"  id="view_info_delete_support" class="biankuang_blue_ding hand" type="button" value="放弃"/>
 									</div>
@@ -123,7 +123,7 @@
 				<div style="float:left;width:100px;color:red;"  class="remove_mark_view biankuang_gray menu_button">取消标记</div><input type="text" value="${userGroups.mark.id}"  class="add_mark_view_id hidden"/>
 			</s:if>
 			<s:else><div style="float:left;width:60px;"  class="add_mark_view biankuang_gray menu_button">标记</div><input type="text"  class="add_mark_view_id hidden"/></s:else>
-			<div val1="${info.id}" style="float:left;width:60px;"  class="check_gongdan biankuang_gray menu_button">工单</div>
+			
 			
 			<s:if test="%{userGroups.xiaoshouyi != null && userGroups.xiaoshouyi > 0}">
 				<div style="float:left;width:120px;color:blue;"  class="biankuang_gray_ding menu_button">已推送销售</div>
@@ -179,9 +179,9 @@
 			
 			<div style="width:400px;margin-left:10px;float:left;padding-bottom: 40px;">
 				<div class="view_info biankuang_gray_ding" style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">
-				<s:if test="%{infos != null && infos.size > 0}">
+				<s:if test="%{userGroupList != null && userGroupList.size > 0}">
 					<div  >
-						<s:iterator value="infos" >
+						<s:iterator value="userGroupList" >
 					<div>			
 						
 					<%-- <div style="margin-left:20px;width:380px;float:left;">公司：<span>${info.company }</span></div>
@@ -263,18 +263,20 @@
 					<div style="margin-left:20px;width:140px;float:left;">
 							<div style="float:left;width:110px;"><div style="float:left;width:48px;">角色：</div>
 								<div style="float:left;" ><span class="gender_name">
-									<s:if test="%{info.role=='admin'}">admin</s:if>
-									<s:if test="%{info.role=='manager'}">manager</s:if>
-									<s:if test="%{info.role=='normal'}">normal</s:if>
+									<s:if test="%{role=='admin'}">admin</s:if>
+									<s:if test="%{role=='manager'}">manager</s:if>
+									<s:if test="%{role=='user'}">user</s:if>
 								</span></div>
 								<select style="float:left;margin-top:3px;" class="edit_gender_name hidden">
 								</select>
 							</div>
 					</div>
-					<div style="width:400px;float:left;line-height:25px;font-size:16px;">
-						<div style="margin-left:20px;width:300px;float:left;">下载信息:<a href="javascript:showAll();" style="font-size:14px;color:blue;">  显示全部</a></div>
+					<div style="margin-left:20px;width:300px;float:left;">工单：
+					<a href="javascript:showAll();" val1="${info.id}" style="font-size:15px;color:blue;" class="check_gongdan">  点击进入</a>
+						</div>		
+					
 					</div>
-					</div>
+					
 					</s:iterator>
 					</div>
 					</s:if>
@@ -301,6 +303,25 @@
 						</div>
 					</div> --%>
 				</div>
+				<div class="view_p_content biankuang_gray_ding">
+				<div style="width:400px;float:left;line-height:25px;font-size:16px;">
+						<div style="margin-left:20px;width:300px;float:left;">下载信息:<a href="javascript:showAll();" style="font-size:14px;color:blue;">  显示全部</a></div>
+					</div>
+					</div>
+				<s:iterator value="userGroupList" >
+				<s:if test="%{info.downloads != null && info.downloads.size > 0}">
+					<div id="download_view_${info.userId }"  style="display:none">
+						<s:iterator value="info.downloads" >
+							<div class="view_p_content biankuang_gray_ding">
+								<div style="margin-left:10px;width:165px;float:left;">ID：${id }</div>
+								<div style="margin-left:5px;width:170px;float:left;">Agent：${agentName }</div>
+								<div style="margin-left:10px;width:165px;float:left;">版本：${vesion }</div>
+								<div style="margin-left:5px;width:170px;float:left;">时间：${downloadTime }</div>
+							</div>
+						</s:iterator>
+					</div>
+					</s:if>
+					</s:iterator>
 				<s:if test="%{info.level >= 1}">
 					<%-- <div style="width:410px;float:left;line-height:25px;font-size:12px;">
 						<div class="view_p_button"><strong>名片:</strong></div>
@@ -368,18 +389,7 @@
 					</div> --%>
 					
 					
-					<s:if test="%{info.downloads != null && info.downloads.size > 0}">
-					<div id="download_view_${info.userId }"  style="display:none">
-						<s:iterator value="info.downloads" >
-							<div class="view_p_content biankuang_gray_ding">
-								<div style="margin-left:10px;width:165px;float:left;">ID：${id }</div>
-								<div style="margin-left:5px;width:170px;float:left;">Agent：${agentName }</div>
-								<div style="margin-left:10px;width:165px;float:left;">版本：${vesion }</div>
-								<div style="margin-left:5px;width:170px;float:left;">时间：${downloadTime }</div>
-							</div>
-						</s:iterator>
-					</div>
-					</s:if>
+					
 					<div style="width:400px;float:left;line-height:25px;font-size:16px;">
 						<div class="view_p_button"><strong>添加应用信息:</strong></div>
 					</div>
@@ -489,7 +499,7 @@
 				<input type = "button" id = "sendcloudbtn" value="查看用户邮件记录"/>
 				<!-- <input type = "button" id = "exportexcel" value="导出成excel"/> -->
 			</div>
-			<s:if test="%{info.pushs != null}">
+			<s:if test="%{userGroups.pushs != null}">
 				<div style="width:250px;float:left;margin:30px 0 0 10px;font-size:12px; " class="biankuang_gray_ding">
 					<div style="width:100%;height:20px;margin:5px 0 0 10px;font-size:14px;">任务:</div>
 					<div style="100%">
@@ -534,7 +544,7 @@
 					<input type="text" class="hand left hidden" style="width:90px;" id="guanlian_add_value"/>
 					<input type="button" value="保存" class="hand hidden"  id="guanlian_add"/>
 					<div class="left" style="width:220px;" id="guanlian_value">
-						<s:iterator value="info.guanlians" id="ingl">
+						<s:iterator value="userGroups.guanlians" id="ingl">
 							<div style="width:210px;float:left;line-height:20px;margin-top:5px;" id="guanlian_value_${guanlianId}">
 								<s:if test="%{userId == guanlianId}">
 									<div style="float:left;width:80px;" class="menu_button hand  biankuang_gray_ding" id="guanlian_value_${userId}">当前</div>
@@ -572,8 +582,8 @@
 								<div style="float:left;width:60px;">注册：</div>
 								<%-- <div style="float:left;width:170px;">${info.tag.lou.name}</div> --%>
 								<div style="float:left;width:170px;color:#4F4F4F;">
-									<s:if test="%{info.comming == null}">未知</s:if>
-									<s:else>${info.from }</s:else>
+									<s:if test="%{userGroups.comming == null}">未知</s:if>
+									<s:else>${userGroups.comming }</s:else>
 								</div>
 							</div>
 							<div style="width:230px;height:20px;margin:15px 0 0 15px;">
@@ -924,12 +934,11 @@
 						<div class="contact call_add_card"  style="width:430px;float:left;"><div style="float:left;width:50px;">名片:</div>
 							<div style="float:left;">
 								<select style="float:left;margin-top:5px;" name="card" id="add_call_card" class="hand" tabindex="1">
-									<option value="0">---请选择---</option>
-									<s:if test="%{info.userId != null && info.userId > 0}">
-										<option value="1">注册信息</option>
+									<s:if test="%{userGroups.groupId != null && userGroups.groupId > 0}">
+										<option value="1" select="selected">注册信息</option>
 									</s:if>
-									<s:if test="%{info.cards != null && info.cards.size > 0}">
-										<s:iterator value="info.cards">
+									<s:if test="%{userGroups.cards != null && userGroups.cards.size > 0}">
+										<s:iterator value="userGroups.cards">
 											<option value="${id}">名片：${id}</option>
 										</s:iterator>
 									</s:if>

@@ -29,6 +29,22 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group>{
 		return Instance;
 	}
 	
+	 public boolean update_xiaoshouyi(UserGroups userGroups, String lableId){
+         try{
+                 DBObject object = new BasicDBObject();
+                 DBObject value = new BasicDBObject();
+                 value.put("xiaoshouyi", userGroups.getXiaoshouyi());
+                 if(lableId != null && lableId.length() > 0){
+                         value.put("xiaoshouyi_lable_id", lableId);
+                 }
+                 object.put("group_id", userGroups.getGroupId());
+                 return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set",value)).getN() > -1;
+         }catch(Exception e){
+                 LOG.error(e.getMessage(), e);
+         }
+         return false;
+ }
+	
 	public UserGroups findByAdminId(Long admin_id){
 	        try{
 	                DBObject object = new BasicDBObject();
@@ -180,10 +196,16 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group>{
 					  project = object.get("project").toString();
 				  } catch (Exception e) {
 				  }
+				  Long xiaoshouyi  = null;
+				  try {
+					  xiaoshouyi = Long.parseLong(object.get("xiaoshouyi").toString());
+				  } catch (Exception e) {
+				  }
 	              userGroups = new UserGroups( groupId,  adminId,  groupName,  parentId,  deleted,  sale,  support,
 	                                 preSale,  payLevel,  payTime,  comming,  emailStatus,  contectTime);
 	              userGroups.setCreateTime(createTime);
 	              userGroups.setProject(project);
+	              userGroups.setXiaoshouyi(xiaoshouyi);
 	              return userGroups;
 	      }catch(Exception e){
 	              LOG.error(e.getMessage(), e);
@@ -198,11 +220,28 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group>{
 	                 if (userGroups.getGroupId() != null && userGroups.getGroupId() > 0) {
 	                         value.put("group_id", userGroups.getGroupId());
 	                 }
+	                 value.put("sale", userGroups.getSale());
 	                 value.put("project", userGroups.getProject());
+	                 value.put("support", userGroups.getSupport());
+	                 value.put("preSale", userGroups.getPreSale());
 	                 return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value)).getN() > -1;
 	         } catch (Exception e) {
 	                 LOG.error(e.getMessage(), e);
 	         }
 	         return false;
 	 }
+		 public boolean updateOwner(UserGroups userGroups) {
+             try {
+                     DBObject object = new BasicDBObject();
+                     object.put("group_id", userGroups.getGroupId());
+                     DBObject value = new BasicDBObject();
+                     value.put("support", userGroups.getSupport());
+                     value.put("sale", userGroups.getSale());
+                     value.put("preSale", userGroups.getPreSale());
+                     return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value)).getN() > -1;
+             } catch (Exception e) {
+                     LOG.error(e.getMessage(), e);
+             }
+             return false;
+     }
 }

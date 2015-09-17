@@ -10,8 +10,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.oneapm.dto.Mail;
 import com.oneapm.dto.MailDto;
 import com.oneapm.dto.MailMode;
+import com.oneapm.dto.UserGroup;
+import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.info.Info;
 import com.oneapm.service.account.AccountService;
+import com.oneapm.service.group.UserGroupService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.mail.MailService;
 import com.oneapm.service.mail.SendMailService;
@@ -62,20 +65,48 @@ public class SendMailAction extends SupportAction {
         private String content;
         private String signTime;
         private List<Mail> mails;
+        private Long groupId;
+        private UserGroups userGroups;
+        private List<UserGroup> userGroupList;
+        private List<Info> infos;
+        private String userId;
         public String send(){
                 if (!isLogin()) {
                         return "login";
                 }
                 try {
-                        info = InfoService.findByIdSimple(infoId);
-                        signTime = info.getCreateTime().substring(0, 10);
-                        mails = MailService.findMailsById(info.getId());
+                    //    info = InfoService.findByIdSimple(infoId);
+                     //   signTime = info.getCreateTime().substring(0, 10);
+                     //   mails = MailService.findMailsById(info.getId());
 //                        content = SendMailService.findByModeId(101);
+                		userGroups = UserGroupService.findByGroupIdSimple(groupId);
+                		userGroupList = UserGroupService.findUsersByGroupId(groupId);
+                		for(UserGroup userGroup : userGroupList){
+                			info = InfoService.findByUserIdSimple(userGroup.getUserId());
+                			infos.add(info);
+                		}
+                		if(userGroups.getCreateTime()!=null){
+                		signTime = userGroups.getCreateTime().substring(0,10);
+                		}
+                		mails = MailService.findMailsByGroupId(groupId);
+                		content = SendMailService.findByModeId(101);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), 1);
                 }
                 return "send";
         }
+        public void findNameById(){
+            try {
+            	info = InfoService.findByUserIdSimple(Long.parseLong(userId));
+                 JSONObject object = new JSONObject();
+                 object.put("status", 1);
+                 object.put("name", info.getName());
+                 getServletResponse().getWriter().print(object.toJSONString());
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), 1);
+            }
+            
+    }
         
         public void view() throws IOException{
                 if (!isLogin()) {
@@ -272,5 +303,46 @@ public class SendMailAction extends SupportAction {
         public void setLable(Long lable) {
                 this.lable = lable;
         }
+
+		public Long getGroupId() {
+			return groupId;
+		}
+
+		public void setGroupId(Long groupId) {
+			this.groupId = groupId;
+		}
+
+		public UserGroups getUserGroups() {
+			return userGroups;
+		}
+
+		public void setUserGroups(UserGroups userGroups) {
+			this.userGroups = userGroups;
+		}
+
+		public List<UserGroup> getUserGroupList() {
+			return userGroupList;
+		}
+
+		public void setUserGroupList(List<UserGroup> userGroupList) {
+			this.userGroupList = userGroupList;
+		}
+
+		public List<Info> getInfos() {
+			return infos;
+		}
+
+		public void setInfos(List<Info> infos) {
+			this.infos = infos;
+		}
+
+		public String getUserId() {
+			return userId;
+		}
+
+		public void setUserId(String userId) {
+			this.userId = userId;
+		}
+        
 
 }

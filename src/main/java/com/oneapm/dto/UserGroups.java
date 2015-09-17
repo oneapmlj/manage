@@ -48,7 +48,8 @@ public class UserGroups {
         private String pay_level;
         private Mark mark;
         private String project;
-
+        private Long xiaoshouyi;
+        private Long xiaoshouyiAdmin;
         public UserGroups(Long groupId, Long adminId, String groupName, Long parentId, int deleted){
                 setGroupId(groupId);
                 setAdminId(adminId);
@@ -304,6 +305,18 @@ public class UserGroups {
                 public void setProject(String project) {
                         this.project = project;
                 }
+				public Long getXiaoshouyi() {
+					return xiaoshouyi;
+				}
+				public void setXiaoshouyi(Long xiaoshouyi) {
+					this.xiaoshouyi = xiaoshouyi;
+				}
+				public Long getXiaoshouyiAdmin() {
+					return xiaoshouyiAdmin;
+				}
+				public void setXiaoshouyiAdmin(Long xiaoshouyiAdmin) {
+					this.xiaoshouyiAdmin = xiaoshouyiAdmin;
+				}
 		
         
 }

@@ -335,11 +335,12 @@ $(document).ready(function() {
 	});
 	$(".add_xiaoshouyi_view").live('click', function(){
 		var id = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		var xiaoshou = $(".add_xiaoshouyi_view_sale").val();
 		$.ajax({
 			dataType:'json',
-			url:'info_xiaoshouyi.action',
-			data:{infoId:id,xiaoshou:xiaoshou}
+			url:'user_group_xiaoshouyi.action',
+			data:{groupId:groupId,xiaoshou:xiaoshou}
 		}).done(function(da){
 			if(da.status == 1){
 				$(".add_xiaoshouyi_view").css("color","blue");
@@ -780,10 +781,11 @@ $(document).ready(function() {
 	});
 	$("#view_info_remind_sale").live('click', function(){
 		var id = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_change.action',
-			data:{id:id,type:7}
+			url:'user_group_change.action',
+			data:{groupId:groupId,type:7}
 		}).done(function(da){
 			if(da.status == 1){
 				
@@ -861,10 +863,11 @@ $(document).ready(function() {
 	});
 	$("#view_info_remind_support").live('click', function(){
 		var id = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_change.action',
-			data:{id:id,type:8}
+			url:'user_group_change.action',
+			data:{groupId:groupId,type:8}
 		}).done(function(da){
 			if(da.status == 1){
 				
@@ -876,10 +879,11 @@ $(document).ready(function() {
 	});
 	$("#view_info_back_sale").live('click', function(){
 		var id = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_back.action',
-			data:{id:id,type:1}
+			url:'user_group_back.action',
+			data:{groupId:groupId,type:1}
 		}).done(function(da){
 			if(da.status == 1){
 				location.reload(true);
@@ -890,10 +894,11 @@ $(document).ready(function() {
 	});
 	$("#view_info_back_support").live('click', function(){
 		var id = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_back.action',
-			data:{id:id,type:2}
+			url:'user_group_back.action',
+			data:{groupId:groupId,type:2}
 		}).done(function(da){
 			if(da.status == 1){
 				location.reload(true);
@@ -904,10 +909,11 @@ $(document).ready(function() {
 	});
 	$("#view_info_back_presale").live('click', function(){
 		var id = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_back.action',
-			data:{id:id,type:3}
+			url:'user_group_back.action',
+			data:{groupId:groupId,type:3}
 		}).done(function(da){
 			if(da.status == 1){
 				location.reload(true);
@@ -941,13 +947,17 @@ $(document).ready(function() {
 	$(".sale_assign_one").live('click', function(){
 		var adminId = $(this).attr('val1');
 		var id = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
 			url:'assign_sale.action',
-			data:{adminId:adminId,id:id}
+			data:{adminId:adminId,groupId:groupId}
 		}).done(function(da){
 			if(da.status == 1){
 				location.reload(true);
+			}
+			else{
+				alert(da.msg);
 			}
 		});
 	});
@@ -988,11 +998,12 @@ $(document).ready(function() {
 	});
 	$(".presale_assign_one").live('click', function(){
 		var adminId = $(this).attr('val1');
+		var groupId = $("#group_id").html();
 		var id = $("#view_infoId").val();
 		$.ajax({
 			dataType:'json',
 			url:'assign_presale.action',
-			data:{adminId:adminId,id:id}
+			data:{adminId:adminId,groupId:groupId}
 		}).done(function(da){
 			if(da.status == 1){
 				location.reload(true);
@@ -1024,11 +1035,12 @@ $(document).ready(function() {
 	});
 	$(".support_assign_one").live('click', function(){
 		var adminId = $(this).attr('val1');
+		var groupId = $("#group_id").html();
 		var id = $("#view_infoId").val();
 		$.ajax({
 			dataType:'json',
 			url:'assign_support.action',
-			data:{adminId:adminId,id:id}
+			data:{adminId:adminId,groupId:groupId}
 		}).done(function(da){
 			if(da.status == 1){
 				location.reload(true);
@@ -1154,13 +1166,14 @@ $(document).ready(function() {
 	
 	$(".add_mail").click( function(){
 		var infoId = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
 			url:'account_grade.action',
 			data:{type:100}
 		}).done(function(da){
 			if(da.status == 1){
-				window.open("mail_send.action?infoId="+infoId);
+				window.open("mail_send.action?groupId="+groupId);
 			}else{
 				alert(da.msg);
 			}

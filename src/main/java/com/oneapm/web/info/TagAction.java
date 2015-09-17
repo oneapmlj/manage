@@ -32,9 +32,9 @@ public class TagAction extends SupportAction {
                         getServletResponse().sendRedirect("/login.action");
                         return;
                 }
-//                if (description != null) {
-//                        description = new String(description.getBytes("ISO8859-1"), "UTF-8");
-//                }
+                if (description != null) {
+                        description = new String(description.getBytes("ISO8859-1"), "UTF-8");
+               }
                 String result = TagService.update(getAdmin().getId(), id, category, person, province, from, description, rongzi,fuwuqi);
                 getServletResponse().getWriter().print(result);
         }

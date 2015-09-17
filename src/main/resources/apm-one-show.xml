@@ -75,7 +75,7 @@
 				/WEB-INF/salespanel/salespanel.jsp
 			</result>
 		</action>
-		<action name="assign_*" method="{1}" class="com.oneapm.web.info.InfoAction">
+		<action name="assign_*" method="{1}" class="com.oneapm.web.group.UserGroupAction">
 			
 		</action>
 		

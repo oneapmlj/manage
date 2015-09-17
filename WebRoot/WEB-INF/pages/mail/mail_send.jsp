@@ -41,7 +41,7 @@
 						</div>
 						<div style="width:220px;float:left;height:40px;font-size:14px;line-height:40px;" class="person">
 							<div style="float:left;width:45px;">姓名：</div>
-							<input style="width:160px;float:left;height:16px;margin-top:10px;"  type="text" id="info_name" value="${info.name }"/>
+							<input style="width:160px;float:left;height:16px;margin-top:10px;"  type="text" id="info_name" />
 						</div>
 						<div style="width:220px;float:left;height:40px;font-size:14px;line-height:40px;" class="person">
 							<div style="float:left;width:45px;">注册：</div>
@@ -86,8 +86,16 @@
 							</div>
 						</s:if>
 						<s:else>
-							<div style="width:220px;float:left;height:40px;font-size:14px;line-height:40px;" class="hidden">
+						<div style="width:220px;float:left;height:40px;font-size:14px;line-height:40px;">
+						<div style="float:left;width:45px;">目标：</div>
+						<select id="view_mail_to" class="hand" style="width:165px;float:left;height:25px;margin-top:10px;">
+									<s:iterator value="userGroupList">
+									<option value="0" id="${userId}">${email }</option>
+									</s:iterator>
+								</select>
+							<!-- <div style="width:220px;float:left;height:40px;font-size:14px;line-height:40px;" class="hidden">
 								<input type="text" id="view_mail_to" value="0"/>
+							</div> -->
 							</div>
 						</s:else>
 						<div style="width:220px;float:left;height:40px;font-size:14px;line-height:40px;">
@@ -148,7 +156,18 @@
 		var touch = "<tr><td style='font-size:16px;font-family:微软雅黑,黑体,arial;line-height:24px;padding-bottom: 15px;'>为了能进一步了解您的需求，更好的使用我们的产品，我将于<strong style='color:rgb(26, 167, 42)'>$[touch_time]</strong> 给您致电，如果时间不合适，请回复我您方便的时间。</td></tr>";
 		var sign = "<tr><td style='font-size:16px;font-family:微软雅黑,黑体,arial;line-height:24px;padding-bottom: 15px;'>您在<strong style='color:rgb(26, 167, 42);'>$[sign_time]</strong> 注册成为我们的客户，但是并没有使用，是否在使用过程中遇到了困难？我们很关心您的使用体验，期待您的回复。</td></tr>";
 		var zidingyi = "<tr><td style='font-size:16px;font-family:微软雅黑,黑体,arial;line-height:24px;padding-bottom: 15px;'>$[zidingyi]</td></tr>";
-	
+		function findNameById(){
+			var id = $("#view_mail_to").find("option:selected").attr("id");
+			$.ajax({
+				dataType:'json',
+				url:'mail_findNameById.action',
+				data:{userId:id}
+			}).done(function(da){
+				if(da.status == 1){
+					$("#info_name").val(da.name);
+				}
+			})
+		}
 		var init = function(){
 			var mode = $("#view_mail_mode").val();
 			$.ajax({
@@ -208,6 +227,7 @@
 		}
 		init();
 		$(document).ready(function() {
+			findNameById();
 			$("#biankuang_val").live("change",function(){
 				var content = $("#biankuang_val").val();
 				if(content != null && content.length > 0){
@@ -302,6 +322,7 @@
 			});
 			$("#view_mail_to").live("change", function(){
 				var to = $("#view_mail_to").val();
+				findNameById();
 				if(to > 0){
 					$(".person").addClass("hidden");	
 				}else{

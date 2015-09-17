@@ -25,6 +25,8 @@ import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dao.info.impl.XiaoshouyiDaoImpl;
+import com.oneapm.dto.UserGroup;
+import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
 import com.oneapm.dto.tag.Category;
@@ -33,6 +35,7 @@ import com.oneapm.dto.tag.Province;
 import com.oneapm.dto.tag.Rongzi;
 import com.oneapm.dto.tag.Tag;
 import com.oneapm.service.account.AccountService;
+import com.oneapm.service.group.UserGroupService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.info.TagService;
 import com.oneapm.util.OneTools;
@@ -46,7 +49,7 @@ public class Xiaoshouyi {
         public static final String TOKEN = "a307630d395747fcc15e208b462984e9";
 
         
-        public static String xiaoshouyi(Admin admin, Long infoId, String xiaoshou){
+        /*public static String xiaoshouyi(Admin admin, Long infoId, String xiaoshou){
                 try{
                         Info info = InfoService.findByIdSimple(infoId);
                         if(info == null || info.getProject() == null || info.getProject().trim().length() <= 0){
@@ -65,7 +68,7 @@ public class Xiaoshouyi {
                         }
                         info.setXiaoshouyi(xiaoshouyiId);
                         info.setXiaoshouyiAdmin(admin.getId());
-                        if(InfoService.update_xiaoshouyi(info, null)){
+                        if(UserGroupService.update_xiaoshouyi(info, null)){
                                 XiaoshouyiDaoImpl.getInstance().insert(XiaoshouyiDaoImpl.getInstance().getIdest(),
                                                 TimeTools.format(), info.getUserId(), admin.getId(), 1, info.getSale(), null);
                         }
@@ -74,11 +77,51 @@ public class Xiaoshouyi {
                         LOG.error(e.getMessage(), e);
                 }
                 return OneTools.getResult(0, "服务器内部错误");
-        }
+        }*/
+        
+        public static String xiaoshouyiWithGroupId(Admin admin, Long groupId, String xiaoshou){
+            try{
+                    UserGroups userGroups = UserGroupService.findByGroupIdSingle(groupId);
+                    if(userGroups == null || userGroups.getProject() == null || userGroups.getProject().trim().length() <= 0){
+                            return OneTools.getResult(0, "项目信息必须完整");
+                    }
+                    userGroups.setTag(TagService.findByGroupId(groupId));
+                    if(userGroups.getTag() != null && userGroups.getTag().getProvince() > 0){
+                    	userGroups.getTag().setProvinceName(Province.getName(userGroups.getTag().getProvince()));
+                    }else{
+                    	userGroups.setTag(new Tag());
+                    	userGroups.getTag().setProvinceName("未知");
+                    }
+                    Long xiaoshouyiId = post(userGroups, xiaoshou);
+                    if(xiaoshouyiId == null){
+                            return OneTools.getResult(0, "推送销售失败");
+                    }
+                    userGroups.setXiaoshouyi(xiaoshouyiId);
+                    userGroups.setXiaoshouyiAdmin(admin.getId());
+                    if(UserGroupService.update_xiaoshouyi(userGroups, null)){
+                            XiaoshouyiDaoImpl.getInstance().insert(XiaoshouyiDaoImpl.getInstance().getIdest(),
+                                            TimeTools.format(), userGroups.getGroupId(), admin.getId(), 1, userGroups.getSale(), null);
+                    }
+                    return OneTools.getResult(1, "成功");
+            }catch(Exception e){
+                    LOG.error(e.getMessage(), e);
+            }
+            return OneTools.getResult(0, "服务器内部错误");
+    }
+    
         
         
-        
-        public static Long post(Info info, String xiaoshou) {
+        public static Long post(UserGroups userGroups, String xiaoshou) {
+        	UserGroup userGroupAdmin = null;
+        	Info info = null;
+        		List<UserGroup> userGroupList = UserGroupService.findUsersByGroupId(userGroups.getAdminId());
+        		for(UserGroup userGroup: userGroupList){
+        			if(userGroup.getRole().equals("admin")){
+        				userGroupAdmin = userGroup;
+        				info = InfoService.findByUserId(userGroup.getUserId());
+        				userGroupAdmin.setInfo(info);
+        			}
+        		}
                 ByteArrayOutputStream bos = null;
                 InputStream bis = null;
                 byte[] buf = new byte[10240];
@@ -97,41 +140,41 @@ public class Xiaoshouyi {
                         JSONObject object = new JSONObject();
                         object.put("public", true);
                         JSONObject record = new JSONObject();
-                        record.put("name", info.getName());                              //姓名
-                        record.put("companyName", info.getProject());              //公司名
+                        record.put("name", userGroupAdmin.getInfo().getName());                              //姓名
+                        record.put("companyName", userGroups.getProject());              //公司名
                         record.put("ownerId", 329832);                                       //负责人
                         record.put("status", 1);                                        //跟进状态1.未处理，2.已联系，3.关闭，4.已转换
                         if(info.getGender() == 1 || info.getGender() == 2){
                                 record.put("gender", info.getGender());                                        //性别1男2女
                         }
-                        record.put("mobile", info.getPhone());                    //手机
-                        record.put("email", info.getEmail());              //邮件
-                        record.put("state", info.getTag().getProvinceName());                                       //省
+                        record.put("mobile", userGroupAdmin.getInfo().getPhone());                    //手机
+                        record.put("email", userGroupAdmin.getInfo().getEmail());              //邮件
+                        record.put("state", userGroups.getTag().getProvinceName());                                       //省
                         record.put("highSeaId", 58830);                                            //所属公海分组，4735默认分组
                         
                         record.put("comment", "无"); 
                         try{
-                                record.put("comment", info.getTag().getDescription());
+                                record.put("comment", userGroups.getTag().getDescription());
                         }catch(Exception e){}
                         record.put("dimDepart", "116395");                                                    //所属部门
-                        record.put("dbcVarchar1", info.getUserId());
+                        record.put("dbcVarchar1", userGroups.getGroupId());
                         record.put("dbcVarchar2", "未知");      //融资
                         try{
-                                record.put("dbcVarchar2", Rongzi.getName(info.getTag().getRongzi()));
+                                record.put("dbcVarchar2", Rongzi.getName(userGroups.getTag().getRongzi()));
                         }catch(Exception e){}
                         record.put("dbcVarchar3", "未知");        //分类
                         try{
-                                record.put("dbcVarchar3", Category.getName(info.getTag().getCategory()));
+                                record.put("dbcVarchar3", Category.getName(userGroups.getTag().getCategory()));
                         }catch(Exception e){}
                         record.put("dbcVarchar4", "未知");        //人数
                         try{
-                                record.put("dbcVarchar4", Person.getName(info.getTag().getPerson()));
+                                record.put("dbcVarchar4", Person.getName(userGroups.getTag().getPerson()));
                         }catch(Exception e){}
                         try{
                                 if(xiaoshou != null && xiaoshou.trim().length() > 0){
                                         record.put("dbcVarchar5", xiaoshou);
                                 }else if(info.getSale() != null&& info.getSale() > 0){
-                                        Admin a = AccountService.findById(info.getSale());
+                                        Admin a = AccountService.findById(userGroups.getSale());
                                         if(a != null){
                                                 record.put("dbcVarchar5", a.getName());
                                         }

@@ -60,7 +60,22 @@ public class MessageDaoImpl extends DaoImplBase<Admin> {
                 }
                 return null;
         }
-
+        
+        public Message findApplyByGroupId(Long groupId, int type, int status) {
+            try {
+                    DBObject object = new BasicDBObject();
+                    object.put("group_id", groupId);
+                    object.put("status", status);
+                    object.put("type", type);
+                    DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                    if (cursor.hasNext()) {
+                            return getMessageFromObject(cursor.next());
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return null;
+        }
         public Message findById(Long id) {
                 try {
                         DBObject object = new BasicDBObject();

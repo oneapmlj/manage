@@ -11,6 +11,7 @@ import com.oneapm.dto.info.Info;
 import com.oneapm.service.group.UserGroupService;
 import com.oneapm.service.info.GuanlianService;
 import com.oneapm.service.info.InfoService;
+import com.oneapm.service.record.Xiaoshouyi;
 import com.oneapm.service.show.CallService;
 import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
@@ -72,7 +73,8 @@ public class UserGroupAction extends SupportAction{
                      
              }
          }
-         infos.add(info);
+         userGroup.setInfo(info);
+         //infos.add(info);
          }
          UserGroupService.initUserGroups(userGroups);
          userGroups.setUserGroups(userGroupList);
@@ -223,6 +225,88 @@ public class UserGroupAction extends SupportAction{
              try{
              		guanlian = Long.parseLong(guanlianId);
                      String result = GuanlianService.change(groupId, guanlian);
+                     getServletResponse().getWriter().print(result);
+             }catch(Exception e){
+                     LOG.error(e.getMessage(), e);
+             }
+     }
+     
+     public void sale() throws IOException {
+         if (!isLogin()) {
+                 getServletResponse().sendRedirect("/login.action");
+                 return;
+         }
+         try {
+                 String result = UserGroupService.assign(getAdmin(), 1, groupId, adminId);
+                 getServletResponse().getWriter().print(result);
+         } catch (Exception e) {
+                 LOG.error(e.getMessage(), e);
+         }
+ }	
+     public void presale() throws IOException {
+         if (!isLogin()) {
+                 getServletResponse().sendRedirect("/login.action");
+                 return;
+         }
+         try {
+                 String result = UserGroupService.assign(getAdmin(), 3, groupId, adminId);
+                 getServletResponse().getWriter().print(result);
+         } catch (Exception e) {
+                 LOG.error(e.getMessage(), e);
+         }
+ }
+     
+     public void support() throws IOException {
+         if (!isLogin()) {
+                 getServletResponse().sendRedirect("/login.action");
+                 return;
+         }
+         try {
+                 String result = UserGroupService.assign(getAdmin(), 2, groupId, adminId);
+                 getServletResponse().getWriter().print(result);
+         } catch (Exception e) {
+                 LOG.error(e.getMessage(), e);
+         }
+ }
+     private Long from;
+     private Long messageId;
+     private int type;
+     public void change() throws IOException {
+         if (!isLogin()) {
+                 getServletResponse().sendRedirect("/login.action");
+                 return;
+         }
+         String result = UserGroupService.change(getAdmin(), from, groupId, type, messageId);
+         getServletResponse().getWriter().print(result);
+ }
+     
+     public void back() throws IOException {
+         if (!isLogin()) {
+                 getServletResponse().sendRedirect("/login.action");
+                 return;
+         }
+         try {
+                 String result = UserGroupService.back(getAdmin(), type, groupId);
+                 getServletResponse().getWriter().print(result);
+         } catch (Exception e) {
+                 LOG.error(e.getMessage(), e);
+         }
+ }
+     private String xiaoshou;
+     public void xiaoshouyi() throws IOException {
+             if (!isLogin()) {
+                     getServletResponse().sendRedirect("/login.action");
+                     return;
+             }
+             try{
+                     if (xiaoshou != null) {
+                             xiaoshou = new String(xiaoshou.getBytes("ISO8859-1"), "UTF-8");
+                     }
+                     if(!quanxian(getAdmin().getGrades(), getGRADE().getMap().get(116))){
+                             getServletResponse().getWriter().print(OneTools.getResult(0, "权限不足"));
+                             return;
+                     }
+                     String result = Xiaoshouyi.xiaoshouyiWithGroupId(getAdmin(), groupId, xiaoshou);
                      getServletResponse().getWriter().print(result);
              }catch(Exception e){
                      LOG.error(e.getMessage(), e);
@@ -468,6 +552,30 @@ public class UserGroupAction extends SupportAction{
 	}
 	public void setProject(String project) {
 		this.project = project;
+	}
+	public Long getFrom() {
+		return from;
+	}
+	public void setFrom(Long from) {
+		this.from = from;
+	}
+	public Long getMessageId() {
+		return messageId;
+	}
+	public void setMessageId(Long messageId) {
+		this.messageId = messageId;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	public String getXiaoshou() {
+		return xiaoshou;
+	}
+	public void setXiaoshou(String xiaoshou) {
+		this.xiaoshou = xiaoshou;
 	}
 	
 

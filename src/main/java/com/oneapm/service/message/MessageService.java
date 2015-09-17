@@ -256,6 +256,9 @@ public class MessageService {
         public static Message findApplyByInfoId(Long infoId, int type, int status) {
                 return MessageDaoImpl.getInstance().findApplyByInfoId(infoId, type, status);
         }
+        public static Message findApplyByGroupId(Long groupId, int type, int status) {
+            return MessageDaoImpl.getInstance().findApplyByGroupId(groupId, type, status);
+    }
 
         public static MessageVo getMessageVoFromMessage(Message message) {
                 MessageVo vo = null;
