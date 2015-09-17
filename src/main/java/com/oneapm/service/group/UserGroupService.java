@@ -8,14 +8,16 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
 import com.oneapm.dao.group.impl.UserGroupDaoImpl;
+import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
+import com.oneapm.dto.UserGroup;
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Zhengzailianxi;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.group.Group;
 import com.oneapm.dto.group.GroupView;
 import com.oneapm.dto.info.Guanlian;
+import com.oneapm.dto.tag.Language;
 import com.oneapm.record.MailPush;
 import com.oneapm.service.account.AccountService;
 import com.oneapm.service.info.AppService;
@@ -29,7 +31,6 @@ import com.oneapm.service.mail.MailService;
 import com.oneapm.service.show.CallService;
 import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
-import com.oneapm.dto.UserGroup;
 
 public class UserGroupService extends OneTools{
 	protected static final Logger LOG = LoggerFactory.getLogger(UserGroupService.class);
@@ -109,7 +110,7 @@ public class UserGroupService extends OneTools{
     
     public static UserGroups findByGroupIdSingle(Long groupId) {
     	UserGroups userGroups = UserGroupsDaoImpl.getInstance().findByAdminId(groupId);
-        initTag(userGroups);
+        initUserGroups(userGroups);
         return userGroups;
     }
     public static UserGroups findByGroupIdSimple(Long groupId) {
@@ -142,8 +143,8 @@ public class UserGroupService extends OneTools{
 		userGroups.setApps(AppService.findByUserId(userGroups.getGroupId()));
 		//userGroups.setApps(AppService.findByGroupId(userGroups.getGroupId()));
 		userGroups.setGongdans(KFService.findByUserId(userGroups.getGroupId()));
-        initTag(userGroups);
-        initSupport(userGroups);
+                initTag(userGroups);
+                initSupport(userGroups);
 }
 	
 	
@@ -244,4 +245,112 @@ public class UserGroupService extends OneTools{
 	        public static boolean update(UserGroups userGroups) {
                 return UserGroupsDaoImpl.getInstance().update(userGroups);
         }
+	        public static List<UserGroups> findByComming(String comming){
+	                return UserGroupsDaoImpl.getInstance().findByComming(comming);
+	        }
+	        
+	        public static void initLanguage(UserGroups userGroups){
+	                if (userGroups.getTag().getLanguage() != null && userGroups.getTag().getLanguage().trim().length() > 0) {
+	                        String[] languages = userGroups.getTag().getLanguage().split(OneTools.sp);
+	                        if (languages != null && languages.length > 0) {
+	                                StringBuilder builder = new StringBuilder();
+	                                for (String l : languages) {
+	                                        try {
+	                                                int k = Integer.parseInt(l.trim());
+	                                                if (k > 0) {
+	                                                        builder.append(Language.getName(k)).append(OneTools.sp);
+	                                                }
+	                                        } catch (Exception e) {
+	                                        }
+	                                }
+	                                userGroups.setLanguage(builder.toString());
+	                        }
+	                }
+	        }
+	        
+	        public static int power(Long adminId, int group, UserGroups userGroups) {
+	                if (userGroups != null && adminId != null) {
+	                        initLanguage(userGroups);
+	                        switch (group) {
+	                        case 1:
+	                                if (userGroups.getSale() == null || userGroups.getSale() <= 0L) {
+	                                        userGroups.setLevel(0);
+	                                        break;
+	                                }
+	                                userGroups.setSaleName(AccountService.findById(userGroups.getSale()).getName());
+	                                userGroups.setLevel(adminId.equals(userGroups.getSale()) ? 1 : 0);
+	                                break;
+	                        case 2:
+	                                if ((userGroups.getSupport() == null || userGroups.getSupport() <= 0) && (userGroups.getPreSale() == null || userGroups.getPreSale() <= 0)) {
+	                                        userGroups.setLevel(2);
+	                                        break;
+	                                }
+	                                if(userGroups.getSupport() != null && userGroups.getSupport() > 0L){
+	                                        userGroups.setSupportName(AccountService.findById(userGroups.getSupport()).getName());
+	                                }
+	                                if(userGroups.getPreSale() != null && userGroups.getPreSale() > 0){
+	                                        userGroups.setPreSaleName(AccountService.findById(userGroups.getPreSale()).getName());
+	                                }
+	                                // info.setLevel(adminId.equals(info.getSupport())
+	                                // ? 1 : 0);
+	                                userGroups.setLevel(1);
+	                                break;
+	                        case 3:
+	                                if ((userGroups.getSupport() == null || userGroups.getSupport() <= 0) && (userGroups.getPreSale() == null || userGroups.getPreSale() <= 0)) {
+	                                        userGroups.setLevel(2);
+	                                        break;
+	                                }
+	                                if(userGroups.getSupport() != null && userGroups.getSupport() > 0L){
+	                                        userGroups.setSupportName(AccountService.findById(userGroups.getSupport()).getName());
+	                                }
+	                                if(userGroups.getPreSale() != null || userGroups.getPreSale() > 0){
+	                                        userGroups.setPreSaleName(AccountService.findById(userGroups.getPreSale()).getName());
+	                                }
+	                                // info.setLevel(adminId.equals(info.getPreSale())
+	                                // ? 1 : 0);
+	                                userGroups.setLevel(1);
+	                                break;
+	                        case 4:
+	                                if (userGroups.getSale() != null && userGroups.getSale() > 0) {
+	                                        userGroups.setSaleName(AccountService.findById(userGroups.getSale()).getName());
+	                                }
+	                                userGroups.setLevel(1);
+	                                break;
+	                        case 5:
+	                                if (userGroups.getSupport() != null && userGroups.getSupport() > 0) {
+	                                        userGroups.setSupportName(AccountService.findById(userGroups.getSupport()).getName());
+	                                }
+	                                if (userGroups.getPreSale() != null && userGroups.getPreSale() > 0) {
+	                                        userGroups.setPreSaleName(AccountService.findById(userGroups.getPreSale()).getName());
+	                                }
+	                                userGroups.setLevel(1);
+	                                break;
+	                        case 6:
+	                                if (userGroups.getPreSale() != null && userGroups.getPreSale() > 0) {
+	                                        userGroups.setPreSaleName(AccountService.findById(userGroups.getPreSale()).getName());
+	                                }
+	                                if (userGroups.getSupport() != null && userGroups.getSupport() > 0) {
+	                                        userGroups.setSupportName(AccountService.findById(userGroups.getSupport()).getName());
+	                                }
+	                                userGroups.setLevel(1);
+	                                break;
+	                        case 7:
+	                                if (userGroups.getSale() != null && userGroups.getSale() > 0) {
+	                                        userGroups.setSaleName(AccountService.findById(userGroups.getSale()).getName());
+	                                }
+	                                if (userGroups.getSupport() != null && userGroups.getSupport() > 0) {
+	                                        userGroups.setSupportName(AccountService.findById(userGroups.getSupport()).getName());
+	                                }
+	                                if (userGroups.getPreSale() != null && userGroups.getPreSale() > 0) {
+	                                        userGroups.setPreSaleName(AccountService.findById(userGroups.getPreSale()).getName());
+	                                }
+	                                userGroups.setLevel(1);
+	                                break;
+	                        default:
+	                                userGroups.setLevel(0);
+	                                break;
+	                        }
+	                }
+	                return userGroups.getLevel();
+	        }
 }

@@ -30,9 +30,9 @@
 					<div style="width:70px;float:left;height:30px;">
 						<div style="float:left;width:60px;margin-top:5px;" class="go_from menu_button biankuang_gray hand">来源</div>
 					</div>
-					<div style="width:120px;float:left;height:30px;">
+					<!-- <div style="width:120px;float:left;height:30px;">
 						<div style="float:left;width:110px;margin-top:5px;" class="go_baobiao menu_button biankuang_gray hand">报表查询</div>
-					</div>
+					</div> -->
 					<div style="float:left;width:250px;margin-left:10px;height:30px;">
 						排序方式:
 						<select id="paixu" class="hand">

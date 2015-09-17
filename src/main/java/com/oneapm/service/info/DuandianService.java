@@ -2,9 +2,7 @@ package com.oneapm.service.info;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
 import com.oneapm.dao.info.impl.AppDaoImpl;
 import com.oneapm.dao.info.impl.AppDataDaoImpl;
-import com.oneapm.dao.info.impl.InfoDaoImpl;
+//import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dao.info.impl.LoginDaoImpl;
 import com.oneapm.dao.opt.impl.DownDaoImpl;
 import com.oneapm.dto.Aplication;
@@ -22,7 +20,7 @@ import com.oneapm.dto.App;
 import com.oneapm.dto.Download;
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Account.Admin;
-import com.oneapm.dto.info.Info;
+//import com.oneapm.dto.info.Info;
 import com.oneapm.dto.lable.Lable;
 import com.oneapm.dto.tag.Language;
 import com.oneapm.service.group.UserGroupService;
@@ -84,19 +82,21 @@ public class DuandianService {
                         if(lable == null){
                                 return OneTools.getResult(0, "分类不存在");
                         }
-                        List<Info> infos = InfoService.findByFrom(lable.getFrom());
-                        for(int i=0;i<infos.size();i++){
-                                if(!infos.get(i).getComming().startsWith(lable.getFrom())){
-                                    infos.remove(i);
-                                    i--;
+                        List<UserGroups> groups = UserGroupService.findByComming(lable.getFrom());
+//                        List<Info> infos = InfoService.findByFrom(lable.getFrom());
+                        for(int i=0;i<groups.size();i++){
+                                if(!groups.get(i).getComming().startsWith(lable.getFrom())){
+                                        groups.remove(i);
+                                        i--;
                                 }
                         }
-                        for(Info info : infos){
-                                InfoService.initInfo(info);
-                                InfoService.power(99999999L, 7, info);
+                        for(UserGroups userGroups : groups){
+                                UserGroupService.initSupport(userGroups);
+                                UserGroupService.initTag(userGroups);
+                                UserGroupService.power(99999999L, 7, userGroups);
                         }
                         args1.add("infos");
-                        args2.add(InfoService.getArrayFromInfos(infos));
+                        args2.add(UserGroupService.getArrayFromUserGroups(groups));
                         return OneTools.getResult(1, args1, args2);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
@@ -110,26 +110,21 @@ public class DuandianService {
                         object.put("status", 1);
                         String start = yuanStart + " 00:00:00";
                         String end = yuanEnd + " 00:00:00";
-                        List<Info> infos = InfoDaoImpl.getInstance().countSign(start, end);
-                        for(int i=0;i<infos.size();i++){
-                                if(!DownDaoImpl.getInstance().findDownload(infos.get(i).getUserId())){
-                                    infos.remove(i);
-                                    i--;
-                                }else{
-                                        if(AppDaoImpl.getInstance().findApp(infos.get(i).getUserId())){
-                                           infos.remove(i);
+                        List<UserGroups> groups = UserGroupsDaoImpl.getInstance().countSign(start, end);
+                        for(int i=0;i<groups.size();i++){
+                                        if(AppDaoImpl.getInstance().findApp(groups.get(i).getGroupId())){
+                                                groups.remove(i);
                                            i--;
-                                        }
                         }
                         }
-                        if(infos.size() == 0){
+                        if(groups.size() == 0){
                                 object.put("size", 0);
                         }else{
-                                object.put("size", infos.size());
-                                for(int i=0;i<infos.size();i++){
-                                        infos.set(i, InfoService.findById(infos.get(i).getId()));
+                                object.put("size", groups.size());
+                                for(int i=0;i<groups.size();i++){
+                                        groups.set(i, UserGroupService.findByGroupIdSingle(groups.get(i).getGroupId()));
                                 }
-                                object.put("infos", InfoService.getArrayFromInfos(infos));
+                                object.put("infos", UserGroupService.getArrayFromUserGroups(groups));
                         }
                         return object.toJSONString();
                 }catch(Exception e){
@@ -206,13 +201,13 @@ public class DuandianService {
                 try{
                         String time =TimeTools.getDateTime(-1);
                         long timeLong = TimeTools.formatTime.parse(time).getTime();
-                        List<Info> infos = InfoDaoImpl.getInstance().countSign(start, end);
+                        List<UserGroups> groups = UserGroupsDaoImpl.getInstance().countSign(start, end);
                         
-                        if(infos == null || infos.size() <= 0){
+                        if(groups == null || groups.size() <= 0){
                                 object.put("base", 0);
                                 return object;
                         }
-                        object.put("base", infos.size());
+                        object.put("base", groups.size());
                         JSONArray datas = new JSONArray();
                         if(zuobiao > 0){
                                 List<String> mapTime = new ArrayList<String>();
@@ -242,9 +237,9 @@ public class DuandianService {
                                         mapDownload_qujian.add(0);
                                         mapApp_qujian.add(0);
                                 }
-                                for(Info info : infos){
-                                        Download download = DownDaoImpl.getInstance().findDonwTime(info.getUserId());
-                                        Aplication aplication = AppDataDaoImpl.getInstance().findByUserIdfirst(info.getUserId());
+                                for(UserGroups userGroups : groups){
+                                        Download download = DownDaoImpl.getInstance().findDonwTime(userGroups.getGroupId());//TODO
+                                        Aplication aplication = AppDataDaoImpl.getInstance().findByUserIdfirst(userGroups.getGroupId());
                                         if(download != null){
                                                 long d = TimeTools.formatTime.parse(download.getDownloadTime()).getTime();
                                                 for(int i=0;i<mapLong.size()-1;i++){
@@ -312,9 +307,9 @@ public class DuandianService {
                                 mapLong.add(TimeTools.formatTime.parse(end).getTime());
                                 mapLong.add(TimeTools.formatTime.parse(zuobiaoStart).getTime());
                                 mapLong.add(TimeTools.formatTime.parse(zuobiaoEnd).getTime());
-                                for(Info info : infos){
-                                        Download download = DownDaoImpl.getInstance().findDonwTime(info.getUserId());
-                                        Aplication aplication = AppDataDaoImpl.getInstance().findByUserIdfirst(info.getUserId());
+                                for(UserGroups userGroups : groups){
+                                        Download download = DownDaoImpl.getInstance().findDonwTime(userGroups.getGroupId());
+                                        Aplication aplication = AppDataDaoImpl.getInstance().findByUserIdfirst(userGroups.getGroupId());
                                         if(download != null){
                                                 long d = TimeTools.formatTime.parse(download.getDownloadTime()).getTime();
                                                 if(d >= mapLong.get(0) && d < mapLong.get(1)){
@@ -378,7 +373,7 @@ public class DuandianService {
         public static JSONObject chaxun_liucun(String start, String end, String zuobiaoStart, String zuobiaoEnd, int zuobiao, int agent, int yuanType){
                 JSONObject object = new JSONObject();
                 try{
-                        List<Info> infos = new ArrayList<Info>();
+                        List<UserGroups> groups = new ArrayList<UserGroups>();
                         List<Long> USERIDS = new ArrayList<Long>();
                         if(yuanType == 0){
                                 USERIDS = AppDataDaoImpl.getInstance().findUserIdsByAgent(agent, start, end);
@@ -393,7 +388,7 @@ public class DuandianService {
                                                 }
                                         }
                                         for(Long userId: USERIDS){
-                                                infos.add(InfoService.findByUserId(userId));
+                                                groups.add(UserGroupService.findByGroupIdSingle(userId));
                                         }
                                 }
                         }else{
@@ -426,15 +421,15 @@ public class DuandianService {
                                                 }
                                         }
                                         if(in){
-                                                infos.add(InfoService.findByUserId(userId));
+                                                groups.add(UserGroupService.findByGroupIdSingle(userId));
                                         }
                                 }
                         }
-                        if(infos == null || infos.size() <= 0){
+                        if(groups == null || groups.size() <= 0){
                                 object.put("base", 0);
                                 return object;
                         }
-                        object.put("base", infos.size());
+                        object.put("base", groups.size());
                         List<String> mapTime = new ArrayList<String>();
                         List<Long> mapLong = new ArrayList<Long>();
                         List<Integer> mapLianxu= new ArrayList<Integer>();
@@ -463,7 +458,7 @@ public class DuandianService {
                                         mapCunzai.add(0);
                                         mapChixu.add(0);
                                 }
-                                for(Info info: infos){
+                                for(UserGroups userGroups : groups){
                                         boolean chixu = true;
                                         for(int i=0;i<mapTime.size()-1;i++){
                                                 boolean lianxu = true;
@@ -471,7 +466,7 @@ public class DuandianService {
                                                 String a1 = mapTime.get(i);
                                                 String a2 = TimeTools.next(mapTime.get(i), 1);
                                                 while(TimeTools.formatTime.parse(a2).getTime() <= mapLong.get(i+1)){
-                                                        if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(a1,a2, info.getUserId(), agent)){
+                                                        if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(a1,a2, userGroups.getGroupId(), agent)){
                                                                 cunzai = true;
                                                         }else{
                                                                 if(i > 0){
@@ -520,14 +515,14 @@ public class DuandianService {
                                 mapLianxu.add(0);
                                 mapCunzai.add(0);
                                 mapChixu.add(0);
-                                for(Info info: infos){
+                                for(UserGroups userGroups : groups){
                                         boolean lianxu = true;
                                         boolean cunzai = false;
                                         boolean chixu = true;
                                         String a1 = mapTime.get(0);
                                         String a2 = TimeTools.next(mapTime.get(0), 1);
                                         while(TimeTools.formatTime.parse(a2).getTime() <= mapLong.get(1)){
-                                                if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(a1,a2, info.getUserId(), agent)){
+                                                if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(a1,a2, userGroups.getGroupId(), agent)){
                                                         cunzai = true;
                                                 }
                                                 
@@ -541,7 +536,7 @@ public class DuandianService {
                                         a1 = mapTime.get(2);
                                         a2 = TimeTools.next(mapTime.get(2), 1);
                                         while(TimeTools.formatTime.parse(a2).getTime() <= mapLong.get(3)){
-                                                if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(a1,a2, info.getUserId(), agent)){
+                                                if(AppDataDaoImpl.getInstance().existByTimeAndUserIdAndAgent(a1,a2, userGroups.getGroupId(), agent)){
                                                         cunzai = true;
                                                 }else{
                                                         lianxu = false;

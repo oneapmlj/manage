@@ -13,7 +13,6 @@ import com.mongodb.DBObject;
 import com.oneapm.dao.DaoImplBase;
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.group.Group;
-import com.oneapm.dto.info.Info;
 
 public class UserGroupsDaoImpl extends DaoImplBase<Group>{
 	protected static final Logger LOG = LoggerFactory.getLogger(UserGroupsDaoImpl.class);
@@ -37,6 +36,21 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group>{
 	                if(cursor.hasNext()){
 	                        return findComplicatedGroupsByObject(cursor.next());
 	                }
+	        }catch(Exception e){
+	                LOG.error(e.getMessage(), e);
+	        }
+	        return null;
+	}
+	
+	public List<UserGroups> findByComming(String comming){
+	        try{
+	                DBObject object = new BasicDBObject("comming", comming);
+	                DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+	                List<UserGroups> groups = new ArrayList<UserGroups>();
+	                while(cursor.hasNext()){
+	                        groups.add(findComplicatedGroupsByObject(cursor.next()));
+	                }
+	                return groups;
 	        }catch(Exception e){
 	                LOG.error(e.getMessage(), e);
 	        }
@@ -205,4 +219,24 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group>{
 	         }
 	         return false;
 	 }
+		 
+		 public List<UserGroups> countSign(String start, String end) {
+		                try {
+		                        DBObject object = new BasicDBObject();
+		                        object.put("user_id", new BasicDBObject("$gte", 1L));
+		                        BasicDBList list = new BasicDBList();
+		                        list.add(new BasicDBObject("create_time", new BasicDBObject("$gte", start)));
+		                        list.add(new BasicDBObject("create_time", new BasicDBObject("$lt", end)));
+		                        object.put("$and", list);
+		                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+		                        List<UserGroups> groups = new ArrayList<UserGroups>();
+		                        while (cursor.hasNext()) {
+		                                groups.add(findComplicatedGroupsByObject(cursor.next()));
+		                        }
+		                        return groups;
+		                } catch (Exception e) {
+		                        LOG.error(e.getMessage(), e);
+		                }
+		                return null;
+		        }
 }

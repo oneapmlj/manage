@@ -5,7 +5,6 @@ import java.util.List;
 import com.oneapm.dto.card.Card;
 import com.oneapm.dto.group.Group;
 import com.oneapm.dto.info.Guanlian;
-import com.oneapm.dto.info.Info;
 import com.oneapm.dto.info.Mark;
 import com.oneapm.dto.tag.Tag;
 import com.oneapm.record.MailPush;
@@ -19,6 +18,8 @@ public class UserGroups {
         private int deleted;
         
         private String createTime;
+        private String language;
+        private int level;
         
         private Long sale;
         private Long support;
@@ -303,6 +304,18 @@ public class UserGroups {
                 }
                 public void setProject(String project) {
                         this.project = project;
+                }
+                public String getLanguage() {
+                        return language;
+                }
+                public void setLanguage(String language) {
+                        this.language = language;
+                }
+                public int getLevel() {
+                        return level;
+                }
+                public void setLevel(int level) {
+                        this.level = level;
                 }
 		
         
