@@ -52,7 +52,7 @@ public class XiazaiDaoImpl extends DaoImplBase<Long> {
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(new BasicDBObject("data_time", object)).sort(sort);
                         List<Long> ids = new ArrayList<Long>();
                         while (cursor.hasNext()) {
-                                ids.add(Long.parseLong(cursor.next().get("user_id").toString()));
+                                ids.add(Long.parseLong(cursor.next().get("group_id").toString()));
                         }
                         return ids;
                 } catch (Exception e) {
