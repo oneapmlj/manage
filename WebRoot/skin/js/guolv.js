@@ -113,21 +113,33 @@ $(document).ready(function() {
 		}).done(function(da){
 			if(da.status == 1){
 				var html = "";
-				for(var i=0;i<da.infos.length;i++){
-					html += "<tr>" 
-								+"<td></td>"
-								+"<td>"+da.infos[i].userId+"</td>"
-								+"<td>"+da.infos[i].name+"</td>"
-								+"<td>"+da.infos[i].company+"</td>"
-								+"<td>"+da.infos[i].project+"</td>"
-								+"<td>"+da.infos[i].language+"</td>"
-								+"<td>"+da.infos[i].comming+"</td>"
-								+"<td>"+da.infos[i].saleName+"</td>"
-								+"<td>"+da.infos[i].preSaleName+"</td>"
-								+"<td>"+da.infos[i].supportName+"</td>"
-								+"<td><input val1='"+da.infos[i].id+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' /></td>"
-								+"<td></td>"
-								+"</tr>";
+				for(var i=0;i<da.groups.length;i++){
+					html += "<tr id='"+da.groups[i].groupId+"'>" 
+					+"<td></td>"
+					+"<td>"+da.groups[i].groupId+"</td>"
+					+"<td>"+da.groups[i].name+"</td>";
+				if(da.groups[i].project != null){
+					html += "<td>"+da.groups[i].project+"</td>";
+				}else{
+					html += "<td>"+da.groups[i].company+"</td>";
+				}
+				html += "<td>"+da.groups[i].language+"</td>"
+						+"<td>"+da.groups[i].comming+"</td>";
+				if(da.groups[i].tag != null){
+					html += "<td>"+da.groups[i].tag.province+"</td>"
+								+"<td>"+da.groups[i].tag.rongzi+"</td>"
+								+"<td>"+da.groups[i].tag.category+"</td>"
+								+"<td>"+da.groups[i].tag.person+"</td>"
+								+"<td>"+da.groups[i].tag.fuwuqi+"</td>"
+				}else{
+					html += "<td>未知</td><td>未知</td><td>未知</td><td>未知</td><td>未知</td>";
+				}
+					html += "<td>"+da.groups[i].saleName+"</td>"
+							+"<td>"+da.groups[i].preSaleName+"</td>"
+							+"<td>"+da.groups[i].supportName+"</td>"
+							+"<td><input val1='"+da.groups[i].groupId+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' /></td>"
+							+"<td></td>"
+							+"</tr>";
 				}
 				$("#duandian_result").html(html);
 				$(".duandian_result_msg").html("总数："+da.infos.length);
@@ -348,21 +360,33 @@ $(document).ready(function() {
 		}).done(function(da){
 			if(da.status == 1){
 				var html = "";
-				for(var i=0;i<da.infos.length;i++){
-					html += "<tr>" 
-								+"<td></td>"
-								+"<td>"+da.infos[i].userId+"</td>"
-								+"<td>"+da.infos[i].name+"</td>"
-								+"<td>"+da.infos[i].company+"</td>"
-								+"<td>"+da.infos[i].project+"</td>"
-								+"<td>"+da.infos[i].language+"</td>"
-								+"<td>"+da.infos[i].comming+"</td>"
-								+"<td>"+da.infos[i].saleName+"</td>"
-								+"<td>"+da.infos[i].preSaleName+"</td>"
-								+"<td>"+da.infos[i].supportName+"</td>"
-								+"<td><input val1='"+da.infos[i].id+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' /></td>"
-								+"<td></td>"
-								+"</tr>";
+				for(var i=0;i<da.groups.length;i++){
+					html += "<tr id='"+da.groups[i].groupId+"'>" 
+					+"<td></td>"
+					+"<td>"+da.groups[i].groupId+"</td>"
+					+"<td>"+da.groups[i].name+"</td>";
+				if(da.groups[i].project != null){
+					html += "<td>"+da.groups[i].project+"</td>";
+				}else{
+					html += "<td>"+da.groups[i].company+"</td>";
+				}
+				html += "<td>"+da.groups[i].language+"</td>"
+						+"<td>"+da.groups[i].comming+"</td>";
+				if(da.groups[i].tag != null){
+					html += "<td>"+da.groups[i].tag.province+"</td>"
+								+"<td>"+da.groups[i].tag.rongzi+"</td>"
+								+"<td>"+da.groups[i].tag.category+"</td>"
+								+"<td>"+da.groups[i].tag.person+"</td>"
+								+"<td>"+da.groups[i].tag.fuwuqi+"</td>"
+				}else{
+					html += "<td>未知</td><td>未知</td><td>未知</td><td>未知</td><td>未知</td>";
+				}
+					html += "<td>"+da.groups[i].saleName+"</td>"
+							+"<td>"+da.groups[i].preSaleName+"</td>"
+							+"<td>"+da.groups[i].supportName+"</td>"
+							+"<td><input val1='"+da.groups[i].groupId+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' /></td>"
+							+"<td></td>"
+							+"</tr>";
 				}
 				$("#duandian_list_baobiao_chazhi").html(html);
 				$(".duandian_result_msg").html("总数："+da.infos.length);
@@ -750,32 +774,32 @@ $(document).ready(function() {
 			if(da.status == 1){
 				var html = "";
 				for(var i=0;i<da.infos.length;i++){
-					html += "<tr id='"+da.infos[i].id+"'>" 
-						+"<td></td>"
-						+"<td>"+da.infos[i].userId+"</td>"
-						+"<td>"+da.infos[i].name+"</td>";
-					if(da.infos[i].project != null){
-						html += "<td>"+da.infos[i].project+"</td>";
-					}else{
-						html += "<td>"+da.infos[i].company+"</td>";
-					}
-					html += "<td>"+da.infos[i].language+"</td>"
-							+"<td>"+da.infos[i].comming+"</td>";
-					if(da.infos[i].tag != null){
-						html += "<td>"+da.infos[i].tag.province+"</td>"
-									+"<td>"+da.infos[i].tag.rongzi+"</td>"
-									+"<td>"+da.infos[i].tag.category+"</td>"
-									+"<td>"+da.infos[i].tag.person+"</td>"
-									+"<td>"+da.infos[i].tag.fuwuqi+"</td>"
-					}else{
-						html += "<td>未知</td><td>未知</td><td>未知</td><td>未知</td><td>未知</td>";
-					}
-						html += "<td>"+da.infos[i].saleName+"</td>"
-								+"<td>"+da.infos[i].preSaleName+"</td>"
-								+"<td>"+da.infos[i].supportName+"</td>"
-								+"<td><input val1='"+da.infos[i].id+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' /></td>"
-								+"<td></td>"
-								+"</tr>";
+					html += "<tr id='"+da.groups[i].groupId+"'>" 
+					+"<td></td>"
+					+"<td>"+da.groups[i].groupId+"</td>"
+					+"<td>"+da.groups[i].name+"</td>";
+				if(da.groups[i].project != null){
+					html += "<td>"+da.groups[i].project+"</td>";
+				}else{
+					html += "<td>"+da.groups[i].company+"</td>";
+				}
+				html += "<td>"+da.groups[i].language+"</td>"
+						+"<td>"+da.groups[i].comming+"</td>";
+				if(da.groups[i].tag != null){
+					html += "<td>"+da.groups[i].tag.province+"</td>"
+								+"<td>"+da.groups[i].tag.rongzi+"</td>"
+								+"<td>"+da.groups[i].tag.category+"</td>"
+								+"<td>"+da.groups[i].tag.person+"</td>"
+								+"<td>"+da.groups[i].tag.fuwuqi+"</td>"
+				}else{
+					html += "<td>未知</td><td>未知</td><td>未知</td><td>未知</td><td>未知</td>";
+				}
+					html += "<td>"+da.groups[i].saleName+"</td>"
+							+"<td>"+da.groups[i].preSaleName+"</td>"
+							+"<td>"+da.groups[i].supportName+"</td>"
+							+"<td><input val1='"+da.groups[i].groupId+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' /></td>"
+							+"<td></td>"
+							+"</tr>";
 				}
 				$("#duandian_result").html(html);
 				$(".duandian_result_msg").html("总数："+da.infos.length);

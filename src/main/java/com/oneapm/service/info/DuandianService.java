@@ -95,7 +95,7 @@ public class DuandianService {
                                 UserGroupService.initTag(userGroups);
                                 UserGroupService.power(99999999L, 7, userGroups);
                         }
-                        args1.add("infos");
+                        args1.add("groups");
                         args2.add(UserGroupService.getArrayFromUserGroups(groups));
                         return OneTools.getResult(1, args1, args2);
                 }catch(Exception e){
@@ -124,7 +124,7 @@ public class DuandianService {
                                 for(int i=0;i<groups.size();i++){
                                         groups.set(i, UserGroupService.findByGroupIdSingle(groups.get(i).getGroupId()));
                                 }
-                                object.put("infos", UserGroupService.getArrayFromUserGroups(groups));
+                                object.put("groups", UserGroupService.getArrayFromUserGroups(groups));
                         }
                         return object.toJSONString();
                 }catch(Exception e){
@@ -773,7 +773,7 @@ public class DuandianService {
                                 if(data > 0){
                                         List<Aplication> aplications = AppService.findAplicationByAgent(agent, dataStart, banben, dataEnd);
                                         if(aplications.size() <= 0){
-                                                args1.add("infos");
+                                                args1.add("groups");
 //                                                args2.add(InfoService.getArrayFromInfos(infos));
                                                 return OneTools.getResult(1, args1, args2);
                                         }
@@ -968,7 +968,7 @@ public class DuandianService {
                                         default:break;
                                 }
                         }
-                        args1.add("infos");
+                        args1.add("groups");
                         args2.add(UserGroupService.getArrayFromUserGroups(groups));
                         return OneTools.getResult(1, args1, args2);
                 }catch(Exception e){
