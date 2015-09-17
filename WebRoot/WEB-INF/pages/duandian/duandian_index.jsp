@@ -30,9 +30,9 @@
 					<div style="width:70px;float:left;height:30px;">
 						<div style="float:left;width:60px;margin-top:5px;" class="go_from menu_button biankuang_gray hand">来源</div>
 					</div>
-					<div style="width:120px;float:left;height:30px;">
+					<!-- <div style="width:120px;float:left;height:30px;">
 						<div style="float:left;width:110px;margin-top:5px;" class="go_baobiao menu_button biankuang_gray hand">报表查询</div>
-					</div>
+					</div> -->
 					<div style="float:left;width:250px;margin-left:10px;height:30px;">
 						排序方式:
 						<select id="paixu" class="hand">
@@ -323,7 +323,6 @@
 							<tr> 
 								<th style="width:1%"></th>
 					  			<th style="width:6%;">ID</th> 
-					  			<th style="width:10%;">姓名</th>
 					  			<th style="width:14%;">公司</th>
 					  			<th style="width:10%;">语言</th>
 					  			<th style="width:7%">Coming</th>
@@ -350,18 +349,23 @@
 					<table class="tablesorter duandian_list_baobiao_chazhi hidden" cellspacing="0"> 
 						<thead> 
 							<tr> 
-								<th style="width:2%"></th>
+								<th style="width:1%"></th>
 					  			<th style="width:6%;">ID</th> 
-					  			<th style="width:10%;">姓名</th>
 					  			<th style="width:14%;">公司</th>
-					  			<th style="width:15%;">项目</th>
-					  			<th style="width:15%;">语言</th>
+					  			<th style="width:10%;">语言</th>
 					  			<th style="width:7%">Coming</th>
+					  			
+					  			<th style="width:6%">区域</th>
+					  			<th style="width:6%">融资</th>
+					  			<th style="width:6%">分类</th>
+					  			<th style="width:6%">规模</th>
+					  			<th style="width:6%">平台</th>
+					  			
 					  			<th style="width:6%;">销售</th>
 					  			<th style="width:6%;">售前</th>
 					  			<th style="width:6%;">运营</th>
-					  			<th style="width:10%">Edit</th>
-					  			<th style="width:3%"></th>
+					  			<th style="width:6%">Edit</th>
+					  			<th style="width:1%"></th>
 							</tr> 
 						</thead> 
 						<tbody id="duandian_list_baobiao_chazhi" style="font-size:12px;"> 

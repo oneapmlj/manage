@@ -85,7 +85,7 @@ public class SendCloudService2 {
         
         public static void main(String[] args){
                 try{
-                        File file = new File("/home/abc/onealert4120.html");
+                        File file = new File("/home/abc/OneAPM免费的业务系统性能监控平台.html");
                         FileReader fReader = new FileReader(file);
                         BufferedReader bReader = new BufferedReader(fReader);
                         String string = null;
@@ -96,8 +96,14 @@ public class SendCloudService2 {
                         String html = builder.toString();
                         bReader = null;
                         fReader = null;
-                        file = new File("/home/abc/1.txt");
                         List<String> emails = new ArrayList<String>();
+                        file = new File("/home/abc/1-ok.txt");
+                        fReader = new FileReader(file);
+                        bReader = new BufferedReader(fReader);
+                        while((string = bReader.readLine()) != null){
+                                emails.add(string.trim());
+                        }
+                        file = new File("/home/abc/2-ok.txt");
                         fReader = new FileReader(file);
                         bReader = new BufferedReader(fReader);
                         while((string = bReader.readLine()) != null){
@@ -107,12 +113,13 @@ public class SendCloudService2 {
                         for(String email : emails){
                                 if(email != null){
                                         i++;
-                                        sendMail(email, html, "「OneAPM」OneAlert 发布电话通知新功能，告警必达~", 15869L, "OneAlert@push.oneapm.com");
-                                        if(i %50 == 0){
+                                        sendMail(email, html, "OneAPM 免费的业务系统性能监控平台", 16667L, "OneAlert@push.oneapm.com");
+                                        if(i %100 == 0){
                                                 System.out.println(i);
                                         }
                                 }
                         }
+//                        sendMail("lijiang@oneapm.com", html, "OneAPM 免费的业务系统性能监控平台", 0L);
                 }catch(Exception e){
                         e.printStackTrace();
                 }
