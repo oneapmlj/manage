@@ -178,11 +178,12 @@
 			</div>
 			
 			<div style="width:400px;margin-left:10px;float:left;padding-bottom: 40px;">
-				<div class="view_info biankuang_gray_ding" style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">
+				<div >
 				<s:if test="%{userGroupList != null && userGroupList.size > 0}">
 					<div  >
 						<s:iterator value="userGroupList" >
-					<div>			
+						
+					<div class="view_info biankuang_gray_ding" style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">			
 						
 					<%-- <div style="margin-left:20px;width:380px;float:left;">公司：<span>${info.company }</span></div>
 					<div style="margin-left:20px;width:380px;float:left;">
@@ -305,7 +306,12 @@
 				</div>
 				<div class="view_p_content biankuang_gray_ding">
 				<div style="width:400px;float:left;line-height:25px;font-size:16px;">
-						<div style="margin-left:20px;width:300px;float:left;">下载信息:<a href="javascript:showAll();" style="font-size:14px;color:blue;">  显示全部</a></div>
+						<div style="margin-left:20px;width:300px;float:left;">下载信息:
+					<%-- 	<s:iterator value="userGroupList" >
+				<s:if test="%{info.downloads != null && info.downloads.size > 0}">
+				</s:if></s:iterator> --%>
+						共<a href="javascript:showAll();" style="font-size:14px;color:blue;"> ${userGroupList[0].info.downloads.size()}</a>条 
+						 </div>
 					</div>
 					</div>
 				<s:iterator value="userGroupList" >
@@ -1147,6 +1153,7 @@
 		language();
 		var userId =${info.userId };
 		var infoId =${info.id };
+		var groupId =$("#group_id").html();
 		$(document).ready(function(){
 			
 		

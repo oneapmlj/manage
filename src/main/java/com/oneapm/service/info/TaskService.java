@@ -10,12 +10,14 @@ import com.oneapm.dao.mail.impl.MailModeDaoImpl;
 import com.oneapm.dao.mail.impl.MailPushDaoImpl;
 import com.oneapm.dao.mail.impl.PushDealDaoImpl;
 import com.oneapm.dto.MailDto;
+import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
 import com.oneapm.record.MailPush;
 import com.oneapm.record.PushDeal;
 import com.oneapm.record.Task;
 import com.oneapm.service.account.AccountService;
+import com.oneapm.service.group.UserGroupService;
 import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
 
@@ -270,7 +272,7 @@ public class TaskService extends OneTools {
                 }
         }
 
-        public static List<Task> index(Admin admin, int type) {
+      /*  public static List<Task> index(Admin admin, int type) {
                 List<Task> tasks = new ArrayList<Task>();
                 try {
                         List<MailPush> pushs = MailPushDaoImpl.getInstance().findByAdmin(admin.getId(), TimeTools.format(), type);
@@ -295,7 +297,34 @@ public class TaskService extends OneTools {
                         LOG.error(e.getMessage(), e);
                 }
                 return tasks;
+        }*/
+        
+          public static List<Task> index(Admin admin, int type) {
+        List<Task> tasks = new ArrayList<Task>();
+        try {
+                List<MailPush> pushs = MailPushDaoImpl.getInstance().findByAdmin(admin.getId(), TimeTools.format(), type);
+                if (pushs != null && pushs.size() > 0) {
+                        String time = TimeTools.format();
+                        for (MailPush push : pushs) {
+                                if (push.getFromId() != null && push.getFromId() > 0) {
+                                        push.setFromName(AccountService.findName(push.getFromId()));
+                                }
+                                UserGroups userGroups = UserGroupService.findByGroupIdSimple(push.getInfoId());
+                                Task task = new Task(push, findByTaskType(push.getType()), userGroups, push.isPoint());
+                                if (push.getWarming() > 0) {
+                                        task.setWarmingHour(TimeTools.apartHour(time, push.getWarmingTime()));
+                                        if (task.getWarmingHour() < 0) {
+                                                task.setWarmingHour(0);
+                                        }
+                                }
+                                tasks.add(task);
+                        }
+                }
+        } catch (Exception e) {
+                LOG.error(e.getMessage(), e);
         }
+        return tasks;
+}
 
         public static boolean insert(Long infoId, Long adminId, int type, String putTime, Long from, boolean point) {
                 MailPush pp = findByInfoIdAdminType(infoId, adminId, type);

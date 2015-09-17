@@ -47,8 +47,8 @@
 						<div style="float:left;width:100px;text-align: left;" >时限</div>
 					</div>
 					<s:iterator value="tasks">
-						<div id="task_${push.id }" style="<s:if test='%{push.point}'>color:red;</s:if>width:1200px;height:40px;line-height:40px;border: 1px solid #DDD;<s:if test="%{warming == 1}">color:red;</s:if> " taskId=${push.id } infoId=${info.id }>
-							<div style="margin-left:10px;float:left;width:200px;">${info.company }</div>
+						<div id="task_${push.id }" style="<s:if test='%{push.point}'>color:red;</s:if>width:1200px;height:40px;line-height:40px;border: 1px solid #DDD;<s:if test="%{warming == 1}">color:red;</s:if> " taskId=${push.id } groupId=${userGroups.groupId }>
+							<div style="margin-left:10px;float:left;width:200px;">${userGroups.groupName }</div>
 							<div style="float:left;width:120px;">
 								<s:if test="%{push.type == 1}">未激活</s:if>
 								<s:if test="%{push.type == 2}">欢迎使用</s:if>
@@ -216,7 +216,8 @@
 			});
 			$(".recommend_view").live('click', function(){
 				var infoId = $(this).parent().parent().parent().attr("infoId");
-				window.open("info_view.action?id="+infoId);
+				var groupId = $(this).parent().parent().parent().attr("groupId");
+				window.open("user_group_view.action?id="+groupId);
 			});
 			$(".recommend_mail").live('click', function(){
 				var taskId = $(this).parent().parent().parent().attr("taskId");
@@ -251,7 +252,7 @@
 			});
 			$(".recommend_delete").live('click', function(){
 				var taskId = $(this).parent().parent().parent().attr("taskId");
-				var infoId = $(this).parent().parent().parent().attr("infoId");
+				var groupId = $(this).parent().parent().parent().attr("groupId");
 				$.ajax({
 					dataType:'json',
 					url:'task_remove.action',

@@ -47,7 +47,7 @@ zhengzailianxi();
 
 
 function showAll(){
-	$("#download_view_"+userId+"").slideToggle(50);
+	$("#download_view_"+groupId+"").slideToggle(50);
 }
 $(document).ready(function() {
 
