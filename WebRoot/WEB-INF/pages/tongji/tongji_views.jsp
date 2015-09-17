@@ -28,9 +28,9 @@
 							<tr> 
 								<th style="width:3%;"></th>
 					  			<th style="width:6%;">ID</th> 
-					  			<th style="width:10%;">Name</th>
+					  			<!-- <th style="width:10%;">Name</th> -->
 					  			<th style="width:14%;">Project</th>
-					  			<th style="width:15%">loginTime</th>
+					  			<!-- <th style="width:15%">loginTime</th> -->
 					  			<th style="width:15%;">Language</th>
 					  			<th style="width:7%;">Coming</th>
 					  			<th style="width:6%;">Sale</th>
@@ -46,10 +46,8 @@
 								<s:iterator value="index.todayUp">
 									<tr style="color:red;" class="hand"> 
 										<td></td>
-										<td>${userId}</td> 
-										<td>${name}</td> 
+										<td>${groupId}</td> 
 										<td>${company}</td>
-										<td>${loginTime}</td>
 										<td>${language }</td>
 										<td>${from}</td>
 										<s:if test="%{saleName != null}">
@@ -79,10 +77,8 @@
 								<s:iterator value="index.todayDown">
 									<tr style="color:blue;" class="hand"> 
 										<td></td>
-										<td>${userId}</td> 
-										<td>${name}</td> 
+										<td>${groupId}</td> 
 										<td>${company}</td>
-										<td>${loginTime}</td>
 										<td>${language }</td>
 										<s:if test="%{saleName != null}">
 											<td>${saleName }</td>
@@ -111,10 +107,8 @@
 								<s:iterator value="index.today">
 									<tr class="hand"> 
 										<td></td>
-										<td>${userId}</td> 
-										<td>${name}</td> 
+										<td>${groupId}</td> 
 										<td>${company}</td>
-										<td>${loginTime}</td>
 										<td>${language }</td>
 										<s:if test="%{saleName != null}">
 											<td>${saleName }</td>

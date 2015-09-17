@@ -22,6 +22,7 @@ import com.oneapm.dto.info.Info;
 import com.oneapm.dto.info.Tongji;
 import com.oneapm.dto.info.TongjiIndex;
 import com.oneapm.dto.tag.Tag;
+import com.oneapm.service.group.UserGroupService;
 import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
 
@@ -76,7 +77,7 @@ public class TongjiService {
 
         public static void setUp(Tongji tongji, Tongji before) {
                 tongji.setTotalUp(tongji.getTotal() - before.getTotal() > 0 ? 1 : tongji.getTotal() - before.getTotal() == 0 ? 2 : 3);
-                tongji.setSignUp(tongji.getSign() - before.getSign() > 0 ? 1 : tongji.getSign() - before.getSign() == 0 ? 2 : 3);
+                tongji.setGroupUp(tongji.getGroup() - before.getGroup() > 0 ? 1 : tongji.getGroup() - before.getGroup() == 0 ? 2 : 3);
                 tongji.setLoginUp(tongji.getLogin() - before.getLogin() > 0 ? 1 : tongji.getLogin() - before.getLogin() == 0 ? 2 : 3);
                 tongji.setDownloadUp(tongji.getDownload() - before.getDownload() > 0 ? 1 : tongji.getDownload() - before.getDownload() == 0 ? 2 : 3);
                 tongji.setAppUp(tongji.getApp() - before.getApp() > 0 ? 1 : tongji.getApp() - before.getApp() == 0 ? 2 : 3);
@@ -85,16 +86,6 @@ public class TongjiService {
                         tongji.setAppDataUp(tongji.getAppData() - before.getAppData() > 0 ? 1 : tongji.getAppData() - before.getAppData() == 0 ? 2 : 3);
                 } catch (Exception e) {
                 }
-                tongji.setPointUp(tongji.getPoint() - before.getPoint() > 0 ? 1 : tongji.getPoint() - before.getPoint() == 0 ? 2 : 3);
-                tongji.setCommonUp(tongji.getCommon() - before.getCommon() > 0 ? 1 : tongji.getCommon() - before.getCommon() == 0 ? 2 : 3);
-                tongji.setUnbinUp(tongji.getUnbin() - before.getUnbin() > 0 ? 1 : tongji.getUnbin() - before.getUnbin() == 0 ? 2 : 3);
-                tongji.setUnuseUp(tongji.getUnuse() - before.getUnuse() > 0 ? 1 : tongji.getUnuse() - before.getUnuse() == 0 ? 2 : 3);
-                tongji.setJiaoliuUp(tongji.getJiaoliu() - before.getJiaoliu() > 0 ? 1 : tongji.getJiaoliu() - before.getJiaoliu() == 0 ? 2 : 3);
-                tongji.setCeshiUp(tongji.getCeshi() - before.getCeshi() > 0 ? 1 : tongji.getCeshi() - before.getCeshi() == 0 ? 2 : 3);
-                tongji.setCaigouUp(tongji.getCaigou() - before.getCaigou() > 0 ? 1 : tongji.getCaigou() - before.getCaigou() == 0 ? 2 : 3);
-                tongji.setWanchengUp(tongji.getWancheng() - before.getWancheng() > 0 ? 1 : tongji.getWancheng() - before.getWancheng() == 0 ? 2 : 3);
-                tongji.setWancheng_successUp(tongji.getWancheng_success() - before.getWancheng_success() > 0 ? 1 : tongji.getWancheng_success() - before.getWancheng_success() == 0 ? 2 : 3);
-                tongji.setWancheng_failUp(tongji.getWancheng_fail() - before.getWancheng_fail() > 0 ? 1 : tongji.getWancheng_fail() - before.getWancheng_fail() == 0 ? 2 : 3);
         }
 
         @SuppressWarnings("unchecked")
@@ -352,7 +343,7 @@ public class TongjiService {
                                         }
                                 }
                                 break;
-                        case 7:
+                        /*case 7:
                                 byId = true;
                                 index.setName("重点用户");
                                 tags = TagService.findByTag(type);
@@ -451,19 +442,19 @@ public class TongjiService {
                                                 ups.add(tag.getInfoId());
                                         }
                                 }
-                                break;
+                                break;*/
                         default:
                                 break;
                         }
-                        if (byId) {
-                                index.setTodayUp(getInfosFromIds(ups, admin));
-                                index.setTodayDown(getInfosFromIds(downs, admin));
-                                index.setToday(getInfosFromIds(common, admin));
-                        } else {
+//                        if (byId) {
+//                                index.setTodayUp(getInfosFromIds(ups, admin));
+//                                index.setTodayDown(getInfosFromIds(downs, admin));
+//                                index.setToday(getInfosFromIds(common, admin));
+//                        } else {
                                 index.setTodayUp(getInfosFromUserIds(ups, admin));
                                 index.setTodayDown(getInfosFromUserIds(downs, admin));
                                 index.setToday(getInfosFromUserIds(common, admin));
-                        }
+//                        }
                         return index;
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
@@ -487,25 +478,26 @@ public class TongjiService {
                 return infos;
         }
 
-        public static List<Info> getInfosFromUserIds(List<Long> ids, Admin admin) {
+        public static List<UserGroups> getInfosFromUserIds(List<Long> ids, Admin admin) {
                 if (ids == null || ids.size() <= 0)
                         return null;
-                List<Info> infos = new ArrayList<Info>();
+                List<UserGroups> groups = new ArrayList<UserGroups>();
                 Set<Long> set = new HashSet<Long>();
                 for (Long id : ids) {
                         if (!set.contains(id)) {
                                 try {
-                                        UserGroups groups = UserGroupsDaoImpl.getInstance().findById(id);
-                                        Info info = InfoService.findByUserIdSingle(id);
-                                        InfoService.power(admin.getId(), admin.getGroup(), info);
-                                        infos.add(info);
+                                        UserGroups userGroups = UserGroupService.findByGroupId(id, admin);
+//                                        Info info = InfoService.findByUserIdSingle(id);
+//                                        InfoService.power(admin.getId(), admin.getGroup(), info);
+                                        UserGroupService.power(admin.getId(), admin.getGroup(), userGroups);
+                                        groups.add(userGroups);
                                         set.add(id);
                                 } catch (Exception e) {
                                         LOG.error(e.getMessage(), e);
                                 }
                         }
                 }
-                return infos;
+                return groups;
         }
 
         @SuppressWarnings("unchecked")

@@ -76,21 +76,13 @@ public class Tongji {
     //数据时间
     private String data_time;
     
+    private long group;
+    private int groupUp;
     
     public Tongji(){}
-    public Tongji(Long id, long total,long jiaoliu,long ceshi,long caigou,long wancheng,long wancheng_success, long wancheng_fail,
-            long point,long common,long unbin,long unuse,long sign,long login,long download,long app,long data, long appData){
+    public Tongji(long group, Long id, long total,long sign,long login,long download,long app,long data, long appData){
+        setGroup(group);
         setTotal(total);
-        setJiaoliu(jiaoliu);
-        setCeshi(ceshi);
-        setCaigou(caigou);
-        setWancheng(wancheng);
-        setWancheng_fail(wancheng_fail);
-        setWancheng_success(wancheng_success);
-        setPoint(point);
-        setCommon(common);
-        setUnbin(unbin);
-        setUnuse(unuse);
         setSign(sign);
         setLogin(login);
         setDownload(download);
@@ -356,6 +348,18 @@ public int getGeli() {
 }
 public void setGeli(int geli) {
         this.geli = geli;
+}
+public long getGroup() {
+        return group;
+}
+public void setGroup(long group) {
+        this.group = group;
+}
+public int getGroupUp() {
+        return groupUp;
+}
+public void setGroupUp(int groupUp) {
+        this.groupUp = groupUp;
 }
     
 

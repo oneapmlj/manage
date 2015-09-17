@@ -28,7 +28,7 @@
 						<tr> 
 				  			<th style="width:120px;">日期</th> 
 				  			<!-- <th style="width:70px;">总数</th> -->
-				  			<th style="width:70px;">注册</th>
+				  			<th style="width:70px;">团队</th>
 				  			<th style="width:65px;">登录</th>
 				  			<th style="width:65px;">下载</th>
 				  			<th style="width:65px;">应用</th>
@@ -42,15 +42,15 @@
 							<s:iterator value="index.tongjis">
 								<tr style="font-size:16px;" id="${id}"> 
 						 			<td>${data_time}</td>
-									<s:if test="%{signUp == 1}">
-							 			<td style="color:red;"  class="hand view" id="${id}_2">${sign}</td>
+									<s:if test="%{groupUp == 1}">
+							 			<td style="color:red;"  class="hand view" id="${id}_2">${group}</td>
 									</s:if>
 									<s:else>
-										<s:if test="%{signUp == 3}">
-											<td style="color:blue;"  class="hand view" id="${id}_2">${sign}</td>
+										<s:if test="%{groupUp == 3}">
+											<td style="color:blue;"  class="hand view" id="${id}_2">${group}</td>
 										</s:if>
 										<s:else>
-											<td  class="hand view" id="${id}_2">${sign}</td>
+											<td  class="hand view" id="${id}_2">${group}</td>
 										</s:else>
 									</s:else>
 									<s:if test="%{loginUp == 1}">

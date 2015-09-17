@@ -102,80 +102,11 @@ public class TongjiDaoImpl extends DaoImplBase<Tongji> {
                 return null;
         }
 
-        public boolean update(Tongji tongji) {
-                try {
-                        DBObject object = new BasicDBObject("id", tongji.getId());
-                        DBObject value = new BasicDBObject();
-                        value.put("total", tongji.getTotal());
-                        value.put("jiaoliu", tongji.getJiaoliu());
-                        value.put("ceshi", tongji.getCeshi());
-                        value.put("caigou", tongji.getCaigou());
-                        value.put("wancheng", tongji.getWancheng());
-                        value.put("wancheng_success", tongji.getWancheng_success());
-                        value.put("wancheng_fail", tongji.getWancheng_fail());
-                        value.put("point", tongji.getPoint());
-                        value.put("common", tongji.getCommon());
-                        value.put("unbin", tongji.getUnbin());
-                        value.put("unuse", tongji.getUnuse());
-                        value.put("sign", tongji.getSign());
-                        value.put("login", tongji.getLogin());
-                        value.put("download", tongji.getDownload());
-                        value.put("app", tongji.getApp());
-                        value.put("data", tongji.getData());
-                        value.put("app_data", tongji.getAppData());
-                        value.put("data_time", tongji.getData_time());
-                        return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value)).getN() > -1;
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return false;
-        }
-
-        public boolean insert(Tongji tongji) {
-                try {
-                        tongji.setId(getIdest() + 1L);
-                        DBObject value = new BasicDBObject();
-                        value.put("id", tongji.getId());
-                        value.put("total", tongji.getTotal());
-                        value.put("jiaoliu", tongji.getJiaoliu());
-                        value.put("ceshi", tongji.getCeshi());
-                        value.put("caigou", tongji.getCaigou());
-                        value.put("wancheng", tongji.getWancheng());
-                        value.put("wancheng_success", tongji.getWancheng_success());
-                        value.put("wancheng_fail", tongji.getWancheng_fail());
-                        value.put("point", tongji.getPoint());
-                        value.put("common", tongji.getCommon());
-                        value.put("unbin", tongji.getUnbin());
-                        value.put("unuse", tongji.getUnuse());
-                        value.put("sign", tongji.getSign());
-                        value.put("login", tongji.getLogin());
-                        value.put("download", tongji.getDownload());
-                        value.put("app", tongji.getApp());
-                        value.put("data", tongji.getData());
-                        value.put("app_data", tongji.getAppData());
-                        value.put("data_time", tongji.getData_time());
-                        return getDBCollection(TABLE_NAME).insert(value).getN() > -1;
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return false;
-        }
 
         private Tongji getTongjiFromJSON(DBObject object) {
                 Tongji tongji = null;
                 try {
                         long total = Long.parseLong(object.get("total").toString());
-                        long jiaoliu = Long.parseLong(object.get("jiaoliu").toString());
-                        long ceshi = Long.parseLong(object.get("ceshi").toString());
-                        long caigou = Long.parseLong(object.get("caigou").toString());
-                        // long wancheng =
-                        // Long.parseLong(object.get("wancheng").toString());
-                        long wancheng_success = Long.parseLong(object.get("finish_success").toString());
-                        long wancheng_fail = Long.parseLong(object.get("finish_fail").toString());
-                        long point = Long.parseLong(object.get("point").toString());
-                        long common = Long.parseLong(object.get("common").toString());
-                        long unbin = Long.parseLong(object.get("unbin").toString());
-                        long unuse = Long.parseLong(object.get("unuse").toString());
                         long sign = Long.parseLong(object.get("sign").toString());
                         long login = Long.parseLong(object.get("login").toString());
                         long download = Long.parseLong(object.get("download").toString());
@@ -188,7 +119,8 @@ public class TongjiDaoImpl extends DaoImplBase<Tongji> {
                                 appData = Long.parseLong(object.get("app_data").toString().trim());
                         } catch (Exception e) {
                         }
-                        tongji = new Tongji(id, total, jiaoliu, ceshi, caigou, 0, wancheng_success, wancheng_fail, point, common, unbin, unuse, sign, login, download, app, data, appData);
+                        long group = Long.parseLong(object.get("group").toString());
+                        tongji = new Tongji(group, id, total, sign, login, download, app, data, appData);
                         tongji.setData_time(data_time);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
