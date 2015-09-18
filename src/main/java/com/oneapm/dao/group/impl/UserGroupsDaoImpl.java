@@ -178,14 +178,18 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 			}
 			int payLevel = 0;
 			try {
-				payLevel = Integer.parseInt(object.get("payLevel").toString());
+				payLevel = Integer.parseInt(object.get("pay_level").toString());
 			} catch (Exception e) {
 			}
 			String payTime = null;
 			try {
-				payTime = object.get("payTime").toString();
+				payTime = object.get("pay_time").toString();
 			} catch (Exception e) {
 			}
+			String expireTime = null;
+			try{
+			        expireTime = object.get("pay_expire_time").toString();
+			}catch(Exception e){}
 			String comming = null;
 			try {
 				comming = object.get("comming").toString();
@@ -221,6 +225,7 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 			userGroups.setCreateTime(createTime);
 			userGroups.setProject(project);
 			userGroups.setXiaoshouyi(xiaoshouyi);
+			userGroups.setExpireTime(expireTime);
 			return userGroups;
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
@@ -240,6 +245,10 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 			value.put("project", userGroups.getProject());
 			value.put("support", userGroups.getSupport());
 			value.put("preSale", userGroups.getPreSale());
+			if(userGroups.getExpireTime() !=null && userGroups.getExpireTime().trim().length() > 0){
+			        value.put("pay_level", userGroups.getPayLevel());
+			        value.put("pay_expire_time", userGroups.getExpireTime());
+			}
 			return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value)).getN() > -1;
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

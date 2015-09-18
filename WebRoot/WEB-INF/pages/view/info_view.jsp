@@ -171,6 +171,16 @@
 				</div>
 				<div style="float:left;width:340px;"><div style="float:left;width:80px;">到期时间：</div>
 					<div style="float:left;"><span >${userGroups.expireTime }</span></div>
+					<input style="float:left;width:150px;" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" class="edit_license_name hidden"/>
+					<select class="hand edit_license_pay_level hidden">
+						<option value="10">免费用户</option>
+						<option value="20">免费到期</option>
+						<option value="30">付费用户</option>
+						<option value="40">付费到期</option>
+					</select>
+					<s:if test="%{info.userId == null || admin.id == 99999999}">
+						<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_license_name">编辑</div>
+					</s:if>
 				</div>
 				
 				

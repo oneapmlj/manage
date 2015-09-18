@@ -82,6 +82,8 @@ public class UserGroupAction extends SupportAction{
          userGroups.setUserGroups(userGroupList);
          return "view";
  }
+     private String license;
+     private int pay_level;
      public void edit() throws IOException {
          if (!isLogin()) {
                  getServletResponse().sendRedirect("/login.action");
@@ -106,7 +108,7 @@ public class UserGroupAction extends SupportAction{
 //                 if (license != null) {
 //                         license = new String(license.getBytes("ISO8859-1"), "UTF-8");
 //                 }
-                 String result = UserGroupService.edit(groupId, project, email,  getAdmin());
+                 String result = UserGroupService.edit(groupId, project, email,  getAdmin(), license, pay_level);
                  getServletResponse().getWriter().print(result);
          } catch (Exception e) {
                  LOG.error(e.getMessage(), e);
@@ -585,6 +587,22 @@ public class UserGroupAction extends SupportAction{
 	public void setDownloadsNum(int downloadsNum) {
 		this.downloadsNum = downloadsNum;
 	}
+
+        public String getLicense() {
+                return license;
+        }
+
+        public void setLicense(String license) {
+                this.license = license;
+        }
+
+        public int getPay_level() {
+                return pay_level;
+        }
+
+        public void setPay_level(int pay_level) {
+                this.pay_level = pay_level;
+        }
 	
 
 	

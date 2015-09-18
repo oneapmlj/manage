@@ -23,6 +23,7 @@ import com.oneapm.dto.tag.Language;
 import com.oneapm.record.MailPush;
 import com.oneapm.record.Message;
 import com.oneapm.service.account.AccountService;
+import com.oneapm.service.account.PayService;
 import com.oneapm.service.info.AppService;
 import com.oneapm.service.info.GuanlianService;
 import com.oneapm.service.info.KFService;
@@ -238,7 +239,7 @@ public class UserGroupService extends OneTools {
 		return value;
 	}
 
-	public static String edit(Long groupId, String project, String email, Admin admin) {
+	public static String edit(Long groupId, String project, String email, Admin admin, String expireTime, int pay_level) {
 		try {
 			if (groupId == null || groupId <= 0) {
 				return OneTools.getResult(0, "参数错误");
@@ -247,10 +248,22 @@ public class UserGroupService extends OneTools {
 			if (project != null && project.trim().length() > 0) {
 				userGroups.setProject(project);
 			}
+			if(expireTime != null && expireTime.trim().length() > 0){
+			        if(PayService.pay(userGroups.getGroupId(), expireTime, "运营系统管理员添加", admin, pay_level)){
+			                userGroups.setExpireTime(expireTime);
+	                                userGroups.setPayLevel(pay_level);
+                                }else {
+                                        return OneTools.getResult(0, "api更新失败");
+                                }
+			}
 			List<String> args1 = new ArrayList<String>();
 			List<Object> args2 = new ArrayList<Object>();
 			args1.add("project");
 			args2.add(userGroups.getProject());
+			args1.add("expire_time");
+			args2.add(userGroups.getExpireTime());
+			args1.add("payLevel");
+			args2.add(userGroups.getPayLevel());
 			if (update(userGroups)) {
 				return getResult(1, args1, args2);
 			}

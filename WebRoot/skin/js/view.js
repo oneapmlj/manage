@@ -521,26 +521,25 @@ $(document).ready(function() {
 				$(".license_name").html(da.expireTime);
 				$(".license_name").removeClass("hidden");
 				$(".edit_license_pay_level").addClass("hidden");
-				if(da.daoqi > 0){
-					$(".licence_description").html(daoqi+"后到期");
-				}else{
-					if(da.payLevel == 40){
-						$(".licence_description").html("<span style='color:red;'>付费已到期</span>");
-					}else{
-						if(da.payLevel == 20){
-							$(".licence_description").html("<span style='color:red;'>免费已到期</span>");
-						}else{
-							$(".licence_description").html("测试阶段");
-						}
-					}
-				}
-				switch(da.payLevel){
-					case 10:$(".pay_level").html("<span>免费用户</span>");break;
-					case 20:$(".pay_level").html("<span style='color:red;'>免费到期</span>");break;
-					case 30:$(".pay_level").html("<span>付费用户</span>");break;
-					case 40:$(".pay_level").html("<span style='color:red;'>付费到期</span>");break;
-					default:$(".pay_level").html("<span>未知</span>");break;
-				}
+//				if(da.daoqi > 0){
+//					$(".licence_description").html(daoqi+"后到期");
+//				}
+//				if(da.payLevel == 40){
+//					$(".licence_description").html("<span style='color:red;'>付费已到期</span>");
+//				}else{
+//					if(da.payLevel == 20){
+//						$(".licence_description").html("<span style='color:red;'>免费已到期</span>");
+//					}else{
+//						$(".licence_description").html("未到期");
+//					}
+//				}
+//				switch(da.payLevel){
+//					case 10:$(".pay_level").html("<span>免费用户</span>");break;
+//					case 20:$(".pay_level").html("<span style='color:red;'>免费到期</span>");break;
+//					case 30:$(".pay_level").html("<span>付费用户</span>");break;
+//					case 40:$(".pay_level").html("<span style='color:red;'>付费到期</span>");break;
+//					default:$(".pay_level").html("<span>未知</span>");break;
+//				}
 			}else{
 				alert(da.msg);
 			}
