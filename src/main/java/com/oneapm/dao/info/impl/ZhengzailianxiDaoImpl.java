@@ -174,7 +174,10 @@ public class ZhengzailianxiDaoImpl extends DaoImplBase<Zhengzailianxi> {
                         try{
                         	infoId = Long.parseLong(object.get("info_id").toString().trim());
                         }catch(Exception e){}
-                        Long groupId = Long.parseLong(object.get("group_id").toString().trim());
+                        Long groupId = null;
+                        try{
+                                groupId = Long.parseLong(object.get("group_id").toString().trim());
+                        }catch(Exception e){}
                         zhengzailianxi = new Zhengzailianxi(id, adminId, startTime, endTime, status, stay, infoId);
                         zhengzailianxi.setGroupId(groupId);
                 } catch (Exception e) {

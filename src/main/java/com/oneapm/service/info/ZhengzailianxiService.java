@@ -1,6 +1,7 @@
 package com.oneapm.service.info;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -42,9 +43,13 @@ public class ZhengzailianxiService {
                       if(zhengzailianxis != null && zhengzailianxis.size() > 0){
                               for(Zhengzailianxi zhengzailianxi : zhengzailianxis){
                                       if(zhengzailianxi.getStatus() != 0 && zhengzailianxi.getEndTime() != null){
-                                              zhengzailianxi.setStay((int)((TimeTools.formatTime.parse(zhengzailianxi.getEndTime()).getTime() - TimeTools.formatTime.parse(zhengzailianxi.getStartTime()).getTime())/1000/60));
+                                              zhengzailianxi.setStay((int)((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(zhengzailianxi.getEndTime()).getTime() - 
+                                                              new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(zhengzailianxi.getStartTime()).getTime())/1000/60));
                                       }else{
-                                              zhengzailianxi.setStay((int)((new Date().getTime() - TimeTools.formatTime.parse(zhengzailianxi.getStartTime()).getTime())/1000/60));
+                                              long start = 0;
+                                              long stay = 0;
+                                              stay = (new Date().getTime() - start)/1000/60;
+                                              zhengzailianxi.setStay((int)stay);
                                       }
                                       ZhengzailianxiDaoImpl.getInstance().updateStay(zhengzailianxi);
                               }
