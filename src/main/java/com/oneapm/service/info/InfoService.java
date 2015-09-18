@@ -1018,7 +1018,7 @@ public class InfoService extends OneTools {
         }
 
         public static List<Info> search(String email, String name, String phone, String company, String qq, boolean in) {
-                List<Info> infos = InfoDaoImpl.getInstance().search(email, name, phone, company, qq, in);
+                List<Info> infos = InfoDaoImpl.getInstance().search(email, name, phone, qq, in);
                 for (int i = 0; i < infos.size(); i++) {
                         initTag(infos.get(i));
                 }

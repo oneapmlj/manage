@@ -535,7 +535,7 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                 return infos;
         }
 
-        public List<Info> search(String email, String name, String phone, String company, String qq, boolean in) {
+        public List<Info> search(String email, String name, String phone, String qq, boolean in) {
                 List<Info> infos = null;
                 try {
                         DBObject object = new BasicDBObject();
@@ -548,14 +548,14 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                                 Pattern pattern = Pattern.compile("^.*" + name.trim() + ".*$", Pattern.CASE_INSENSITIVE);
                                 list.add(new BasicDBObject("name", pattern));
                         }
-                        if (company != null && !company.trim().equals("")) {
+                        /*if (company != null && !company.trim().equals("")) {
                                 Pattern pattern = Pattern.compile("^.*" + company.trim() + ".*$", Pattern.CASE_INSENSITIVE);
                                 list.add(new BasicDBObject("company", pattern));
                         }
                         if (company != null && !company.trim().equals("")) {
                                 Pattern pattern = Pattern.compile("^.*" + company.trim() + ".*$", Pattern.CASE_INSENSITIVE);
                                 list.add(new BasicDBObject("project", pattern));
-                        }
+                        }*/
                         if (email != null && !email.trim().equals("")) {
                                 Pattern pattern = Pattern.compile("^.*" + email.trim() + ".*$", Pattern.CASE_INSENSITIVE);
                                 list.add(new BasicDBObject("email", pattern));

@@ -41,7 +41,7 @@ public class ReviewAction extends SupportAction {
                                         } else {
                                                 admin = AccountService.findById(id);
                                         }
-                                        account = AccountRecordService.findByAdmin(admin, type, true, page, nowPage);
+                                        account = AccountRecordService.findGroupsByAdmin(admin, type, true, page, nowPage);
                                 }
                         }
                 } catch (Exception e) {
@@ -58,7 +58,7 @@ public class ReviewAction extends SupportAction {
                 }
                 try{
                         Admin admin = AccountService.findById(id);
-                        String result = AccountRecordService.findByAdminId(admin, type, true, page, nowPage);
+                        String result = AccountRecordService.findGroupsByAdminId(admin, type, true, page, nowPage);
                         getServletResponse().getWriter().print(result);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);

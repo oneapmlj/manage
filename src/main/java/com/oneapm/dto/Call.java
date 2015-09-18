@@ -31,6 +31,7 @@ public class Call {
         private int todu;
         
         private Long groupId;
+        private Long userId;
 
         public Call(Long infoId, Long callId, Long cardId, String callTime, String mark, Long adminId, String company, Long type, String time, Long gongdan) {
                 setInfoId(infoId);
@@ -167,6 +168,14 @@ public class Call {
 
 		public void setGroupId(Long groupId) {
 			this.groupId = groupId;
+		}
+
+		public Long getUserId() {
+			return userId;
+		}
+
+		public void setUserId(Long userId) {
+			this.userId = userId;
 		}
         
         

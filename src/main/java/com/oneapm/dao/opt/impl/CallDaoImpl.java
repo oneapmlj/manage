@@ -98,6 +98,7 @@ public class CallDaoImpl extends DaoImplBase<Call> {
                         value.put("time", call.getTime());
                         value.put("todu", call.getTodu());
                         value.put("group_id", call.getGroupId());
+                        value.put("user_id", call.getUserId());
                         if (getDBCollection(TABLE_NAME).insert(value).getN() > -1) {
                                 return call;
                         }
@@ -202,8 +203,20 @@ public class CallDaoImpl extends DaoImplBase<Call> {
                                 todu = Integer.parseInt(object.get("todu").toString().trim());
                         } catch (Exception e) {
                         }
+                        Long groupId = null;
+                        try {
+                        	groupId = Long.parseLong(object.get("group_id").toString().trim());
+                        } catch (Exception e) {
+                        }
+                        Long userId = null;
+                        try {
+                        	userId = Long.parseLong(object.get("user_id").toString().trim());
+                        } catch (Exception e) {
+                        }
                         call = new Call(infoId, callId, cardId, callTime, mark, adminId, company, type, time, gongdan);
                         call.setTodu(todu);
+                        call.setGroupId(groupId);
+                        call.setUserId(userId);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

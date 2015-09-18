@@ -229,6 +229,8 @@ public class CallService {
                         Long infoId = 0L;
                         Long gongdan = null;
                         Call call = new Call(infoId, null, cardId, TimeTools.format(), mark, admin.getId(), userGroups.getGroupName(), type, putTime, gongdan);
+                        call.setUserId(cardId);
+                        call.setCardId(0L);
                         call.setGongdan(null);
                         call.setGroupId(groupId);
                         if (cardId == null || cardId <= 0) {
