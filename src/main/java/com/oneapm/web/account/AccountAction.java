@@ -133,7 +133,7 @@ public class AccountAction extends SupportAction {
                 if (!isLogin()) {
                         return "login";
                 }
-                account = AccountRecordService.findByAdmin(getAdmin(), type, true, page, nowPage);
+                account = AccountRecordService.findGroupsByAdmin(getAdmin(), type, true, page, nowPage);
                 if (getAdmin().getId().equals(99999999L)) {
                         controls = ControlDaoImpl.getInstance().list();
                 }
@@ -145,7 +145,7 @@ public class AccountAction extends SupportAction {
                         return;
                 }
                 try{
-                        String result = AccountRecordService.findByAdminId(getAdmin(), type, true, page, nowPage);
+                        String result = AccountRecordService.findGroupsByAdminId(getAdmin(), type, true, page, nowPage);
                         getServletResponse().getWriter().print(result);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);

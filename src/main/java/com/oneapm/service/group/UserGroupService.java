@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
+import com.oneapm.dao.info.impl.InfoDaoImpl;
 //import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dao.group.impl.UserGroupDaoImpl;
 import com.oneapm.dto.UserGroup;
@@ -18,6 +19,7 @@ import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.group.Group;
 import com.oneapm.dto.group.GroupView;
 import com.oneapm.dto.info.Guanlian;
+import com.oneapm.dto.info.Info;
 //import com.oneapm.dto.info.Info;
 import com.oneapm.dto.tag.Language;
 import com.oneapm.record.MailPush;
@@ -49,11 +51,30 @@ public class UserGroupService extends OneTools {
 	public static List<UserGroup> findUsersByGroupId(Long groupId) {
 		return UserGroupDaoImpl.getInstance().findUsersByGroupId(groupId);
 	}
+	public static UserGroup findUsersByUserId(Long userId) {
+		return UserGroupDaoImpl.getInstance().findUsersByUserId(userId);
+	}
 
 	public static boolean update_xiaoshouyi(UserGroups userGroups, String lableId) {
 		return UserGroupsDaoImpl.getInstance().update_xiaoshouyi(userGroups, lableId);
 	}
-
+	
+	public static long countAdminId(Long adminId){
+        return UserGroupsDaoImpl.getInstance().countAdminId(adminId);
+}
+	
+	public static List<UserGroups> findUserGroupsListByAdminId(Long adminId, int number, int skip) {
+        List<UserGroups> userGroupsList =  UserGroupsDaoImpl.getInstance().findByAdminId(adminId, number, skip);
+        if(userGroupsList != null && userGroupsList.size() > 0){
+                for(UserGroups userGroups : userGroupsList){
+                        if(userGroups.getProject() == null || userGroups.getProject().trim().length() <= 0){
+                        	userGroups.setProject(userGroups.getProject());
+                        }
+                        initTag(userGroups);
+                }
+        }
+        return userGroupsList;
+}
 	public static UserGroups findByGroupId(Long groupId, Admin admin) {
 		UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(groupId);
 		if (userGroups != null) {
@@ -225,6 +246,15 @@ public class UserGroupService extends OneTools {
 			value.put("preSaleName", userGroups.getPreSaleName());
 			value.put("comming", userGroups.getComming());
 			value.put("contectTime", userGroups.getContectTime());
+			List<UserGroup> userGroupList = userGroups.getUserGroups();
+			if(userGroupList!=null){
+			for(UserGroup userGroup : userGroupList){
+				if(userGroup.getRole().equals("admin")){
+					value.put("name", userGroup.getInfo().getName());
+				}
+			}
+			}
+			
 			if (userGroups.getCalls() != null) {
 				value.put("calls", CallService.getArrayFromCall(userGroups.getCalls()));
 			}
@@ -733,4 +763,72 @@ public class UserGroupService extends OneTools {
 		}
 		return userGroups.getLevel();
 	}
+	@SuppressWarnings("null")
+	public static List<UserGroups> search(String email, String name, String phone, String company, String qq, boolean in) {
+        List<UserGroups> userGroupsList = UserGroupsDaoImpl.getInstance().searchByCompany(company);
+        List<Info> infos = InfoDaoImpl.getInstance().search(email, name, phone, qq, in);
+        if(userGroupsList==null){
+        	userGroupsList = new ArrayList<UserGroups>();
+        }
+        if(infos!=null && !infos.isEmpty()){
+        for (int i = 0; i < infos.size(); i++) {
+        	UserGroup userGroup = findUsersByUserId(infos.get(i).getUserId());
+        	if(userGroup!=null){
+        	if(userGroup.getRole().equals("admin")){
+        		UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(userGroup.getGroupId());
+        		userGroupsList.add(userGroups);
+        	}
+        }
+        }
+        }
+        
+        for (int i = 0; i < userGroupsList.size(); i++) {
+                initTag(userGroupsList.get(i));
+        }
+        return userGroupsList;
+}
+	
+	 @SuppressWarnings("unchecked")
+     public static String searchOut(String email, String name, String phone, String company, boolean in, Admin admin, String qq) {
+             JSONObject object = new JSONObject();
+             try {
+                     object.put("status", 0);
+                     List<UserGroups> userGroupsList = null;
+                     if ((email == null || email.trim().equals("")) && (name == null || name.trim().equals("")) && (phone == null || phone.trim().equals("")) && (company == null || company.trim().equals("")) && (qq == null || qq.trim().equals(""))) {
+                             return object.toJSONString();
+                     } else {
+                    	 userGroupsList = search(email, name, phone, company, qq, in);
+                             if (userGroupsList == null || userGroupsList.size() <= 0) {
+                                     return object.toJSONString();
+                             }
+                     }
+                     if (userGroupsList != null) {
+                             for (UserGroups userGroups : userGroupsList) {
+                                     power(admin.getId(), admin.getGroup(), userGroups);
+                             }
+                     }
+                     JSONArray array = getArrayFromUserGroups(userGroupsList);
+                     object.put("userGroupsList", array);
+                     object.put("status", 1);
+                     object.put("size", userGroupsList.size());
+             } catch (Exception e) {
+                     LOG.error(e.getMessage(), e);
+             }
+             return object.toJSONString();
+     }
+
+	 
+	 @SuppressWarnings("unchecked")
+	public static JSONArray getArrayFromUserGroupsList(List<UserGroups> userGroupsList) {
+         JSONArray array = new JSONArray();
+         if (userGroupsList == null || userGroupsList.size() <= 0) {
+                 return array;
+         }
+         for (UserGroups userGroups : userGroupsList) {
+                 array.add(getJSONFromUserGroups(userGroups));
+         }
+         return array;
+ }
+	 
+	 
 }

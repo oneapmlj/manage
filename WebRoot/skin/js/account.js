@@ -7,7 +7,7 @@ var addInfos = function(nowPage,type){
 		url:'account_view.action',
 		data:{nowPage:nowPage,page:0,type:type}
 	}).done(function(da){
-		if(da.status == 1){
+		if(da.status==1){
 			$("#page").html(da.page);
 			$("#type").html(da.type);
 			$("#account_info_size_total").html("负责用户("+da.sizeTotal);
@@ -24,29 +24,26 @@ var addInfos = function(nowPage,type){
 			}else{
 				$(".page_next").addClass("hidden");
 			}
-			var infos = da.infos;
-			if(infos != null && infos.length > 0){
+			var userGroupsList = da.userGroupsList;
+			if(userGroupsList != null && userGroupsList.length > 0){
 				var html = "";
-				for(var i=0;i<infos.length;i++){
+				for(var i=0;i<userGroupsList.length;i++){
 					html += "<div class='view_p_content_850 biankuang_gray_ding' style='font-size:14px;'>"
-							+"<div style='margin-left:5px;width:540px;float:left;'>公司："+infos[i].project+"</div>";
-					if(infos[i].userId != null){
-						html += "<div style='width:240px;float:left;'>ID："+infos[i].userId+"</div>";
+							+"<div style='margin-left:5px;width:540px;float:left;'>公司："+userGroupsList[i].groupName+"</div>";
+					if(userGroupsList[i].groupId != null){
+						html += "<div style='width:240px;float:left;'>ID："+userGroupsList[i].groupId+"</div>";
 					}else{
 						html += "div style='width:240px;float:left;'>ID：无</div>";
 					}
 					html	+= "<div style='width:60px;float:left;'>"
-							+"	<input val1='"+infos[i].id+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' />"
+							+"	<input val1='"+userGroupsList[i].groupId+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' />"
 							+"</div>"
-							+"<div style='margin-left:5px;width:270px;float:left;'>注册："+infos[i].createTime+"</div>"
-							+"<div style='width:270px;float:left;'>登录："+infos[i].loginTime+"</div>"
-							+"<div style='width:270px;float:left;'>最近联系："+infos[i].contectTime+"</div>"
+							+"<div style='margin-left:5px;width:270px;float:left;'>注册："+userGroupsList[i].createTime+"</div>"
+							+"<div style='width:270px;float:left;'>最近联系："+userGroupsList[i].contectTime+"</div>"
 							+"</div>";
 				}
 				$("#infos").html(html);
 			}
-		}else{
-			alert(da.msg);
 		}
 	});
 }
@@ -84,8 +81,11 @@ var addCalls= function(nowPage,type){
 					html += "<div class='view_p_content_850 biankuang_gray_ding hand'>"
 								+"<div style='margin-left:5px;width:780px;float:left;overflow: hidden;'>公司："+calls[i].company+"</div>"
 								+"<div style='width:60px;float:left;'>"
-								+"<input val1='"+calls[i].infoId+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' />"
-								+"</div>"
+								if(calls[i].groupId != null){
+									html += "<input val1='"+calls[i].groupId+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' />";
+								}else{
+								}
+								html+="</div>"
 								+"<div style='margin-left:5px;width:800px;height:20px;float:left;'>时间："+calls[i].callTime+"</div>"
 								+"<div style='margin-left:5px;width:800px;height:20px;float:left;'>记录：</div>"
 								+"<div style='margin-left:20px;width:700px;float:left;'>"+calls[i].mark+"</div></div>";

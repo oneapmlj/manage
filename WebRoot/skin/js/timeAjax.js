@@ -34,32 +34,31 @@ $(document).ready(function(){
 		$(this).val("搜索中");
 		$.ajax({
 			dataType:'json',
-			url:'info_searchOut.action',
+			url:'user_group_searchOut.action',
 			data:o
 		}).done(function(da){
 			if(da.status == 1){
-				INFO = da.infos;
-				var infos = da.infos;
+				INFO = da.userGroupsList;
+				var userGroupsList = da.userGroupsList;
 				var html = "";
-				for(var i=0;i<infos.length;i++){
-					if(infos[i].level == 2){
-						html += "<tr class='hand' style='color:#00FF00;'  val1='"+infos[i].id+"'> "
+				var name = $("#search_name").val();
+				for(var i=0;i<userGroupsList.length;i++){
+					if(userGroupsList[i].level == 2){
+						html += "<tr class='hand' style='color:#00FF00;'  val1='"+userGroupsList[i].groupId+"'> "
 					}else{
-						html += "<tr class='hand' val1='"+infos[i].id+"'> "
+						html += "<tr class='hand' val1='"+userGroupsList[i].groupId+"'> "
 					}
 					html +="<td></td> "
-						+"<td>"+infos[i].userId+"</td> "
-						+"<td>"+infos[i].name+"</td> "
-						+"<td>"+infos[i].company+"</td> "
-						+"<td>"+infos[i].project+"</td> "
-						+"<td>"+infos[i].comming+"</td> "
-						+"<td>"+infos[i].saleName+"</td>"
-						+"<td>"+infos[i].supportName+"</td>"
-						+"<td>"+infos[i].preSaleName+"</td>" 
+						+"<td>"+userGroupsList[i].groupId+"</td> "
+						+"<td>"+name+"</td> "
+						+"<td>"+userGroupsList[i].company+"</td> "
+						+"<td>"+userGroupsList[i].project+"</td> "
+						+"<td>"+userGroupsList[i].comming+"</td> "
+						+"<td>"+userGroupsList[i].saleName+"</td>"
+						+"<td>"+userGroupsList[i].supportName+"</td>"
+						+"<td>"+userGroupsList[i].preSaleName+"</td>" 
 						+"<td>";
-					if(infos[i].level >= 1){
-						html+="<input val1='"+infos[i].id+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' />";
-					}
+						html+="<input val1='"+userGroupsList[i].groupId+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' />";
 					html +="</td></tr>";
 				}
 				$("#search_result").html(html);

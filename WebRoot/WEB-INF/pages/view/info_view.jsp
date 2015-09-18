@@ -954,13 +954,14 @@
 							<div style="float:left;">
 								<select style="float:left;margin-top:5px;" name="card" id="add_call_card" class="hand" tabindex="1">
 									<s:if test="%{userGroups.groupId != null && userGroups.groupId > 0}">
-										<option value="1" select="selected">注册信息</option>
-									</s:if>
-									<s:if test="%{userGroups.cards != null && userGroups.cards.size > 0}">
-										<s:iterator value="userGroups.cards">
-											<option value="${id}">名片：${id}</option>
+										<s:if test="%{userGroupList != null && userGroupList.size > 0}">
+						
+										<s:iterator value="userGroupList" >
+											<option value="${info.userId}">名片：${info.name}</option>
 										</s:iterator>
 									</s:if>
+									</s:if>
+									
 								</select>
 							</div>
 						</div>

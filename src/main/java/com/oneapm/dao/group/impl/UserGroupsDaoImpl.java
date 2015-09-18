@@ -2,6 +2,7 @@ package com.oneapm.dao.group.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import com.mongodb.DBObject;
 import com.oneapm.dao.DaoImplBase;
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.group.Group;
+import com.oneapm.dto.info.Info;
 
 public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 	protected static final Logger LOG = LoggerFactory.getLogger(UserGroupsDaoImpl.class);
@@ -27,7 +29,53 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 	public static UserGroupsDaoImpl getInstance() {
 		return Instance;
 	}
-
+	
+	public long countAdminId(Long adminId){
+        try {
+                DBObject object = new BasicDBObject();
+                BasicDBList list = new BasicDBList();
+                list.add(new BasicDBObject("admin_id", adminId));
+                list.add(new BasicDBObject("sale", adminId));
+                list.add(new BasicDBObject("support", adminId));
+                list.add(new BasicDBObject("preSale", adminId));
+                object.put("$or", list);
+                DBObject sort = new BasicDBObject();
+                sort.put("contect_time", 1);
+                return getDBCollection(TABLE_NAME).count(object);
+        } catch (Exception e) {
+                LOG.error(e.getMessage(), e);
+        }
+        return 0;
+}
+	
+	public List<UserGroups> findByAdminId(Long adminId, int number, int skip) {
+        List<UserGroups> userGroups = new ArrayList<UserGroups>();
+        try {
+                DBObject object = new BasicDBObject();
+                BasicDBList list = new BasicDBList();
+                list.add(new BasicDBObject("admin_id", adminId));
+                list.add(new BasicDBObject("sale", adminId));
+                list.add(new BasicDBObject("support", adminId));
+                list.add(new BasicDBObject("preSale", adminId));
+                object.put("$or", list);
+                DBObject sort = new BasicDBObject();
+                sort.put("contect_time", 1);
+                DBCursor cursor = null;
+                if(number == 0){
+                        cursor = getDBCollection(TABLE_NAME).find(object);
+                }else{
+                        cursor = getDBCollection(TABLE_NAME).find(object).sort(sort).skip(skip).limit(number);
+                }
+                userGroups = new ArrayList<UserGroups>();
+                while (cursor.hasNext()) {
+                	userGroups.add(findComplicatedGroupsByObject(cursor.next()));
+                }
+                return userGroups;
+        } catch (Exception e) {
+                LOG.error(e.getMessage(), e);
+        }
+        return null;
+}
 	public boolean update_xiaoshouyi(UserGroups userGroups, String lableId) {
 		try {
 			DBObject object = new BasicDBObject();
@@ -178,18 +226,14 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 			}
 			int payLevel = 0;
 			try {
-				payLevel = Integer.parseInt(object.get("pay_level").toString());
+				payLevel = Integer.parseInt(object.get("payLevel").toString());
 			} catch (Exception e) {
 			}
 			String payTime = null;
 			try {
-				payTime = object.get("pay_time").toString();
+				payTime = object.get("payTime").toString();
 			} catch (Exception e) {
 			}
-			String expireTime = null;
-			try{
-			        expireTime = object.get("pay_expire_time").toString();
-			}catch(Exception e){}
 			String comming = null;
 			try {
 				comming = object.get("comming").toString();
@@ -200,6 +244,10 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 				emailStatus = Integer.parseInt(object.get("emailStatus").toString());
 			} catch (Exception e) {
 			}
+			String expireTime = null;
+                        try{
+                                expireTime = object.get("pay_expire_time").toString();
+                        }catch(Exception e){}
 			String contectTime = null;
 			try {
 				contectTime = object.get("contectTime").toString();
@@ -246,9 +294,9 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 			value.put("support", userGroups.getSupport());
 			value.put("preSale", userGroups.getPreSale());
 			if(userGroups.getExpireTime() !=null && userGroups.getExpireTime().trim().length() > 0){
-			        value.put("pay_level", userGroups.getPayLevel());
-			        value.put("pay_expire_time", userGroups.getExpireTime());
-			}
+                                value.put("pay_level", userGroups.getPayLevel());
+                                value.put("pay_expire_time", userGroups.getExpireTime());
+                        }
 			return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value)).getN() > -1;
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
@@ -290,4 +338,79 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 		}
 		return null;
 	}
+	
+	
+	  public List<UserGroups> search(String email, String name, String phone, String company, String qq, boolean in) {
+          List<UserGroups> userGroups = null;
+          try {
+                  DBObject object = new BasicDBObject();
+                  BasicDBList list = new BasicDBList();
+                  if (phone != null && !phone.trim().equals("")) {
+                          Pattern pattern = Pattern.compile("^.*" + phone.trim() + ".*$", Pattern.CASE_INSENSITIVE);
+                          list.add(new BasicDBObject("phone", pattern));
+                  }
+                  if (name != null && !name.trim().equals("")) {
+                          Pattern pattern = Pattern.compile("^.*" + name.trim() + ".*$", Pattern.CASE_INSENSITIVE);
+                          list.add(new BasicDBObject("name", pattern));
+                  }
+                  if (company != null && !company.trim().equals("")) {
+                          Pattern pattern = Pattern.compile("^.*" + company.trim() + ".*$", Pattern.CASE_INSENSITIVE);
+                          list.add(new BasicDBObject("group_name", pattern));
+                  }
+                  if (company != null && !company.trim().equals("")) {
+                          Pattern pattern = Pattern.compile("^.*" + company.trim() + ".*$", Pattern.CASE_INSENSITIVE);
+                          list.add(new BasicDBObject("project", pattern));
+                  }
+                  if (email != null && !email.trim().equals("")) {
+                          Pattern pattern = Pattern.compile("^.*" + email.trim() + ".*$", Pattern.CASE_INSENSITIVE);
+                          list.add(new BasicDBObject("email", pattern));
+                  }
+                  if (qq != null && !qq.trim().equals("")) {
+                          list.add(new BasicDBObject("qq", qq));
+                  }
+                  if (list.size() <= 0) {
+                          return null;
+                  }
+                  object.put("$or", list);
+                  DBObject sort = new BasicDBObject("create_time", -1);
+                  DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort);
+                  userGroups = new ArrayList<UserGroups>();
+                  while (cursor.hasNext()) {
+                	  userGroups.add(findComplicatedGroupsByObject(cursor.next()));
+                  }
+          } catch (Exception e) {
+                  LOG.error(e.getMessage(), e);
+          }
+          return userGroups;
+  }
+	  
+	  
+	  public List<UserGroups> searchByCompany(String company) {
+          List<UserGroups> userGroups = null;
+          try {
+                  DBObject object = new BasicDBObject();
+                  BasicDBList list = new BasicDBList();
+                  if (company != null && !company.trim().equals("")) {
+                          Pattern pattern = Pattern.compile("^.*" + company.trim() + ".*$", Pattern.CASE_INSENSITIVE);
+                          list.add(new BasicDBObject("group_name", pattern));
+                  }
+                  if (company != null && !company.trim().equals("")) {
+                          Pattern pattern = Pattern.compile("^.*" + company.trim() + ".*$", Pattern.CASE_INSENSITIVE);
+                          list.add(new BasicDBObject("project", pattern));
+                  }
+                  if (list.size() <= 0) {
+                          return null;
+                  }
+                  object.put("$or", list);
+                  DBObject sort = new BasicDBObject("create_time", -1);
+                  DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort);
+                  userGroups = new ArrayList<UserGroups>();
+                  while (cursor.hasNext()) {
+                	  userGroups.add(findComplicatedGroupsByObject(cursor.next()));
+                  }
+          } catch (Exception e) {
+                  LOG.error(e.getMessage(), e);
+          }
+          return userGroups;
+  }
 }

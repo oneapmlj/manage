@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.oneapm.dto.Call;
 import com.oneapm.dto.Mail;
+import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.card.Card;
 import com.oneapm.dto.info.Info;
 import com.oneapm.vo.Quanxian;
@@ -25,7 +26,7 @@ public class Account {
         private int pageNow;
         private int pageTotal;
         private List<Quanxian> quanxians;
-
+        private List<UserGroups> userGroupsList;
         public Account() {
         }
 
@@ -36,6 +37,13 @@ public class Account {
                 setCards(cards);
                 setInfos(infos);
         }
+        public Account(Admin admin, List<Mail> mails, List<Card> cards, List<Call> calls) {
+            setAdmin(admin);
+            setMails(mails);
+            setCalls(calls);
+            setCards(cards);
+            
+    }
 
         public List<Mail> getMails() {
                 return mails;
@@ -116,4 +124,13 @@ public class Account {
         public void setSizeTotal(int sizeTotal) {
                 this.sizeTotal = sizeTotal;
         }
+
+		public List<UserGroups> getUserGroupsList() {
+			return userGroupsList;
+		}
+
+		public void setUserGroupsList(List<UserGroups> userGroupsList) {
+			this.userGroupsList = userGroupsList;
+		}
+        
 }

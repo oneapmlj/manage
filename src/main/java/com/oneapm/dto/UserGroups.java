@@ -51,6 +51,9 @@ public class UserGroups {
         private String project;
         private Long xiaoshouyi;
         private Long xiaoshouyiAdmin;
+        public UserGroups(){
+        
+    }
         public UserGroups(Long groupId, Long adminId, String groupName, Long parentId, int deleted){
                 setGroupId(groupId);
                 setAdminId(adminId);

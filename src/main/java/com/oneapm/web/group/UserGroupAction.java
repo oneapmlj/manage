@@ -316,6 +316,29 @@ public class UserGroupAction extends SupportAction{
                      LOG.error(e.getMessage(), e);
              }
      }
+     
+     private String qq;
+     private boolean in;
+     private String phone;
+     private String name;
+     private String company;
+     public void searchOut() throws IOException {
+         if (!isLogin()) {
+                 getServletResponse().sendRedirect("/login.action");
+                 return;
+         }
+//         if (name != null) {
+//                 name = new String(name.getBytes("ISO8859-1"), "UTF-8").trim();
+//         }
+//         if (company != null) {
+//                 company = new String(company.getBytes("ISO8859-1"), "UTF-8");
+//         }
+//         if (qq != null) {
+//                 qq = new String(qq.getBytes("ISO8859-1"), "UTF-8").trim();
+//         }
+         String result = UserGroupService.searchOut(email, name, phone, company, in, getAdmin(), qq);
+         getServletResponse().getWriter().print(result);
+ }
 	public Long getGroupId() {
 		return groupId;
 	}
@@ -603,9 +626,36 @@ public class UserGroupAction extends SupportAction{
         public void setPay_level(int pay_level) {
                 this.pay_level = pay_level;
         }
-	
-
-	
+	public String getQq() {
+		return qq;
+	}
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+	public boolean isIn() {
+		return in;
+	}
+	public void setIn(boolean in) {
+		this.in = in;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
 	
      
 }
