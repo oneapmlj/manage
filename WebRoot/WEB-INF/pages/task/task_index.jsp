@@ -48,7 +48,9 @@
 					</div>
 					<s:iterator value="tasks">
 						<div id="task_${push.id }" style="<s:if test='%{push.point}'>color:red;</s:if>width:1200px;height:40px;line-height:40px;border: 1px solid #DDD;<s:if test="%{warming == 1}">color:red;</s:if> " taskId=${push.id } groupId=${userGroups.groupId }>
-							<div style="margin-left:10px;float:left;width:200px;">${userGroups.groupName }</div>
+							<div style="margin-left:10px;float:left;width:200px;">
+							<s:if test="%{userGroups.groupName == null}">" "</s:if>
+							${userGroups.groupName }</div>
 							<div style="float:left;width:120px;">
 								<s:if test="%{push.type == 1}">未激活</s:if>
 								<s:if test="%{push.type == 2}">欢迎使用</s:if>

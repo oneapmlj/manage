@@ -1,6 +1,7 @@
 package com.oneapm.web.mail;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -79,6 +80,7 @@ public class SendMailAction extends SupportAction {
                      //   signTime = info.getCreateTime().substring(0, 10);
                      //   mails = MailService.findMailsById(info.getId());
 //                        content = SendMailService.findByModeId(101);
+                		infos = new ArrayList<Info>();
                 		userGroups = UserGroupService.findByGroupIdSimple(groupId);
                 		userGroupList = UserGroupService.findUsersByGroupId(groupId);
                 		for(UserGroup userGroup : userGroupList){
@@ -89,7 +91,7 @@ public class SendMailAction extends SupportAction {
                 		signTime = userGroups.getCreateTime().substring(0,10);
                 		}
                 		mails = MailService.findMailsByGroupId(groupId);
-                		content = SendMailService.findByModeId(101);
+                		content = SendMailService.findByModeId(102);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), 1);
                 }

@@ -292,11 +292,11 @@ public class AccountService {
                         admins = AdminDaoImpl.getInstance().findAdmins(0);
                         for (int i = 0; i < admins.size(); i++) {
                                 Admin ad = admins.get(i);
-                                if (admin.getGrades().indexOf(SupportAction.getGRADE().getMap().get(111).getQuanxian()) < 0) {
-                                        admins.remove(i);
-                                        i--;
-                                        continue;
-                                }
+//                                if (admin.getGrades().indexOf(SupportAction.getGRADE().getMap().get(111).getQuanxian()) < 0) {
+//                                	admins.remove(i);
+//                                        i--;
+//                                        continue;
+//                                }
                                 if (admin.getId().equals(ad.getId())) {
                                         admins.remove(i);
                                         i--;

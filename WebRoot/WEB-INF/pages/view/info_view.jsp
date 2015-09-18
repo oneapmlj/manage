@@ -310,10 +310,13 @@
 					<%-- 	<s:iterator value="userGroupList" >
 				<s:if test="%{info.downloads != null && info.downloads.size > 0}">
 				</s:if></s:iterator> --%>
-						共<a href="javascript:showAll();" style="font-size:14px;color:blue;"> ${userGroupList[0].info.downloads.size()}</a>条 
+						共<a href="javascript:showAll();" style="font-size:14px;color:blue;"> 
+						${downloadsNum}
+						</a>条 
 						 </div>
 					</div>
 					</div>
+					
 				<s:iterator value="userGroupList" >
 				<s:if test="%{info.downloads != null && info.downloads.size > 0}">
 					<div id="download_view_${info.userId }"  style="display:none">

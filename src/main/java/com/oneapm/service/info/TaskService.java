@@ -309,7 +309,7 @@ public class TaskService extends OneTools {
                                 if (push.getFromId() != null && push.getFromId() > 0) {
                                         push.setFromName(AccountService.findName(push.getFromId()));
                                 }
-                                UserGroups userGroups = UserGroupService.findByGroupIdSimple(push.getInfoId());
+                                UserGroups userGroups = UserGroupService.findByGroupIdSimple(push.getGroupId());
                                 Task task = new Task(push, findByTaskType(push.getType()), userGroups, push.isPoint());
                                 if (push.getWarming() > 0) {
                                         task.setWarmingHour(TimeTools.apartHour(time, push.getWarmingTime()));

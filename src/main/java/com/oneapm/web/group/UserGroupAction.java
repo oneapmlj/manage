@@ -55,6 +55,7 @@ public class UserGroupAction extends SupportAction{
      private Long cardId;
      private Long recordType;
      private String project;
+     private int downloadsNum;
      public String view() {
          if (!isLogin()) {
                  return "login";
@@ -73,6 +74,7 @@ public class UserGroupAction extends SupportAction{
                      
              }
          }
+         downloadsNum =+ info.getDownloads().size();
          userGroup.setInfo(info);
          //infos.add(info);
          }
@@ -576,6 +578,12 @@ public class UserGroupAction extends SupportAction{
 	}
 	public void setXiaoshou(String xiaoshou) {
 		this.xiaoshou = xiaoshou;
+	}
+	public int getDownloadsNum() {
+		return downloadsNum;
+	}
+	public void setDownloadsNum(int downloadsNum) {
+		this.downloadsNum = downloadsNum;
 	}
 	
 
