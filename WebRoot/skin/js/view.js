@@ -47,7 +47,7 @@ zhengzailianxi();
 
 
 function showAll(){
-	$("#download_view_"+groupId+"").slideToggle(50);
+	$(".download_view").slideToggle(50);
 }
 $(document).ready(function() {
 
@@ -567,7 +567,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	$(".click_edit_name_name").live('click', function(){
+	$(".click_edit_name_name").live('click', function(){  
 		$(this).addClass("click_save_name_name");
 		$(this).removeClass("click_edit_name_name");
 		$(this).html("保存");

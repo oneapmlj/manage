@@ -60,13 +60,25 @@ public class CloudService {
         }
         
         public static  String findSendCloudByEmail(String email) {
-         	JSONObject object = new JSONObject();
-         	JSONArray jsonlist = new JSONArray();
          	List<SendCloudDto> sdList = MailDaoImpl.getInstance().findSendCloudByEmail(email);
          	 List<String> args1 = new ArrayList<String>();
              List<Object> args2 = new ArrayList<Object>();
              args1.add("sdList");
              args2.add(getArrayFromList(sdList));
+             return OneTools.getResult(1, args1, args2);
+    }
+        
+        public static  String findSendCloudByEmailList(String[] emailList) {
+        	List<SendCloudDto> sdList = new ArrayList<SendCloudDto>();
+        	List<SendCloudDto> sdLists = new ArrayList<SendCloudDto>();
+        	for(String email : emailList){
+         	 sdList = MailDaoImpl.getInstance().findSendCloudByEmail(email);
+         	sdLists.addAll(sdList);
+        	}
+         	 List<String> args1 = new ArrayList<String>();
+             List<Object> args2 = new ArrayList<Object>();
+             args1.add("sdList");
+             args2.add(getArrayFromList(sdLists));
              return OneTools.getResult(1, args1, args2);
     }
         

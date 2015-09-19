@@ -74,7 +74,7 @@ public class UserGroupAction extends SupportAction{
                      
              }
          }
-         downloadsNum =+ info.getDownloads().size();
+         downloadsNum = downloadsNum + info.getDownloads().size();
          userGroup.setInfo(info);
          //infos.add(info);
          }
@@ -96,9 +96,9 @@ public class UserGroupAction extends SupportAction{
                  if (project != null) {
                          project = new String(project.getBytes("ISO8859-1"), "UTF-8");
                  }
-//                 if (name != null) {
-//                         name = new String(name.getBytes("ISO8859-1"), "UTF-8");
-//                 }
+                 if (name != null) {
+                         name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+                 }
 //                 if (phone != null) {
 //                         phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
 //                 }

@@ -136,7 +136,7 @@
 	<input class="hidden" id="view_infoId" value="${info.id}"/>
 	<div style="width:100%;min-width:1200px;">
 		<div style="width:1150px;margin-left: auto;margin-right: auto;">
-			<div class="view_info biankuang_gray_ding" style="margin-top:30px;width:1120px;margin-left:10px;float:left;line-height:25px;font-size:16px;">
+			<div class="biankuang_gray_ding" style="margin-top:30px;width:1120px;margin-left:10px;float:left;line-height:25px;font-size:16px;">
 				<div style="margin-left:20px;width:380px;float:left;">公司：<span>${userGroups.groupName }</span></div>
 				<div style="float:left;width:280px;"><div style="float:left;width:48px;">项目：</div>
 					<div style="float:left;"><span class="project_name">${userGroups.project }</span></div>
@@ -146,8 +146,7 @@
 				</div>
 				<div style="float:left;font-size:14px;width:60px" class="blue hand click_edit_project_name">编辑</div>
 				<div style="float:left;width:340px;"><div style="float:left;width:48px;">姓名：</div>
-					<div style="float:left;" ><span class="name_name">${info.name }</span></div>
-					<input style="float:left;margin-top:3px;" class="edit_name_name hidden"/>
+					<div style="float:left;" ><span >${info.name }</span></div>
 				</div>
 				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:90px;">Groug_ID：</div>
 					<div style="float:left;"><span  id="group_id">${userGroups.groupId }</span></div>
@@ -166,8 +165,7 @@
 					</span></div>
 				</div>
 				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:48px;">邮箱：</div>
-					<div style="float:left;" ><span class="name_name">${userGroups.userGroups[0].email }</span></div>
-					<input style="float:left;margin-top:3px;" class="edit_name_name hidden"/>
+					<div style="float:left;" ><span >${userGroups.userGroups[0].email }</span></div>
 				</div>
 				<div style="float:left;width:340px;"><div style="float:left;width:80px;">到期时间：</div>
 					<div style="float:left;"><span >${userGroups.expireTime }</span></div>
@@ -206,12 +204,12 @@
 					<div style="margin-left:20px;width:380px;float:left;">
 						<div style="float:left;width:340px;"><div style="float:left;width:48px;">姓名：</div>
 							<div style="float:left;" ><span class="name_name">${info.name }</span></div>
-							<input style="float:left;margin-top:3px;" class="edit_name_name hidden"/>
+							<input style="float:left;margin-top:3px;" id="edit_name_${info.userId} " class="edit_name_name hidden"/>
 						</div>
 						<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_name_name">编辑</div>
 					</div>
 					<div class="boder_line" style="width:350px;margin-left:30px;float:left;"></div>
-					<s:if test="%{info.userId != null}"><div style="margin-left:20px;width:380px;float:left;">邮箱：<span  id="email">${info.email }</span></div></s:if>
+					<s:if test="%{info.userId != null}"><div style="margin-left:20px;width:380px;float:left;">邮箱：<span  class="email ${info.userId}">${info.email }</span></div></s:if>
 					<s:else>
 						<div style="margin-left:20px;width:380px;float:left;">
 							<div style="float:left;width:340px;"><div style="float:left;width:48px;">邮箱：</div>
@@ -252,7 +250,7 @@
 							<s:if test="%{status == 1}">是</s:if>
 							<s:else>否</s:else>
 						</div>
-						<div style="margin-left:20px;width:110px;float:left;">UserId：<span>${info.userId}</span></div>
+						<div style="margin-left:20px;width:110px;float:left;">UserId：<span id=${info.userId }>${info.userId}</span></div>
 						<div style="margin-left:20px;width:140px;float:left;">
 							<div style="float:left;width:110px;"><div style="float:left;width:48px;">性别：</div>
 								<div style="float:left;" ><span class="gender_name">
@@ -273,13 +271,11 @@
 					</s:else>
 					<div style="margin-left:20px;width:140px;float:left;">
 							<div style="float:left;width:110px;"><div style="float:left;width:48px;">角色：</div>
-								<div style="float:left;" ><span class="gender_name">
+								<div style="float:left;" ><span >
 									<s:if test="%{role=='admin'}">admin</s:if>
 									<s:if test="%{role=='manager'}">manager</s:if>
 									<s:if test="%{role=='user'}">user</s:if>
 								</span></div>
-								<select style="float:left;margin-top:3px;" class="edit_gender_name hidden">
-								</select>
 							</div>
 					</div>
 					<div style="margin-left:20px;width:300px;float:left;">工单：
@@ -329,7 +325,7 @@
 					
 				<s:iterator value="userGroupList" >
 				<s:if test="%{info.downloads != null && info.downloads.size > 0}">
-					<div id="download_view_${info.userId }"  style="display:none">
+					<div class="download_view"  style="display:none">
 						<s:iterator value="info.downloads" >
 							<div class="view_p_content biankuang_gray_ding">
 								<div style="margin-left:10px;width:165px;float:left;">ID：${id }</div>
@@ -950,14 +946,14 @@
 						</div> 
 					</s:if>
 					<div style="margin:5px 0 0 10px;float:left;width:440px;height:">
-						<div class="contact call_add_card"  style="width:430px;float:left;"><div style="float:left;width:50px;">名片:</div>
+						<div class="contact call_add_card"  style="width:430px;float:left;"><div style="float:left;width:50px;">用户:</div>
 							<div style="float:left;">
 								<select style="float:left;margin-top:5px;" name="card" id="add_call_card" class="hand" tabindex="1">
 									<s:if test="%{userGroups.groupId != null && userGroups.groupId > 0}">
 										<s:if test="%{userGroupList != null && userGroupList.size > 0}">
 						
 										<s:iterator value="userGroupList" >
-											<option value="${info.userId}">名片：${info.name}</option>
+											<option value="${info.userId}">姓名：${info.name}</option>
 										</s:iterator>
 									</s:if>
 									</s:if>
@@ -1062,14 +1058,17 @@
 	<script type="text/javascript">
 	
 		  $("#sendcloudbtn").click(function(){
-			  
-		  
-		  	var email = $("#email").html();
-			if(email==null){
-				email =  $(".email_name").html();
+			var emailArr = [];
+			var viweInfo = $(".view_info");
+			if(viweInfo.size()>0){
+				$.each(viweInfo,function(){
+					var emailInfo =$(this).find(".email ").html();
+					emailArr.push(emailInfo+"");
+					  });
 			}
-			if(email==null){
-				return false;
+			var email = "";
+			for(var i=0;i<emailArr.length;i++){
+				email = email+emailArr[i]+",";//连接符其实可以换的
 			}
 			$("#sendcloud").slideToggle(50);
 		 	     $.ajax({
@@ -1077,7 +1076,7 @@
 						url:'info_findByEmail.action',
 						data:{email:email}
 					}).done(function(data){
-						if(data.status==1){
+						 if(data.status==1){
 								 var listCnter = $("#sendcloud").empty();
 								var rows = data.sdList; 
 								var table = $('<table  width="400" border="0" cellspacing="0" cellpadding="0"></table>').appendTo(listCnter);
@@ -1112,7 +1111,7 @@
 									
 								} 
 							
-						}
+						} 
 					});
 			    }) 
 		/* 	$("#exportexcel").click(function(){
@@ -1168,6 +1167,8 @@
 		var userId =${info.userId };
 		var infoId =${info.id };
 		var groupId =$("#group_id").html();
+		var arr = [];
+		
 		$(document).ready(function(){
 			
 		

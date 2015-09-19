@@ -410,13 +410,7 @@ $("#export_excel").click(function(){
 			url:'info_exportExcel.action',
 			data:{"ids":stringInt}
 		}).done(function(data){
-			if(data.status==1){
-				alert(data.msg);
 				 $("#export_excel").html("导出excel");
-			}else{
-				alert(data.msg);
-				$("#export_excel").html("导出excel");
-			}		
 		})  
 })</script>
 </html>

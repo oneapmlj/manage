@@ -773,7 +773,7 @@ $(document).ready(function() {
 		}).done(function(da){
 			if(da.status == 1){
 				var html = "";
-				for(var i=0;i<da.infos.length;i++){
+				for(var i=0;i<da.groups.length;i++){
 					html += "<tr id='"+da.groups[i].groupId+"'>" 
 					+"<td></td>"
 					+"<td>"+da.groups[i].groupId+"</td>"

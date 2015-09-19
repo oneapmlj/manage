@@ -1,5 +1,7 @@
 package com.oneapm.web.info;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,6 +15,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.json.JSONObject;
 
 import com.oneapm.dto.Call;
 import com.oneapm.dto.Download;
@@ -46,6 +51,8 @@ import com.oneapm.web.KF5;
 import com.oneapm.web.LoginApi;
 import com.oneapm.web.Sdk;
 import com.oneapm.web.SupportAction;
+
+import javassist.bytecode.ByteArray;
 
 public class InfoAction extends SupportAction {
 
@@ -231,9 +238,9 @@ public class InfoAction extends SupportAction {
 //                        if (project != null) {
 //                                project = new String(project.getBytes("ISO8859-1"), "UTF-8");
 //                        }
-//                        if (name != null) {
-//                                name = new String(name.getBytes("ISO8859-1"), "UTF-8");
-//                        }
+                        if (name != null) {
+                               name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+                        }
 //                        if (phone != null) {
 //                                phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
 //                        }
@@ -730,9 +737,12 @@ public class InfoAction extends SupportAction {
             
         }
         private List<SendCloudDto> sdList;
-        public void findByEmail() throws IOException {
-        	String result = CloudService.findSendCloudByEmail(email);
-        	 getServletResponse().getWriter().print(result);
+       
+		public void findByEmail() throws IOException {
+       	 String[] el = email.split(",");
+       		String result = CloudService.findSendCloudByEmailList(el);
+       		getServletResponse().getWriter().print(result);
+       	
         }
         
         public void changeEmailStatus() throws IOException {
@@ -759,21 +769,29 @@ public class InfoAction extends SupportAction {
          }
         	 String[] sl = ids.split(",");
         	 for(String s : sl){
-        		 info = InfoService.findById(Long.parseLong(s),getAdmin());
+        		 info = InfoService.findByUserId(Long.parseLong(s),getAdmin());
         		 infoList.add(info);
         	 }
         	 
-            String result;
+        	 HSSFWorkbook result = null;
 			try {
+				ByteArrayOutputStream os = new ByteArrayOutputStream();
 				result = ExportExcelService.exportExcelJson(infoList);
-				getServletResponse().getWriter().print(result);
+				result.write(os);
+				byte[] bytes = os.toByteArray();
+				SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+				String fileName = ""+df.format(new Date())+".xls";
+				getServletResponse().reset();
+				getServletResponse().setContentType("application/x-download;charset=utf-8");
+				getServletResponse().setHeader("Content-disposition", "attachment;filename= " + fileName);
+				getServletResponse().getOutputStream().write(bytes);
+				getServletResponse().getOutputStream().flush();
+				getServletResponse().getOutputStream().close();
 			} catch (IOException e) {
 				e.printStackTrace();
-				result  = OneTools.getResult(0, "找不到路径，请在D盘建立“用户邮件分析Excel”文件夹");
-				getServletResponse().getWriter().print(result);
 			}
-			
 			return null;
+			
             
             
     }

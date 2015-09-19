@@ -48,20 +48,20 @@ import com.oneapm.util.OneTools;
 public class ExportExcelService<T>  
 {  
 		public void exportExcel(Collection<T> dataset, OutputStream out) {
-			exportExcel("测试POI导出EXCEL文档", null, dataset, out, "yyyy-MM-dd");
+			exportExcel("测试POI导出EXCEL文档", null, dataset,  "yyyy-MM-dd");
 		}
 	
-		public void exportExcel(String[] headers, Collection<T> dataset, OutputStream out) {
-			exportExcel("测试POI导出EXCEL文档", headers, dataset, out, "yyyy-MM-dd");
+		public HSSFWorkbook exportExcel(String[] headers, Collection<T> dataset) {
+			return exportExcel("测试POI导出EXCEL文档", headers, dataset,  "yyyy-MM-dd");
 		}
 	
 		public void exportExcel(String[] headers, Collection<T> dataset, OutputStream out, String pattern) {
-			exportExcel("测试POI导出EXCEL文档", headers, dataset, out, pattern);
+			exportExcel("测试POI导出EXCEL文档", headers, dataset,  pattern);
 		}
 	
 		@SuppressWarnings("unchecked")
 	
-		public void exportExcel(String title, String[] headers, Collection<T> dataset, OutputStream out, String pattern) {
+		public HSSFWorkbook exportExcel(String title, String[] headers, Collection<T> dataset,  String pattern) {
 			// 声明一个工作薄
 			HSSFWorkbook workbook = new HSSFWorkbook();
 			// 生成一个表格
@@ -170,13 +170,15 @@ public class ExportExcelService<T>
 					}
 				}
 			}
-			try {
-				workbook.write(out);
+			/*try {
+				//workbook.write(out);
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			}*/
+			return workbook;
 		}
-		public static String exportExcelJson(List<Info> infoList) throws IOException{
+		public static HSSFWorkbook exportExcelJson(List<Info> infoList) throws IOException{
+			HSSFWorkbook workbook = null;
 			 	List<ExcelDto> excelList = new ArrayList<ExcelDto>();
 			 	for(Info info:infoList){
 			 	ExcelDto dto = new ExcelDto();
@@ -231,14 +233,13 @@ public class ExportExcelService<T>
 	            	dataset.addAll(excelList);
 	            	ExportExcelService<ExcelDto> ex = new ExportExcelService<ExcelDto>();  
 	            	SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-	            	OutputStream out = new FileOutputStream("d://用户邮件分析Excel//"+df.format(new Date())+".xls");;	
-					ex.exportExcel(headers, dataset, out);  
-			        out.close();  
+	            	workbook = ex.exportExcel(headers, dataset);  
+					
 		            result = OneTools.getResult(1, "导出成功，路径为d:\\用户邮件分析Excel\\"+df.format(new Date())+".xls");
 	            }else{
 	            	result = OneTools.getResult(0, "没有此用户");
 	            }
-				return result;
+				return workbook;
 			
 			
 			

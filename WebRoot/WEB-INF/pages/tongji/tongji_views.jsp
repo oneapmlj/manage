@@ -19,7 +19,7 @@
 	<section id="main" class="column">
 	<div class="public_main width_3_quarter_customer">
 		<div class="header">
-			<h3 class="tabs_involved">${index.name}(${index.date})</h3>
+			<h3 class="tabs_involved">(${index.date})</h3>
 		</div> 
 		<div style="width:100%;min-width:1200px;">
 			<div style="min-width:1200px;width:100%;margin-left: auto;margin-right: auto;">
@@ -64,8 +64,8 @@
 										<s:else><td style="color:#00FF00;">无</td></s:else>
 										<td>
 											<s:if test="%{level >0}">
-												<input val1="${id}" class="check_gongdan"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="工单" />
-												<input val1="${id}" class="check_view"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="查看" />
+												<%-- <input val1="${groupId}" class="check_gongdan"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="工单" /> --%>
+												<input val1="${groupId}" class="check_view"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="查看" />
 											</s:if>
 											<input class="check_remove" type="image" src="${applicationScope.staticPath}skin/images/icn_logout.png" title="忽略" />
 										</td> 
@@ -94,8 +94,8 @@
 										<s:else><td style="color:#00FF00;">无</td></s:else>
 										<td>
 											<s:if test="%{level >0}">
-												<input val1="${id}" class="check_gongdan"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="工单" />
-												<input val1="${id}" class="check_view"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="查看" />
+												<%-- <input val1="${groupId}" class="check_gongdan"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="工单" /> --%>
+												<input val1="${groupId}" class="check_view"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="查看" />
 											</s:if>
 											<input class="check_remove" type="image" src="${applicationScope.staticPath}skin/images/icn_logout.png" title="忽略" />
 										</td> 
@@ -124,8 +124,8 @@
 										<s:else><td style="color:#00FF00;">无</td></s:else>
 										<td>
 											<s:if test="%{level >0}">
-												<input val1="${id}" class="check_gongdan"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="工单" />
-												<input val1="${id}" class="check_view"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="查看" />
+												<%-- <input val1="${groupId}" class="check_gongdan"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="工单" /> --%>
+												<input val1="${groupId}" class="check_view"  type="image" src="${applicationScope.staticPath }skin/images/icn_view_users.png" title="查看" />
 											</s:if>
 											<input class="check_remove" type="image" src="${applicationScope.staticPath}skin/images/icn_logout.png" title="忽略" />
 										</td> 

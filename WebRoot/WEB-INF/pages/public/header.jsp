@@ -160,9 +160,9 @@
 			<div class="click_to_review menu_button biankuang_gray"
 				title="review">review</div>
 		</s:if>
-		<s:if test="%{admin.pay == 1}">
+		<%-- <s:if test="%{admin.pay == 1}">
 			<div class="click_to_pay menu_button biankuang_gray" title="pay">pay</div>
-		</s:if>
+		</s:if> --%>
 		<div class="click_to_zhengzailianxi menu_button biankuang_gray" style="width:80px;"" title="pay">正在联系</div>
 		<div style="width: 280px; z-index: 999; position: absolute; margin: 28px 0 0 6px;" id="message_window" class="hidden hand biankuang_gray_ding">
 			<div style="width: 280px; heigth: 30px; float: left;">\

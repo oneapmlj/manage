@@ -119,7 +119,11 @@ public class TongjiDaoImpl extends DaoImplBase<Tongji> {
                                 appData = Long.parseLong(object.get("app_data").toString().trim());
                         } catch (Exception e) {
                         }
-                        long group = Long.parseLong(object.get("group").toString());
+                        long group = 0L;
+                        try {
+                             group = Long.parseLong(object.get("group").toString());
+                        }  catch (Exception e) {
+                        }
                         tongji = new Tongji(group, id, total, sign, login, download, app, data, appData);
                         tongji.setData_time(data_time);
                 } catch (Exception e) {
