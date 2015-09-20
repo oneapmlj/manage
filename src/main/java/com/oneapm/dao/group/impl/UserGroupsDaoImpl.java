@@ -140,7 +140,9 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 			DBObject object = new BasicDBObject();
 			BasicDBList list = new BasicDBList();
 			list.add(new BasicDBObject("create_time", new BasicDBObject("$gte", start)));
-			list.add(new BasicDBObject("create_time", new BasicDBObject("$lt", end)));
+			if(end != null){
+			        list.add(new BasicDBObject("create_time", new BasicDBObject("$lt", end)));
+			}
 			object.put("$and", list);
 			DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
 			List<Long> ids = new ArrayList<Long>();

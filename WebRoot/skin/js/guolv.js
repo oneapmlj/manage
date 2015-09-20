@@ -116,8 +116,7 @@ $(document).ready(function() {
 				for(var i=0;i<da.groups.length;i++){
 					html += "<tr id='"+da.groups[i].groupId+"'>" 
 					+"<td></td>"
-					+"<td>"+da.groups[i].groupId+"</td>"
-					+"<td>"+da.groups[i].name+"</td>";
+					+"<td>"+da.groups[i].groupId+"</td>";
 				if(da.groups[i].project != null){
 					html += "<td>"+da.groups[i].project+"</td>";
 				}else{
@@ -363,8 +362,7 @@ $(document).ready(function() {
 				for(var i=0;i<da.groups.length;i++){
 					html += "<tr id='"+da.groups[i].groupId+"'>" 
 					+"<td></td>"
-					+"<td>"+da.groups[i].groupId+"</td>"
-					+"<td>"+da.groups[i].name+"</td>";
+					+"<td>"+da.groups[i].groupId+"</td>";
 				if(da.groups[i].project != null){
 					html += "<td>"+da.groups[i].project+"</td>";
 				}else{
@@ -393,6 +391,7 @@ $(document).ready(function() {
 				$(".duandian_list_baobiao").addClass("hidden");
 				$(".duandian_list_baobiao_chazhi").removeClass("hidden");
 				$(".back_to_baobiao").removeClass("hidden");
+				$("#duandian_chaxun").html("查询");
 			}else{
 				alert(da.msg);
 			}
@@ -776,8 +775,7 @@ $(document).ready(function() {
 				for(var i=0;i<da.groups.length;i++){
 					html += "<tr id='"+da.groups[i].groupId+"'>" 
 					+"<td></td>"
-					+"<td>"+da.groups[i].groupId+"</td>"
-					+"<td>"+da.groups[i].name+"</td>";
+					+"<td>"+da.groups[i].groupId+"</td>";
 				if(da.groups[i].project != null){
 					html += "<td>"+da.groups[i].project+"</td>";
 				}else{
@@ -802,7 +800,7 @@ $(document).ready(function() {
 							+"</tr>";
 				}
 				$("#duandian_result").html(html);
-				$(".duandian_result_msg").html("总数："+da.infos.length);
+				$(".duandian_result_msg").html("总数："+da.groups.length);
 				$("#duandian_chaxun").html("查询");
 			}else{
 				alert(da.msg);

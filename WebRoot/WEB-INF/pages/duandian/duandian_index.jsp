@@ -314,9 +314,9 @@
 						<div style="width:100px;float:left;"><input class="hand baobiao_chaxun" type="button" value="查询"/></div>
 					</div>
 				</div>
-				<div style="float:left;width:1200px;height:30px;">
+				<!-- <div style="float:left;width:1200px;height:30px;">
 					<div class="duandian_result_msg" style="height:20px;line-hight:20px;font-size:16px;color:red;"></div>
-				</div>
+				</div> -->
 				<div id="duandian_out" style="width:1200px;min-height:400px;float:left;">
 					<table class="tablesorter duandian_list" cellspacing="0"> 
 						<thead> 

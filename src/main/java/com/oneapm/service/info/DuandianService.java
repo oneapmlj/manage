@@ -835,7 +835,7 @@ public class DuandianService {
                                                 }
                                         }
                                         for(Aplication aplication : aplications){
-                                                groups.add(UserGroupService.findByGroupId(aplication.getUserId(), admin));
+                                                groups.add(UserGroupService.findByGroupIdNoTouch(aplication.getUserId()));
 //                                                infos.add(InfoService.findByUserId(aplication.getUserId()));
                                         }
                                 }else{
@@ -870,7 +870,7 @@ public class DuandianService {
                                                                                 }
                                                                         }
                                                                         for(App app : apps){
-                                                                                groups.add(UserGroupService.findByGroupId(app.getUserId(), admin));
+                                                                                groups.add(UserGroupService.findByGroupIdNoTouch(app.getUserId()));
                                                                         }
                                                                 }
                                                                 break;

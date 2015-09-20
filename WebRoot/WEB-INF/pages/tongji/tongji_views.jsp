@@ -47,9 +47,14 @@
 									<tr style="color:red;" class="hand"> 
 										<td></td>
 										<td>${groupId}</td> 
-										<td>${company}</td>
+										<s:if test="%{project != null}">
+										<td>${project }</td>
+										</s:if>
+										<s:else>
+										<td>${groupName}</td>
+										</s:else>
 										<td>${language }</td>
-										<td>${from}</td>
+										<td>${comming}</td>
 										<s:if test="%{saleName != null}">
 											<td>${saleName }</td>
 										</s:if>
@@ -78,8 +83,14 @@
 									<tr style="color:blue;" class="hand"> 
 										<td></td>
 										<td>${groupId}</td> 
-										<td>${company}</td>
+										<s:if test="%{project != null}">
+										<td>${project }</td>
+										</s:if>
+										<s:else>
+										<td>${groupName}</td>
+										</s:else>
 										<td>${language }</td>
+										<td>${comming}</td>
 										<s:if test="%{saleName != null}">
 											<td>${saleName }</td>
 										</s:if>
@@ -108,8 +119,14 @@
 									<tr class="hand"> 
 										<td></td>
 										<td>${groupId}</td> 
-										<td>${company}</td>
+										<s:if test="%{project != null}">
+										<td>${project }</td>
+										</s:if>
+										<s:else>
+										<td>${groupName}</td>
+										</s:else>
 										<td>${language }</td>
+										<td>${comming}</td>
 										<s:if test="%{saleName != null}">
 											<td>${saleName }</td>
 										</s:if>

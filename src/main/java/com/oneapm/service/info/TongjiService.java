@@ -10,12 +10,14 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oneapm.dao.group.impl.UserGroupDaoImpl;
 import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
 import com.oneapm.dao.info.impl.DataDaoImpl;
 import com.oneapm.dao.info.impl.LoginDaoImpl;
 import com.oneapm.dao.info.impl.TianjiaDaoImpl;
 import com.oneapm.dao.info.impl.TongjiDaoImpl;
 import com.oneapm.dao.info.impl.XiazaiDaoImpl;
+import com.oneapm.dto.UserGroup;
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
@@ -250,6 +252,21 @@ public class TongjiService {
                                         UserGroups group = UserGroupsDaoImpl.getInstance().findByAdminId(iduser);
                                         if(group != null){
                                                 upsgroup.add(group.getGroupId());
+                                        }else{
+                                                UserGroup userGroup = UserGroupDaoImpl.getInstance().findUsersByUserId(iduser);
+                                                if(userGroup != null){
+                                                        group = UserGroupsDaoImpl.getInstance().findById(userGroup.getGroupId());
+                                                        if(group != null){
+                                                                if(group.getParentId() > 0){
+                                                                        group = UserGroupsDaoImpl.getInstance().findById(group.getParentId());
+                                                                        if(group != null){
+                                                                                upsgroup.add(group.getGroupId());
+                                                                        }
+                                                                }else{
+                                                                        upsgroup.add(group.getGroupId());
+                                                                }
+                                                        }
+                                                }
                                         }
                                 }
                                 for(Long iduser : downs){
@@ -486,7 +503,7 @@ public class TongjiService {
                 for (Long id : ids) {
                         if (!set.contains(id)) {
                                 try {
-                                        UserGroups userGroups = UserGroupService.findByGroupId(id, admin);
+                                        UserGroups userGroups = UserGroupService.findByGroupIdNoTouch(id);
 //                                        Info info = InfoService.findByUserIdSingle(id);
 //                                        InfoService.power(admin.getId(), admin.getGroup(), info);
                                         UserGroupService.power(admin.getId(), admin.getGroup(), userGroups);
