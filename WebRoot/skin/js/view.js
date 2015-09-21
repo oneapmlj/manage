@@ -408,22 +408,26 @@ $(document).ready(function() {
 	
 	$(".click_save_project_name").live('click', function(){
 		var project = $(".edit_project_name").val();
-		$(".click_save_project_name").addClass("click_edit_project_name");
-		$(".click_save_project_name").removeClass("click_save_project_name");
-		$(".click_edit_project_name").html("编辑");
-		var id = $("#view_infoId").val();
-		var groupId = $("#group_id").html();
+		var groupId = $("#view_groupId").val();
 		$.ajax({
 			dataType:'json',
 			url:'user_group_edit.action',
 			data:{groupId:groupId,project:project}
 		}).done(function(da){
 			if(da.status == 1){
-				$(".edit_project_name").addClass("hidden");
 				$(".project_name").html(da.project);
+				$(".edit_project_name").addClass("hidden");
 				$(".project_name").removeClass("hidden");
+				$(".click_save_project_name").addClass("click_edit_project_name");
+				$(".click_save_project_name").removeClass("click_save_project_name");
+				$(".click_edit_project_name").html("编辑");
 			}else{
 				alert(da.msg);
+				$(".edit_project_name").addClass("hidden");
+				$(".project_name").removeClass("hidden");
+				$(".click_save_project_name").addClass("click_edit_project_name");
+				$(".click_save_project_name").removeClass("click_save_project_name");
+				$(".click_edit_project_name").html("编辑");
 			}
 		});
 	});
@@ -507,42 +511,29 @@ $(document).ready(function() {
 	
 	$(".click_save_license_name").live('click', function(){
 		var license = $(".edit_license_name").val();
-		$(".click_save_license_name").addClass("click_edit_license_name");
-		$(".click_save_license_name").removeClass("click_save_license_name");
-		$(".click_edit_license_name").html("编辑");
 		var pay_level = $(".edit_license_pay_level").val();
-		var id = $("#view_infoId").val();
+		var id = $("#view_groupId").val();
 		$.ajax({
 			dataType:'json',
-			url:'info_edit.action',
-			data:{id:id,license:license,pay_level:pay_level}
+			url:'user_group_edit.action',
+			data:{groupId:id,license:license,pay_level:pay_level}
 		}).done(function(da){
 			if(da.status == 1){
-				$(".edit_license_name").addClass("hidden");
 				$(".license_name").html(da.expireTime);
 				$(".license_name").removeClass("hidden");
 				$(".edit_license_pay_level").addClass("hidden");
-//				if(da.daoqi > 0){
-//					$(".licence_description").html(daoqi+"后到期");
-//				}
-//				if(da.payLevel == 40){
-//					$(".licence_description").html("<span style='color:red;'>付费已到期</span>");
-//				}else{
-//					if(da.payLevel == 20){
-//						$(".licence_description").html("<span style='color:red;'>免费已到期</span>");
-//					}else{
-//						$(".licence_description").html("未到期");
-//					}
-//				}
-//				switch(da.payLevel){
-//					case 10:$(".pay_level").html("<span>免费用户</span>");break;
-//					case 20:$(".pay_level").html("<span style='color:red;'>免费到期</span>");break;
-//					case 30:$(".pay_level").html("<span>付费用户</span>");break;
-//					case 40:$(".pay_level").html("<span style='color:red;'>付费到期</span>");break;
-//					default:$(".pay_level").html("<span>未知</span>");break;
-//				}
+				$(".edit_license_name").addClass("hidden");
+				$(".click_save_license_name").addClass("click_edit_license_name");
+				$(".click_save_license_name").removeClass("click_save_license_name");
+				$(".click_edit_license_name").html("编辑");
 			}else{
 				alert(da.msg);
+				$(".license_name").removeClass("hidden");
+				$(".edit_license_pay_level").addClass("hidden");
+				$(".edit_license_name").addClass("hidden");
+				$(".click_save_license_name").addClass("click_edit_license_name");
+				$(".click_save_license_name").removeClass("click_save_license_name");
+				$(".click_edit_license_name").html("编辑");
 			}
 		});
 	});

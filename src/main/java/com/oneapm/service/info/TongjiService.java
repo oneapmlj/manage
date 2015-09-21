@@ -12,11 +12,13 @@ import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.group.impl.UserGroupDaoImpl;
 import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
+import com.oneapm.dao.info.impl.AppDataDaoImpl;
 import com.oneapm.dao.info.impl.DataDaoImpl;
 import com.oneapm.dao.info.impl.LoginDaoImpl;
 import com.oneapm.dao.info.impl.TianjiaDaoImpl;
 import com.oneapm.dao.info.impl.TongjiDaoImpl;
 import com.oneapm.dao.info.impl.XiazaiDaoImpl;
+import com.oneapm.dto.Aplication;
 import com.oneapm.dto.UserGroup;
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Account.Admin;
@@ -305,7 +307,7 @@ public class TongjiService {
                                 break;
                         case 6:
                                 index.setName("当日有数据");
-                                ids = DataDaoImpl.getInstance().findByTime(start, end);
+                                ids = AppDataDaoImpl.getInstance().findLongByTime(start, end);
                                 if (ids == null) {
                                         return null;
                                 }
@@ -319,7 +321,7 @@ public class TongjiService {
                                                 }
                                         }
                                 }
-                                IDS = DataDaoImpl.getInstance().findByTime(before, start);
+                                IDS = AppDataDaoImpl.getInstance().findLongByTime(before, start);
                                 if (IDS == null) {
                                         ups = ids;
                                         break;
@@ -499,19 +501,13 @@ public class TongjiService {
                 if (ids == null || ids.size() <= 0)
                         return null;
                 List<UserGroups> groups = new ArrayList<UserGroups>();
-                Set<Long> set = new HashSet<Long>();
                 for (Long id : ids) {
-                        if (!set.contains(id)) {
-                                try {
-                                        UserGroups userGroups = UserGroupService.findByGroupIdNoTouch(id);
-//                                        Info info = InfoService.findByUserIdSingle(id);
-//                                        InfoService.power(admin.getId(), admin.getGroup(), info);
-                                        UserGroupService.power(admin.getId(), admin.getGroup(), userGroups);
-                                        groups.add(userGroups);
-                                        set.add(id);
-                                } catch (Exception e) {
-                                        LOG.error(e.getMessage(), e);
-                                }
+                        try {
+                                UserGroups userGroups = UserGroupService.findByGroupIdInitTagAndLan(id);
+                                UserGroupService.power(admin.getId(), admin.getGroup(), userGroups);
+                                groups.add(userGroups);
+                        } catch (Exception e) {
+                                LOG.error(e.getMessage(), e);
                         }
                 }
                 return groups;

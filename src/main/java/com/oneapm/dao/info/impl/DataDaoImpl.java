@@ -56,6 +56,7 @@ public class DataDaoImpl extends DaoImplBase<Long> {
                         }
                         return ids;
                 } catch (Exception e) {
+                        System.out.println(e.getMessage());
                         LOG.error(e.getMessage(), e);
                 }
                 return null;

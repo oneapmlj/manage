@@ -1,9 +1,7 @@
 package com.oneapm.dao.info.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.json.simple.JSONArray;
 import org.slf4j.Logger;
@@ -115,6 +113,24 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
                         DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
                         while(cursor.hasNext()){
                                 apps.add(getAplicationFromResult(cursor.next()));
+                        }
+                }catch(Exception e){
+                        LOG.error(e.getMessage(), e);
+                }
+                return apps;
+        }
+        
+        public List<Long> findLongByTime(String start, String end){
+                List<Long> apps = new ArrayList<Long>();
+                try{
+                        DBObject object = new BasicDBObject();
+                       BasicDBList list = new BasicDBList();
+                       list.add(new BasicDBObject("data_time", new BasicDBObject("$gte", start)));
+                       list.add(new BasicDBObject("data_time", new BasicDBObject("$lt", end)));
+                        object.put("$and", list);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        while(cursor.hasNext()){
+                                apps.add(Long.parseLong(cursor.next().get("user_id").toString()));
                         }
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
