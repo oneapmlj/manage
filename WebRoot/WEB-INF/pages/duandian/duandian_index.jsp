@@ -204,9 +204,9 @@
 						<div style="hieght:30px;width:75px;float:left;">
 							<div id="duandian_chaxun" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">查询</div>
 						</div>
-						<div style="hieght:30px;width:75px;float:left;">
+						 <div style="hieght:30px;width:75px;float:left;">
 							<div id="export_excel" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">导出excel</div>
-						</div>
+						</div> 
 					</div>
 					<div style="float:left;width:1200px;height:30px;">
 						<div class="duandian_result_msg" style="height:20px;line-hight:20px;font-size:16px;color:red;"></div>

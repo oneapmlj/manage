@@ -176,7 +176,7 @@ public class UserGroupService extends OneTools {
 			if (zhengzailianxis != null && zhengzailianxis.size() > 0) {
 				UserGroupsList = new ArrayList<UserGroups>();
 				for (Zhengzailianxi zhengzailianxi : zhengzailianxis) {
-					UserGroups userGroups = findByGroupIdSingle(zhengzailianxi.getGroupId());
+					UserGroups userGroups = findByGroupIdSimple(zhengzailianxi.getGroupId());
 					userGroups.setZhengzailianxi(zhengzailianxi);
 					UserGroupsList.add(userGroups);
 				}

@@ -163,7 +163,7 @@
 		<%-- <s:if test="%{admin.pay == 1}">
 			<div class="click_to_pay menu_button biankuang_gray" title="pay">pay</div>
 		</s:if> --%>
-		<div class="click_to_zhengzailianxi menu_button biankuang_gray" style="width:80px;"" title="pay">正在联系</div>
+		<!-- <div class="click_to_zhengzailianxi menu_button biankuang_gray" style="width:80px;"" title="pay">正在联系</div> -->
 		<div style="width: 280px; z-index: 999; position: absolute; margin: 28px 0 0 6px;" id="message_window" class="hidden hand biankuang_gray_ding">
 			<div style="width: 280px; heigth: 30px; float: left;">\
 				<div style="float: left; width: 80px; height: 30px;color:blue;margin-left:20px; font-size: 13px; line-height: 30px;" class="message_history_all">查看所有</div>
