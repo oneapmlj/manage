@@ -191,7 +191,7 @@
 					<div  >
 						<s:iterator value="userGroupList" >
 						
-					<div class="view_info biankuang_gray_ding" style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">			
+					<div class="view_info biankuang_gray_ding" val = "${info.id }" style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">			
 						
 					<%-- <div style="margin-left:20px;width:380px;float:left;">公司：<span>${info.company }</span></div>
 					<div style="margin-left:20px;width:380px;float:left;">
