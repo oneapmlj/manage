@@ -123,7 +123,6 @@ public class UserGroupService extends OneTools {
 				}
 			} catch (Exception e) {
 			}
-			initTag(userGroups);
 			initUserGroups(userGroups);
 			userGroups.setMark(MarkService.findByAdminIdAndGroupId(admin.getId(), userGroups.getGroupId()));
 			// info.setTip(TipService.findByInfoId(info.getId()));
@@ -152,7 +151,7 @@ public class UserGroupService extends OneTools {
 	}
 
 	public static UserGroups findByGroupIdSingle(Long groupId) {
-		UserGroups userGroups = UserGroupsDaoImpl.getInstance().findByAdminId(groupId);
+		UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(groupId);
 		initUserGroups(userGroups);
 		return userGroups;
 	}
@@ -164,9 +163,14 @@ public class UserGroupService extends OneTools {
 		initSupport(userGroups);
 		return userGroups;
 	}
+	public static UserGroups findByGroupIdNoTouch(Long groupId) {
+                UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(groupId);
+                initTag(userGroups);
+                return userGroups;
+        }
 
 	public static UserGroups findByGroupIdSimple(Long groupId) {
-		UserGroups userGroups = UserGroupsDaoImpl.getInstance().findByAdminId(groupId);
+		UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(groupId);
 		return userGroups;
 	}
 
@@ -213,6 +217,7 @@ public class UserGroupService extends OneTools {
 				userGroups.setGroupFather(father);
 			}
 		}
+		initLanguage(userGroups);
 	}
 
 	public static void initSupport(UserGroups userGroups) {
@@ -255,7 +260,6 @@ public class UserGroupService extends OneTools {
 			value.put("comming", userGroups.getComming());
 			value.put("contectTime", userGroups.getContectTime());
 			value.put("language", userGroups.getLanguage());
-			value.put("comming", userGroups.getComming());
 			List<UserGroup> userGroupList = userGroups.getUserGroups();
 			if(userGroupList!=null){
 			for(UserGroup userGroup : userGroupList){
