@@ -14,7 +14,6 @@ import com.mongodb.DBObject;
 import com.oneapm.dao.DaoImplBase;
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.group.Group;
-import com.oneapm.dto.info.Info;
 
 public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 	protected static final Logger LOG = LoggerFactory.getLogger(UserGroupsDaoImpl.class);
