@@ -238,9 +238,9 @@ public class InfoAction extends SupportAction {
 //                        if (project != null) {
 //                                project = new String(project.getBytes("ISO8859-1"), "UTF-8");
 //                        }
-                        if (name != null) {
-                               name = new String(name.getBytes("ISO8859-1"), "UTF-8");
-                        }
+//                        if (name != null) {
+//                               name = new String(name.getBytes("ISO8859-1"), "UTF-8");
+//                        }
 //                        if (phone != null) {
 //                                phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
 //                        }
@@ -626,7 +626,6 @@ public class InfoAction extends SupportAction {
                         }
                 }
                 try {
-                        LOG.info("ADD CALL : "+mark);
 //                        mark = new String(mark.getBytes("ISO8859-1"), "UTF-8");
 //                        if (phone != null) {
 //                                phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");

@@ -141,7 +141,7 @@ $(document).ready(function() {
 							+"</tr>";
 				}
 				$("#duandian_result").html(html);
-				$(".duandian_result_msg").html("总数："+da.infos.length);
+				$(".duandian_result_msg").html("总数："+da.groups.length);
 				$(".from_chaxun_ding").val("查询");
 				$(".from_chaxun_ding").addClass("from_chaxun");
 				$(".from_chaxun").removeClass("from_chaxun_ding");
@@ -387,7 +387,7 @@ $(document).ready(function() {
 							+"</tr>";
 				}
 				$("#duandian_list_baobiao_chazhi").html(html);
-				$(".duandian_result_msg").html("总数："+da.infos.length);
+				$(".duandian_result_msg").html("总数："+da.groups.length);
 				$(".duandian_list_baobiao").addClass("hidden");
 				$(".duandian_list_baobiao_chazhi").removeClass("hidden");
 				$(".back_to_baobiao").removeClass("hidden");

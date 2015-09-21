@@ -93,12 +93,12 @@ public class UserGroupAction extends SupportAction{
 //                 if (qq != null) {
 //                         qq = new String(qq.getBytes("ISO8859-1"), "UTF-8");
 //                 }
-                 if (project != null) {
+                /* if (project != null) {
                          project = new String(project.getBytes("ISO8859-1"), "UTF-8");
                  }
                  if (name != null) {
                          name = new String(name.getBytes("ISO8859-1"), "UTF-8");
-                 }
+                 }*/
 //                 if (phone != null) {
 //                         phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
 //                 }
@@ -142,8 +142,7 @@ public class UserGroupAction extends SupportAction{
                  }
          }
          try {
-                 LOG.info("ADD CALL : "+mark);
-                mark = new String(mark.getBytes("ISO8859-1"), "UTF-8");
+                /*mark = new String(mark.getBytes("ISO8859-1"), "UTF-8");*/
 //                 if (phone != null) {
 //                         phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
 //                 }
@@ -304,7 +303,7 @@ public class UserGroupAction extends SupportAction{
              }
              try{
                      if (xiaoshou != null) {
-                             xiaoshou = new String(xiaoshou.getBytes("ISO8859-1"), "UTF-8");
+                             /*xiaoshou = new String(xiaoshou.getBytes("ISO8859-1"), "UTF-8");*/
                      }
                      if(!quanxian(getAdmin().getGrades(), getGRADE().getMap().get(116))){
                              getServletResponse().getWriter().print(OneTools.getResult(0, "权限不足"));
