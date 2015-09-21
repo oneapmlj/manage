@@ -108,6 +108,7 @@ public class MailDaoImpl extends DaoImplBase<Mail> {
                         object.put("send_time", mail.getSendTime());
                         object.put("mail_mode", mail.getMailMode());
                         object.put("mail_content", mail.getMailContent());
+                        object.put("group_id", mail.getGroupId());
                         if (getDBCollection(TABLE_NAME).insert(object).getN() > -1) {
                                 return id;
                         }
@@ -176,8 +177,7 @@ public class MailDaoImpl extends DaoImplBase<Mail> {
                         String sendTime = object.get("send_time").toString();
                         Long adminId = Long.parseLong(object.get("admin_id").toString().trim());
                         String mailContent = object.get("mail_content").toString();
-                        mail = new Mail(id, infoId, sendTime, mailMode, adminId, mailContent);
-                        mail.setGroupId(groupId);
+                        mail = new Mail(id, infoId, sendTime, mailMode, adminId, mailContent,groupId);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

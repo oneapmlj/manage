@@ -257,7 +257,7 @@ public class TaskService extends OneTools {
 
         public static void mail(Long infoId, Long adminId, int mode) {
                 try {
-                        List<MailPush> pushs = MailPushDaoImpl.getInstance().findByInfoIdAndAdmin(infoId, adminId);
+                        List<MailPush> pushs = MailPushDaoImpl.getInstance().findByGroupIdAndAdmin(infoId, adminId);
                         if (pushs.size() <= 0) {
                                 return;
                         }

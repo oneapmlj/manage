@@ -48,7 +48,7 @@ public class MailService {
         }
 
         public static List<Mail> findMailsById(Long infoId) {
-                List<Mail> mails = MailDaoImpl.getInstance().findById(infoId);
+                List<Mail> mails = MailDaoImpl.getInstance().findByGroupId(infoId);
                 if (mails != null) {
                         for (Mail mail : mails) {
                                 mail.setAdminName(AdminDaoImpl.getInstance().findById(mail.getAdminId()).getName());

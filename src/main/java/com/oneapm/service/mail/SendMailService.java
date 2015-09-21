@@ -60,7 +60,7 @@ public class SendMailService extends OneTools {
                                 title = mail.getTitle();
                         }
                         if (SendCloudService.sendCloud(info.getEmail(), mailContent, title, from)) {
-                                return MailService.insert(new Mail(null, info.getId(), TimeTools.format(), mail.getId(), admin.getId(), mailContent));
+                                return MailService.insert(new Mail(null, info.getId(), TimeTools.format(), mail.getId(), admin.getId(), mailContent,info.getUserId()));
                         }
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
@@ -177,8 +177,10 @@ public class SendMailService extends OneTools {
                         if(from == null || from.trim().length() <= 1){
                                 from = admin.getEmail();
                         }
-                        Info info = InfoService.findByIdSingle(infoId);
+                        Info info = InfoService.findByUserIdSimple(infoId);
+                        if(info!=null){
                         TaskService.mail(info.getId(), admin.getId(), mode);
+                        }
                         if(to == 0){
                                 Long id = send(info, mail, mailContent, admin, title, from);
                                 if (id != null) {

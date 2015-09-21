@@ -12,13 +12,14 @@ public class Mail {
     private String mailContent;
     private Long groupId;
     public Mail(){}
-    public Mail(Long id, Long infoId, String sendTime, int mailMode, Long adminId, String mailContent){
+    public Mail(Long id, Long infoId, String sendTime, int mailMode, Long adminId, String mailContent,Long groupId){
         setSendTime(sendTime);
         setId(id);
         setMailMode(mailMode);
         setAdminId(adminId);
         setInfoId(infoId);
         setMailContent(mailContent);
+        setGroupId(groupId);
     }
     public String getSendTime() {
         return sendTime;
