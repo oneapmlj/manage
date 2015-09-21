@@ -156,6 +156,14 @@ public class UserGroupService extends OneTools {
 		initUserGroups(userGroups);
 		return userGroups;
 	}
+	
+	public static UserGroups findByGroupIdInitTagAndLan(Long groupId) {
+		UserGroups userGroups = UserGroupsDaoImpl.getInstance().findByAdminId(groupId);
+		initTag(userGroups);
+		initLanguage(userGroups);
+		initSupport(userGroups);
+		return userGroups;
+	}
 
 	public static UserGroups findByGroupIdSimple(Long groupId) {
 		UserGroups userGroups = UserGroupsDaoImpl.getInstance().findByAdminId(groupId);
@@ -246,6 +254,8 @@ public class UserGroupService extends OneTools {
 			value.put("preSaleName", userGroups.getPreSaleName());
 			value.put("comming", userGroups.getComming());
 			value.put("contectTime", userGroups.getContectTime());
+			value.put("language", userGroups.getLanguage());
+			value.put("comming", userGroups.getComming());
 			List<UserGroup> userGroupList = userGroups.getUserGroups();
 			if(userGroupList!=null){
 			for(UserGroup userGroup : userGroupList){

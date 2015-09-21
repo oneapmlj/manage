@@ -27,6 +27,7 @@ public class TagAction extends SupportAction {
         private int rongzi;
         private Long infoId;
         private int fuwuqi;
+        private Long groupId;
         public void update() throws IOException {
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
@@ -98,7 +99,7 @@ public class TagAction extends SupportAction {
                         return;
                 }
                 try {
-                        String result = TagService.metric(infoId, metric, getAdmin());
+                        String result = TagService.metricWithGroupId(groupId, metric, getAdmin());
                         getServletResponse().getWriter().print(result);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
@@ -237,4 +238,13 @@ public class TagAction extends SupportAction {
         public void setFuwuqi(int fuwuqi) {
                 this.fuwuqi = fuwuqi;
         }
+
+		public Long getGroupId() {
+			return groupId;
+		}
+
+		public void setGroupId(Long groupId) {
+			this.groupId = groupId;
+		}
+        
 }

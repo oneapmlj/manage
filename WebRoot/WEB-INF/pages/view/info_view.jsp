@@ -191,7 +191,7 @@
 					<div  >
 						<s:iterator value="userGroupList" >
 						
-					<div class="view_info biankuang_gray_ding" style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">			
+					<div class="view_info biankuang_gray_ding" val=${info.id } style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">			
 						
 					<%-- <div style="margin-left:20px;width:380px;float:left;">公司：<span>${info.company }</span></div>
 					<div style="margin-left:20px;width:380px;float:left;">
@@ -204,7 +204,7 @@
 					<div style="margin-left:20px;width:380px;float:left;">
 						<div style="float:left;width:340px;"><div style="float:left;width:48px;">姓名：</div>
 							<div style="float:left;" ><span class="name_name">${info.name }</span></div>
-							<input style="float:left;margin-top:3px;" id="edit_name_${info.userId} " class="edit_name_name hidden"/>
+							<input style="float:left;margin-top:3px;"  class="edit_name_name hidden"/>
 						</div>
 						<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_name_name">编辑</div>
 					</div>

@@ -427,23 +427,22 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
 	$(".click_edit_qq_name").live('click', function(){
 		$(this).addClass("click_save_qq_name");
 		$(this).removeClass("click_edit_qq_name");
 		$(this).html("保存");
-		var project = $(".qq_name").html();
-		$(".qq_name").addClass("hidden");
-		$(".edit_qq_name").val(project);
-		$(".edit_qq_name").removeClass("hidden");
+		var project = $(this).parent().find(".qq_name").html();
+		$(this).parent().find(".qq_name").addClass("hidden");
+		$(this).parent().find(".edit_qq_name").val(project);
+		$(this).parent().find(".edit_qq_name").removeClass("hidden");
 	});
 	
 	$(".click_edit_gender_name").live('click', function(){
 		$(this).addClass("click_save_gender_name");
 		$(this).removeClass("click_edit_gender_name");
 		$(this).html("保存");
-		var gender = $(".gender_name").html();
-		$(".gender_name").addClass("hidden");
+		var gender = $(this).parent().find(".gender_name").html();
+		$(this).parent().find(".gender_name").addClass("hidden");
 		var html ="<option value='0'";
 		if(gender == "未知"){
 			html += " selected='selected'>未知</option><option value='1'"
@@ -460,33 +459,35 @@ $(document).ready(function() {
 		}else{
 			html += ">女</option>"
 		}
-		$(".edit_gender_name").html(html);
-		$(".edit_gender_name").removeClass("hidden");
+		$(this).parent().find(".edit_gender_name").html(html);
+		$(this).parent().find(".edit_gender_name").removeClass("hidden");
 	});
 	
 	$(".click_save_gender_name").live('click', function(){
-		var gender = $(".edit_gender_name").val();
-		$(".click_save_gender_name").addClass("click_edit_gender_name");
-		$(".click_save_gender_name").removeClass("click_save_gender_name");
-		$(".click_edit_gender_name").html("编辑");
-		var id = $("#view_infoId").val();
+		var genderdiv = $(this).parent().find(".edit_gender_name");
+		var genderspan = $(this).parent().find(".gender_name");
+		var gender = $(this).parent().find(".edit_gender_name").val();
+		$(this).parent().find(".click_save_gender_name").addClass("click_edit_gender_name");
+		$(this).parent().find(".click_save_gender_name").removeClass("click_save_gender_name");
+		$(this).parent().find(".click_edit_gender_name").html("编辑");
+		var id = $(this).parent().parent().attr("val");
 		$.ajax({
 			dataType:'json',
 			url:'info_edit.action',
 			data:{id:id,gender:gender}
 		}).done(function(da){
 			if(da.status == 1){
-				$(".edit_gender_name").addClass("hidden");
+				genderdiv.addClass("hidden");
 				if(da.gender == '0'){
-					$(".gender_name").html("未知");
+					genderspan.html("未知");
 				}
 				if(da.gender == '1'){
-					$(".gender_name").html("男");
+					genderspan.html("男");
 				}
 				if(da.gender == '2'){
-					$(".gender_name").html("女");
+					genderspan.html("女");
 				}
-				$(".gender_name").removeClass("hidden");
+				genderspan.removeClass("hidden");
 			}else{
 				alert(da.msg);
 			}
@@ -547,20 +548,22 @@ $(document).ready(function() {
 	});
 	
 	$(".click_save_qq_name").live('click', function(){
-		var qq = $(".edit_qq_name").val();
-		$(".click_save_qq_name").addClass("click_edit_qq_name");
-		$(".click_save_qq_name").removeClass("click_save_qq_name");
-		$(".click_edit_qq_name").html("编辑");
-		var id = $("#view_infoId").val();
+		var qqdiv = $(this).parent().find(".edit_qq_name");
+		var qqspan = $(this).parent().find(".qq_name");
+		var qq = $(this).parent().find(".edit_qq_name").val();
+		$(this).parent().find(".click_save_qq_name").addClass("click_edit_qq_name");
+		$(this).parent().find(".click_save_qq_name").removeClass("click_save_qq_name");
+		$(this).parent().find(".click_edit_qq_name").html("编辑");
+		var id = $(this).parent().parent().attr("val");
 		$.ajax({
 			dataType:'json',
 			url:'info_edit.action',
 			data:{id:id,qq:qq}
 		}).done(function(da){
 			if(da.status == 1){
-				$(".edit_qq_name").addClass("hidden");
-				$(".qq_name").html(da.qq);
-				$(".qq_name").removeClass("hidden");
+				qqdiv.addClass("hidden");
+				qqspan.html(da.qq);
+				qqspan.removeClass("hidden");
 			}else{
 				alert(da.msg);
 			}
@@ -571,27 +574,29 @@ $(document).ready(function() {
 		$(this).addClass("click_save_name_name");
 		$(this).removeClass("click_edit_name_name");
 		$(this).html("保存");
-		var project = $(".name_name").html();
-		$(".name_name").addClass("hidden");
-		$(".edit_name_name").val(project);
-		$(".edit_name_name").removeClass("hidden");
+		var project = $(this).parent().find("span.name_name").html();
+		$(this).parent().find(".name_name").addClass("hidden");
+		$(this).parent().find(".edit_name_name").val(project);
+		$(this).parent().find(".edit_name_name").removeClass("hidden");
 	});
 	
 	$(".click_save_name_name").live('click', function(){
-		var name = $(".edit_name_name").val();
-		$(".click_save_name_name").addClass("click_edit_name_name");
-		$(".click_save_name_name").removeClass("click_save_name_name");
-		$(".click_edit_name_name").html("编辑");
-		var id = $("#view_infoId").val();
+		var namediv = $(this).parent().find(".edit_name_name");
+		var namespan = $(this).parent().find(".name_name");
+		var name = $(this).parent().find(".edit_name_name").val();
+		$(this).parent().find(".click_save_name_name").addClass("click_edit_name_name");
+		$(this).parent().find(".click_save_name_name").removeClass("click_save_name_name");
+		$(this).parent().find(".click_edit_name_name").html("编辑");
+		var id = $(this).parent().parent().attr("val");
 		$.ajax({
 			dataType:'json',
 			url:'info_edit.action',
 			data:{id:id,name:name}
 		}).done(function(da){
 			if(da.status == 1){
-				$(".edit_name_name").addClass("hidden");
-				$(".name_name").html(da.name);
-				$(".name_name").removeClass("hidden");
+				namediv.addClass("hidden");
+				namespan.html(da.name);
+				namespan.removeClass("hidden");
 			}else{
 				alert(da.msg);
 			}
@@ -602,27 +607,29 @@ $(document).ready(function() {
 		$(this).addClass("click_save_phone_name");
 		$(this).removeClass("click_edit_phone_name");
 		$(this).html("保存");
-		var project = $(".phone_name").html();
-		$(".phone_name").addClass("hidden");
-		$(".edit_phone_name").val(project);
-		$(".edit_phone_name").removeClass("hidden");
+		var project = $(this).parent().find("span.phone_name").html();
+		$(this).parent().find(".phone_name").addClass("hidden");
+		$(this).parent().find(".edit_phone_name").val(project);
+		$(this).parent().find(".edit_phone_name").removeClass("hidden");
 	});
 	
 	$(".click_save_phone_name").live('click', function(){
-		var phone = $(".edit_phone_name").val();
-		$(".click_save_phone_name").addClass("click_edit_phone_name");
-		$(".click_save_phone_name").removeClass("click_save_phone_name");
-		$(".click_edit_phone_name").html("编辑");
-		var id = $("#view_infoId").val();
+		var phonediv = $(this).parent().find(".edit_phone_name");
+		var phonespan = $(this).parent().find(".phone_name");
+		var phone = $(this).parent().find(".edit_phone_name").val();
+		$(this).parent().find(".click_save_phone_name").addClass("click_edit_phone_name");
+		$(this).parent().find(".click_save_phone_name").removeClass("click_save_phone_name");
+		$(this).parent().find(".click_edit_phone_name").html("编辑");
+		var id =  $(this).parent().parent().attr("val");
 		$.ajax({
 			dataType:'json',
 			url:'info_edit.action',
 			data:{id:id,phone:phone}
 		}).done(function(da){
 			if(da.status == 1){
-				$(".edit_phone_name").addClass("hidden");
-				$(".phone_name").html(da.phone);
-				$(".phone_name").removeClass("hidden");
+				phonediv.addClass("hidden");
+				phonespan.html(da.phone);
+				phonespan.removeClass("hidden");
 			}else{
 				alert(da.msg);
 			}
@@ -633,14 +640,16 @@ $(document).ready(function() {
 		$(this).addClass("click_save_email_name");
 		$(this).removeClass("click_edit_email_name");
 		$(this).html("保存");
-		var project = $(".email_name").html();
-		$(".email_name").addClass("hidden");
-		$(".edit_email_name").val(project);
-		$(".edit_email_name").removeClass("hidden");
+		var project = $(this).parent().find(".email_name").html();
+		$(this).parent().find(".email_name").addClass("hidden");
+		$(this).parent().find(".edit_email_name").val(project);
+		$(this).parent().find(".edit_email_name").removeClass("hidden");
 	});
 	
 	$(".click_save_email_name").live('click', function(){
-		var email = $(".edit_email_name").val();
+		var emaildiv = $(this).parent().find(".edit_email_name");
+		var emailspan = $(this).parent().find(".email_name");
+		var email = $(this).parent().find(".edit_email_name").val();
 		if(email != null && email.trim().length > 1){
 			var search_str = /^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/;
 			if(!search_str.test(email)){
@@ -648,19 +657,19 @@ $(document).ready(function() {
 				return;
 			}
 		}
-		$(".click_save_email_name").addClass("click_edit_email_name");
-		$(".click_save_email_name").removeClass("click_save_email_name");
-		$(".click_edit_email_name").html("编辑");
-		var id = $("#view_infoId").val();
+		$(this).parent().find(".click_save_email_name").addClass("click_edit_email_name");
+		$(this).parent().find(".click_save_email_name").removeClass("click_save_email_name");
+		$(this).parent().find(".click_edit_email_name").html("编辑");
+		var id = $(this).parent().parent().attr("val");
 		$.ajax({
 			dataType:'json',
 			url:'info_edit.action',
 			data:{id:id,email:email}
 		}).done(function(da){
 			if(da.status == 1){
-				$(".edit_email_name").addClass("hidden");
-				$(".email_name").html(da.email);
-				$(".email_name").removeClass("hidden");
+				emaildiv.addClass("hidden");
+				emailspan.html(da.email);
+				emailspan.removeClass("hidden");
 			}else{
 				alert(da.msg);
 			}
@@ -718,10 +727,11 @@ $(document).ready(function() {
 			return;
 		}
 		var infoId = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
 			url:'tag_metric.action',
-			data:{infoId:infoId,metric:id}
+			data:{groupId:groupId,metric:id}
 		}).done(function(da){
 			if(da.status == 1){
 				$(".view_edit_tag_metric").removeClass("biankuang_blue_ding");

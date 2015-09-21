@@ -90,8 +90,8 @@ var addCalls= function(nowPage,type){
 					html += "<div class='view_p_content_850 biankuang_gray_ding hand'>"
 								+"<div style='margin-left:5px;width:780px;float:left;overflow: hidden;'>公司："+calls[i].company+"</div>"
 								+"<div style='width:60px;float:left;'>";
-								if(calls[i].groupId != null){
-									html += "<input val1='"+calls[i].groupId+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' />";
+								if(calls[i].group_id != null){
+									html += "<input val1='"+calls[i].group_id+"' class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' />";
 								}else{
 								}
 								

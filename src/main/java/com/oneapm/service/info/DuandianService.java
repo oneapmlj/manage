@@ -835,8 +835,8 @@ public class DuandianService {
                                                 }
                                         }
                                         for(Aplication aplication : aplications){
-                                                groups.add(UserGroupService.findByGroupId(aplication.getUserId(), admin));
-//                                                infos.add(InfoService.findByUserId(aplication.getUserId()));
+                                            groups.add(UserGroupService.findByGroupIdInitTagAndLan(aplication.getUserId()));   
+                                        	// groups.add(UserGroupService.findByGroupId(aplication.getUserId(), admin));
                                         }
                                 }else{
                                         if(caozuo > 0){

@@ -22,9 +22,9 @@
 		<div style="float:left"><h3 class="tabs_involved">帐号信息</h3></div>
 		<div style="width:800px;float:left;">
 			<div style="float:left;width:45px;"val1="0" class="account biankuang_blue_ding menu_button_2">全部</div>
-			<div style="float:left;width:45px;" val1="1" class="account biankuang_gray menu_button_2">企业</div>
+			<!-- <div style="float:left;width:45px;" val1="1" class="account biankuang_gray menu_button_2">企业</div>
 			<div style="float:left;width:45px;" val1="2" class="account biankuang_gray menu_button_2">开发者</div>
-			<div style="float:left;width:55px;" val1="3"  class="account biankuang_gray menu_button_2">未定义</div>
+			<div style="float:left;width:55px;" val1="3"  class="account biankuang_gray menu_button_2">未定义</div> -->
 			<!-- <div style="float:left;width:55px;" val1="3"  class="biankuang_gray menu_button_2">未定义</div> -->
 			<div style="float:left;width:70px;"  class="account_info biankuang_gray menu_button_2">个人信息</div>
 		</div>

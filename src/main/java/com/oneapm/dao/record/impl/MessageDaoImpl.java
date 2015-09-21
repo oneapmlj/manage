@@ -213,7 +213,10 @@ public class MessageDaoImpl extends DaoImplBase<Admin> {
 	                    } catch (Exception e) {
 	                    }
                         int status = Integer.parseInt(object.get("status").toString().trim());
-                        Long groupId = Long.parseLong(object.get("group_id").toString().trim());
+                        Long groupId = null;
+                        try {
+                         groupId = Long.parseLong(object.get("group_id").toString().trim());
+                        }catch(Exception e){}
                         String viewTime = null;
                         try {
                                 viewTime = object.get("view_time").toString().trim();

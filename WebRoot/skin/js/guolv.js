@@ -777,7 +777,6 @@ $(document).ready(function() {
 					html += "<tr id='"+da.groups[i].groupId+"'>" 
 					+"<td></td>"
 					+"<td>"+da.groups[i].groupId+"</td>"
-					+"<td>"+da.groups[i].name+"</td>";
 				if(da.groups[i].project != null){
 					html += "<td>"+da.groups[i].project+"</td>";
 				}else{
