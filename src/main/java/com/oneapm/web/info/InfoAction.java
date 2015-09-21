@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -23,6 +24,7 @@ import com.oneapm.dto.Call;
 import com.oneapm.dto.Download;
 import com.oneapm.dto.Mail;
 import com.oneapm.dto.MailMode;
+import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.card.Card;
 import com.oneapm.dto.info.ExcelDto;
 import com.oneapm.dto.info.Guanlian;
@@ -31,6 +33,7 @@ import com.oneapm.dto.mail.SendCloudDto;
 import com.oneapm.dto.tag.Language;
 import com.oneapm.service.card.CardService;
 import com.oneapm.service.group.GroupService;
+import com.oneapm.service.group.UserGroupService;
 import com.oneapm.service.info.AppService;
 import com.oneapm.service.info.DashboardService;
 import com.oneapm.service.info.ExportExcelService;
@@ -91,7 +94,7 @@ public class InfoAction extends SupportAction {
         
         private Long appId;
         private int agent;
-
+        private UserGroups userGroups;
         public String view() {
                 if (!isLogin()) {
                         return "login";
@@ -769,27 +772,47 @@ public class InfoAction extends SupportAction {
          }
         	 String[] sl = ids.split(",");
         	 for(String s : sl){
-        		 info = InfoService.findByUserId(Long.parseLong(s),getAdmin());
+        		 userGroups = UserGroupService.findByGroupIdInitTagAndLan(Long.parseLong(s));
+        		 info = InfoService.findByUserId(userGroups.getAdminId(),getAdmin());
         		 infoList.add(info);
         	 }
         	 
         	 HSSFWorkbook result = null;
+        	 javax.servlet.ServletOutputStream out = response.getOutputStream();
+        	 ByteArrayOutputStream os =null;
+        	 InputStream in = null;
+        	 SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+			 String fileName = "" + df.format(new Date()) + ".xls";
+			 response = getServletResponse();
+			 response.reset();
+			 response.setContentType("application/vnd.ms-excel");
+			 response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 			try {
-				ByteArrayOutputStream os = new ByteArrayOutputStream();
+				os = new ByteArrayOutputStream();
 				result = ExportExcelService.exportExcelJson(infoList);
 				result.write(os);
-				byte[] bytes = os.toByteArray();
-				SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-				String fileName = ""+df.format(new Date())+".xls";
-				getServletResponse().reset();
-				getServletResponse().setContentType("application/x-download;charset=utf-8");
-				getServletResponse().setHeader("Content-disposition", "attachment;filename= " + fileName);
-				getServletResponse().getOutputStream().write(bytes);
-				getServletResponse().getOutputStream().flush();
-				getServletResponse().getOutputStream().close();
+				byte[] b = os.toByteArray();
+				in = new ByteArrayInputStream(b);
+				byte[] content = new byte[1024];
+				int length = 0;
+				while ((length = in.read(content)) != -1) {
+				out.write(content, 0, length);
+				}
+				out.write(content);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
+			}finally{
+				 if(os != null){
+					 os.close();
+				    }
+				    if(in != null){
+				     in.close();
+				    }
+				out.flush();
+				out.close();
 			}
+			
 			return null;
 			
             
@@ -1306,5 +1329,14 @@ public class InfoAction extends SupportAction {
         public void setGuanlian(Long guanlian) {
                 this.guanlian = guanlian;
         }
+
+		public UserGroups getUserGroups() {
+			return userGroups;
+		}
+
+		public void setUserGroups(UserGroups userGroups) {
+			this.userGroups = userGroups;
+		}
+        
 
 }

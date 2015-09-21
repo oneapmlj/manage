@@ -285,12 +285,13 @@
 			});
 			$(".view_mail_send").live("click", function(){
 				var mode = $("#view_mail_mode").val();
-				var infoId = $("#infoId").val();
+				var infoId = $("#view_mail_to").find("option:selected").attr("id");
 				var content = $("#mail_content").html();
 				var title = $("#view_mail_title").val();
 				var to = $("#view_mail_to").val();
 				var from = $("#view_mail_from").val();
 				var lable = $("#view_mail_label").val();
+				
 				$(".view_mail_send").val("正在发送.....");
 				$.ajax({
 					type:"POST",

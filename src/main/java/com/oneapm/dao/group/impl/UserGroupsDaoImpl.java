@@ -257,7 +257,7 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 			}
 			String createTime = null;
 			try {
-				createTime = object.get("createTime").toString();
+				createTime = object.get("create_time").toString();
 			} catch (Exception e) {
 			}
 			String project = null;

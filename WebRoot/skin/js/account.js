@@ -29,7 +29,7 @@ var addInfos = function(nowPage,type){
 				var html = "";
 				for(var i=0;i<userGroupsList.length;i++){
 					html += "<div class='view_p_content_850 biankuang_gray_ding' style='font-size:14px;'>"
-							+"<div style='margin-left:5px;width:540px;float:left;'>公司："+userGroupsList[i].groupName+"</div>";
+							+"<div style='margin-left:5px;width:540px;float:left;'>公司："+userGroupsList[i].company+"</div>";
 					if(userGroupsList[i].groupId != null){
 						html += "<div style='width:240px;float:left;'>ID："+userGroupsList[i].groupId+"</div>";
 					}else{
