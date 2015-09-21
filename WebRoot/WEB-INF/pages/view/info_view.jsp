@@ -133,22 +133,22 @@
 		</div>
 		
 	</div> 
-	<%-- <input class="hidden" id="view_infoId" value="${info.id}"/> --%>
+	<input class="hidden" id="view_groupId" value="${userGroups.groupId}"/>
 	<div style="width:100%;min-width:1200px;">
 		<div style="width:1150px;margin-left: auto;margin-right: auto;">
 			<div class="biankuang_gray_ding" style="margin-top:30px;width:1120px;margin-left:10px;float:left;line-height:25px;font-size:16px;">
 				<div style="margin-left:20px;width:380px;float:left;">公司：<span>${userGroups.groupName }</span></div>
-				<div style="float:left;width:280px;"><div style="float:left;width:48px;">项目：</div>
+				<div style="float:left;width:460px;"><div style="float:left;width:48px;">项目：</div>
 					<div style="float:left;"><span class="project_name">${userGroups.project }</span></div>
 					
-					<input style="float:left;" class="edit_project_name hidden"/>
+					<input style="float:left;width:350px;" class="edit_project_name hidden"/>
 					
 				</div>
 				<div style="float:left;font-size:14px;width:60px" class="blue hand click_edit_project_name">编辑</div>
-				<div style="float:left;width:340px;"><div style="float:left;width:48px;">姓名：</div>
+				<%-- <div style="float:left;width:340px;"><div style="float:left;width:48px;">姓名：</div>
 					<div style="float:left;" ><span >${info.name }</span></div>
-				</div>
-				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:90px;">Groug_ID：</div>
+				</div> --%>
+				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:90px;">GroupId：</div>
 					<div style="float:left;"><span  id="group_id">${userGroups.groupId }</span></div>
 					
 				</div>
@@ -167,10 +167,10 @@
 				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:48px;">邮箱：</div>
 					<div style="float:left;" ><span >${userGroups.userGroups[0].email }</span></div>
 				</div>
-				<div style="float:left;width:340px;"><div style="float:left;width:80px;">到期时间：</div>
-					<div style="float:left;width:280px;" class="license_name">${userGroups.expireTime }</div>
+				<div style="float:left;width:400px;"><div style="float:left;width:80px;">到期时间：</div>
+					<div style="float:left;width:220px;" class="license_name">${userGroups.expireTime }</div>
 					<input style="float:left;width:150px;" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" class="edit_license_name hidden"/>
-					<select class="hand edit_license_pay_level hidden" >
+					<select class="hand edit_license_pay_level hidden"  style="float:left;">
 						<option value="10">免费用户</option>
 						<option value="20">免费到期</option>
 						<option value="30">付费用户</option>
