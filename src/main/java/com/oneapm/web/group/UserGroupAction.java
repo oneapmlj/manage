@@ -338,7 +338,11 @@ public class UserGroupAction extends SupportAction{
 //         if (qq != null) {
 //                 qq = new String(qq.getBytes("ISO8859-1"), "UTF-8").trim();
 //         }
-         String result = UserGroupService.searchOut(email, name, phone, company, in, getAdmin(), qq , userId.toString());
+         String userIdStr =null;
+         if(userId!=null){
+        	 userIdStr = userId.toString();
+         }
+         String result = UserGroupService.searchOut(email, name, phone, company, in, getAdmin(), qq , userIdStr);
          getServletResponse().getWriter().print(result);
  }
      
