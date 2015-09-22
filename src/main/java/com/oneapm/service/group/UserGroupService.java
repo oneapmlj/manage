@@ -143,9 +143,11 @@ public class UserGroupService extends OneTools {
 			}
 		}
 		// 获取关联帐号
+		if(userGroups!=null){
 		if (userGroups.getGroupId() != null && userGroups != null) {
 			List<Guanlian> guanlians = GuanlianService.findByUserId(userGroups.getGroupId());
 			userGroups.setGuanlians(guanlians);
+		}
 		}
 		return userGroups;
 	}
