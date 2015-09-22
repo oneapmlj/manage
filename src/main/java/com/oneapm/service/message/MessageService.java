@@ -248,17 +248,8 @@ public class MessageService {
             return MessageDaoImpl.getInstance().insert(message);
     }
 
-        public static MessageVo findVoApplyByInfoId(Long infoId, int type) {
-                return getMessageVoFromMessage(findApplyByInfoId(infoId, type));
-        }
 
-        public static Message findApplyByInfoId(Long infoId, int type) {
-                return MessageDaoImpl.getInstance().findApplyByInfoId(infoId, type);
-        }
 
-        public static Message findApplyByInfoId(Long infoId, int type, int status) {
-                return MessageDaoImpl.getInstance().findApplyByInfoId(infoId, type, status);
-        }
         public static Message findApplyByGroupId(Long groupId, int type, int status) {
             return MessageDaoImpl.getInstance().findApplyByGroupId(groupId, type, status);
     }

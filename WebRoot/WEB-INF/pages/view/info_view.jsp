@@ -333,7 +333,6 @@
 					</div>
 					</s:if>
 					</s:iterator>
-				<s:if test="%{info.level >= 1}">
 					<%-- <div style="width:410px;float:left;line-height:25px;font-size:12px;">
 						<div class="view_p_button"><strong>名片:</strong></div>
 						<div class="add_card biankuang_gray hand" style="float:left;padding:3px;width:400px;margin:5px 0 0 0;height:20px;">
@@ -421,7 +420,6 @@
 							</div>
 						</s:iterator>
 					</s:if>
-				</s:if>
 			</div>
 			<div style="width:430px;float:left;padding-bottom: 40px;margin-top:30px;margin-left:30px;font-size:14px;">
 				<%-- <div style="width:430px;height:25px;float:left;font-size:16px;" id="lianxi">
@@ -586,7 +584,7 @@
 			</div>
 			<div style="width:250px;float:left;padding-bottom: 40px;margin:0 0 0 10px;font-size:14px;">
 				<div  id="right_side" style="margin:10px 0 0 0;width:250px;height:800px;" class="biankuang_gray_ding">
-					<s:if test="%{info.tag != null}">
+					<s:if test="%{userGroups.tag != null}">
 						<input id="view_tag_id" class="hidden"  value="${userGroups.tag.id}"/>
 						<div id="view_edit_tag" style="width:230px;line-height:30px;">
 							<div style="width:230px;height:20px;margin:15px 0 0 15px;">

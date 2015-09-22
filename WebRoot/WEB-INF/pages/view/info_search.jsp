@@ -25,7 +25,7 @@
 			<div style="width:1200px;margin-left:auto;margin-right:auto;">
 			
 				<div style="width:1500px;float:left;">
-					<div style="float:left;margin-top:20px;width:1500px;">
+					<div style="float:left;margin-top:20px;width:1200px;">
 						<div style="hieght:30px;margin:5px 0 0 0;width:220px;float:left;">公司：<input style="width:170px;" class="hand" type="text" id="search_company"/></div>
 						<div style="hieght:30px;margin:5px 0 0 0;width:220px;float:left;">姓名：<input style="width:170px;" class="hand" type="text" id="search_name"/></div>
 						<div style="hieght:30px;margin:5px 0 0 0;width:220px;float:left;">邮箱：<input style="width:170px;" class="hand" type="text" id="search_email"/></div>
