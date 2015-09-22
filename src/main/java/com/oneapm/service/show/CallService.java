@@ -47,16 +47,14 @@ public class CallService {
         public static List<Call> findByAccountId(Long accountId, int skip, int number) {
                 List<Call> calls = CallDaoImpl.getInstance().findByAccountId(accountId, number, skip);
                 for(int i=0;i<calls.size();i++){
-                        Info info = InfoService.findByIdSimple(calls.get(i).getInfoId());
-                        if(info == null){
+                        UserGroups userGroups = UserGroupService.findByGroupIdSimple(calls.get(i).getGroupId());
+                        if(userGroups == null){
                                 calls.remove(i);
                                 i--;
                                 continue;
                         }
-                        String name = info.getProject();
-                        if(name == null || name.trim().length() <= 0){
-                                name = info.getCompany();
-                        }
+                        String name = userGroups.getGroupName();
+                        
                         calls.get(i).setCompany(name);
                 }
                 return calls;

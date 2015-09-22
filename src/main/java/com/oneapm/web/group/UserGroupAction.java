@@ -64,8 +64,10 @@ public class UserGroupAction extends SupportAction{
         // userGroups = UserGroupService.findByGroupId(info.getUserId(),getAdmin());
          System.out.println(id);
          userGroups = UserGroupService.findByGroupId(id,getAdmin());
-         infos = new ArrayList<Info>();
+         if(userGroups!=null){
          userGroupList = UserGroupService.findUsersByGroupId(userGroups.getGroupId());
+         }
+         if(userGroupList!=null){
          for(UserGroup userGroup : userGroupList ){
          info = InfoService.findByUserId(userGroup.getUserId(), getAdmin());
          if (info != null) {
@@ -76,10 +78,12 @@ public class UserGroupAction extends SupportAction{
          }
          downloadsNum = downloadsNum + info.getDownloads().size();
          userGroup.setInfo(info);
-         //infos.add(info);
          }
+         }
+         if(userGroups!=null){
          UserGroupService.initUserGroups(userGroups);
          userGroups.setUserGroups(userGroupList);
+         }
          return "view";
  }
      private String license;

@@ -799,6 +799,9 @@ public class InfoService extends OneTools {
 
         public static Info findByUserId(Long userId, Admin admin) {
                 Info info = InfoDaoImpl.getInstance().findByUserId(userId);
+                if(info == null){
+                	return null;
+                }
                 return findById(info.getId(), admin);
         }
         /**
