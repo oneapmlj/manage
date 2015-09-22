@@ -176,13 +176,10 @@
 						<option value="30">付费用户</option>
 						<option value="40">付费到期</option>
 					</select>
-					<s:if test="%{info.userId == null || admin.id == 99999999}">
+					<s:if test="%{admin.id == 99999999}">
 						<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_license_name">编辑</div>
 					</s:if>
 				</div>
-				
-				
-		
 			</div>
 			
 			<div style="width:400px;margin-left:10px;float:left;padding-bottom: 40px;">
