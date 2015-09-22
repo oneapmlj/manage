@@ -174,7 +174,7 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 			DBObject object = new BasicDBObject();
 			object.put("group_id", userGroups.getGroupId());
 			BasicDBObject value = new BasicDBObject();
-			value.put("$set", new BasicDBObject("contect_time", userGroups.getContectTime()));
+			value.put("$set", new BasicDBObject("contectTime", userGroups.getContectTime()));
 			return getDBCollection(TABLE_NAME).update(object, value).getN() > -1;
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

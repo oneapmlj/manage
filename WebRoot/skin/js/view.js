@@ -1481,14 +1481,15 @@ $(document).ready(function() {
 		var phone = $("#call_add_phone").val();
 		var email = $("#call_add_email").val();
 		var gender = $("#call_add_gender").val();
-		var call_add_time = $("#call_add_time").val();
+		
 		var position = $("#call_add_position").val();
 		var branch = $("#call_add_branch").val();*/
+		var call_add_time = $("#call_add_time").val();
 		var groupId = $("#group_id").html();
 		var call_add_point = document.getElementById("call_add_point").checked;
 		/*var o = {cardId:cardId, mark:mark,infoId:infoId,recordType:type,qq:qq,gongdan:gongdan,name:name,
 				phone:phone,email:email,gender:gender,add_time:call_add_time,branch:branch,position:position,add_call_point:call_add_point};*/
-		var u = {cardId:cardId, groupId:groupId, add_call_point:call_add_point, mark:mark ,recordType:type};
+		var u = {cardId:cardId, groupId:groupId, add_call_point:call_add_point, mark:mark ,recordType:type, add_time:call_add_time};
 		$.ajax({
 			dataType:'json',
 			url:'user_group_add_call.action',

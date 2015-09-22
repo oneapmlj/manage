@@ -56,7 +56,6 @@ public class UserGroupAction extends SupportAction{
      private Long recordType;
      private String project;
      private int downloadsNum;
-
         public String view() {
                 if (!isLogin()) {
                         return "login";

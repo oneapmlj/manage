@@ -267,7 +267,7 @@ public class CallService {
                         if (call == null) {
                                 throw new DataException();
                         }
-                        userGroups.setContectTime(TimeTools.format());
+                        userGroups.setContectTime(putTime);
                         UserGroupsDaoImpl.getInstance().update_contectTime(userGroups);
                         TaskService.dealWithGroupId(userGroups.getGroupId(), admin.getId(), call.getCallId());
                         JSONObject value = getJSONFromCall(call);
