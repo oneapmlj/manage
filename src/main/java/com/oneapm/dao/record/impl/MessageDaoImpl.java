@@ -29,37 +29,6 @@ public class MessageDaoImpl extends DaoImplBase<Admin> {
                 return Instance;
         }
 
-        public Message findApplyByInfoId(Long infoId, int type) {
-                try {
-                        DBObject object = new BasicDBObject();
-                        object.put("info_id", infoId);
-                        object.put("status", new BasicDBObject("$lt", 1));
-                        object.put("type", type);
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
-                        if (cursor.hasNext()) {
-                                return getMessageFromObject(cursor.next());
-                        }
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return null;
-        }
-
-        public Message findApplyByInfoId(Long infoId, int type, int status) {
-                try {
-                        DBObject object = new BasicDBObject();
-                        object.put("info_id", infoId);
-                        object.put("status", status);
-                        object.put("type", type);
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
-                        if (cursor.hasNext()) {
-                                return getMessageFromObject(cursor.next());
-                        }
-                } catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                }
-                return null;
-        }
         
         public Message findApplyByGroupId(Long groupId, int type, int status) {
             try {
