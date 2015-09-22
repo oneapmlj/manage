@@ -118,6 +118,24 @@ public class MessageDaoImpl extends DaoImplBase<Admin> {
                 return messages;
         }
         
+        public List<Message> findByAdminIdIsViewed(Long adminId, int number, int skip) {
+            List<Message> messages = null;
+            try {
+                    DBObject object = new BasicDBObject("to", adminId);
+                    object.put("status", 3);
+                    DBObject sort = new BasicDBObject();
+                    sort.put("create_time", -1);
+                    DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort).skip(skip).limit(number);;
+                    messages = new ArrayList<Message>();
+                    while (cursor.hasNext()) {
+                            messages.add(getMessageFromObject(cursor.next()));
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return messages;
+    }
+        
 
         public List<Message> findByAdminIdUnClose(Long adminId) {
                 List<Message> messages = null;
