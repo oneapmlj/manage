@@ -104,7 +104,7 @@ public class MessageAction extends SupportAction {
                                 }
                         }
                         pageTotal = total/20+1;
-                        vos = MessageService.findMessage(getAdmin().getId(), 20, skip);
+                        vos = MessageService.findMessage(getAdmin().getId(), 30, skip);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
                 }

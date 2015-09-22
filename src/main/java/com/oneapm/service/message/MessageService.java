@@ -61,6 +61,20 @@ public class MessageService {
                 List<Message> messages = MessageDaoImpl.getInstance().findByAdminId(adminId, number , skip);
                 return messages;
         }
+        
+        public static List<Message> findByAdminUnView(Long adminId){
+            if (adminId == null)
+                    return null;
+            List<Message> messages = MessageDaoImpl.getInstance().findByAdminIdUnView(adminId);
+            return messages;
+        }
+        
+        public static List<Message> findByAdminIsViewed(Long adminId, int number, int skip){
+            if (adminId == null)
+                    return null;
+            List<Message> messages = MessageDaoImpl.getInstance().findByAdminIdIsViewed(adminId,number,skip);
+            return messages;
+        }
 
 
         public static List<Message> findUnCloseByAdminId(Long adminId) {
@@ -147,13 +161,25 @@ public class MessageService {
         }
 
         public static List<MessageVo> findVosAllByAdminId(Long adminId, int number, int skip) {
-                List<Message> messages = findByAdmin(adminId, number, skip);
-                if (messages == null || messages.size() <= 0)
+                List<Message> messagesIsViewed = findByAdminIsViewed(adminId,number,skip);
+                List<Message> messagesUnView = findByAdminUnView(adminId);
+                if (messagesUnView == null || messagesUnView.size() <= 0 || messagesIsViewed == null || messagesIsViewed.size() <= 0)
                         return null;
                 List<MessageVo> vos = new ArrayList<MessageVo>();
-                for (Message message : messages) {
+                for (Message message : messagesUnView) {
+                	if(message.getStatus()==0){
                         vos.add(getMessageVoFromMessage(message));
+                        }
                 }
+                
+                	for (Message message : messagesIsViewed) {
+                		if(vos.size()<30){
+                    	if(message.getStatus()==3){
+                            vos.add(getMessageVoFromMessage(message));
+                            }
+                    }
+            	}
+                
                 return vos;
         }
 
