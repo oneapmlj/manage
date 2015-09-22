@@ -76,6 +76,7 @@ public class UserGroupAction extends SupportAction{
                                         userGroupList.get(i).setInfo(info);
                                 }else{
                                         userGroupList.remove(i);
+                                        i--;
                                 }
                         }
                 }

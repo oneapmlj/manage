@@ -191,7 +191,7 @@
 					<div  >
 						<s:iterator value="userGroupList" >
 						
-					<div class="view_info biankuang_gray_ding" val=${info.id } style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">			
+					<div class="view_info biankuang_gray_ding" val="${info.id }" style="margin-top:30px;width:405px;float:left;line-height:25px;font-size:16px;">			
 						
 					<%-- <div style="margin-left:20px;width:380px;float:left;">公司：<span>${info.company }</span></div>
 					<div style="margin-left:20px;width:380px;float:left;">
@@ -244,7 +244,7 @@
 						</div>
 						<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_qq_name">编辑</div>
 					</div>
-					<s:if test="%{info.userId != null}">
+					<%-- <s:if test="%{info.userId != null}"> --%>
 						<div class="boder_line" style="width:350px;margin-left:30px;float:left;"></div>
 						<div style="margin-left:20px;width:60px;float:left;">激活:
 							<s:if test="%{status == 1}">是</s:if>
@@ -265,10 +265,10 @@
 						</div>
 						<div style="margin-left:20px;width:300px;float:left;">注册时间：${info.createTime}</div>
 						<div style="margin-left:20px;width:300px;float:left;">登录时间：${info.loginTime}</div>
-					</s:if>
+					<%-- </s:if>
 					<s:else>
 						<div style="margin-left:20px;width:300px;float:left;">注册：否</div>
-					</s:else>
+					</s:else> --%>
 					<div style="margin-left:20px;width:180px;float:left;">
 							<div style="float:left;width:110px;"><div style="float:left;width:48px;">角色：</div>
 								<div style="float:left;" ><span >${role}</span></div>
