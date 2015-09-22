@@ -550,7 +550,7 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                 return infos;
         }
 
-        public List<Info> search(String email, String name, String phone, String qq, boolean in) {
+        public List<Info> search(String email, String name, String phone, String qq, boolean in, String userId) {
                 List<Info> infos = null;
                 try {
                         DBObject object = new BasicDBObject();
@@ -577,6 +577,9 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                         }
                         if (qq != null && !qq.trim().equals("")) {
                                 list.add(new BasicDBObject("qq", qq));
+                        }
+                        if (userId != null && !userId.trim().equals("")) {
+                            list.add(new BasicDBObject("user_id",  Long.parseLong(userId)));
                         }
                         if (list.size() <= 0) {
                                 return null;

@@ -980,7 +980,7 @@ public class InfoService extends OneTools {
                 return InfoDaoImpl.getInstance().insertAndGet(info);
         }
 
-        @SuppressWarnings("unchecked")
+       /* @SuppressWarnings("unchecked")
         public static String searchOut(String email, String name, String phone, String company, boolean in, Admin admin, String qq) {
                 JSONObject object = new JSONObject();
                 try {
@@ -1007,9 +1007,9 @@ public class InfoService extends OneTools {
                         LOG.error(e.getMessage(), e);
                 }
                 return object.toJSONString();
-        }
+        }*/
 
-        public static List<Info> addSearch(Admin admin, String email, String name, String phone, String company, String qq, boolean in) {
+        /*public static List<Info> addSearch(Admin admin, String email, String name, String phone, String company, String qq, boolean in) {
                 List<Info> infos = search(email, name, phone, company, qq, in);
                 if (infos != null && infos.size() > 0) {
                         for (Info info : infos) {
@@ -1026,15 +1026,15 @@ public class InfoService extends OneTools {
                         }
                 }
                 return infos;
-        }
+        }*/
 
-        public static List<Info> search(String email, String name, String phone, String company, String qq, boolean in) {
+       /* public static List<Info> search(String email, String name, String phone, String company, String qq, boolean in) {
                 List<Info> infos = InfoDaoImpl.getInstance().search(email, name, phone, qq, in);
                 for (int i = 0; i < infos.size(); i++) {
                         initTag(infos.get(i));
                 }
                 return infos;
-        }
+        }*/
         public static List<Info> findByFrom(String from){
                 return InfoDaoImpl.getInstance().findByFrom(from);
         }

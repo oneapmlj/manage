@@ -21,14 +21,17 @@
 		<div class="header">
 			<h3 class="tabs_involved">搜索用户</h3>
 		</div> 
+		
 			<div style="width:1200px;margin-left:auto;margin-right:auto;">
-				<div style="width:1200px;float:left;">
-					<div style="float:left;margin-top:20px;width:1200px;">
+			
+				<div style="width:1500px;float:left;">
+					<div style="float:left;margin-top:20px;width:1500px;">
 						<div style="hieght:30px;margin:5px 0 0 0;width:220px;float:left;">公司：<input style="width:170px;" class="hand" type="text" id="search_company"/></div>
 						<div style="hieght:30px;margin:5px 0 0 0;width:220px;float:left;">姓名：<input style="width:170px;" class="hand" type="text" id="search_name"/></div>
 						<div style="hieght:30px;margin:5px 0 0 0;width:220px;float:left;">邮箱：<input style="width:170px;" class="hand" type="text" id="search_email"/></div>
 						<div style="hieght:30px;margin:5px 0 0 0;width:220px;float:left;">电话：<input style="width:170px;" class="hand" type="text" id="search_phone"/></div>
 						<div style="hieght:30px;margin:5px 0 0 0;width:220px;float:left;">QQ：<input style="width:170px;" class="hand" type="text" id="search_qq"/></div>
+						<div style="margin:5px 0 0 0;width:220px;float:left;">UserID:<input style="width:170px;" class="hand" type="text" id="search_userId"/></div>
 						<%-- <div style="hieght:30px;margin:5px 0 0 0;width:315px;float:left; line-height:30px;">
 							<div style="width:36px;float:left;height:30px;">标签:</div>
 							<div style="width:279px;height:30px;float:left;">
