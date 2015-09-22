@@ -39,7 +39,7 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
                 list.add(new BasicDBObject("preSale", adminId));
                 object.put("$or", list);
                 DBObject sort = new BasicDBObject();
-                sort.put("contect_time", 1);
+                sort.put("contectTime", 1);
                 return getDBCollection(TABLE_NAME).count(object);
         } catch (Exception e) {
                 LOG.error(e.getMessage(), e);
@@ -58,7 +58,7 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
                 list.add(new BasicDBObject("preSale", adminId));
                 object.put("$or", list);
                 DBObject sort = new BasicDBObject();
-                sort.put("contect_time", 1);
+                sort.put("contectTime", 1);
                 DBCursor cursor = null;
                 if(number == 0){
                         cursor = getDBCollection(TABLE_NAME).find(object);

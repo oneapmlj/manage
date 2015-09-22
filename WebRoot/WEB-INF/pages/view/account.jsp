@@ -107,7 +107,7 @@
 								<div class="view_p_content_850 biankuang_gray_ding" style="font-size:14px;">
 									<div style="margin-left:5px;width:540px;float:left;">公司：${groupName }</div>
 									<%-- <div style="width:290px;float:left;">邮箱：<span>${email }</span></div> --%>
-									<s:if test="%{userId != null && userId > 0}"><div style="width:240px;float:left;">ID：${groupId }</div></s:if>
+									<s:if test="%{groupId != null && groupId > 0}"><div style="width:240px;float:left;">ID：${groupId }</div></s:if>
 									<s:else><div style="width:240px;float:left;">ID：无</div></s:else>
 									<div style="width:60px;float:left;">
 										<input val1="${groupId }" class='check_view'  type='image' src='http://manage.oneapm.com/skin/images/icn_view_users.png' title='查看' />
