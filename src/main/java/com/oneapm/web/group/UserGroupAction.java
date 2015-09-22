@@ -67,7 +67,7 @@ public class UserGroupAction extends SupportAction{
                 }
                 if (userGroupList != null) {
                         for(int i=0;i<userGroupList.size();i++){
-                                info = InfoService.findByUserId(userGroupList.get(i).getUserId(), getAdmin());
+                                info = InfoService.findInfoAndDownloadByUserId(userGroupList.get(i).getUserId());
                                 if (info != null) {
                                         if (quanxian(getAdmin().getGrades(), getGRADE().getMap().get(105))) {
                                                 info.setAssign(1);

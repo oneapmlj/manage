@@ -804,6 +804,14 @@ public class InfoService extends OneTools {
                 }
                 return findById(info.getId(), admin);
         }
+        public static Info findInfoAndDownloadByUserId(Long userId) {
+                Info info = InfoDaoImpl.getInstance().findByUserIdStatus(userId);
+                if(info == null){
+                        return null;
+                }
+                info.setDownloads(DownloadService.findByUserId(info.getUserId()));
+                return info;
+        }
         /**
          * 非显示
          * @param userId
