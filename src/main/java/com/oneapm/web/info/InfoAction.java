@@ -435,7 +435,7 @@ public class InfoAction extends SupportAction {
                 getServletResponse().getWriter().print(result);
         }
 
-        public String add() throws UnsupportedEncodingException {
+       /* public String add() throws UnsupportedEncodingException {
                 if (!isLogin()) {
                         return "login";
                 }
@@ -450,7 +450,7 @@ public class InfoAction extends SupportAction {
 //                }
                 infos = InfoService.addSearch(getAdmin(), email, name, phone, company, qq, false);
                 return "add";
-        }
+        }*/
 
         public void insert() throws IOException {
                 if (!isLogin()) {
@@ -506,7 +506,7 @@ public class InfoAction extends SupportAction {
         private String qq;
         private Long gongdan;
 
-        public void searchOut() throws IOException {
+       /* public void searchOut() throws IOException {
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
                         return;
@@ -522,7 +522,7 @@ public class InfoAction extends SupportAction {
 //                }
                 String result = InfoService.searchOut(email, name, phone, company, in, getAdmin(), qq);
                 getServletResponse().getWriter().print(result);
-        }
+        }*/
 
         private Long from;
         private Long messageId;

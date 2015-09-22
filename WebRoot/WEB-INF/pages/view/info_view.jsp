@@ -250,7 +250,7 @@
 							<s:if test="%{status == 1}">是</s:if>
 							<s:else>否</s:else>
 						</div>
-						<div style="margin-left:20px;width:120px;float:left;">UserId:<span id=${info.userId }>${info.userId}</span></div>
+						<div style="margin-left:20px;width:130px;float:left;">UserId:<span id=${info.userId }>${info.userId}</span></div>
 						<div style="margin-left:20px;width:140px;float:left;">
 							<div style="float:left;width:110px;"><div style="float:left;width:48px;">性别：</div>
 								<div style="float:left;" ><span class="gender_name">
@@ -269,13 +269,9 @@
 					<s:else>
 						<div style="margin-left:20px;width:300px;float:left;">注册：否</div>
 					</s:else>
-					<div style="margin-left:20px;width:140px;float:left;">
+					<div style="margin-left:20px;width:180px;float:left;">
 							<div style="float:left;width:110px;"><div style="float:left;width:48px;">角色：</div>
-								<div style="float:left;" ><span >
-									<s:if test="%{role=='admin'}">admin</s:if>
-									<s:if test="%{role=='manager'}">manager</s:if>
-									<s:if test="%{role=='user'}">user</s:if>
-								</span></div>
+								<div style="float:left;" ><span >${role}</span></div>
 							</div>
 					</div>
 					<div style="margin-left:20px;width:300px;float:left;">工单：
