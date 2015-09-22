@@ -1,5 +1,6 @@
 package com.oneapm.service.info;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -171,7 +172,7 @@ public class AppService {
                 apps = AddDaoImpl.getInstance().findByUserId(userId);
                 long dataTime = 0;
                 try{
-                        dataTime = TimeTools.formatTime.parse(TimeTools.getDateTime(0)).getTime();
+                        dataTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(TimeTools.getDateTime(0)).getTime();
                 }catch(Exception e){
                         LOG.error(e.getMessage() ,e);
                 }
@@ -180,7 +181,7 @@ public class AppService {
                                 if (app.getDataTime() == null) {
                                         app.setDataTime("未记录");
                                 } else {
-                                        if(TimeTools.formatTime.parse(app.getDataTime()).getTime() >= dataTime){
+                                        if(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(app.getDataTime()).getTime() >= dataTime){
                                                 app.setDataTime("今日");
                                         }else{
                                                 app.setDataTime(app.getDataTime().substring(0,10));
