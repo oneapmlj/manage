@@ -73,6 +73,9 @@ public class MessageService {
         public static Message findById(Long id) {
                 return MessageDaoImpl.getInstance().findById(id);
         }
+        public static Message findByGroupId(Long groupId) {
+            return MessageDaoImpl.getInstance().findByGroupId(groupId);
+    }
 
         public static MessageVo findVoById(Long id) {
                 Message message = findById(id);

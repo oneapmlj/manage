@@ -169,7 +169,7 @@
 				<div style="float: left; width: 80px; height: 30px;color:blue;margin-left:20px; font-size: 13px; line-height: 30px;" class="message_history_all">查看所有</div>
 				<div style="float: right; width: 15px; height: 30px; font-size: 14px; line-height: 30px;" class="message_click_to_close">X</div>
 			</div>
-			<div id="message_view"
+			<!-- <div id="message_view"
 				style="width: 250px; margin: 0 0 10px 15px; float: left; line-height: 20px;">
 				<div style="width: 250px; border-top: 1px solid #FFFFFF;">
 					<div style="width: 250px;">
@@ -215,7 +215,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<%-- <s:if test="%{report.updateTime != null}">

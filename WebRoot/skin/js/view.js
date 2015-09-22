@@ -796,11 +796,11 @@ $(document).ready(function() {
 		});
 	});
 	$("#view_info_delete_sale").live('click', function(){
-		var id = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_delete.action',
-			data:{id:id,type:1}
+			url:'user_group_delete.action',
+			data:{groupId:groupId,type:1}
 		}).done(function(da){
 			if(da.status == 1){
 				location.reload(true);
@@ -810,11 +810,11 @@ $(document).ready(function() {
 		});
 	});
 	$("#view_info_delete_presale").live('click', function(){
-		var id = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_delete.action',
-			data:{id:id,type:3}
+			url:'user_group_delete.action',
+			data:{groupId:groupId,type:3}
 		}).done(function(da){
 			if(da.status == 1){
 				location.reload(true);
@@ -824,11 +824,11 @@ $(document).ready(function() {
 		});
 	});
 	$("#view_info_delete_support").live('click', function(){
-		var id = $("#view_infoId").val();
+		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_delete.action',
-			data:{id:id,type:2}
+			url:'user_group_delete.action',
+			data:{groupId:groupId,type:2}
 		}).done(function(da){
 			if(da.status == 1){
 				location.reload(true);

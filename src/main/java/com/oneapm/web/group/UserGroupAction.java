@@ -142,7 +142,7 @@ public class UserGroupAction extends SupportAction{
                  }
          }
          try {
-                /*mark = new String(mark.getBytes("ISO8859-1"), "UTF-8");*/
+  //              mark = new String(mark.getBytes("ISO8859-1"), "UTF-8");
 //                 if (phone != null) {
 //                         phone = new String(phone.getBytes("ISO8859-1"), "UTF-8");
 //                 }
@@ -337,6 +337,20 @@ public class UserGroupAction extends SupportAction{
 //         }
          String result = UserGroupService.searchOut(email, name, phone, company, in, getAdmin(), qq);
          getServletResponse().getWriter().print(result);
+ }
+     
+     
+     public void delete() throws IOException {
+         if (!isLogin()) {
+                 getServletResponse().sendRedirect("/login.action");
+                 return;
+         }
+         try {
+                 String result = UserGroupService.delete(getAdmin(), groupId, type);
+                 getServletResponse().getWriter().print(result);
+         } catch (Exception e) {
+                 LOG.error(e.getMessage(), e);
+         }
  }
 	public Long getGroupId() {
 		return groupId;

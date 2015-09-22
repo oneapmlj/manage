@@ -376,7 +376,7 @@ public class UserGroupService extends OneTools {
 	public static String change(Admin admin, Long from, Long groupId, int type, Long messageId) {
 		JSONObject object = new JSONObject();
 		try {
-			UserGroups userGroups = findByGroupIdSingle(groupId);
+			UserGroups userGroups = findByGroupIdInitTagAndLan(groupId);
 			Message message = null;
 			List<Admin> admins = null;
 			object.put("status", 0);
@@ -400,8 +400,8 @@ public class UserGroupService extends OneTools {
 				if (admin.getId() >= 80000000L && admin.getId() < 90000000L) {
 					return OneTools.getResult(0, "无权限");
 				}
-				if (MessageService.insertWithGroupId(admin.getId(), userGroups.getSale(), 0, groupId, type)) {
-					RecordService.insertWithGroupId(admin.getId(), type, groupId, userGroups.getSale(), 0,
+				if (MessageService.insertWithGroupId(admin.getId(), userGroups.getSupport(), 0, groupId, type)) {
+					RecordService.insertWithGroupId(admin.getId(), type, groupId, userGroups.getSupport(), 0,
 							userGroups.getTag().getMetric(), userGroups.getTag().getLoudou(), 0, 0, groupId);
 					object.put("status", 1);
 					return object.toJSONString();
@@ -429,8 +429,8 @@ public class UserGroupService extends OneTools {
 				userGroups.setSupport(from);
 				update(userGroups);
 				MessageService.agree(messageId);
-				if (MessageService.insertWithGroupId(admin.getId(), userGroups.getSale(), 0, groupId, type)) {
-					RecordService.insertWithGroupId(admin.getId(), type, groupId, userGroups.getSale(), 0,
+				if (MessageService.insertWithGroupId(admin.getId(), userGroups.getSupport(), 0, groupId, type)) {
+					RecordService.insertWithGroupId(admin.getId(), type, groupId, userGroups.getSupport(), 0,
 							userGroups.getTag().getMetric(), userGroups.getTag().getLoudou(), 0, 0, groupId);
 					object.put("status", 1);
 					object.put("id", messageId);
@@ -439,8 +439,8 @@ public class UserGroupService extends OneTools {
 				break;
 			case 5:
 				MessageService.close(messageId);
-				if (MessageService.insertWithGroupId(admin.getId(), userGroups.getSale(), 0, groupId, type)) {
-					RecordService.insertWithGroupId(admin.getId(), type, groupId, userGroups.getSale(), 0,
+				if (MessageService.insertWithGroupId(admin.getId(), userGroups.getSupport(), 0, groupId, type)) {
+					RecordService.insertWithGroupId(admin.getId(), type, groupId, userGroups.getSupport(), 0,
 							userGroups.getTag().getMetric(), userGroups.getTag().getLoudou(), 0, 0, groupId);
 					object.put("status", 1);
 					object.put("id", messageId);
@@ -449,8 +449,8 @@ public class UserGroupService extends OneTools {
 				break;
 			case 6:
 				MessageService.close(messageId);
-				if (MessageService.insertWithGroupId(admin.getId(), userGroups.getSale(), 0, groupId, type)) {
-					RecordService.insertWithGroupId(admin.getId(), type, groupId, userGroups.getSale(), 0,
+				if (MessageService.insertWithGroupId(admin.getId(), userGroups.getSupport(), 0, groupId, type)) {
+					RecordService.insertWithGroupId(admin.getId(), type, groupId, userGroups.getSupport(), 0,
 							userGroups.getTag().getMetric(), userGroups.getTag().getLoudou(), 0, 0, groupId);
 					object.put("status", 1);
 					object.put("id", messageId);
@@ -480,8 +480,8 @@ public class UserGroupService extends OneTools {
 				if (message != null) {
 					return OneTools.getResult(0, "已经提醒过了");
 				}
-				if (MessageService.insertWithGroupId(admin.getId(), userGroups.getSale(), 0, groupId, type)) {
-					RecordService.insertWithGroupId(admin.getId(), type, groupId, userGroups.getSale(), 0,
+				if (MessageService.insertWithGroupId(admin.getId(), userGroups.getSupport(), 0, groupId, type)) {
+					RecordService.insertWithGroupId(admin.getId(), type, groupId, userGroups.getSupport(), 0,
 							userGroups.getTag().getMetric(), userGroups.getTag().getLoudou(), 0, 0, groupId);
 					object.put("status", 1);
 					return object.toJSONString();
@@ -837,6 +837,42 @@ public class UserGroupService extends OneTools {
                  array.add(getJSONFromUserGroups(userGroups));
          }
          return array;
+ }
+	 
+	 
+	 public static String delete(Admin admin, Long id, int type) {
+         try {
+                 UserGroups userGroups = findByGroupIdSimple(id);
+                 switch (type) {
+                 case 1:
+                         if (userGroups.getSale() != null && userGroups.getSale().equals(admin.getId())) {
+                        	 userGroups.setSale(null);
+                        	 UserGroupsDaoImpl.getInstance().updateOwner(userGroups);
+                                 return OneTools.getResult(1, "");
+                         } else {
+                                 return OneTools.getResult(0, "参数错误");
+                         }
+                 case 2:
+                         if (userGroups.getSupport() != null && userGroups.getSupport().equals(admin.getId())) {
+                        	 userGroups.setSupport(null);
+                        	 UserGroupsDaoImpl.getInstance().updateOwner(userGroups);
+                                 return OneTools.getResult(1, "");
+                         } else {
+                                 return OneTools.getResult(0, "参数错误");
+                         }
+                 case 3:
+                         if (userGroups.getPreSale() != null && userGroups.getPreSale().equals(admin.getId())) {
+                        	 userGroups.setPreSale(null);
+                        	 UserGroupsDaoImpl.getInstance().updateOwner(userGroups);
+                                 return OneTools.getResult(1, "");
+                         } else {
+                                 return OneTools.getResult(0, "参数错误");
+                         }
+                 }
+         } catch (Exception e) {
+                 LOG.error(e.getMessage(), e);
+         }
+         return OneTools.getResult(0, "服务器内部错误");
  }
 	 
 	 

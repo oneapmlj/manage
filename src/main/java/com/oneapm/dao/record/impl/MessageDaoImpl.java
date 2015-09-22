@@ -89,6 +89,20 @@ public class MessageDaoImpl extends DaoImplBase<Admin> {
                 }
                 return null;
         }
+        
+        public Message findByGroupId(Long groupId) {
+            try {
+                    DBObject object = new BasicDBObject();
+                    object.put("group_id", groupId);
+                    DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                    if (cursor.hasNext()) {
+                            return getMessageFromObject(cursor.next());
+                    }
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return null;
+    }
 
         public List<Message> findByAdminId(Long adminId, int number, int skip) {
                 List<Message> messages = null;
@@ -181,6 +195,20 @@ public class MessageDaoImpl extends DaoImplBase<Admin> {
                 }
                 return false;
         }
+        
+        public boolean updateByGroupId(Message message) {
+            try {
+                    DBObject object = new BasicDBObject("group_id", message.getGroupId());
+                    DBObject value = new BasicDBObject();
+                    value.put("status", message.getStatus());
+                    value.put("view_time", message.getViewTime());
+                    value.put("close_time", message.getCloseTime());
+                    return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value)).getN() > -1;
+            } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+            }
+            return false;
+    }
 
         public boolean insert(Message message) {
                 try {
