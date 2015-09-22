@@ -586,7 +586,7 @@
 			</div>
 			<div style="width:250px;float:left;padding-bottom: 40px;margin:0 0 0 10px;font-size:14px;">
 				<div  id="right_side" style="margin:10px 0 0 0;width:250px;height:800px;" class="biankuang_gray_ding">
-					<s:if test="%{info.tag != null}">
+					<s:if test="%{userGroups.tag != null}">
 						<input id="view_tag_id" class="hidden"  value="${userGroups.tag.id}"/>
 						<div id="view_edit_tag" style="width:230px;line-height:30px;">
 							<div style="width:230px;height:20px;margin:15px 0 0 15px;">
