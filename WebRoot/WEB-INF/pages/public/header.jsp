@@ -164,12 +164,12 @@
 			<div class="click_to_pay menu_button biankuang_gray" title="pay">pay</div>
 		</s:if> --%>
 		<!-- <div class="click_to_zhengzailianxi menu_button biankuang_gray" style="width:80px;"" title="pay">正在联系</div> -->
-		<div style="width: 280px; z-index: 999; position: absolute; margin: 28px 0 0 6px;" id="message_window" class="hidden hand biankuang_gray_ding">
-			<div style="width: 280px; heigth: 30px; float: left;">\
+		<!-- <div style="width: 280px; z-index: 999; position: absolute; margin: 28px 0 0 6px;" id="message_window" class="hidden hand biankuang_gray_ding">
+			 <div style="width: 280px; heigth: 30px; float: left;">\
 				<div style="float: left; width: 80px; height: 30px;color:blue;margin-left:20px; font-size: 13px; line-height: 30px;" class="message_history_all">查看所有</div>
 				<div style="float: right; width: 15px; height: 30px; font-size: 14px; line-height: 30px;" class="message_click_to_close">X</div>
-			</div>
-			<!-- <div id="message_view"
+			</div> 
+			<div id="message_view"
 				style="width: 250px; margin: 0 0 10px 15px; float: left; line-height: 20px;">
 				<div style="width: 250px; border-top: 1px solid #FFFFFF;">
 					<div style="width: 250px;">
@@ -215,9 +215,9 @@
 						</div>
 					</div>
 				</div>
-			</div> -->
+			</div>
 		</div>
-	</div>
+	</div> -->
 	<%-- <s:if test="%{report.updateTime != null}">
 		<div class="btn_view_site2">
 					<a class="update" id="${id}" href="#">更新</a>

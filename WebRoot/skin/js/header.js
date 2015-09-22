@@ -314,7 +314,8 @@ var JmessageNum = function(number){
 				$("#message_window").addClass("hidden");
 			});
 			$(".show_message").live('click', function(){
-				$("#message_window").removeClass("hidden");
+				//$("#message_window").removeClass("hidden");
+				window.open("/message_index.action");
 			})
 			$(".click_to_search").live('click', function(){
 				window.location.href="info_search.action";
