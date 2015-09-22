@@ -198,6 +198,21 @@ public class InfoDaoImpl extends DaoImplBase<Info> {
                 }
                 return null;
         }
+        
+        public Info findByUserIdStatus(Long userId) {
+                try {
+                        DBObject object = new BasicDBObject();
+                        object.put("user_id", userId);
+                        object.put("status", 1);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        if (cursor.hasNext()) {
+                                return getInfoFromResult(cursor.next());
+                        }
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return null;
+        }
 
         public Info findById(Long id) {
                 try {

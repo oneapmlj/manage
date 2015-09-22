@@ -269,7 +269,7 @@
 					<s:else>
 						<div style="margin-left:20px;width:300px;float:left;">注册：否</div>
 					</s:else>
-					<div style="margin-left:20px;width:140px;float:left;">
+					<div style="margin-left:20px;width:180px;float:left;">
 							<div style="float:left;width:110px;"><div style="float:left;width:48px;">角色：</div>
 								<div style="float:left;" ><span >
 									<s:if test="%{role=='admin'}">admin</s:if>

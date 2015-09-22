@@ -56,35 +56,35 @@ public class UserGroupAction extends SupportAction{
      private Long recordType;
      private String project;
      private int downloadsNum;
-     public String view() {
-         if (!isLogin()) {
-                 return "login";
-         }
-         //info = InfoService.findUserId(id);
-        // userGroups = UserGroupService.findByGroupId(info.getUserId(),getAdmin());
-         System.out.println(id);
-         userGroups = UserGroupService.findByGroupId(id,getAdmin());
-         if(userGroups!=null){
-         userGroupList = UserGroupService.findUsersByGroupId(userGroups.getGroupId());
-         }
-         if(userGroupList!=null){
-         for(UserGroup userGroup : userGroupList ){
-         info = InfoService.findByUserId(userGroup.getUserId(), getAdmin());
-         if (info != null) {
-             if (quanxian(getAdmin().getGrades(), getGRADE().getMap().get(105))) {
-                     info.setAssign(1);
-             }
-             downloadsNum = downloadsNum + info.getDownloads().size();
-             userGroup.setInfo(info);
-         }
-         }
-         }
-         if(userGroups!=null){
-         UserGroupService.initUserGroups(userGroups);
-         userGroups.setUserGroups(userGroupList);
-         }
-         return "view";
- }
+
+        public String view() {
+                if (!isLogin()) {
+                        return "login";
+                }
+                userGroups = UserGroupService.findByGroupId(id, getAdmin());
+                if (userGroups != null) {
+                        userGroupList = UserGroupService.findUsersByGroupId(userGroups.getGroupId());
+                }
+                if (userGroupList != null) {
+                        for(int i=0;i<userGroupList.size();i++){
+                                info = InfoService.findByUserId(userGroupList.get(i).getUserId(), getAdmin());
+                                if (info != null) {
+                                        if (quanxian(getAdmin().getGrades(), getGRADE().getMap().get(105))) {
+                                                info.setAssign(1);
+                                        }
+                                        downloadsNum = downloadsNum + info.getDownloads().size();
+                                        userGroupList.get(i).setInfo(info);
+                                }else{
+                                        userGroupList.remove(i);
+                                }
+                        }
+                }
+                if (userGroups != null) {
+                        UserGroupService.initUserGroups(userGroups);
+                        userGroups.setUserGroups(userGroupList);
+                }
+                return "view";
+        }
      private String license;
      private int pay_level;
      public void edit() throws IOException {
