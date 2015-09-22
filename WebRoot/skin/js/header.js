@@ -243,6 +243,7 @@ var JmessageNum = function(number){
 			$(".message_view_check_chakan").live('click', function(){
 				var id = $(this).parent().parent().attr("id");
 				var ids = id.split("_");
+				var chakan = $(".message_view_check_chakan");
 				$.ajax({
 					dataType:'json',
 					url:'message_view.action',
@@ -250,7 +251,7 @@ var JmessageNum = function(number){
 				}).done(function(da){
 					if(da.status == 1){
 						$("#list_message_"+da.id).css("color","gray");
-						var groupId = $(".message_view_check_chakan").parent().parent().attr("groupId");
+						var groupId = $("#list_message_"+da.id).attr("groupId");
 						window.open("/user_group_view.action?id="+groupId);
 					}else{
 						alert(da.msg);
