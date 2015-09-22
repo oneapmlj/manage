@@ -137,7 +137,6 @@ public class TagDaoImpl extends DaoImplBase<Tag> {
                         DBObject object = new BasicDBObject();
                         tag.setId(getIdest() + 1);
                         object.put("id", tag.getId());
-                        object.put("info_id", tag.getInfoId());
                         object.put("category", tag.getCategory());
                         object.put("metric", tag.getMetric());
                         object.put("loudou", tag.getLoudou());

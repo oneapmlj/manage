@@ -246,11 +246,11 @@
 					</div>
 					<s:if test="%{info.userId != null}">
 						<div class="boder_line" style="width:350px;margin-left:30px;float:left;"></div>
-						<div style="margin-left:20px;width:70px;float:left;">激活：
+						<div style="margin-left:20px;width:60px;float:left;">激活:
 							<s:if test="%{status == 1}">是</s:if>
 							<s:else>否</s:else>
 						</div>
-						<div style="margin-left:20px;width:110px;float:left;">UserId：<span id=${info.userId }>${info.userId}</span></div>
+						<div style="margin-left:20px;width:120px;float:left;">UserId:<span id=${info.userId }>${info.userId}</span></div>
 						<div style="margin-left:20px;width:140px;float:left;">
 							<div style="float:left;width:110px;"><div style="float:left;width:48px;">性别：</div>
 								<div style="float:left;" ><span class="gender_name">

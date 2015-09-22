@@ -334,7 +334,6 @@ public class TagService extends OneTools {
             Tag tag = TagDaoImpl.getInstance().findByGroupId(groupId);
             if (tag == null) {
                     tag = new Tag(null, groupId, 0, 0, new Integer(0), new Integer(0), null, 0, new Integer(0), new Integer(0), null, new Integer(0), new Integer(0));
-                    tag.setGroupId(groupId);
                     initLanguageByGroupId(tag);
                     tag = TagDaoImpl.getInstance().insert(tag);
             } else {

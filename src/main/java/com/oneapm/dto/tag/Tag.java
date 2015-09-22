@@ -35,10 +35,10 @@ public class Tag {
         public Tag() {
         };
 
-        public Tag(Long id, Long infoId, Integer category, int from, Integer metric, Integer loudou, String description,
+        public Tag(Long id, Long groupId, Integer category, int from, Integer metric, Integer loudou, String description,
                         int status, Integer province, Integer person, String language, Integer rongzi, Integer fuwuqi) {
                 setId(id);
-                setInfoId(infoId);
+                setGroupId(groupId);
                 setCategory(category);
                 setFrom(from);
                 setLoudou(loudou);
