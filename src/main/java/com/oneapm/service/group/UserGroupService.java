@@ -775,9 +775,9 @@ public class UserGroupService extends OneTools {
 		return userGroups.getLevel();
 	}
 	@SuppressWarnings("null")
-	public static List<UserGroups> search(String email, String name, String phone, String company, String qq, boolean in) {
+	public static List<UserGroups> search(String email, String name, String phone, String company, String qq, boolean in, String userId) {
         List<UserGroups> userGroupsList = UserGroupsDaoImpl.getInstance().searchByCompany(company);
-        List<Info> infos = InfoDaoImpl.getInstance().search(email, name, phone, qq, in);
+        List<Info> infos = InfoDaoImpl.getInstance().search(email, name, phone, qq, in, userId);
         if(userGroupsList==null){
         	userGroupsList = new ArrayList<UserGroups>();
         }
@@ -800,15 +800,15 @@ public class UserGroupService extends OneTools {
 }
 	
 	 @SuppressWarnings("unchecked")
-     public static String searchOut(String email, String name, String phone, String company, boolean in, Admin admin, String qq) {
+     public static String searchOut(String email, String name, String phone, String company, boolean in, Admin admin, String qq, String userId) {
              JSONObject object = new JSONObject();
              try {
                      object.put("status", 0);
                      List<UserGroups> userGroupsList = null;
-                     if ((email == null || email.trim().equals("")) && (name == null || name.trim().equals("")) && (phone == null || phone.trim().equals("")) && (company == null || company.trim().equals("")) && (qq == null || qq.trim().equals(""))) {
+                     if ((email == null || email.trim().equals("")) && (name == null || name.trim().equals("")) && (phone == null || phone.trim().equals("")) && (company == null || company.trim().equals("")) && (qq == null || qq.trim().equals(""))&& (userId == null || userId.trim().equals(""))) {
                              return object.toJSONString();
                      } else {
-                    	 userGroupsList = search(email, name, phone, company, qq, in);
+                    	 userGroupsList = search(email, name, phone, company, qq, in, userId);
                              if (userGroupsList == null || userGroupsList.size() <= 0) {
                                      return object.toJSONString();
                              }

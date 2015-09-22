@@ -75,9 +75,9 @@ public class UserGroupAction extends SupportAction{
                      info.setAssign(1);
                      
              }
+             downloadsNum = downloadsNum + info.getDownloads().size();
+             userGroup.setInfo(info);
          }
-         downloadsNum = downloadsNum + info.getDownloads().size();
-         userGroup.setInfo(info);
          }
          }
          if(userGroups!=null){
@@ -339,7 +339,7 @@ public class UserGroupAction extends SupportAction{
 //         if (qq != null) {
 //                 qq = new String(qq.getBytes("ISO8859-1"), "UTF-8").trim();
 //         }
-         String result = UserGroupService.searchOut(email, name, phone, company, in, getAdmin(), qq);
+         String result = UserGroupService.searchOut(email, name, phone, company, in, getAdmin(), qq , userId.toString());
          getServletResponse().getWriter().print(result);
  }
      

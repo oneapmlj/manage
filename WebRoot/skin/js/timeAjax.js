@@ -18,8 +18,10 @@ $(document).ready(function(){
 		var loudou = $("#search_loudou").val();*/
 		/*var language = $("#search_language").val();*/
 		var qq = $("#search_qq").val();
+		var userId = $("#search_userId").val();
 		if((company == null || company.trim()=="") && (name == null || name.trim()=="") &&
-				(email == null || email.trim()=="") && (phone == null || phone.trim()=="") && (qq == null || qq.trim()=="")){
+				(email == null || email.trim()=="") && (phone == null || phone.trim()=="") && (qq == null || qq.trim()=="")
+				&& (userId == null || userId.trim()=="")){
 			$(".search_result_msg").html("请输入搜索条件");
 			return;
 		}
@@ -28,6 +30,7 @@ $(document).ready(function(){
 		o["email"] = email;
 		o["phone"] = phone;
 		o["qq"] = qq;
+		o["userId"] = userId;
 		$(".search_result_msg").html("搜索中……");
 		$(this).removeClass('search_button');
 		$(this).addClass('search_button_un');
