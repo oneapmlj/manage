@@ -74,9 +74,9 @@ public class UserGroupAction extends SupportAction{
              if (quanxian(getAdmin().getGrades(), getGRADE().getMap().get(105))) {
                      info.setAssign(1);
              }
+             downloadsNum = downloadsNum + info.getDownloads().size();
+             userGroup.setInfo(info);
          }
-         downloadsNum = downloadsNum + info.getDownloads().size();
-         userGroup.setInfo(info);
          }
          }
          if(userGroups!=null){
