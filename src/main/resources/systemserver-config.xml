@@ -13,8 +13,8 @@
 	<!--mongodb参数 -->
 	<mongodb>
 		<mongodata>
-		    <serverNode>10.128.8.35</serverNode> 
-			 <!-- <serverNode>manager.mgo.010251193010.ali.bj</serverNode>   -->
+		    <!-- <serverNode>10.128.8.35</serverNode>  -->
+			  <serverNode>manager.mgo.010251193010.ali.bj</serverNode> 
 			<!-- <serverNode>manager.mgo.010251193010.ali.bj</serverNode> -->
 			<serverPort>27017</serverPort>
 			<autoConnectRetry>true</autoConnectRetry>
