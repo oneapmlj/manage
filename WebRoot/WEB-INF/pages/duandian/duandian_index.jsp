@@ -27,9 +27,9 @@
 					<div style="width:70px;float:left;height:30px;">
 						<div style="float:left;width:60px;margin-top:5px;" class="go_guolv_ding menu_button biankuang_blue_ding hand">过滤</div>
 					</div>
-					<!-- <div style="width:70px;float:left;height:30px;">
+					<div style="width:70px;float:left;height:30px;">
 						<div style="float:left;width:60px;margin-top:5px;" class="go_from menu_button biankuang_gray hand">来源</div>
-					</div> -->
+					</div>
 					<!-- <div style="width:120px;float:left;height:30px;">
 						<div style="float:left;width:110px;margin-top:5px;" class="go_baobiao menu_button biankuang_gray hand">报表查询</div>
 					</div> -->
@@ -228,6 +228,22 @@
 						<div style="width:120px;float:left;" class="hidden lable_7" val="7">
 						</div>
 						<div style="width:100px;float:left;"><input class="from_chaxun hand" type="button" value="查询"/></div>
+					</div>
+					<div style="margin-top:5px;width:1200px;margin-left:auto;margin-right:auto;">
+						<div style="float:left;height:30px;width:120px;">
+							<select id="duandian_zidingyishijian_from">
+								<option value="1">所有</option>
+								<option value="2">自定义时间</option>
+							</select>
+						</div>
+						<div class="hidden duandian_zidingyishijian_form" style="width:160px;float:left;height:30px;font-size:14px;">
+							起始时间:
+							<input type="text" id="duandian_zidingyishijian_start_form" value="" style="width:80px;"/>
+						</div>
+						<div class="hidden duandian_zidingyishijian_form" style="width:160px;float:left;height:30px;font-size:14px;">
+							结束时间:
+							<input type="text" id="duandian_zidingyishijian_end_form" value="" style="width:80px;"/>
+						</div>
 					</div>
 					<!-- <div style="float:left;width:1200px;height:30px;">
 						<div class="duandian_result_msg" style="height:20px;line-hight:20px;font-size:16px;color:red;"></div>

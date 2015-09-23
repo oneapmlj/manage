@@ -50,7 +50,18 @@ function showAll(){
 	$(".download_view").slideToggle(50);
 }
 $(document).ready(function() {
-
+	$("#add_card_window_close").click(function(){
+		$(".card_add").addClass("hidden");
+		$(".keyboard_card_enter").val("1");
+		$(".background").addClass("hidden");
+	});
+	
+	$("#add_call_window_close").live("click",function(){
+		$(".background").addClass("hidden");
+		$(".call_add").addClass("hidden");
+		$(".keyboard_call_enter").val("1"); 
+	});
+	
 	$(".guanlian").live("click", function(){
 		$("#guanlian_add").removeClass("hidden");
 		$("#guanlian_add_value").removeClass("hidden");

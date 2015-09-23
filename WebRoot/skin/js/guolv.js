@@ -95,6 +95,16 @@ $(document).ready(function() {
 		$(".duandian_list_baobiao").removeClass("hidden");
 		$(".duandian_result_msg").html("");
 	});
+	$("#duandian_zidingyishijian_from").live("change", function(){
+		var i = $(this).val();
+		if(i=="1"){
+			$("#duandian_zidingyishijian_start_form").val("");
+			$("#duandian_zidingyishijian_end_form").val("");
+			$(".duandian_zidingyishijian_form").addClass("hidden");
+		}else if(i == "2"){
+			$(".duandian_zidingyishijian_form").removeClass("hidden");
+		}
+	});
 	$(".from_chaxun").live('click', function(){
 		if(father <= 0){
 			alert("至少选一个来源分类");
@@ -106,10 +116,19 @@ $(document).ready(function() {
 		$(".from_chaxun").val("查询中");
 		$(".from_chaxun").addClass("from_chaxun_ding");
 		$(".from_chaxun_ding").removeClass("from_chaxun");
+		var time = $("#duandian_zidingyishijian_from").val();
+		var start;
+		var end;
+		if(time == "2"){
+			start = $("#duandian_zidingyishijian_start_form").val();
+			end = $("#duandian_zidingyishijian_end_form").val();
+		}
+		start = start +" 00:00:00";
+		end = end + " 00:00:00";
 		$.ajax({
 			dataType:'json',
 			url:'duandian_chaxun.action',
-			data:{fatherId:father}
+			data:{fatherId:father,startTime:start,endTime:end}
 		}).done(function(da){
 			if(da.status == 1){
 				var html = "";
@@ -560,6 +579,20 @@ $(document).ready(function() {
 	$("#duandian_zidingyishijian_end_login").live("click", function(){
 		laydate({
 		    elem: '#duandian_zidingyishijian_end_login',
+		    max: laydate.now(), //+1代表明天，+2代表后天，以此类推
+		    format: 'YYYY-MM-DD',
+		});
+	});
+	$("#duandian_zidingyishijian_start_form").live("click", function(){
+		laydate({
+		    elem: '#duandian_zidingyishijian_start_form',
+		    max: laydate.now(), //+1代表明天，+2代表后天，以此类推
+		    format: 'YYYY-MM-DD',
+		});
+	});
+	$("#duandian_zidingyishijian_end_form").live("click", function(){
+		laydate({
+		    elem: '#duandian_zidingyishijian_end_form',
 		    max: laydate.now(), //+1代表明天，+2代表后天，以此类推
 		    format: 'YYYY-MM-DD',
 		});

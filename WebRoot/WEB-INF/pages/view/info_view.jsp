@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>${info.userId }</title>
+<title>${userGroups.groupId }</title>
 <link rel="stylesheet" href="${applicationScope.staticPath}skin/css/layout.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="${applicationScope.staticPath}skin/css/index.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="${applicationScope.staticPath}skin/css/view.css" type="text/css" media="screen" />
@@ -176,13 +176,10 @@
 						<option value="30">付费用户</option>
 						<option value="40">付费到期</option>
 					</select>
-					<s:if test="%{info.userId == null || admin.id == 99999999}">
+					<s:if test="%{admin.id == 99999999}">
 						<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_license_name">编辑</div>
 					</s:if>
 				</div>
-				
-				
-		
 			</div>
 			
 			<div style="width:400px;margin-left:10px;float:left;padding-bottom: 40px;">
@@ -1188,19 +1185,6 @@
 		    	}
 		    }
 		}
-		$("#add_card_window_close").click(function(){
-			$(".card_add").addClass("hidden");
-			$(".keyboard_card_enter").val("1");
-			$(".background").addClass("hidden");
-		});
-		
-		$("#add_call_window_close").live("click",(function(){
-			
-		
-			 $(".background").addClass("hidden");
-			$(".call_add").addClass("hidden");
-			$(".keyboard_call_enter").val("1"); 
-		}));
 		
 	</script>
 </body>
