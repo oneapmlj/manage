@@ -229,7 +229,7 @@
 						</div>
 						<div style="width:100px;float:left;"><input class="from_chaxun hand" type="button" value="查询"/></div>
 					</div>
-					<div style="margin-top:5px;width:1200px;margin-left:auto;margin-right:auto;">
+					<div style="margin-top:5px;width:1200px;margin-left:auto;margin-right:auto;float:left;">
 						<div style="float:left;height:30px;width:120px;">
 							<select id="duandian_zidingyishijian_from">
 								<option value="1">所有</option>

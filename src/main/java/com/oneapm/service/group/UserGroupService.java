@@ -8,10 +8,12 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
-import com.oneapm.dao.info.impl.InfoDaoImpl;
 //import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dao.group.impl.UserGroupDaoImpl;
+import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
+import com.oneapm.dao.info.impl.InfoDaoImpl;
+import com.oneapm.dao.opt.impl.AddDaoImpl;
+import com.oneapm.dto.App;
 import com.oneapm.dto.UserGroup;
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.Zhengzailianxi;
@@ -775,40 +777,47 @@ public class UserGroupService extends OneTools {
 		return userGroups.getLevel();
 	}
 	@SuppressWarnings("null")
-	public static List<UserGroups> search(String email, String name, String phone, String company, String qq, boolean in, String userId) {
-        List<UserGroups> userGroupsList = UserGroupsDaoImpl.getInstance().searchByCompany(company);
-        List<Info> infos = InfoDaoImpl.getInstance().search(email, name, phone, qq, in, userId);
-        if(userGroupsList==null){
-        	userGroupsList = new ArrayList<UserGroups>();
-        }
-        if(infos!=null && !infos.isEmpty()){
-        for (int i = 0; i < infos.size(); i++) {
-        	UserGroup userGroup = findUsersByUserId(infos.get(i).getUserId());
-        	if(userGroup!=null){
-        	if(userGroup.getRole().equals("admin")){
-        		UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(userGroup.getGroupId());
-        		userGroupsList.add(userGroups);
-        	}
-        }
-        }
-        }
-        
-        for (int i = 0; i < userGroupsList.size(); i++) {
-                initTag(userGroupsList.get(i));
-        }
-        return userGroupsList;
-}
+        public static List<UserGroups> search(String email, String name, String phone, String company, String qq, boolean in, String userId, Long appId, int agent) {
+                List<UserGroups> userGroupsList = UserGroupsDaoImpl.getInstance().searchByCompany(company);
+                List<Info> infos = InfoDaoImpl.getInstance().search(email, name, phone, qq, in, userId);
+                App app = AddDaoImpl.getInstance().findById(appId, agent);
+                if (userGroupsList == null) {
+                        userGroupsList = new ArrayList<UserGroups>();
+                }
+                if (infos != null && !infos.isEmpty()) {
+                        for (int i = 0; i < infos.size(); i++) {
+                                UserGroup userGroup = findUsersByUserId(infos.get(i).getUserId());
+                                if (userGroup != null) {
+                                        if (userGroup.getRole().equals("admin")) {
+                                                UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(userGroup.getGroupId());
+                                                userGroupsList.add(userGroups);
+                                        }
+                                }
+                        }
+
+                }
+                if(app != null){
+                        UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(app.getUserId());
+                        if(userGroups != null){
+                                userGroupsList.add(userGroups);
+                        }
+                }
+                for (int i = 0; i < userGroupsList.size(); i++) {
+                        initTag(userGroupsList.get(i));
+                }
+                return userGroupsList;
+	}
 	
 	 @SuppressWarnings("unchecked")
-     public static String searchOut(String email, String name, String phone, String company, boolean in, Admin admin, String qq, String userId) {
+     public static String searchOut(String email, String name, String phone, String company, boolean in, Admin admin, String qq, String userId, int agent, Long appId) {
              JSONObject object = new JSONObject();
              try {
                      object.put("status", 0);
                      List<UserGroups> userGroupsList = null;
-                     if ((email == null || email.trim().equals("")) && (name == null || name.trim().equals("")) && (phone == null || phone.trim().equals("")) && (company == null || company.trim().equals("")) && (qq == null || qq.trim().equals(""))&& (userId == null || userId.trim().equals(""))) {
+                     if ((email == null || email.trim().equals("")) && (name == null || name.trim().equals("")) && (phone == null || phone.trim().equals("")) && (company == null || company.trim().equals("")) && (qq == null || qq.trim().equals(""))&& (userId == null || userId.trim().equals(""))&&appId == null) {
                              return object.toJSONString();
                      } else {
-                    	 userGroupsList = search(email, name, phone, company, qq, in, userId);
+                    	 userGroupsList = search(email, name, phone, company, qq, in, userId, appId, agent);
                              if (userGroupsList == null || userGroupsList.size() <= 0) {
                                      return object.toJSONString();
                              }

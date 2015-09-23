@@ -68,7 +68,6 @@
 								<div style="float:left;width:45px;">目标：</div>
 								<select id="view_mail_to" class="hand" style="width:165px;float:left;height:25px;margin-top:10px;">
 									<option value="0">${info.email }</option>
-									<option value="1">所有注册用户</option>
 									<option value="2">所有白名单用户</option>
 									<option value="3">MI用户</option>
 									<option value="4">MI用户Android</option>
@@ -101,6 +100,15 @@
 						<div style="width:220px;float:left;height:40px;font-size:14px;line-height:40px;">
 							<div style="float:left;width:45px;">发件：</div>
 							<input style="width:160px;float:left;height:16px;margin-top:10px;"  type="text" id="view_mail_from" value="${admin.email }"/>
+						</div>
+						<div style="width:220px;float:left;height:40px;font-size:14px;line-height:40px;">
+							<div style="float:left;width:45px;">保存：</div>
+							<select style="width:160px;float:left;height:16px;margin-top:10px;" id="view_mail_baocun">
+								<option value="0">不保存</option>
+								<option value="1">保存</option>
+								<option value="2">排除保存</option>
+								<option value="3">清零</option>
+							</select>
 						</div>
 						<div style="width:220px;float:left;height:120px;font-size:14px;">
 							<div style="float:left;width:200px;line-height:30px;">自定义内容：</div>
@@ -289,15 +297,15 @@
 				var content = $("#mail_content").html();
 				var title = $("#view_mail_title").val();
 				var to = $("#view_mail_to").val();
-				var from = $("#view_mail_from").val();
 				var lable = $("#view_mail_label").val();
-				
+				var from = $("#view_mail_from").val();
+				var baocun = $("#view_mail_baocun").val();
 				$(".view_mail_send").val("正在发送.....");
 				$.ajax({
 					type:"POST",
 					dataType:'json',
 					url:'mail_sendSingle.action',
-					data:{mode:mode,infoId:infoId,mailContent:content,title:title,to:to,from:from,lable:lable},
+					data:{mode:mode,infoId:infoId,mailContent:content,title:title,to:to,from:from,lable:lable,baocun:baocun},
 					contentType:'application/x-www-form-urlencoded; charset=UTF-8'
 				}).done(function(da){
 					if(da.status == 1){
