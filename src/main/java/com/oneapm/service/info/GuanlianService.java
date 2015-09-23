@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oneapm.dao.group.impl.UserGroupsDaoImpl;
 import com.oneapm.dao.info.impl.GuanlianDaoImpl;
-import com.oneapm.dao.info.impl.InfoDaoImpl;
 import com.oneapm.dto.info.Guanlian;
 import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
@@ -22,7 +22,7 @@ public class GuanlianService {
                         if(userId == null){
                                 return  OneTools.getResult(0, "必须是注册用户");
                         }
-                        if(!InfoDaoImpl.getInstance().exist(guanlianId)){
+                        if(!UserGroupsDaoImpl.getInstance().exist(guanlianId)){
                         	return OneTools.getResult(0, guanlianId+"关联账号不存在，请核对后添加");
                         }
                         if(!GuanlianDaoImpl.getInstance().exist(userId, guanlianId)){

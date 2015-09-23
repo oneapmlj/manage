@@ -57,7 +57,7 @@ $(document).ready(function(){
 					}
 					html +="<td></td> "
 						+"<td>"+userGroupsList[i].groupId+"</td> "
-						+"<td>"+name+"</td> "
+						+"<td>"+userGroupsList[i].name+"</td> "
 						+"<td>"+userGroupsList[i].company+"</td> "
 						+"<td>"+userGroupsList[i].project+"</td> "
 						+"<td>"+userGroupsList[i].comming+"</td> "
