@@ -1161,12 +1161,9 @@
 		var userId =${info.userId };
 		var infoId =${info.id };
 		var groupId =$("#group_id").html();
-		var arr = [];
 		
 		$(document).ready(function(){
 			
-		
-		
 			$("#add").click(function(){
 				var title = $("#title").val();
 				var id = $("#mode_id").val();
@@ -1197,11 +1194,13 @@
 			$(".background").addClass("hidden");
 		});
 		
-		$("#add_call_window_close").click(function(){
-			$(".background").addClass("hidden");
+		$("#add_call_window_close").live("click",(function(){
+			
+		
+			 $(".background").addClass("hidden");
 			$(".call_add").addClass("hidden");
-			$(".keyboard_call_enter").val("1");
-		});
+			$(".keyboard_call_enter").val("1"); 
+		}));
 		
 	</script>
 </body>
