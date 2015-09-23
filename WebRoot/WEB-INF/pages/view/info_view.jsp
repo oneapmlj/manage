@@ -1155,8 +1155,6 @@
 			});
 		};
 		language();
-		var userId =${info.userId };
-		var infoId =${info.id };
 		var groupId =$("#group_id").html();
 		
 		$(document).ready(function(){
