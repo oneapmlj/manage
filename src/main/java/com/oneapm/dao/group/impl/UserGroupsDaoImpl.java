@@ -406,4 +406,16 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
           }
           return userGroups;
   }
+	  
+	  public boolean exist(Long userId) {
+          try {
+                  DBObject object = new BasicDBObject();
+                  object.put("group_id", userId);
+                  DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                  return cursor.hasNext();
+          } catch (Exception e) {
+                  LOG.error(e.getMessage(), e);
+          }
+          return false;
+  }
 }

@@ -28,6 +28,7 @@ import com.oneapm.service.account.AccountService;
 import com.oneapm.service.account.PayService;
 import com.oneapm.service.info.AppService;
 import com.oneapm.service.info.GuanlianService;
+import com.oneapm.service.info.InfoService;
 import com.oneapm.service.info.KFService;
 import com.oneapm.service.info.MarkService;
 import com.oneapm.service.info.TagService;
@@ -265,7 +266,6 @@ public class UserGroupService extends OneTools {
 				}
 			}
 			}
-			
 			if (userGroups.getCalls() != null) {
 				value.put("calls", CallService.getArrayFromCall(userGroups.getCalls()));
 			}
@@ -816,6 +816,16 @@ public class UserGroupService extends OneTools {
                      if (userGroupsList != null) {
                              for (UserGroups userGroups : userGroupsList) {
                                      power(admin.getId(), admin.getGroup(), userGroups);
+                                     List<UserGroup> userGroupList = UserGroupService.findUsersByGroupId(userGroups.getGroupId());
+                                     if(userGroupList!=null){
+                                	 for(UserGroup userGroup : userGroupList){
+                                		 Info info = InfoService.findByUserIdSimple(userGroup.getUserId());
+                                		 if(info!=null){
+                                		 userGroup.setInfo(info);
+                                		 }
+                                	 }
+                                     }
+                                	 userGroups.setUserGroups(userGroupList);
                              }
                      }
                      JSONArray array = getArrayFromUserGroups(userGroupsList);
