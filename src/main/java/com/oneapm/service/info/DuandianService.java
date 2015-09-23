@@ -1,5 +1,6 @@
 package com.oneapm.service.info;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -74,7 +75,7 @@ public class DuandianService {
                 }
                 return OneTools.getResult(0, "服务器内部错误，请联系管理员");
         }
-        public static String chaxun(Long fatherId){
+        public static String chaxun(Long fatherId, String start, String end){
                 try{
                         List<String> args1 = new ArrayList<String>();
                         List<Object> args2 = new ArrayList<Object>();
@@ -82,8 +83,19 @@ public class DuandianService {
                         if(lable == null){
                                 return OneTools.getResult(0, "分类不存在");
                         }
-                        List<UserGroups> groups = UserGroupService.findByComming(lable.getFrom());
-//                        List<Info> infos = InfoService.findByFrom(lable.getFrom());
+                        List<UserGroups> groups = null;
+                        if(start != null && end != null && start.trim().length() > 0 && end.trim().length()>0){
+                                try{
+                                        if(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(end).getTime() <= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(start).getTime()){
+                                                return OneTools.getResult(0, "时间区间有误");
+                                        }
+                                }catch(Exception e){
+                                        return OneTools.getResult(0, "服务器内部错误");
+                                }
+                                groups = UserGroupService.findByComming(lable.getFrom(), start, end);
+                        }else{
+                                groups = UserGroupService.findByComming(lable.getFrom(), null, null);
+                        }
                         for(int i=0;i<groups.size();i++){
                                 if(!groups.get(i).getComming().startsWith(lable.getFrom())){
                                         groups.remove(i);

@@ -48,13 +48,15 @@ public class DuandianAction extends SupportAction {
                 return "index";
         }
 
+        private String startTime;
+        private String endTime;
         public void chaxun() throws IOException {
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
                 }
                 try {
                         if(fatherId != null && fatherId > 0){
-                                String result = DuandianService.chaxun(fatherId);
+                                String result = DuandianService.chaxun(fatherId, startTime, endTime);
                                 getServletResponse().getWriter().print(result);
                                 return;
                         }
@@ -367,5 +369,21 @@ public class DuandianAction extends SupportAction {
 
         public void setYuanType(int yuanType) {
                 this.yuanType = yuanType;
+        }
+
+        public String getStartTime() {
+                return startTime;
+        }
+
+        public void setStartTime(String startTime) {
+                this.startTime = startTime;
+        }
+
+        public String getEndTime() {
+                return endTime;
+        }
+
+        public void setEndTime(String endTime) {
+                this.endTime = endTime;
         }
 }

@@ -105,11 +105,17 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 		return null;
 	}
 
-	public List<UserGroups> findByComming(String comming) {
+	public List<UserGroups> findByComming(String comming, String start, String end) {
+	        List<UserGroups> groups = new ArrayList<UserGroups>();
 		try {
 			DBObject object = new BasicDBObject("comming", comming);
+			if(start != null ){
+			        BasicDBList list = new BasicDBList();
+			        list.add(new BasicDBObject("create_time", new BasicDBObject("$gte", start)));
+			        list.add(new BasicDBObject("create_time", new BasicDBObject("$lt", end)));
+			        object.put("$and", list);
+			}
 			DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
-			List<UserGroups> groups = new ArrayList<UserGroups>();
 			while (cursor.hasNext()) {
 				groups.add(findComplicatedGroupsByObject(cursor.next()));
 			}
@@ -117,7 +123,7 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
-		return null;
+		return groups;
 	}
 
 	public UserGroups findById(Long groupId) {
@@ -149,20 +155,6 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 				ids.add(Long.parseLong(cursor.next().get("group_id").toString()));
 			}
 			return ids;
-		} catch (Exception e) {
-			LOG.error(e.getMessage(), e);
-		}
-		return null;
-	}
-
-	private UserGroups findUserGroupsByObject(DBObject object) {
-		try {
-			Long groupId = Long.parseLong(object.get("group_id").toString());
-			Long parentId = Long.parseLong(object.get("parent_id").toString());
-			int deleted = Integer.parseInt(object.get("deleted").toString());
-			String groupName = object.get("group_name").toString();
-			Long adminId = Long.parseLong(object.get("admin_id").toString());
-			return new UserGroups(groupId, adminId, groupName, parentId, deleted);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}

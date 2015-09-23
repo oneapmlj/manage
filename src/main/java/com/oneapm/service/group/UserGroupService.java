@@ -664,8 +664,8 @@ public class UserGroupService extends OneTools {
 		return OneTools.getResult(0, "服务器内部错误");
 	}
 
-	public static List<UserGroups> findByComming(String comming) {
-		return UserGroupsDaoImpl.getInstance().findByComming(comming);
+	public static List<UserGroups> findByComming(String comming, String start, String end) {
+		return UserGroupsDaoImpl.getInstance().findByComming(comming, start, end);
 	}
 
 	public static void initLanguage(UserGroups userGroups) {

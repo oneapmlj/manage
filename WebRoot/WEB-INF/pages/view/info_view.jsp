@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>${info.userId }</title>
+<title>${userGroups.groupId }</title>
 <link rel="stylesheet" href="${applicationScope.staticPath}skin/css/layout.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="${applicationScope.staticPath}skin/css/index.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="${applicationScope.staticPath}skin/css/view.css" type="text/css" media="screen" />
@@ -1194,7 +1194,7 @@
 			$(".background").addClass("hidden");
 		});
 		
-		$("#add_call_window_close").click(function(){
+		$("#add_call_window_close").live("click",function(){
 			$(".background").addClass("hidden");
 			$(".call_add").addClass("hidden");
 			$(".keyboard_call_enter").val("1");
