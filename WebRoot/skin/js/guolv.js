@@ -123,8 +123,6 @@ $(document).ready(function() {
 			start = $("#duandian_zidingyishijian_start_form").val();
 			end = $("#duandian_zidingyishijian_end_form").val();
 		}
-		start = start +" 00:00:00";
-		end = end + " 00:00:00";
 		$.ajax({
 			dataType:'json',
 			url:'duandian_chaxun.action',

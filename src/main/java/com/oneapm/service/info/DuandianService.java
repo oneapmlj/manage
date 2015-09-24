@@ -86,6 +86,8 @@ public class DuandianService {
                         List<UserGroups> groups = null;
                         if(start != null && end != null && start.trim().length() > 0 && end.trim().length()>0){
                                 try{
+                                        start = start + " 00:00:00";
+                                        end = end + " 00:00:00";
                                         if(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(end).getTime() <= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(start).getTime()){
                                                 return OneTools.getResult(0, "时间区间有误");
                                         }

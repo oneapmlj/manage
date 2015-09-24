@@ -31,7 +31,7 @@ public class SendMailAction extends SupportAction {
         protected static final Logger LOG = LoggerFactory.getLogger(SendMailAction.class);
         private int mode;
         private int to;
-        private String from;
+//        private String from;
         private Long infoId;
         private Long adminId;
         private MailDto mail;
@@ -151,6 +151,8 @@ public class SendMailAction extends SupportAction {
         private String mailContent;
         private String title;
         private Long lable;
+        private int baocun;
+        private String from;
         public void sendSingle() throws IOException {
                 if (!isLogin()) {
                         getServletResponse().sendRedirect("/login.action");
@@ -165,7 +167,7 @@ public class SendMailAction extends SupportAction {
                         }
                 }
                 try {
-                        String result = SendMailService.sendSingle(infoId, mode, getAdmin(), mailContent,title, to, from, lable);
+                        String result = SendMailService.sendSingle(infoId, mode, getAdmin(), mailContent,title, to, baocun, lable, from);
                         getServletResponse().getWriter().print(result);
                         return;
                 } catch (Exception e) {
@@ -197,14 +199,6 @@ public class SendMailAction extends SupportAction {
 
         public void setTo(int to) {
                 this.to = to;
-        }
-
-        public String getFrom() {
-                return from;
-        }
-
-        public void setFrom(String from) {
-                this.from = from;
         }
 
         public int getMode() {
@@ -345,6 +339,22 @@ public class SendMailAction extends SupportAction {
 		public void setUserId(String userId) {
 			this.userId = userId;
 		}
+
+                public int getBaocun() {
+                        return baocun;
+                }
+
+                public void setBaocun(int baocun) {
+                        this.baocun = baocun;
+                }
+
+                public String getFrom() {
+                        return from;
+                }
+
+                public void setFrom(String from) {
+                        this.from = from;
+                }
         
 
 }

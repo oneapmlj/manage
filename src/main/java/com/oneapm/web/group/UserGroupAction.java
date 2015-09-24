@@ -321,6 +321,8 @@ public class UserGroupAction extends SupportAction{
      private String phone;
      private String name;
      private String company;
+     private int agent;
+     private Long appId;
      public void searchOut() throws IOException {
          if (!isLogin()) {
                  getServletResponse().sendRedirect("/login.action");
@@ -339,7 +341,7 @@ public class UserGroupAction extends SupportAction{
          if(userId!=null){
         	 userIdStr = userId.toString();
          }
-         String result = UserGroupService.searchOut(email, name, phone, company, in, getAdmin(), qq , userIdStr);
+         String result = UserGroupService.searchOut(email, name, phone, company, in, getAdmin(), qq , userIdStr, agent, appId);
          getServletResponse().getWriter().print(result);
  }
      
@@ -673,6 +675,22 @@ public class UserGroupAction extends SupportAction{
 	public void setCompany(String company) {
 		this.company = company;
 	}
+
+        public int getAgent() {
+                return agent;
+        }
+
+        public void setAgent(int agent) {
+                this.agent = agent;
+        }
+
+        public Long getAppId() {
+                return appId;
+        }
+
+        public void setAppId(Long appId) {
+                this.appId = appId;
+        }
 	
      
 }

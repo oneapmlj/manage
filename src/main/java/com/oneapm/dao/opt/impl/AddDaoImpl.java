@@ -152,6 +152,21 @@ public class AddDaoImpl extends DaoImplBase<App> {
                 }
                 return null;
         }
+        
+        public App findById(Long appId, int agent) {
+                try {
+                        DBObject object = new BasicDBObject();
+                        object.put("app_id", appId);
+                        object.put("agent", agent);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+                        if (cursor.hasNext()) {
+                                return getInfoFromResult(cursor.next());
+                        }
+                } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
+                }
+                return null;
+        }
 
         public App findAddTime(Long userId) {
                 try {

@@ -13,9 +13,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.oneapm.dao.DaoImplBase;
 import com.oneapm.dto.UserGroups;
-import com.oneapm.dto.group.Group;
 
-public class UserGroupsDaoImpl extends DaoImplBase<Group> {
+public class UserGroupsDaoImpl extends DaoImplBase<UserGroups> {
 	protected static final Logger LOG = LoggerFactory.getLogger(UserGroupsDaoImpl.class);
 	protected final String TABLE_NAME = "groups";
 
@@ -27,6 +26,20 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 
 	public static UserGroupsDaoImpl getInstance() {
 		return Instance;
+	}
+	
+	public List<UserGroups> findAll(){
+	        try{
+	                List<UserGroups> userGroups = new ArrayList<UserGroups>();
+	                DBCursor cursor = getDBCollection(TABLE_NAME).find();
+	                while(cursor.hasNext()){
+	                        userGroups.add(findComplicatedGroupsByObject(cursor.next()));
+	                }
+	                return userGroups;
+	        }catch(Exception e){
+	                LOG.error(e.getMessage(), e);
+	        }
+	        return null;
 	}
 	
 	public long countAdminId(Long adminId){
@@ -234,7 +247,7 @@ public class UserGroupsDaoImpl extends DaoImplBase<Group> {
 			}
 			int emailStatus = 0;
 			try {
-				emailStatus = Integer.parseInt(object.get("emailStatus").toString());
+				emailStatus = Integer.parseInt(object.get("email_status").toString());
 			} catch (Exception e) {
 			}
 			String expireTime = null;

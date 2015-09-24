@@ -14,6 +14,8 @@ $(document).ready(function(){
 		var name = $("#search_name").val();
 		var email = $("#search_email").val();
 		var phone = $("#search_phone").val();
+		var appId = $("#search_appId").val();
+		var agent = $("#search_appId_agent").val();
 		/*var metric = $("#search_metric").val();
 		var loudou = $("#search_loudou").val();*/
 		/*var language = $("#search_language").val();*/
@@ -21,7 +23,7 @@ $(document).ready(function(){
 		var userId = $("#search_userId").val();
 		if((company == null || company.trim()=="") && (name == null || name.trim()=="") &&
 				(email == null || email.trim()=="") && (phone == null || phone.trim()=="") && (qq == null || qq.trim()=="")
-				&& (userId == null || userId.trim()=="")){
+				&& (userId == null || userId.trim()=="") &&(appId == null || appId.trim()=="")  ){
 			$(".search_result_msg").html("请输入搜索条件");
 			return;
 		}
@@ -31,6 +33,8 @@ $(document).ready(function(){
 		o["phone"] = phone;
 		o["qq"] = qq;
 		o["userId"] = userId;
+		o["appId"] = appId;
+		o["agent"] = agent;
 		$(".search_result_msg").html("搜索中……");
 		$(this).removeClass('search_button');
 		$(this).addClass('search_button_un');

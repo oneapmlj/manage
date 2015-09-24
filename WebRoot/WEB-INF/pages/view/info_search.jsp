@@ -32,6 +32,20 @@
 						<div style="hieght:30px;margin:5px 0 0 0;width:220px;float:left;">电话：<input style="width:170px;" class="hand" type="text" id="search_phone"/></div>
 						<div style="hieght:30px;margin:5px 0 0 0;width:220px;float:left;">QQ：<input style="width:170px;" class="hand" type="text" id="search_qq"/></div>
 						<div style="margin:5px 0 0 0;width:220px;float:left;">UserID:<input style="width:170px;" class="hand" type="text" id="search_userId"/></div>
+						<div style="margin:5px 0 0 0;width:220px;float:left;">appId:<input style="width:170px;" class="hand" type="text" id="search_appId"/></div>
+						<div style="margin:5px 0 0 0;width:220px;float:left;">语言:<select style="width:170px;" class="hand"  id="search_appId_agent">
+						<option value="1">java</option>
+						<option value="2">php</option>
+						<option value="3">nodejs</option>
+						<option value="4">python</option>
+						<option value="5">dotnet</option>
+						<option value="6">ruby</option>
+						<option value="7">Android</option>
+						<option value="8">ios</option>
+						<option value="9">browser</option>
+						<option value="10">server</option>
+						<option value="12">ci</option>
+						</select></div>
 						<%-- <div style="hieght:30px;margin:5px 0 0 0;width:315px;float:left; line-height:30px;">
 							<div style="width:36px;float:left;height:30px;">标签:</div>
 							<div style="width:279px;height:30px;float:left;">
