@@ -80,7 +80,6 @@ $(document).ready(function() {
 
 	function findMainAcount(){
 		
-		var infoId = $("#view_infoId").val();
 		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
@@ -119,7 +118,6 @@ $(document).ready(function() {
 			$("#guanlian_add_value").val("");
 			return;
 		}
-		var infoId = $("#view_infoId").val();
 		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
@@ -155,7 +153,6 @@ $(document).ready(function() {
 
 	$(".guanlian_remove").live("click",function(){
 		var id = $(this).prev().prev().html();
-		var infoId = $("#view_infoId").val();
 		var groupId = $("#group_id").html();
 		var statu = confirm("确认删除吗?");
 	        if(!statu){
@@ -179,7 +176,6 @@ $(document).ready(function() {
 	});
 	$(".guanlian_change").live("click",function(){
 		var id = $(this).prev().html();
-		var infoId = $("#view_infoId").val();
 		var groupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',

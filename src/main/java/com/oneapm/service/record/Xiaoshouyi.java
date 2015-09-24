@@ -114,7 +114,7 @@ public class Xiaoshouyi {
         public static Long post(UserGroups userGroups, String xiaoshou) {
         	UserGroup userGroupAdmin = null;
         	Info info = null;
-        		List<UserGroup> userGroupList = UserGroupService.findUsersByGroupId(userGroups.getAdminId());
+        		List<UserGroup> userGroupList = UserGroupService.findUsersByGroupId(userGroups.getGroupId());
         		for(UserGroup userGroup: userGroupList){
         			if(userGroup.getRole().equals("admin")){
         				userGroupAdmin = userGroup;
@@ -173,7 +173,7 @@ public class Xiaoshouyi {
                         try{
                                 if(xiaoshou != null && xiaoshou.trim().length() > 0){
                                         record.put("dbcVarchar5", xiaoshou);
-                                }else if(info.getSale() != null&& info.getSale() > 0){
+                                }else if(userGroups.getSale() != null&& userGroups.getSale() > 0){
                                         Admin a = AccountService.findById(userGroups.getSale());
                                         if(a != null){
                                                 record.put("dbcVarchar5", a.getName());

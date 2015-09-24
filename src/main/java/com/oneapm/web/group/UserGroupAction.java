@@ -303,7 +303,7 @@ public class UserGroupAction extends SupportAction{
              }
              try{
                      if (xiaoshou != null) {
-                             /*xiaoshou = new String(xiaoshou.getBytes("ISO8859-1"), "UTF-8");*/
+                           /*  xiaoshou = new String(xiaoshou.getBytes("ISO8859-1"), "UTF-8");*/
                      }
                      if(!quanxian(getAdmin().getGrades(), getGRADE().getMap().get(116))){
                              getServletResponse().getWriter().print(OneTools.getResult(0, "权限不足"));

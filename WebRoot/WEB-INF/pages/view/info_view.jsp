@@ -1156,7 +1156,7 @@
 		};
 		language();
 		var groupId =$("#group_id").html();
-		
+		var userId = groupId;
 		$(document).ready(function(){
 			
 			$("#add").click(function(){
