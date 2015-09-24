@@ -157,15 +157,19 @@ public class UserGroupService extends OneTools {
 
 	public static UserGroups findByGroupIdSingle(Long groupId) {
 		UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(groupId);
+		if(userGroups!=null){
 		initUserGroups(userGroups);
+		}
 		return userGroups;
 	}
 	
 	public static UserGroups findByGroupIdInitTagAndLan(Long groupId) {
 		UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(groupId);
+		if(userGroups!=null){
 		initTag(userGroups);
 		initLanguage(userGroups);
 		initSupport(userGroups);
+		}
 		return userGroups;
 	}
 

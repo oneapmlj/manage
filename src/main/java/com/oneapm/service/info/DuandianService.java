@@ -952,7 +952,11 @@ public class DuandianService {
                                                                                         }
                                                                                 }
                                                                         }
-                                                                        groups.add(UserGroupsDaoImpl.getInstance().findByAdminId(logins.get(i)));
+                                                                        
+                                                                        UserGroups userGroups = UserGroupService.findByGroupIdInitTagAndLan(logins.get(i));
+                                                                        if(userGroups!=null){
+                                                                        	groups.add(userGroups);
+                                                                        }
                                                                 }
                                                         }
                                                 }else{
