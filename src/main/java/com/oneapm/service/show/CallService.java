@@ -1,5 +1,6 @@
 package com.oneapm.service.show;
 
+import java.util.Date;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -267,7 +268,7 @@ public class CallService {
                         if (call == null) {
                                 throw new DataException();
                         }
-                        userGroups.setContectTime(putTime);
+                        userGroups.setContectTime(TimeTools.format());
                         UserGroupsDaoImpl.getInstance().update_contectTime(userGroups);
                         TaskService.dealWithGroupId(userGroups.getGroupId(), admin.getId(), call.getCallId());
                         JSONObject value = getJSONFromCall(call);
