@@ -161,9 +161,9 @@
 	<script type="text/javascript">
 		/* var touch = "<p>&nbsp;&nbsp;&nbsp;&nbsp;为了能进一步了解您的需求，更好的使用我们的产品，我将于$[touch_time]给您致电，如果时间不合适，请回复我您的方便时间。</p>"; */
 		/* var sign = "<p>&nbsp;&nbsp;&nbsp;&nbsp;您在$[sign_time]注册成为我们的客户，但是并没有使用，是否在使用过程中遇到了困难。OneAPM部署无需改动代码，1分钟就可以完成</p>"; */
-		var touch = "<tr><td style='font-size:16px;font-family:微软雅黑,黑体,arial;line-height:24px;padding-bottom: 15px;'>为了能进一步了解您的需求，更好的使用我们的产品，我将于<strong style='color:rgb(26, 167, 42)'>$[touch_time]</strong> 给您致电，如果时间不合适，请回复我您方便的时间。</td></tr>";
-		var sign = "<tr><td style='font-size:16px;font-family:微软雅黑,黑体,arial;line-height:24px;padding-bottom: 15px;'>您在<strong style='color:rgb(26, 167, 42);'>$[sign_time]</strong> 注册成为我们的客户，但是并没有使用，是否在使用过程中遇到了困难？我们很关心您的使用体验，期待您的回复。</td></tr>";
-		var zidingyi = "<tr><td style='font-size:16px;font-family:微软雅黑,黑体,arial;line-height:24px;padding-bottom: 15px;'>$[zidingyi]</td></tr>";
+		var touch = "<tr><td style="padding-top:20px;padding-bottom:15px;font:14px/24px '微软雅黑','黑体',arial;">为了能进一步了解您的需求，更好的使用我们的产品，我将于<strong style='color:rgb(26, 167, 42)'>$[touch_time]</strong> 给您致电，如果时间不合适，请回复我您方便的时间。</td></tr>";
+		var sign = "<tr><td style="padding-top:20px;padding-bottom:15px;font:14px/24px '微软雅黑','黑体',arial;">您在<strong style='color:rgb(26, 167, 42);'>$[sign_time]</strong> 注册成为我们的客户，但是并没有使用，是否在使用过程中遇到了困难？我们很关心您的使用体验，期待您的回复。</td></tr>";
+		var zidingyi = "<tr><td style="padding-top:20px;padding-bottom:15px;font:14px/24px '微软雅黑','黑体',arial;">$[zidingyi]</td></tr>";
 		function findNameById(){
 			var id = $("#view_mail_to").find("option:selected").attr("id");
 			$.ajax({
