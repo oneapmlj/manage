@@ -148,8 +148,7 @@
 				<%-- <div style="float:left;width:340px;"><div style="float:left;width:48px;">姓名：</div>
 					<div style="float:left;" ><span >${info.name }</span></div>
 				</div> --%>
-				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:90px;">GroupId：</div>
-					<div style="float:left;"><span  id="group_id">${userGroups.groupId }</span></div>
+				<div style="margin-left:20px;width:380px;float:left;"><div style="float:left;width:300px;">GroupId:<span  id="group_id">${userGroups.groupId }</span></div>
 					
 				</div>
 				<div style="float:left;width:340px;"><div style="float:left;width:80px;">用户状态：</div>
@@ -199,17 +198,17 @@
 						<div style="float:left;font-size:14px;" class="blue hand click_edit_project_name">编辑</div>
 					</div> --%>
 					<div style="margin-left:20px;width:380px;float:left;">
-						<div style="float:left;width:340px;"><div style="float:left;width:48px;">姓名：</div>
+						<div style="float:left;width:340px;"><div style="float:left;width:48px;">姓名:</div>
 							<div style="float:left;" ><span class="name_name">${info.name }</span></div>
 							<input style="float:left;margin-top:3px;"  class="edit_name_name hidden"/>
 						</div>
 						<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_name_name">编辑</div>
 					</div>
 					<div class="boder_line" style="width:350px;margin-left:30px;float:left;"></div>
-					<s:if test="%{info.userId != null}"><div style="margin-left:20px;width:380px;float:left;">邮箱：<span  class="email ${info.userId}">${info.email }</span></div></s:if>
+					<s:if test="%{info.userId != null}"><div style="margin-left:20px;width:380px;float:left;">邮箱:<span  class="email ${info.userId}">${info.email }</span></div></s:if>
 					<s:else>
 						<div style="margin-left:20px;width:380px;float:left;">
-							<div style="float:left;width:340px;"><div style="float:left;width:48px;">邮箱：</div>
+							<div style="float:left;width:340px;"><div style="float:left;width:48px;">邮箱:</div>
 								<div style="float:left;" ><span class="email_name">${info.email }</span></div>
 								<input style="float:left;margin-top:3px;" class="edit_email_name hidden"/>
 							</div>
@@ -218,7 +217,7 @@
 					</s:else>
 					<div style="margin-left:20px;width:380px;float:left;">
 						<s:if test="%{info.zhengzailianxi != null && info.zhengzailianxi.adminId == admin.id}">
-							<div style="float:left;width:340px;"><div style="float:left;width:48px;">电话：</div>
+							<div style="float:left;width:340px;"><div style="float:left;width:48px;">电话:</div>
 								<div style="float:left;" ><span class="phone_name">${info.phone }</span></div>
 								<%-- <div style="float:left;" ><span class="phone_name_hidden hidden">联系可见</span></div> --%>
 								<input style="float:left;margin-top:3px;" class="edit_phone_name hidden"/>
@@ -226,7 +225,7 @@
 							<div style="float:left;font-size:14px;color:blue;" class="hand click_edit_phone_name">编辑</div>
 						</s:if>
 						<s:else>
-							<div style="float:left;width:340px;"><div style="float:left;width:48px;">电话：</div>
+							<div style="float:left;width:340px;"><div style="float:left;width:48px;">电话:</div>
 								<div style="float:left;" ><span >${info.phone }</span></div>
 								<%-- <div style="float:left;" ><span class="phone_name_hidden">联系可见</span></div>
 								<input style="float:left;margin-top:3px;" class="edit_phone_name hidden"/> --%>
@@ -235,7 +234,7 @@
 						</s:else>
 					</div>
 					<div style="margin-left:20px;width:380px;float:left;">
-						<div style="float:left;width:340px;"><div style="float:left;width:48px;">QQ：</div>
+						<div style="float:left;width:340px;"><div style="float:left;width:48px;">QQ:</div>
 							<div style="float:left;" ><span class="qq_name">${info.qq }</span></div>
 							<input style="float:left;margin-top:3px;" class="edit_qq_name hidden"/>
 						</div>
@@ -1038,6 +1037,7 @@
 			</div>
 		</div>
 	</div>
+	<a href="http://blueware.mikecrm.com/f.php?t=F63B5X" target="_blanck" style="position:fixed;z-index:999;right:-5px;bottom: 20px;display: inline-block;width: 20px;border-radius: 5px;color:white;font-size:14px;line-height:17px;background: #2476CE;box-shadow: 0 0 5px #666;word-wrap: break-word;padding: 10px 6px;border: 2px solid white;">申请延期</a>
 
 	<script src="${applicationScope.staticPath}skin/js/hideshow.js" type="text/javascript"></script>
 	<script src="${applicationScope.staticPath}skin/js/note.js" type="text/javascript"></script>

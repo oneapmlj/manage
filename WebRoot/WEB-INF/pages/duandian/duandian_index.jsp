@@ -208,9 +208,9 @@
 							<div id="export_excel" style="float:left;width:65px;height:20px;margin:5px 0 0 0;" class="menu_button biankuang_gray_ding hand">导出excel</div>
 						</div> 
 					</div>
-					<div style="float:left;width:1200px;height:30px;">
+					<!-- <div style="float:left;width:1200px;height:30px;">
 						<div class="duandian_result_msg" style="height:20px;line-hight:20px;font-size:16px;color:red;"></div>
-					</div>
+					</div> -->
 				</div>
 				<div style="width:1200px;float:left;" class="from hidden">
 					<div style="margin-top:20px;width:1200px;margin-left:auto;margin-right:auto;">
@@ -330,9 +330,9 @@
 						<div style="width:100px;float:left;"><input class="hand baobiao_chaxun" type="button" value="查询"/></div>
 					</div>
 				</div>
-				<!-- <div style="float:left;width:1200px;height:30px;">
+				<div style="float:left;width:1200px;height:30px;">
 					<div class="duandian_result_msg" style="height:20px;line-hight:20px;font-size:16px;color:red;"></div>
-				</div> -->
+				</div>
 				<div id="duandian_out" style="width:1200px;min-height:400px;float:left;">
 					<table class="tablesorter duandian_list" cellspacing="0"> 
 						<thead> 
