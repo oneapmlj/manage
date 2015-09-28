@@ -26,8 +26,8 @@ public class PayAction extends SupportAction {
 //                        Shouhui.fuze();
 //                        Xiaoshouyi.tuisongxiaoshouyi();
 //                        Shouhui.wajue();
-                       LOG.info("START LIANXUI");
-                        Shouhui.genzongbaobiao();
+//                       LOG.info("START LIANXUI");
+//                        Shouhui.genzongbaobiao();
 //                        Shouhui.xinxifugai();
 //                        LOG.info("START DIAOSHUJU");
 //                        Shouhui.diaoshujuliebiao();

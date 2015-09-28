@@ -362,118 +362,12 @@ public class TongjiService {
                                         }
                                 }
                                 break;
-                        /*case 7:
-                                byId = true;
-                                index.setName("重点用户");
-                                tags = TagService.findByTag(type);
-                                if (tags != null && tags.size() > 0) {
-                                        for (Tag tag : tags) {
-                                                ups.add(tag.getInfoId());
-                                        }
-                                }
-                                break;
-                        case 8:
-                                byId = true;
-                                index.setName("普通用户");
-                                tags = TagService.findByTag(type);
-                                if (tags != null && tags.size() > 0) {
-                                        for (Tag tag : tags) {
-                                                ups.add(tag.getInfoId());
-                                        }
-                                }
-                                break;
-                        case 9:
-                                byId = true;
-                                index.setName("未定义用户");
-                                tags = TagService.findByTag(type);
-                                if (tags != null && tags.size() > 0) {
-                                        for (Tag tag : tags) {
-                                                ups.add(tag.getInfoId());
-                                        }
-                                }
-                                break;
-                        case 10:
-                                byId = true;
-                                index.setName("已关闭用户");
-                                tags = TagService.findByTag(type);
-                                if (tags != null && tags.size() > 0) {
-                                        for (Tag tag : tags) {
-                                                ups.add(tag.getInfoId());
-                                        }
-                                }
-                                break;
-                        case 11:
-                                byId = true;
-                                index.setName("交流");
-                                tags = TagService.findByTag(type);
-                                if (tags != null && tags.size() > 0) {
-                                        for (Tag tag : tags) {
-                                                ups.add(tag.getInfoId());
-                                        }
-                                }
-                                break;
-                        case 12:
-                                byId = true;
-                                index.setName("测试");
-                                tags = TagService.findByTag(type);
-                                if (tags != null && tags.size() > 0) {
-                                        for (Tag tag : tags) {
-                                                ups.add(tag.getInfoId());
-                                        }
-                                }
-                                break;
-                        case 13:
-                                byId = true;
-                                index.setName("采购");
-                                tags = TagService.findByTag(type);
-                                if (tags != null && tags.size() > 0) {
-                                        for (Tag tag : tags) {
-                                                ups.add(tag.getInfoId());
-                                        }
-                                }
-                                break;
-                        case 14:
-                                byId = true;
-                                index.setName("完成");
-                                tags = TagService.findByTag(type);
-                                if (tags != null && tags.size() > 0) {
-                                        for (Tag tag : tags) {
-                                                ups.add(tag.getInfoId());
-                                        }
-                                }
-                                break;
-                        case 15:
-                                byId = true;
-                                index.setName("成单");
-                                tags = TagService.findByTag(type);
-                                if (tags != null && tags.size() > 0) {
-                                        for (Tag tag : tags) {
-                                                ups.add(tag.getInfoId());
-                                        }
-                                }
-                                break;
-                        case 16:
-                                byId = true;
-                                index.setName("输单");
-                                tags = TagService.findByTag(type);
-                                if (tags != null && tags.size() > 0) {
-                                        for (Tag tag : tags) {
-                                                ups.add(tag.getInfoId());
-                                        }
-                                }
-                                break;*/
                         default:
                                 break;
                         }
-//                        if (byId) {
-//                                index.setTodayUp(getInfosFromIds(ups, admin));
-//                                index.setTodayDown(getInfosFromIds(downs, admin));
-//                                index.setToday(getInfosFromIds(common, admin));
-//                        } else {
-                                index.setTodayUp(getInfosFromUserIds(ups, admin));
-                                index.setTodayDown(getInfosFromUserIds(downs, admin));
-                                index.setToday(getInfosFromUserIds(common, admin));
-//                        }
+                        index.setTodayUp(getInfosFromUserIds(ups, admin));
+                        index.setTodayDown(getInfosFromUserIds(downs, admin));
+                        index.setToday(getInfosFromUserIds(common, admin));
                         return index;
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
@@ -500,16 +394,27 @@ public class TongjiService {
         public static List<UserGroups> getInfosFromUserIds(List<Long> ids, Admin admin) {
                 if (ids == null || ids.size() <= 0)
                         return null;
-                List<UserGroups> groups = new ArrayList<UserGroups>();
-                for (Long id : ids) {
-                        try {
-                                UserGroups userGroups = UserGroupService.findByGroupIdInitTagAndLan(id);
-                                UserGroupService.power(admin.getId(), admin.getGroup(), userGroups);
-                                groups.add(userGroups);
-                        } catch (Exception e) {
+                JSONArray array = new JSONArray();
+                for(Long id: ids){
+                        array.add(id);
+                }
+                List<UserGroups> groups = UserGroupsDaoImpl.getInstance().findByArray(array);
+                for(UserGroups userGroups : groups){
+                        try{
+                                UserGroupService.init(userGroups, true, true, true, true, admin.getId(), admin.getGroup());
+                        }catch(Exception e){
                                 LOG.error(e.getMessage(), e);
                         }
                 }
+//                for (Long id : ids) {
+//                        try {
+//                                UserGroups userGroups = UserGroupService.findByGroupIdInitTagAndLan(id);
+//                                UserGroupService.power(admin.getId(), admin.getGroup(), userGroups);
+//                                groups.add(userGroups);
+//                        } catch (Exception e) {
+//                                LOG.error(e.getMessage(), e);
+//                        }
+//                }
                 return groups;
         }
 
