@@ -1,7 +1,10 @@
 package com.oneapm.web.info;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,9 +18,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.JOptionPane;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.struts2.ServletActionContext;
 import org.json.JSONObject;
 
 import com.oneapm.dto.Call;
@@ -752,72 +757,6 @@ public class InfoAction extends SupportAction {
         	 getServletResponse().getWriter().print("OK");
         }
         
-        private String ids;
-        
-
-		public String getIds() {
-			return ids;
-		}
-
-		public void setIds(String ids) {
-			this.ids = ids;
-		}
-
-		@SuppressWarnings("unused")
-		public String exportExcel() throws IOException  {
-			List<Info> infoList = new ArrayList<Info>();
-        	 if (!isLogin()) {
-                 return "login";
-         }
-        	 String[] sl = ids.split(",");
-        	 for(String s : sl){
-        		 userGroups = UserGroupService.findByGroupIdInitTagAndLan(Long.parseLong(s));
-        		 info = InfoService.findByUserId(userGroups.getAdminId(),getAdmin());
-        		 infoList.add(info);
-        	 }
-        	 
-        	 HSSFWorkbook result = null;
-        	 javax.servlet.ServletOutputStream out = response.getOutputStream();
-        	 ByteArrayOutputStream os =null;
-        	 InputStream in = null;
-        	 SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-			 String fileName = "" + df.format(new Date()) + ".xls";
-			 response = getServletResponse();
-			 response.reset();
-			 response.setContentType("application/vnd.ms-excel");
-			 response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
-			try {
-				os = new ByteArrayOutputStream();
-				result = ExportExcelService.exportExcelJson(infoList);
-				result.write(os);
-				byte[] b = os.toByteArray();
-				in = new ByteArrayInputStream(b);
-				byte[] content = new byte[1024];
-				int length = 0;
-				while ((length = in.read(content)) != -1) {
-				out.write(content, 0, length);
-				}
-				out.write(content);
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}finally{
-				 if(os != null){
-					 os.close();
-				    }
-				    if(in != null){
-				     in.close();
-				    }
-				out.flush();
-				out.close();
-			}
-			
-			return null;
-			
-            
-            
-    }
-		
 		  public void download_view() throws IOException{
               if (!isLogin()) {
                       getServletResponse().sendRedirect("/login.action");

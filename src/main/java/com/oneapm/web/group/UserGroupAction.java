@@ -1,14 +1,30 @@
 package com.oneapm.web.group;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.struts2.ServletActionContext;
 
 import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.UserGroup;
 import com.oneapm.dto.info.Guanlian;
 import com.oneapm.dto.info.Info;
 import com.oneapm.service.group.UserGroupService;
+import com.oneapm.service.info.ExportExcelService;
 import com.oneapm.service.info.GuanlianService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.record.Xiaoshouyi;
@@ -358,6 +374,67 @@ public class UserGroupAction extends SupportAction{
                  LOG.error(e.getMessage(), e);
          }
  }
+     
+     private String ids;
+     
+
+		public String getIds() {
+			return ids;
+		}
+
+		public void setIds(String ids) {
+			this.ids = ids;
+		}
+	private InputStream excelStream;
+	
+	
+	public InputStream getExcelStream() {
+		return excelStream;
+	}
+
+	public void setExcelStream(InputStream excelStream) {
+		this.excelStream = excelStream;
+	}
+
+	public void exportExcel() throws IOException {
+		List<Info> infoList = new ArrayList<Info>();
+		String[] sl = ids.split(",");
+		for (String s : sl) {
+			userGroups = UserGroupService.findByGroupIdInitTagAndLan(Long.parseLong(s));
+			info = InfoService.findByUserIdSimple(userGroups.getGroupId());
+			infoList.add(info);
+		}
+
+		HSSFWorkbook result = null;
+		ByteArrayOutputStream os = null;
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+		String fileName = "" + df.format(new Date()) + ".xls";
+		response.reset();
+		response.setContentType("application/vnd.ms-excel,charset=ISO8859-1");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
+		try {
+			os = new ByteArrayOutputStream();
+			result = ExportExcelService.exportExcelJson(infoList);
+			result.write(os);
+			byte[] b = os.toByteArray();
+			excelStream = new ByteArrayInputStream(b);
+			byte[] content = new byte[1024];
+			int length = 0;
+			while ((length = excelStream.read(content)) != -1) {
+				bos.write(content, 0, length);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (os != null) {
+				os.close();
+			}
+			bos.flush();
+			bos.close();
+		}
+	}
 	public Long getGroupId() {
 		return groupId;
 	}

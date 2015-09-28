@@ -404,8 +404,7 @@
 </body>
 <script>
 $("#export_excel").click(function(){	
-	 var arr=[];
-	 $("#export_excel").html("导出中");
+	  var arr=[];
 	jQuery("#duandian_result tr").each(function() {
 		var id = $(this).attr("id");
 		arr.push(id+"");
@@ -420,13 +419,15 @@ $("#export_excel").click(function(){
 	    stringInt = stringInt+arr[i]+",";//连接符其实可以换的
 	}
 	stringInt = stringInt.substring(0,stringInt.length-1);
-	  $.ajax({
+	  /* $.ajax({
 		 	type:"post",
 			dataType:'json',
-			url:'info_exportExcel.action',
+			url:'user_group_exportExcel.action',
 			data:{"ids":stringInt}
 		}).done(function(data){
+			window.localtion.href ="user_group_exportExcel.action?ids=stringInt";
 				 $("#export_excel").html("导出excel");
-		})  
+		})  */ 
+	window.open("user_group_exportExcel.action?ids="+stringInt+"");
 })</script>
 </html>
