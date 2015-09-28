@@ -161,7 +161,9 @@ public class UserGroupsDaoImpl extends DaoImplBase<UserGroups> {
 	                }
 	                DBObject object = new BasicDBObject();
 	                object.put("group_id", new BasicDBObject("$in", array));
-	                DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+	                DBObject sort = new BasicDBObject();
+	                sort.put("create_time", -1);
+	                DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort);
 	                List<UserGroups> userGroups = new ArrayList<UserGroups>();
 	                while(cursor.hasNext()){
 	                        userGroups.add(findComplicatedGroupsByObject(cursor.next()));
