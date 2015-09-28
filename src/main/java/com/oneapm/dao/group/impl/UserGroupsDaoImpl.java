@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -151,6 +152,25 @@ public class UserGroupsDaoImpl extends DaoImplBase<UserGroups> {
 			LOG.error(e.getMessage(), e);
 		}
 		return null;
+	}
+	
+	public List<UserGroups> findByArray(JSONArray array){
+	        try{
+	                if(array == null || array.size() <=0){
+	                        return null;
+	                }
+	                DBObject object = new BasicDBObject();
+	                object.put("group_id", new BasicDBObject("$in", array));
+	                DBCursor cursor = getDBCollection(TABLE_NAME).find(object);
+	                List<UserGroups> userGroups = new ArrayList<UserGroups>();
+	                while(cursor.hasNext()){
+	                        userGroups.add(findComplicatedGroupsByObject(cursor.next()));
+	                }
+	                return userGroups;
+	        }catch(Exception e){
+	                LOG.error(e.getMessage(), e);
+	        }
+	        return null;
 	}
 
 	public List<Long> findByTime(String start, String end) {
