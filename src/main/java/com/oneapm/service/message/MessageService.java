@@ -163,7 +163,7 @@ public class MessageService {
         public static List<MessageVo> findVosAllByAdminId(Long adminId, int number, int skip) {
                 List<Message> messagesIsViewed = findByAdminIsViewed(adminId,number,skip);
                 List<Message> messagesUnView = findByAdminUnView(adminId);
-                if (messagesUnView == null || messagesUnView.size() <= 0 || messagesIsViewed == null || messagesIsViewed.size() <= 0)
+                if (messagesUnView == null && messagesUnView.size() <= 0 && messagesIsViewed == null && messagesIsViewed.size() <= 0)
                         return null;
                 List<MessageVo> vos = new ArrayList<MessageVo>();
                 for (Message message : messagesUnView) {
