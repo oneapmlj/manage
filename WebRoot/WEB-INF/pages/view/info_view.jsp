@@ -854,8 +854,7 @@
 							</div>
 							<div style="margin-left:15px;float:left;width:220px;font-size:12px;height:200px;">
 								<s:if test="%{userGroups.tag.description != null && userGroups.tag.description.length() > 0}">
-									<div style="width:190px;margin-left:15px;color:#4F4F4F;" id="view_edit_tag_description">
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${userGroups.tag.description}</div>
+									<div style="width:190px;margin-left:15px;color:#4F4F4F;" id="view_edit_tag_description">${userGroups.tag.description}</div>
 								</s:if>
 								<s:else><div style="width:190px;margin-left:15px;color:#4F4F4F;" id="view_edit_tag_description">未填写</div></s:else>
 								<textarea style="height:80px;width:200px;" class="hidden" id="view_edit_tag_description_val">${userGroups.tag.description}</textarea>

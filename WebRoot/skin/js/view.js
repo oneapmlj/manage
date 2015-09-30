@@ -1091,6 +1091,7 @@ $(document).ready(function() {
 			var category = $("#view_edit_tag_category_val").val();
 			var fuwuqi = $("#view_edit_tag_fuwuqi_val").val();
 			var from = $("#view_edit_tag_from_val").val();
+			description=description.replace(/\n|\r\n/g,"<br>");
 			$.ajax({
 				dataType:'json',
 				url:'tag_update.action',
@@ -1480,6 +1481,7 @@ $(document).ready(function() {
 		}
 		var cardId = $("#add_call_card").val();
 		var mark = $("#add_call_mark").val();
+		mark=mark.replace(/\n|\r\n/g,"<br>");
 		/*var qq = $("#call_add_qq").val();
 		var gongdan = $("#call_add_gongdan").val();
 		
