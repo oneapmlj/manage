@@ -239,11 +239,11 @@ $(document).ready(function() {
 			alert("请选择一种状态");
 			return;
 		}
-		var infoId = $("#view_infoId").val();
+		var userGroupId = $("group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_group.action',
-			data:{groupId:id,infoId:infoId}
+			url:'user_group_group.action',
+			data:{oldGroupId:id,groupId:userGroupId}
 		}).done(function(da){
 			if(da.status == 1){
 				var html = "<input val='"+da.group.id+"' type='button' class='group_area_1 biankuang_white_ding hand' style='float:left;width:110px;height:23px;line-height:20px;' value='"+da.group.name+"'/>";
@@ -287,11 +287,11 @@ $(document).ready(function() {
 			alert("请选择用户状态");
 			return;
 		}
-		var infoId = $("#view_infoId").val();
+		var userGroupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
-			url:'info_group.action',
-			data:{groupId:id,infoId:infoId}
+			url:'user_group_group.action',
+			data:{oldGroupId:id,groupId:userGroupId}
 		}).done(function(da){
 			if(da.status == 1){
 				var html = "<input type='button' class='group_area_2 biankuang_white_ding hand' style='float:left;width:110px;height:23px;line-height:20px;' value='"+da.group.name+"'/>";

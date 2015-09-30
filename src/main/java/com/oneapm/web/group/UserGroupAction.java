@@ -23,6 +23,7 @@ import com.oneapm.dto.UserGroups;
 import com.oneapm.dto.UserGroup;
 import com.oneapm.dto.info.Guanlian;
 import com.oneapm.dto.info.Info;
+import com.oneapm.service.group.GroupService;
 import com.oneapm.service.group.UserGroupService;
 import com.oneapm.service.info.ExportExcelService;
 import com.oneapm.service.info.GuanlianService;
@@ -435,6 +436,28 @@ public class UserGroupAction extends SupportAction{
 			bos.close();
 		}
 	}
+	
+    private Long oldGroupId;
+    /**
+     * 更改状态
+     * @throws IOException
+     */
+    public void group() throws IOException{
+            if (!isLogin()) {
+                    getServletResponse().sendRedirect("/login.action");
+                    return;
+            }
+            try{
+                    if(quanxian(getAdmin().getGrades(), getGRADE().getMap().get(117))){
+                            String result = GroupService.changeWithGroupId(groupId, oldGroupId, getAdmin().getId());
+                            getServletResponse().getWriter().print(result);
+                    }else{
+                            getServletResponse().getWriter().print(OneTools.getResult(0, "权限不足"));
+                    }
+            }catch(Exception e){
+                    LOG.error(e.getMessage(), e);
+            }
+    }
 	public Long getGroupId() {
 		return groupId;
 	}
@@ -768,6 +791,14 @@ public class UserGroupAction extends SupportAction{
         public void setAppId(Long appId) {
                 this.appId = appId;
         }
+
+		public Long getOldGroupId() {
+			return oldGroupId;
+		}
+
+		public void setOldGroupId(Long oldGroupId) {
+			this.oldGroupId = oldGroupId;
+		}
 	
      
 }

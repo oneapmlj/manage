@@ -78,6 +78,7 @@ public class GroupViewDaoImpl extends DaoImplBase<GroupView>{
 	                object.put("score", groupView.getScore());
 	                object.put("type_time", groupView.getTypeTime());
 	                object.put("change_time", groupView.getChangeTime());
+	                object.put("user_group_id", groupView.getUserGroupId());
 	                return getDBCollection(TABLE_NAME).insert(object).getN() > -1;
 	        }catch(Exception e){
 	                LOG.error(e.getMessage(), e);
@@ -94,6 +95,7 @@ public class GroupViewDaoImpl extends DaoImplBase<GroupView>{
 	                value.put("score", view.getScore());
 	                value.put("type_time", view.getTypeTime());
 	                value.put("change_time", view.getChangeTime());
+	                value.put("user_group_id", view.getUserGroupId());
 	                return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value)).getN() > -1;
 	        }catch(Exception e){
 	                LOG.error(e.getMessage(), e);

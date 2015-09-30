@@ -98,6 +98,47 @@ public class GroupService {
                 }
                 return OneTools.getResult(0, "服务器内部错误");
         }
+        
+        public static String changeWithGroupId(Long userGroupId, Long groupId, Long adminId){
+            try{
+                    String time = TimeTools.format();
+                    Group group = findById(groupId);
+                    if(group == null)return OneTools.getResult(0, "不存在该状态");
+                    GroupView view = GroupViewDaoImpl.getInstance().findByUserGroupId(userGroupId);
+                    if(view == null){
+                            view = new GroupView(null, groupId, 0, null, time, userGroupId);
+                            if(GroupViewDaoImpl.getInstance().insert(view)){
+                                    group.setTotal(group.getTotal()+ 1);
+                                    GroupDaoImpl.getInstance().update(group);
+                            }
+                            view = GroupViewDaoImpl.getInstance().findByUserGroupId(userGroupId);
+                    }else{
+                            if(view.getGroupId().equals(group.getId())){
+                                    return OneTools.getResult(0, "已经是这种状态啦");
+                            }
+                            Group groupbefore = findById(view.getGroupId());
+                            groupbefore.setTotal(groupbefore.getTotal()-1);
+                            group.setTotal(group.getTotal() + 1);
+                            GroupRecord record = new GroupRecord(null, view.getGroupId(), groupId, adminId, time);
+                            view.setChangeTime(time);
+                            view.setGroupId(groupId);
+                            view.setScore(0);
+                            view.setTypeTime(null);
+                            if(GroupViewDaoImpl.getInstance().update(view)){
+                                    GroupRecordDaoImpl.getInstance().insert(record);
+                                    GroupDaoImpl.getInstance().update(groupbefore);
+                                    GroupDaoImpl.getInstance().update(group);
+                            }
+                    }
+                    JSONObject object = new JSONObject();
+                    object.put("status", 1);
+                    object.put("group", getJSONFromGroup(group));
+                    return object.toJSONString();
+            }catch(Exception e){
+                    LOG.error(e.getMessage(), e);
+            }
+            return OneTools.getResult(0, "服务器内部错误");
+    }
         public static String insert(String name, String description, Long fatherId){
                 try{
                         Group group = new Group(null, fatherId, false, 0, 0, 1, name, description);

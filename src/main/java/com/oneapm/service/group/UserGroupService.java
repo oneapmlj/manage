@@ -812,7 +812,7 @@ public class UserGroupService extends OneTools {
                 if(app != null){
                         UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(app.getUserId());
                         if(userGroups != null){
-                                userGroupsList.add(userGroups);
+                        	userGroupsList.add(userGroups);
                         }
                 }
                 for (int i = 0; i < userGroupsList.size(); i++) {

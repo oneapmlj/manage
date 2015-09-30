@@ -186,6 +186,7 @@ public class InfoAction extends SupportAction {
                 }
         }
         private Long groupId;
+        private Long uGroupId;
         /**
          * 更改状态
          * @throws IOException
@@ -197,7 +198,7 @@ public class InfoAction extends SupportAction {
                 }
                 try{
                         if(quanxian(getAdmin().getGrades(), getGRADE().getMap().get(117))){
-                                String result = GroupService.change(infoId, groupId, getAdmin().getId());
+                                String result = GroupService.changeWithGroupId(uGroupId, groupId, getAdmin().getId());
                                 getServletResponse().getWriter().print(result);
                         }else{
                                 getServletResponse().getWriter().print(OneTools.getResult(0, "权限不足"));
@@ -1275,6 +1276,16 @@ public class InfoAction extends SupportAction {
 		public void setUserGroups(UserGroups userGroups) {
 			this.userGroups = userGroups;
 		}
+
+		public Long getuGroupId() {
+			return uGroupId;
+		}
+
+		public void setuGroupId(Long uGroupId) {
+			this.uGroupId = uGroupId;
+		}
+
+		
         
 
 }
