@@ -239,7 +239,7 @@ $(document).ready(function() {
 			alert("请选择一种状态");
 			return;
 		}
-		var userGroupId = $("group_id").html();
+		var userGroupId = $("#group_id").html();
 		$.ajax({
 			dataType:'json',
 			url:'user_group_group.action',
@@ -1104,7 +1104,6 @@ $(document).ready(function() {
 				}
 			});
 	});
-	
 	$(".biankuang_gray").live('mouseover', function(){
 		$(this).removeClass("biankuang_gray");
 		$(this).addClass("biankuang_blue");
@@ -1613,4 +1612,5 @@ $(document).ready(function() {
 		});
 	});
 });
+
 
