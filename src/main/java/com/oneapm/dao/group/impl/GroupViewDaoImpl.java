@@ -89,13 +89,12 @@ public class GroupViewDaoImpl extends DaoImplBase<GroupView>{
 	public boolean update(GroupView view){
 	        try{
 	                DBObject object = new BasicDBObject();
-	                object.put("info_id", view.getInfoId());
+	                object.put("user_group_id", view.getUserGroupId());
 	                DBObject value = new BasicDBObject();
 	                value.put("group_id", view.getGroupId());  
 	                value.put("score", view.getScore());
 	                value.put("type_time", view.getTypeTime());
 	                value.put("change_time", view.getChangeTime());
-	                value.put("user_group_id", view.getUserGroupId());
 	                return getDBCollection(TABLE_NAME).update(object, new BasicDBObject("$set", value)).getN() > -1;
 	        }catch(Exception e){
 	                LOG.error(e.getMessage(), e);
