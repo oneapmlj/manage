@@ -1104,7 +1104,6 @@ $(document).ready(function() {
 				}
 			});
 	});
-	
 	$(".biankuang_gray").live('mouseover', function(){
 		$(this).removeClass("biankuang_gray");
 		$(this).addClass("biankuang_blue");
@@ -1615,4 +1614,5 @@ $(document).ready(function() {
 		});
 	});
 });
+
 
