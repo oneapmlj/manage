@@ -134,11 +134,7 @@ public class AppService {
                         }
                         String time = TimeTools.getDateTime(30);
                         List<Aplication> apps = null;
-//                        if(app.getAgent() <= 6){
-                                apps = AppDataDaoImpl.getInstance().findByTimeList(time, appId, agent, agentId);
-//                        }else{
-//                                apps = AppDataMDaoImpl.getInstance().findByTimeList(time, appId);
-//                        }
+                        apps = AppDataDaoImpl.getInstance().findByTimeList(time, appId, agent, agentId);
                         if(apps == null || apps.size() <= 0){
                                 return OneTools.getResult(0, "无数据连续");
                         }
@@ -148,6 +144,8 @@ public class AppService {
                         for(Aplication aplication : apps){
                                 JSONObject object = new JSONObject();
                                 object.put("time", aplication.getDataTime().substring(0, 10));
+                                object.put("total", aplication.getTotal());
+                                object.put("agent_number", aplication.getAgentNumber());
                                 array.add(object);
                         }
                         args1.add("datas");

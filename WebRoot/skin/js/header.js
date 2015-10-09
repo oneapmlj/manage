@@ -304,6 +304,10 @@ var JmessageNum = function(number){
 				totango.track("guolv_click", "guolv"); 
 				window.location.href="duandian_index.action"; 
 			});
+			$(".click_to_paihangbang").live('click', function(){
+				totango.track("guolv_click", "guolv"); 
+				window.location.href="user_group_paihangbang.action"; 
+			});
 			$(".click_to_language").live('click', function(){
 				window.location.href="info_language.action"; 
 			})

@@ -449,6 +449,7 @@ public class UserGroupAction extends SupportAction{
             }
             try{
                     if(quanxian(getAdmin().getGrades(), getGRADE().getMap().get(117))){
+                            LOG.info("test step 1............................................"+groupId);
                             String result = GroupService.changeWithGroupId(groupId, oldGroupId, getAdmin().getId());
                             getServletResponse().getWriter().print(result);
                     }else{

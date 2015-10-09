@@ -312,7 +312,15 @@ public class AppDataDaoImpl extends DaoImplBase<Aplication> {
                         try{
                                 agentId = Long.parseLong(object.get("agent_id").toString());
                         }catch(Exception e){}
-                        ap = new Aplication(appId, agent, userId, dataTime, Language.getName(agent), agentId);
+                        int agentNumber = 0;
+                        try{
+                                agentNumber = Integer.parseInt(object.get("agent_number").toString());
+                        }catch(Exception e){}
+                        int total = 0;
+                        try{
+                                total = Integer.parseInt(object.get("total").toString());
+                        }catch(Exception e){}
+                        ap = new Aplication(appId, agent, userId, dataTime, Language.getName(agent), agentId, total, agentNumber);
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

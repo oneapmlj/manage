@@ -218,6 +218,7 @@ public class AccountAction extends SupportAction {
                 if (!isLogin()) {
                         return "login";
                 }
+                Shouhui.genzongbaobiao();
                 if (!getAdmin().getId().equals(99999999L)) {
                         session.put(SessionKeys.BACK_MESSAGE, "权限不够!");
                         return "account";
