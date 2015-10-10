@@ -54,8 +54,8 @@ public class UserGroupService extends OneTools {
 	public static List<UserGroup> findUsersByGroupId(Long groupId) {
 		return UserGroupDaoImpl.getInstance().findUsersByGroupId(groupId);
 	}
-	public static UserGroup findUsersByUserId(Long userId) {
-		return UserGroupDaoImpl.getInstance().findUsersByUserId(userId);
+	public static List<UserGroup> findUsersListByUserId(Long userId) {
+		return UserGroupDaoImpl.getInstance().findUsersListByUserId(userId);
 	}
 
 	public static boolean update_xiaoshouyi(UserGroups userGroups, String lableId) {
@@ -799,13 +799,11 @@ public class UserGroupService extends OneTools {
                 }
                 if (infos != null && !infos.isEmpty()) {
                         for (int i = 0; i < infos.size(); i++) {
-                                UserGroup userGroup = findUsersByUserId(infos.get(i).getUserId());
-                                if (userGroup != null) {
-                                        if (userGroup.getRole().equals("admin")) {
-                                                UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(userGroup.getGroupId());
-                                                userGroupsList.add(userGroups);
-                                        }
-                                }
+                        	List<UserGroup> userGroupList = findUsersListByUserId(infos.get(i).getUserId());
+                        		for(UserGroup userGroup : userGroupList){
+                                    UserGroups userGroups = UserGroupsDaoImpl.getInstance().findById(userGroup.getGroupId());
+                                    userGroupsList.add(userGroups);
+                        		}
                         }
 
                 }

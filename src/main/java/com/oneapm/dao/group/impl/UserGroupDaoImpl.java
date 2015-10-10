@@ -13,7 +13,7 @@ import com.oneapm.dao.DaoImplBase;
 import com.oneapm.dto.UserGroup;
 import com.oneapm.dto.group.Group;
 
-public class UserGroupDaoImpl extends DaoImplBase<Group>{
+public class UserGroupDaoImpl extends DaoImplBase<UserGroup>{
 		protected static final Logger LOG = LoggerFactory.getLogger(UserGroupDaoImpl.class);
 		protected final String TABLE_NAME = "user_group";
 		
@@ -57,13 +57,31 @@ public class UserGroupDaoImpl extends DaoImplBase<Group>{
 	                DBCursor cursor= getDBCollection(TABLE_NAME).find(object);
 	                if(cursor.hasNext()){	                	
 	                	 userGroup = findUserGroupsByObject(cursor.next());
-	               
 	                }
 	               
 	        }catch(Exception e){
 	                LOG.error(e.getMessage(), e);
 	        }
 	        return userGroup;
+		}
+		
+		public List<UserGroup> findUsersListByUserId(Long userId){
+			List<UserGroup> list = new ArrayList<UserGroup>();
+	        try{	
+	        		
+	                DBObject object = new BasicDBObject();
+	                object.put("user_id", userId);
+	                DBCursor cursor= getDBCollection(TABLE_NAME).find(object);
+	                while(cursor.hasNext()){	                	
+	                	UserGroup userGroups = findUserGroupsByObject(cursor.next());
+	                	list.add(userGroups);
+	               
+	                }
+	               
+	        }catch(Exception e){
+	                LOG.error(e.getMessage(), e);
+	        }
+	        return list;
 		}
 		
 		private UserGroup findUserGroupsByObject(DBObject object){
