@@ -14,13 +14,19 @@ public class Aplication {
     
     private Long agentId;
     
-    public Aplication(Long appId, int agent, Long userId, String dataTime, String lang, Long agentId){
+    private int total;
+    
+    private int agentNumber;
+    
+    public Aplication(Long appId, int agent, Long userId, String dataTime, String lang, Long agentId, int total, int agentNumber){
         setAppId(appId);
         setAgent(agent);
         setUserId(userId);
         setDataTime(dataTime);
         setLang(lang);
         setAgentId(agentId);
+        setTotal(total);
+        setAgentNumber(agentNumber);
     }
 
     public Long getAppId() {
@@ -69,6 +75,22 @@ public int getAgent() {
 
 public void setAgent(int agent) {
         this.agent = agent;
+}
+
+public int getTotal() {
+        return total;
+}
+
+public void setTotal(int total) {
+        this.total = total;
+}
+
+public int getAgentNumber() {
+        return agentNumber;
+}
+
+public void setAgentNumber(int agentNumber) {
+        this.agentNumber = agentNumber;
 }
     
 }

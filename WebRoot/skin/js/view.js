@@ -1432,9 +1432,11 @@ $(document).ready(function() {
 		}).done(function(da){
 			if(da.status == 1){
 				var array = da.datas;
-				var html = "";
+				var html = "<div style='float:left;width:80px;'>时间</div><div style='float:left;width:80px;'>数据</div><div style='float:left;width:20px;'>agent</div>";
 				for(var i=0;i<array.length;i++){
-					html += "<div>"+array[i].time+"</div>";
+					html += "<div style='float:left;width:80px;'>"+array[i].time+"</div>";
+					html += "<div style='float:left;width:80px;'>"+array[i].total+"</div>";
+					html += "<div style='float:left;width:20px;'>"+array[i].agent_number+"</div>";
 				}
 				$(".app_data_view_content_"+da.appId+"_"+da.agent+"_"+da.agentId).html(html);
 			}else{

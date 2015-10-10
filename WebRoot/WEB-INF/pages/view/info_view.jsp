@@ -408,10 +408,10 @@
 								<div style="margin-left:5px;width:170px;float:left;">语言：${language }</div>
 								<div style="margin-left:10px;width:165px;float:left;">版本：${version }</div>
 								<div style="margin-left:5px;width:170px;float:left;">应用：${parentId }</div>
-								<div style="margin-left:10px;width:300px;float:left;" val1="${agent}" val2="${agentId}">
-									<div style="width:180px;float:left;">最近数据：${dataTime }</div>
+								<div style="margin-left:10px;width:360px;float:left;" val1="${agent}" val2="${agentId}">
+									<div style="width:140px;float:left;">最近数据：${dataTime }</div>
 									<div style="width:30px;float:left;color:blue;" class="hand app_data_view">>>>></div>
-									<div style="width:80px;float:left;" class="app_data_view_content_${appId }_${agent }_${agentId}"></div>
+									<div style="width:180px;float:left;" class="app_data_view_content_${appId }_${agent }_${agentId}"></div>
 								</div>
 							</div>
 						</s:iterator>

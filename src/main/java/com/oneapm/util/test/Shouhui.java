@@ -558,7 +558,7 @@ public class Shouhui {
          * 跟踪报表
          */
         public static void genzongbaobiao(){
-                int before = 0;
+                int before = 4;
                 String start = TimeTools.getDateTime(7+before);
                 String end = TimeTools.getDateTime(0+before);
                 String end1 = TimeTools.getDateTime(-1+before);
