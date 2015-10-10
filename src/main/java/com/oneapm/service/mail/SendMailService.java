@@ -88,6 +88,12 @@ public class SendMailService extends OneTools {
                         }
                         int i=0;
                         int j= 0;
+                        SendCloudService2.sendMail("lijiang1225@qq.com", mailContent, title, lable);//qq测试
+                        SendCloudService2.sendMail("974843350@qq.com", mailContent, title, lable);//qq测试普小娟
+                        SendCloudService2.sendMail("jiang1li@126.com", mailContent, title, lable);//126
+                        SendCloudService2.sendMail("puxiaojuan@oneapm.com", mailContent, title, lable);
+                        SendCloudService2.sendMail("huangdong@oneapm.com", mailContent, title, lable);
+                        SendCloudService2.sendMail("tangjingjing@oneapm.com", mailContent, title, lable);//成都市场唐晶晶
                         for(String email : emails){
                                 if(i%500 == 0){
                                         LOG.info("send email step :"+j+"/"+i);
@@ -102,12 +108,6 @@ public class SendMailService extends OneTools {
                                         }
                                 }catch(Exception e){}
                         }
-                        SendCloudService2.sendMail("lijiang1225@qq.com", mailContent, title, lable);//qq测试
-                        SendCloudService2.sendMail("974843350@qq.com", mailContent, title, lable);//qq测试普小娟
-                        SendCloudService2.sendMail("jiang1li@126.com", mailContent, title, lable);//126
-                        SendCloudService2.sendMail("puxiaojuan@oneapm.com", mailContent, title, lable);
-                        SendCloudService2.sendMail("huangdong@oneapm.com", mailContent, title, lable);
-                        SendCloudService2.sendMail("tangjingjing@oneapm.com", mailContent, title, lable);//成都市场唐晶晶
                         MailService.insertAll(mailContent, admin.getId(), from, emails.size(), TimeTools.format());
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
