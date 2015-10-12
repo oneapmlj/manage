@@ -85,7 +85,7 @@ public class SendCloudService2 {
         
         public static void main(String[] args){
                 try{
-                        File file = new File("/home/abc/download/20150925OneAlert.html");
+                        File file = new File("/home/abc/download/20151012CT.html");
                         FileReader fReader = new FileReader(file);
                         BufferedReader bReader = new BufferedReader(fReader);
                         String string = null;
@@ -94,29 +94,42 @@ public class SendCloudService2 {
                                 builder.append(string);
                         }
                         String html = builder.toString();
-                        bReader = null;
-                        fReader = null;
-                        List<String> emails = new ArrayList<String>();
-                        file = new File("/home/abc/download/user_20150925.csv");
-                        fReader = new FileReader(file);
-                        bReader = new BufferedReader(fReader);
-                        while((string = bReader.readLine()) != null){
-                                emails.add(string.trim());
-                        }
-                        int i = 0;
+//                        bReader = null;
+//                        fReader = null;
+//                        List<String> emails = new ArrayList<String>();
+//                        file = new File("/home/abc/download/user_20150925.csv");
+//                        fReader = new FileReader(file);
+//                        bReader = new BufferedReader(fReader);
+//                        while((string = bReader.readLine()) != null){
+//                                emails.add(string.trim());
+//                        }
+//                        int i = 0;
+                        SendCloudService2.sendMail("3217269761@qq.com", html, "别等到宕机了才想起我，Cloud Test 帮您 7*24 小时监控网站可用性", 0L);//qq测试
+                        SendCloudService2.sendMail("2697997703@qq.com", html,  "别等到宕机了才想起我，Cloud Test 帮您 7*24 小时监控网站可用性", 0L);//qq测试
+                        SendCloudService2.sendMail("2243657235@qq.com", html,  "别等到宕机了才想起我，Cloud Test 帮您 7*24 小时监控网站可用性", 0L);//qq测试
+                        SendCloudService2.sendMail("974843350@qq.com", html,  "别等到宕机了才想起我，Cloud Test 帮您 7*24 小时监控网站可用性", 0L);//qq测试
+                        SendCloudService2.sendMail("384592648@qq.com", html,  "别等到宕机了才想起我，Cloud Test 帮您 7*24 小时监控网站可用性", 0L);//qq测试
+                        SendCloudService2.sendMail("3085189536@qq.com", html,  "别等到宕机了才想起我，Cloud Test 帮您 7*24 小时监控网站可用性", 0L);//qq测试
+                        SendCloudService2.sendMail("1953190856@qq.com", html,  "别等到宕机了才想起我，Cloud Test 帮您 7*24 小时监控网站可用性", 0L);//qq测试
+                        SendCloudService2.sendMail("3186249002@qq.com", html,  "别等到宕机了才想起我，Cloud Test 帮您 7*24 小时监控网站可用性", 0L);//qq测试
+                        SendCloudService2.sendMail("2931493021@qq.com", html,  "别等到宕机了才想起我，Cloud Test 帮您 7*24 小时监控网站可用性", 0L);//qq测试
+                        SendCloudService2.sendMail("1156012163@qq.com", html,  "别等到宕机了才想起我，Cloud Test 帮您 7*24 小时监控网站可用性", 0L);//qq测试
+                        
+                        
+                        SendCloudService2.sendMail("974843350@qq.com", html, "别等到宕机了才想起我，Cloud Test 帮您 7*24 小时监控网站可用性", 0L);//qq测试普小娟
 //                        sendMail("puxiaojuan@oneapm.com", html, "迎国庆准备工作-OneAlert荐", 17104L, "OneAlert@push.oneapm.com");
 //                        sendMail("lijiang@oneapm.com", html, "迎国庆准备工作-OneAlert荐", 17104L, "OneAlert@push.oneapm.com");
 //                        sendMail("huangdong@oneapm.com", html, "迎国庆准备工作-OneAlert荐", 17104L, "OneAlert@push.oneapm.com");
 //                        sendMail("tangjingjing@oneapm.com", html, "迎国庆准备工作-OneAlert荐", 17104L, "OneAlert@push.oneapm.com");
-                        for(String email : emails){
-                                if(email != null){
-                                        i++;
-                                        sendMail(email, html, "迎国庆准备工作-OneAlert荐", 17104L, "OneAlert@push.oneapm.com");
-                                        if(i %100 == 0){
-                                                System.out.println(i);
-                                        }
-                                }
-                        }
+//                        for(String email : emails){
+//                                if(email != null){
+//                                        i++;
+//                                        sendMail(email, html, "迎国庆准备工作-OneAlert荐", 17104L, "OneAlert@push.oneapm.com");
+//                                        if(i %100 == 0){
+//                                                System.out.println(i);
+//                                        }
+//                                }
+//                        }
 //                        sendMail("puxiaojuan@oneapm.com", html, "迎国庆准备工作-OneAlert荐", 17104L, "OneAlert@push.oneapm.com");
 //                        sendMail("lijiang@oneapm.com", html, "OneAPM 免费的业务系统性能监控平台", 0L);
                 }catch(Exception e){
