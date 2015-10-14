@@ -485,7 +485,7 @@
 						<span>暂无邮件信息</span>
 					</s:else>
 				</div> --%>
-				
+				<!-- <div style="float:left;width:120px;" id="group_detail" class="biankuang_gray_ding menu_button">详细信息</div> -->
 				<div id="sendcloud"  style="overflow:scroll;display:none; width:460px;position:relative;max-height:300px">
 						
 							

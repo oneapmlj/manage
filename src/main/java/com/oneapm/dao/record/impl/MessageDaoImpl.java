@@ -100,14 +100,14 @@ public class MessageDaoImpl extends DaoImplBase<Admin> {
                 return 0;
         }
 
-        public List<Message> findByAdminIdUnView(Long adminId) {
+        public List<Message> findByAdminIdUnView(Long adminId, int number, int skip) {
                 List<Message> messages = null;
                 try {
                         DBObject object = new BasicDBObject("to", adminId);
                         object.put("status", 0);
                         DBObject sort = new BasicDBObject();
                         sort.put("create_time", -1);
-                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort);
+                        DBCursor cursor = getDBCollection(TABLE_NAME).find(object).sort(sort).skip(skip).limit(number);
                         messages = new ArrayList<Message>();
                         while (cursor.hasNext()) {
                                 messages.add(getMessageFromObject(cursor.next()));

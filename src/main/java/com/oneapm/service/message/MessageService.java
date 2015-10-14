@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.oneapm.dao.record.impl.MessageDaoImpl;
+import com.oneapm.dto.Account.Account;
 import com.oneapm.dto.Account.Admin;
 import com.oneapm.dto.info.Info;
 import com.oneapm.record.Message;
@@ -17,6 +18,8 @@ import com.oneapm.service.group.UserGroupService;
 import com.oneapm.service.info.InfoService;
 import com.oneapm.service.info.TaskService;
 import com.oneapm.service.record.RecordService;
+import com.oneapm.service.show.CallService;
+import com.oneapm.util.OneTools;
 import com.oneapm.util.TimeTools;
 import com.oneapm.vo.MessageVo;
 
@@ -48,10 +51,10 @@ public class MessageService {
                 return object.toJSONString();
         }
 
-        public static List<Message> findByAdminId(Long adminId) {
+        public static List<Message> findByAdminId(Long adminId, int number, int skip) {
                 if (adminId == null)
                         return null;
-                List<Message> messages = MessageDaoImpl.getInstance().findByAdminIdUnView(adminId);
+                List<Message> messages = MessageDaoImpl.getInstance().findByAdminIdUnView(adminId, number , skip);
                 return messages;
         }
         
@@ -62,10 +65,10 @@ public class MessageService {
                 return messages;
         }
         
-        public static List<Message> findByAdminUnView(Long adminId){
+        public static List<Message> findByAdminUnView(Long adminId, int number, int skip){
             if (adminId == null)
                     return null;
-            List<Message> messages = MessageDaoImpl.getInstance().findByAdminIdUnView(adminId);
+            List<Message> messages = MessageDaoImpl.getInstance().findByAdminIdUnView(adminId, number , skip);
             return messages;
         }
         
@@ -117,10 +120,10 @@ public class MessageService {
         }
 
         @SuppressWarnings("unchecked")
-        public static String findVosJSONByAdminId(Long adminId) {
+        public static String findVosJSONByAdminId(Long adminId, int number, int skip) {
                 JSONObject object = new JSONObject();
                 try {
-                        List<MessageVo> vos = findVosByAdminId(adminId);
+                        List<MessageVo> vos = findVosByAdminId(adminId, number, skip);
                         if (vos == null || vos.size() <= 0) {
                                 object.put("length", 0);
                         } else {
@@ -149,8 +152,8 @@ public class MessageService {
                 return MessageDaoImpl.getInstance().findCount(adminId);
         }
 
-        public static List<MessageVo> findVosByAdminId(Long adminId) {
-                List<Message> messages = findByAdminId(adminId);
+        public static List<MessageVo> findVosByAdminId(Long adminId, int number, int skip) {
+                List<Message> messages = findByAdminId(adminId,number,skip);
                 if (messages == null || messages.size() <= 0)
                         return null;
                 List<MessageVo> vos = new ArrayList<MessageVo>();
@@ -162,7 +165,7 @@ public class MessageService {
 
         public static List<MessageVo> findVosAllByAdminId(Long adminId, int number, int skip) {
                 List<Message> messagesIsViewed = findByAdminIsViewed(adminId,number,skip);
-                List<Message> messagesUnView = findByAdminUnView(adminId);
+                List<Message> messagesUnView = findByAdminUnView(adminId,number,skip);
                 if (messagesUnView == null && messagesUnView.size() <= 0 && messagesIsViewed == null && messagesIsViewed.size() <= 0)
                         return null;
                 List<MessageVo> vos = new ArrayList<MessageVo>();
@@ -173,7 +176,7 @@ public class MessageService {
                 }
                 
                 	for (Message message : messagesIsViewed) {
-                		if(vos.size()<30){
+                		if(vos.size()<number){
                     	if(message.getStatus()==3){
                             vos.add(getMessageVoFromMessage(message));
                             }
@@ -182,7 +185,17 @@ public class MessageService {
                 
                 return vos;
         }
-
+        @SuppressWarnings("unchecked")
+		public static String findMessageWithPagination(Long adminId, int pageSize, int nowPage, int pageTotal, List<MessageVo> vos){
+                    JSONObject object = new JSONObject();
+                    if(vos!= null){
+                        object.put("vos", getArrayFromMessageVo(vos));
+                    }
+                    object.put("status", 1);
+                    object.put("pageNow", nowPage+1);
+                    object.put("pageTotal", pageTotal);
+           return object.toJSONString();
+    }
         public static List<MessageVo> findVosUnCloseByAdminId(Long adminId) {
                 List<Message> messages = findUnCloseByAdminId(adminId);
                 if (messages == null || messages.size() <= 0)
@@ -318,6 +331,7 @@ public class MessageService {
                         object.put("toName", vo.getToName());
                         object.put("company", vo.getCompany());
                         object.put("infoId", vo.getInfoId());
+                        object.put("groupId", vo.getGroupId());
                 } catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                 }

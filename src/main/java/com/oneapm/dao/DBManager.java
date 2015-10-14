@@ -22,10 +22,10 @@ public class DBManager {
     }
     
     public static Connection getConncection() throws SQLException, Exception {
-    	 driver = "com.mysql.jdbc.Driver";
+    	 /*driver = "com.mysql.jdbc.Driver";
          url = "jdbc:mysql://100.98.70.86:3306/managerdb";
          username = "manage_saas";
-         password = "3acr89Mc0bc2a";
+         password = "3acr89Mc0bc2a";*/
     	 /*url = "jdbc:mysql://localhost:3306/webhook";
     	 username = "root";
     	 password = "";*/

@@ -3,6 +3,7 @@ package com.oneapm.web.info;
 import java.io.IOException;
 import java.util.List;
 
+import com.oneapm.service.account.AccountRecordService;
 import com.oneapm.service.message.MessageService;
 import com.oneapm.service.message.TipService;
 import com.oneapm.vo.MessageVo;
@@ -77,40 +78,78 @@ public class MessageAction extends SupportAction {
 
         public void message() throws IOException {
                 String grades = isLogin(false);
+                int skip = page * pageSize;
                 if (grades == null) {
                         getServletResponse().sendRedirect("/login.action");
                         return;
                 }
-                String result = MessageService.findVosJSONByAdminId(getAdmin().getId());
+                String result = MessageService.findVosJSONByAdminId(getAdmin().getId(), pageSize, skip);
                 getServletResponse().getWriter().print(result);
         }
         
         private List<MessageVo> vos;
         private int page;
+        private int pageNow;
         private int pageTotal;
+        private int pageSize;
+        private int total;
         public String index(){
                 String grades = isLogin(false);
                 if (grades == null) {
                         return "login";
                 }
-                try{
-                        int skip = page*20;
-                        int total = MessageService.findCount(getAdmin().getId());
+                try{	
+                		if(pageNow == 0){
+                			pageNow = 1;
+                		}
+                		if(pageSize == 0){
+                			pageSize = 30;
+                		}
+                        int skip = page*pageSize;
+                        total = MessageService.findCount(getAdmin().getId());
                         if(total <= skip){
                                 page --;
-                                skip = page*20;
+                                skip = page*pageSize;
                                 if(skip < 0){
                                         skip =0;
                                 }
                         }
-                        pageTotal = total/20+1;
-                        vos = MessageService.findMessage(getAdmin().getId(), 30, skip);
+                        pageTotal = total/pageSize+1;
+                        vos = MessageService.findMessage(getAdmin().getId(), pageSize, skip);
+                        String result = MessageService.findMessageWithPagination(getAdmin().getId(),  pageSize, page,pageTotal,vos);
+                        getServletResponse().getWriter().print(result);
                 }catch(Exception e){
                         LOG.error(e.getMessage(), e);
                 }
                 return "index";
         }
-
+        public void page() throws IOException{
+            String grades = isLogin(false);
+            if (grades == null) {
+            	getServletResponse().sendRedirect("/login.action");
+                return;
+            }
+            try{	
+            		if(pageSize == 0){
+            			pageSize = 30;
+            		}
+                    int skip = page*pageSize;
+                    total = MessageService.findCount(getAdmin().getId());
+                    if(total <= skip){
+                            page --;
+                            skip = page*pageSize;
+                            if(skip < 0){
+                                    skip =0;
+                            }
+                    }
+                    pageTotal = total/pageSize+1;
+                    vos = MessageService.findMessage(getAdmin().getId(), pageSize, skip);
+                    String result = MessageService.findMessageWithPagination(getAdmin().getId(),  pageSize, page,pageTotal,vos);
+                    getServletResponse().getWriter().print(result);
+            }catch(Exception e){
+                    LOG.error(e.getMessage(), e);
+            }
+    }
         private Long id;
 
         public void view() throws IOException {
@@ -178,4 +217,29 @@ public class MessageAction extends SupportAction {
         public void setPageTotal(int pageTotal) {
                 this.pageTotal = pageTotal;
         }
+        
+		public int getTotal() {
+			return total;
+		}
+
+		public void setTotal(int total) {
+			this.total = total;
+		}
+
+		public int getPageSize() {
+			return pageSize;
+		}
+
+		public void setPageSize(int pageSize) {
+			this.pageSize = pageSize;
+		}
+
+		public int getPageNow() {
+			return pageNow;
+		}
+
+		public void setPageNow(int pageNow) {
+			this.pageNow = pageNow;
+		}
+        
 }
