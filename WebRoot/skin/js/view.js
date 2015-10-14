@@ -61,7 +61,9 @@ $(document).ready(function() {
 		$(".call_add").addClass("hidden");
 		$(".keyboard_call_enter").val("1"); 
 	});
-	
+	/*$("#group_detail").live("click", function(){
+		alert(11);
+	});*/
 	$(".guanlian").live("click", function(){
 		$("#guanlian_add").removeClass("hidden");
 		$("#guanlian_add_value").removeClass("hidden");
